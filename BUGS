@@ -118,4 +118,5 @@ regex syntax clashes (problems with backslashes)
   locales, or `ij' in Dutch locales.
 
   To work around these problems, which may cause bugs in shell scripts,
-  set the LC_COLLATE and LC_CTYPE environment variables to `C'.
+  set the LC_ALL environment variable to `C', or set the locale on a
+  more fine-grained basis with the other LC_* environment variables.

@@ -27,6 +27,9 @@ dist-hook:
 # sed.html dependant on sed.texi and all the included
 # sources
 if MAKEINFO_HTML
+docdir = $(datadir)/doc
+doc_DATA = sed.html
+
 sed.html: sed.texi sed.info
 	builddir=`pwd` && cd $(srcdir) && \
 	  $(MAKEINFO) --html --no-split -o $$builddir/sed.html sed.texi
@@ -38,6 +41,9 @@ endif
 
 # These rules are used together with TEXI2HTML
 if TEXI2HTML_HTML
+docdir = $(datadir)/doc
+doc_DATA = sed.html
+
 sed.html: sed.texi sed.info
 	cp $(srcdir)/*.texi . && \
 	  $(TEXI2HTML) sed.texi && \
