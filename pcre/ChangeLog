@@ -1,3 +1,10 @@
+2004-10-30  Paolo Bonzini  <bonzini@gnu.org>
+
+	* regstudy.c (prune_bracket): More improvements.  Remove
+	"prevptr" parameter.
+	(pruned): Store zero for opcodes that do not have alternative
+	non-backtracking opcodes.
+
 2004-10-29  Paolo Bonzini  <bonzini@gnu.org>
 
 	* regstudy.c (set_start_bits, set_boyer_moore): Do several

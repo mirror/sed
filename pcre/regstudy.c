@@ -39,63 +39,51 @@
 #include "internal.h"
 
 uschar pruned[] = {
-  OP_END,
+  0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
 
-  OP_BEG_WORD,	OP_END_WORD,    OP_ANCHOR_MATCH,
-  OP_NOT_WORD_BOUNDARY,		OP_WORD_BOUNDARY,
-  OP_SOD,   	OP_EODN,	OP_EOD,
-  OP_OPT,	OP_CIRC,	OP_DOLL,	OP_ANY,
-  
-  OP_CHARS,
+  0,
   OP_ONCESTAR,    OP_ONCESTAR,    OP_ONCESTAR,
   OP_ONCEPLUS,    OP_ONCEPLUS,    OP_ONCEPLUS,
   OP_ONCEQUERY,   OP_ONCEQUERY,   OP_ONCEQUERY,
   OP_ONCEUPTO,    OP_ONCEUPTO,    OP_ONCEUPTO,
-  OP_EXACT,
+  0,
   
-  OP_NOT,
+  0,
   OP_NOT_ONCESTAR,    OP_NOT_ONCESTAR,    OP_NOT_ONCESTAR,
   OP_NOT_ONCEPLUS,    OP_NOT_ONCEPLUS,    OP_NOT_ONCEPLUS,
   OP_NOT_ONCEQUERY,   OP_NOT_ONCEQUERY,   OP_NOT_ONCEQUERY,
   OP_NOT_ONCEUPTO,    OP_NOT_ONCEUPTO,    OP_NOT_ONCEUPTO,
-  OP_NOTEXACT,
+  0,
   
-  OP_TYPE,
+  0,
   OP_TYPE_ONCESTAR,    OP_TYPE_ONCESTAR,    OP_TYPE_ONCESTAR,
   OP_TYPE_ONCEPLUS,    OP_TYPE_ONCEPLUS,    OP_TYPE_ONCEPLUS,
   OP_TYPE_ONCEQUERY,   OP_TYPE_ONCEQUERY,   OP_TYPE_ONCEQUERY,
   OP_TYPE_ONCEUPTO,    OP_TYPE_ONCEUPTO,    OP_TYPE_ONCEUPTO,
-  OP_TYPEEXACT,
+  0,
   
-  OP_TYPENOT,
+  0,
   OP_TYPENOT_ONCESTAR,    OP_TYPENOT_ONCESTAR,    OP_TYPENOT_ONCESTAR,
   OP_TYPENOT_ONCEPLUS,    OP_TYPENOT_ONCEPLUS,    OP_TYPENOT_ONCEPLUS,
   OP_TYPENOT_ONCEQUERY,   OP_TYPENOT_ONCEQUERY,   OP_TYPENOT_ONCEQUERY,
   OP_TYPENOT_ONCEUPTO,    OP_TYPENOT_ONCEUPTO,    OP_TYPENOT_ONCEUPTO,
-  OP_TYPENOTEXACT,
+  0,
   
-  OP_CLASS,
+  0,
   OP_CL_ONCESTAR,    OP_CL_ONCESTAR,    OP_CL_ONCESTAR,
   OP_CL_ONCEPLUS,    OP_CL_ONCEPLUS,    OP_CL_ONCEPLUS,
   OP_CL_ONCEQUERY,   OP_CL_ONCEQUERY,   OP_CL_ONCEQUERY,
   OP_CL_ONCERANGE,   OP_CL_ONCERANGE,   OP_CL_ONCERANGE,
   
-  OP_REF,
+  0,
   OP_REF_ONCESTAR,    OP_REF_ONCESTAR,    OP_REF_ONCESTAR,
   OP_REF_ONCEPLUS,    OP_REF_ONCEPLUS,    OP_REF_ONCEPLUS,
   OP_REF_ONCEQUERY,   OP_REF_ONCEQUERY,   OP_REF_ONCEQUERY,
   OP_REF_ONCERANGE,   OP_REF_ONCERANGE,   OP_REF_ONCERANGE,
   
-  OP_RECURSE,    OP_ALT,    OP_KET,
+  0, 0, 0,
   
-  OP_KET_ONCESTAR, OP_KET_ONCESTAR, OP_KET_ONCESTAR,
-  
-  OP_ASSERT,		OP_ASSERT_NOT,
-  OP_ASSERTBACK,	OP_ASSERTBACK_NOT,
-  OP_REVERSE,		OP_ONCE,
-  OP_COND,		OP_CREF,
-  OP_BRAZERO,		OP_BRAMINZERO,
-  OP_BRANUMBER
+  OP_KET_ONCESTAR, OP_KET_ONCESTAR, OP_KET_ONCESTAR
 };
 
 
@@ -714,32 +702,32 @@ set_start_bits (code, start_bits, caseless, cd)
 		 subpatterns
    caseless      the caseless flag
    cd            the block with char table pointers
-   end           points to where the function will store the character
-                 class for the end
+   p_start       points to where the function will store the character
+		 class starting the bracket
+   p_end         points to where the function will store the character
+                 class for the end, and will get the character class
+		 for the character immediately preceding the bracket
  */
 
 BOOL
-prune_bracket (prevptr, codeptr, bracket_start, 
-	       bracket_end, caseless, cd, p_init, p_end)
-     uschar       **prevptr, **codeptr;
+prune_bracket (codeptr, bracket_start, 
+	       bracket_end, caseless, cd, p_start, p_end)
+     uschar       **codeptr;
      BOOL         caseless;
-     bitset       *bracket_start, *bracket_end, *p_init, *p_end;
+     bitset       *bracket_start, *bracket_end, *p_start, *p_end;
      compile_data *cd;
 {
   bitset all_alternatives_start, all_alternatives_end;
   bitset prev_class, curr_class, start, end;
-  uschar *previous, *current, *code = *codeptr;
-  BOOL is_final_opcode = FALSE;
-  BOOL found_start, end_same_as_start;
-  BOOL can_be_empty;
+  uschar *previous, *code = *codeptr;
+  BOOL is_final_opcode, found_start, end_same_as_start;
+  BOOL can_be_empty, bracket_can_be_empty = FALSE;
 
   /* Skip over the assertion at the beginning of a conditional */
   if (*code == OP_COND && code[3] == OP_ASSERT)
     code += (code[4] << 8) | code[5];
 
   code += 3;
-  current = code;
-
   memset (all_alternatives_start, 0, 32);
   memset (all_alternatives_end, 0, 32);
 
@@ -757,10 +745,13 @@ prune_bracket (prevptr, codeptr, bracket_start,
   for (;;)
     {
       int i, backref;
+      uschar *current = code;
+
       memcpy (prev_class, curr_class, 32);
       memset (curr_class, 0, 32);
       can_be_empty = TRUE;
       end_same_as_start = TRUE;
+      is_final_opcode = FALSE;
 
       switch (*code)
 	{
@@ -781,31 +772,32 @@ prune_bracket (prevptr, codeptr, bracket_start,
 
 	case OP_ALT:
 	  code += 3;
-	  can_be_empty = FALSE;
-	  memcpy (curr_class, prev_class, 32);
-
-	  if (found_start)
-	    for (i = 0; i < 32; i++)
-	      {
-		all_alternatives_start[i] |= start[i];
-		all_alternatives_end[i] |= end[i];
-	      }
-	  else
+	  for (i = 0; i < 32; i++)
 	    {
+	      all_alternatives_start[i] |= start[i];
+	      all_alternatives_end[i] |= end[i];
+	    }
+
+	  if (!found_start)
+	    {
+	      bracket_can_be_empty = TRUE;
 	      memset (all_alternatives_start, ~0, 32);
-	      memset (all_alternatives_end, ~0, 32);
+	      if (p_end)
+	        for (i = 0; i < 32; i++)
+		  all_alternatives_end[i] |= (*p_end)[i];
+	      else
+	        memset (all_alternatives_end, ~0, 32);
 	    }
 
 	  if (is_final_opcode)
 	    {
-	      if (p_init)
-	        memcpy (p_init, all_alternatives_start, 32);
+	      if (p_start)
+	        memcpy (p_start, all_alternatives_start, 32);
 	      if (p_end)
 	        memcpy (p_end, all_alternatives_end, 32);
 
-	      *prevptr = current;
 	      *codeptr = code;
-	      return found_start;
+	      return bracket_can_be_empty;
 	    }
 	  else
 	    goto restart;
@@ -858,7 +850,7 @@ prune_bracket (prevptr, codeptr, bracket_start,
 	  break;
 
 	case OP_ASSERT:
-	  prune_bracket (&current, &code, bracket_start, bracket_end,
+	  prune_bracket (&code, bracket_start, bracket_end,
 			 caseless, cd, &curr_class, &end);
 	  memcpy (end, prev_class, 32);
 	  end_same_as_start = FALSE;
@@ -885,7 +877,7 @@ prune_bracket (prevptr, codeptr, bracket_start,
 	case OP_BRAZERO:
 	case OP_BRAMINZERO:
 	  code++;
-	  prune_bracket (&current, &code, bracket_start, bracket_end,
+	  prune_bracket (&code, bracket_start, bracket_end,
 			 caseless, cd, &curr_class, &end);
 	  end_same_as_start = FALSE;
 	  memset (curr_class, ~0, 32);
@@ -1170,9 +1162,8 @@ prune_bracket (prevptr, codeptr, bracket_start,
 	      abort();
 	    }
 
-	  can_be_empty = !prune_bracket(&current, &code,
-					bracket_start, bracket_end,
-					caseless, cd, &curr_class, &end);
+	  can_be_empty = prune_bracket(&code, bracket_start, bracket_end,
+				       caseless, cd, &curr_class, &end);
 
 	  memcpy (bracket_start[backref], curr_class, 32);
 	  memcpy (bracket_end[backref], end, 32);
@@ -1180,19 +1171,16 @@ prune_bracket (prevptr, codeptr, bracket_start,
 	  break;
 	}			/* End of switch */
 
-      if (previous)
+      /* Check if we can prune the last path.  The check
+	 on can_be_empty avoids pruning b* in b*c*b+. */
+      if (previous && !can_be_empty)
 	{
-	  /* Check if we can prune the last path.  The check
-	     on can_be_empty avoids pruning b* in b*c*b+. */
-	  if (!can_be_empty)
-	    {
-	      for (i = 0; i < 32; i++)
-		if (curr_class[i] & prev_class[i])
-		  break;
+	  for (i = 0; i < 32; i++)
+	    if (curr_class[i] & prev_class[i])
+	      break;
 	      
-	      if (i == 32)
-		*previous = pruned[*previous];
-	    }
+	  if (i == 32)
+	    *previous = pruned[*previous];
 	}
 
       if (end_same_as_start)
@@ -1216,8 +1204,7 @@ prune_bracket (prevptr, codeptr, bracket_start,
 	    start[i] |= curr_class[i];
 	}
 
-      previous = (pruned[*current] == *current) ? NULL : current;
-      current = code;
+      previous = (*current < sizeof (pruned) && pruned[*current]) ? current : NULL;
     }
 }
 
@@ -1243,7 +1230,7 @@ prune_backtracking_paths (re, caseless, cd)
      BOOL          caseless;
      compile_data  *cd;
 {
-  uschar *code = re->code, *current;
+  uschar *code = re->code;
 
   /* The first entry is used as scratch in both bitsets.  */
   bitset *bracket_start = (bitset *)
@@ -1252,7 +1239,7 @@ prune_backtracking_paths (re, caseless, cd)
   bitset *bracket_end = (bitset *)
     alloca(sizeof(bitset) * (1 + re->top_bracket));
 
-  prune_bracket (&current, &code, bracket_start, bracket_end,
+  prune_bracket (&code, bracket_start, bracket_end,
 		 caseless, cd, NULL, NULL);
 }
 
