@@ -10,7 +10,7 @@ libpcre_a_SOURCES = regtables.c regsub.c regstudy.c regposix.c regperl.c \
 	reginfo.c regexec.c regexp.c regdebug.c
 
 INCLUDES = -I$(top_srcdir)/lib -I$(top_srcdir)/intl -I$(top_srcdir)/pcre \
-	-I$(top_srcdir)
+	-I$(top_srcdir) -I$(top_builddir)/intl
 
 pcregrep_SOURCES = pcregrep.c
 pcregrep_LDADD = libpcre.a
