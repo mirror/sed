@@ -1259,8 +1259,6 @@ re_node_set_insert_last (set, elem)
      re_node_set *set;
      int elem;
 {
-  int idx;
-
   /* Realloc if we need.  */
   if (set->alloc == set->nelem)
     {
@@ -1340,6 +1338,7 @@ re_dfa_add_node (dfa, token, mode)
      re_token_t token;
      int mode;
 {
+  int type = token.type;
   if (BE (dfa->nodes_len >= dfa->nodes_alloc, 0))
     {
       int new_nodes_alloc = dfa->nodes_alloc * 2;
@@ -1376,6 +1375,10 @@ re_dfa_add_node (dfa, token, mode)
   dfa->nodes[dfa->nodes_len].opt_subexp = 0;
   dfa->nodes[dfa->nodes_len].duplicated = 0;
   dfa->nodes[dfa->nodes_len].constraint = 0;
+#ifdef RE_ENABLE_I18N
+  dfa->nodes[dfa->nodes_len].accept_mb =
+    (type == OP_PERIOD && dfa->mb_cur_max > 1) || type == COMPLEX_BRACKET;
+#endif
   return dfa->nodes_len++;
 }
 
