@@ -2,10 +2,11 @@ CLEANFILES = tmp* core *.core $(EXTRA_PROGRAMS) *.*out *.log
 
 TESTS = $(check_PROGRAMS) $(SEDTESTS)
 
-pcretest_LDADD = ../pcre/libpcre.a ../lib/libsed.a
+pcretest_LDADD = ../pcre/libpcre.a ../lib/libsed.a @INTLLIBS@
 pcretest_DEPENDENCIES = ../pcre/libpcre.a ../lib/libsed.a
 check_PROGRAMS = pcretest
-AM_CPPFLAGS = -I$(top_srcdir) -I$(top_srcdir)/lib -I$(top_srcdir)/pcre
+AM_CPPFLAGS = -I$(top_srcdir) -I$(top_srcdir)/lib -I$(top_srcdir)/pcre \
+	-I$(top_builddir)/intl -I$(top_srcdir)/intl
 
 SEDTESTS = \
         space enable sep inclib 8bit newjis xabcx dollar noeol noeolw \

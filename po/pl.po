@@ -6,7 +6,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: sed 4.1.1\n"
-"POT-Creation-Date: 2004-07-13 20:07+0200\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2004-11-11 16:32+0100\n"
 "PO-Revision-Date: 2004-07-08 19:58+0200\n"
 "Last-Translator: Wojciech Polak <polak@gnu.org>\n"
 "Language-Team: Polish <translation-team-pl@lists.sourceforge.net>\n"
@@ -17,6 +18,7 @@ msgstr ""
 "|| n%100>=20) ? 1 : 2);\n"
 
 #: pcre/pcregrep.c:130
+#, c-format
 msgid "Usage: pcregrep [-bepchilnsvx] pattern [file] ...\n"
 msgstr ""
 
@@ -377,7 +379,7 @@ msgstr "nie mo¿na wyszczególniæ modyfikatorów w pustym wyra¿eniu regularnym"
 msgid "invalid reference \\%d on `s' command's RHS"
 msgstr "nieprawid³owe odwo³anie \\%d po prawej stronie polecenia `s'"
 
-#: sed/sed.c:96
+#: sed/sed.c:93
 msgid ""
 "  -R, --regexp-perl\n"
 "                 use Perl 5's regular expressions syntax in the script.\n"
@@ -386,7 +388,7 @@ msgstr ""
 "                 u¿ywa w skrypcie wyra¿enia regularne zgodne ze sk³adni± "
 "Perl 5.\n"
 
-#: sed/sed.c:101
+#: sed/sed.c:98
 #, c-format
 msgid ""
 "Usage: %s [OPTION]... {script-only-if-no-other-script} [input-file]...\n"
@@ -396,7 +398,8 @@ msgstr ""
 "wej¶ciowy]...\n"
 "\n"
 
-#: sed/sed.c:105
+#: sed/sed.c:102
+#, c-format
 msgid ""
 "  -n, --quiet, --silent\n"
 "                 suppress automatic printing of pattern space\n"
@@ -404,7 +407,8 @@ msgstr ""
 "  -n, --quiet, --silent\n"
 "                 powstrzymuje automatyczne drukowanie przetwarzanych linii.\n"
 
-#: sed/sed.c:107
+#: sed/sed.c:104
+#, c-format
 msgid ""
 "  -e script, --expression=script\n"
 "                 add the script to the commands to be executed\n"
@@ -412,7 +416,8 @@ msgstr ""
 "  -e skrypt, --expression=skrypt\n"
 "                 dodaje skrypt do poleceñ, które maj± byæ wykonane.\n"
 
-#: sed/sed.c:109
+#: sed/sed.c:106
+#, c-format
 msgid ""
 "  -f script-file, --file=script-file\n"
 "                 add the contents of script-file to the commands to be "
@@ -422,7 +427,8 @@ msgstr ""
 "                 dodaje zawarto¶æ pliku skryptowego do poleceñ,\n"
 "                 które maj± byæ wykonane.\n"
 
-#: sed/sed.c:111
+#: sed/sed.c:108
+#, c-format
 msgid ""
 "  -i[SUFFIX], --in-place[=SUFFIX]\n"
 "                 edit files in place (makes backup if extension supplied)\n"
@@ -431,7 +437,8 @@ msgstr ""
 "                 edytuje pliki \"w miejscu\" (tworzy kopie zapasowe\n"
 "                 je¿eli zosta³o podane rozszerzenie).\n"
 
-#: sed/sed.c:113
+#: sed/sed.c:110
+#, c-format
 msgid ""
 "  -l N, --line-length=N\n"
 "                 specify the desired line-wrap length for the `l' command\n"
@@ -439,7 +446,8 @@ msgstr ""
 "  -l N, --line-length=N\n"
 "                 ustala po¿±dan± d³ugo¶æ ³amanych linii dla polecenia `l'.\n"
 
-#: sed/sed.c:115
+#: sed/sed.c:112
+#, c-format
 msgid ""
 "  --posix\n"
 "                 disable all GNU extensions.\n"
@@ -447,7 +455,8 @@ msgstr ""
 "      --posix\n"
 "                 wy³±cza wszystkie rozszerzenia GNU.\n"
 
-#: sed/sed.c:117
+#: sed/sed.c:114
+#, c-format
 msgid ""
 "  -r, --regexp-extended\n"
 "                 use extended regular expressions in the script.\n"
@@ -455,7 +464,8 @@ msgstr ""
 "  -r, --regexp-extended\n"
 "                 u¿ywa w skrypcie rozszerzonych wyra¿eñ regularnych.\n"
 
-#: sed/sed.c:120
+#: sed/sed.c:117
+#, c-format
 msgid ""
 "  -s, --separate\n"
 "                 consider files as separate rather than as a single "
@@ -466,7 +476,8 @@ msgstr ""
 "                 traktuje pliki jako oddzielne, a nie jako pojedynczy,\n"
 "                 d³ugi i ci±g³y strumieñ.\n"
 
-#: sed/sed.c:123
+#: sed/sed.c:120
+#, c-format
 msgid ""
 "  -u, --unbuffered\n"
 "                 load minimal amounts of data from the input files and "
@@ -477,15 +488,18 @@ msgstr ""
 "                 ³aduje minimaln± ilo¶æ danych z plików wej¶ciowych\n"
 "                 i czê¶ciej oczyszcza bufor wyj¶ciowy.\n"
 
-#: sed/sed.c:126
+#: sed/sed.c:123
+#, c-format
 msgid "      --help     display this help and exit\n"
 msgstr "      --help     wy¶wietla tê oto pomoc i koñczy pracê.\n"
 
-#: sed/sed.c:127
+#: sed/sed.c:124
+#, c-format
 msgid "      --version  output version information and exit\n"
 msgstr "      --version  wy¶wietla numer wersji i koñczy pracê.\n"
 
-#: sed/sed.c:128
+#: sed/sed.c:125
+#, c-format
 msgid ""
 "\n"
 "If no -e, --expression, -f, or --file option is given, then the first\n"
@@ -502,7 +516,7 @@ msgstr ""
 "¿adne pliki wej¶ciowe, to wtedy odczytane zostanie standardowe wej¶cie.\n"
 "\n"
 
-#: sed/sed.c:134
+#: sed/sed.c:131
 #, c-format
 msgid ""
 "E-mail bug reports to: %s .\n"
@@ -511,12 +525,12 @@ msgstr ""
 "Ewentualne b³êdy prosimy zg³aszaæ na adres: %s\n"
 "W tym celu proszê dodaæ s³owo ``%s'' do tematu listu.\n"
 
-#: sed/sed.c:271
+#: sed/sed.c:268
 #, c-format
 msgid "super-sed version %s\n"
 msgstr "super-sed wersja %s\n"
 
-#: sed/sed.c:272
+#: sed/sed.c:269
 #, c-format
 msgid ""
 "based on GNU sed version %s\n"
@@ -525,12 +539,12 @@ msgstr ""
 "na podstawie wersji GNU sed %s\n"
 "\n"
 
-#: sed/sed.c:274
+#: sed/sed.c:271
 #, c-format
 msgid "GNU sed version %s\n"
 msgstr "GNU sed wersja %s\n"
 
-#: sed/sed.c:276
+#: sed/sed.c:273
 #, c-format
 msgid ""
 "%s\n"

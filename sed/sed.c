@@ -45,9 +45,6 @@
 #ifdef HAVE_SYS_TYPES_H
 # include <sys/types.h>
 #endif
-#ifdef HAVE_LOCALE_H
-# include <locale.h>
-#endif
 #include "getopt.h"
 
 #ifndef BOOTSTRAP

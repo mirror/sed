@@ -1,7 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: ssed 3.46\n"
-"POT-Creation-Date: 2004-07-13 20:07+0200\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2004-11-11 16:32+0100\n"
 "PO-Revision-Date: 2000-12-21 12:44+0100\n"
 "Last-Translator: Paolo Bonzini <bonzini@gnu.org>\n"
 "Language-Team: Italian <it@li.org>\n"
@@ -11,6 +12,7 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 
 #: pcre/pcregrep.c:130
+#, c-format
 msgid "Usage: pcregrep [-bepchilnsvx] pattern [file] ...\n"
 msgstr "Utilizzo: pcregrep [-bepchilnsvx] pattern [file] ...\n"
 
@@ -364,7 +366,7 @@ msgstr "non è possibile specificare dei modificatori per l'espressione vuota"
 msgid "invalid reference \\%d on `s' command's RHS"
 msgstr "riferimento non valido \\%d nel secondo membro del comando `s'"
 
-#: sed/sed.c:96
+#: sed/sed.c:93
 msgid ""
 "  -R, --regexp-perl\n"
 "                 use Perl 5's regular expressions syntax in the script.\n"
@@ -372,7 +374,7 @@ msgstr ""
 "  -R, --regexp-perl\n"
 "                 usa la sintassi Perl 5 per le espressioni regolari\n"
 
-#: sed/sed.c:101
+#: sed/sed.c:98
 #, c-format
 msgid ""
 "Usage: %s [OPTION]... {script-only-if-no-other-script} [input-file]...\n"
@@ -382,7 +384,8 @@ msgstr ""
 "file]...\n"
 "\n"
 
-#: sed/sed.c:105
+#: sed/sed.c:102
+#, c-format
 msgid ""
 "  -n, --quiet, --silent\n"
 "                 suppress automatic printing of pattern space\n"
@@ -390,7 +393,8 @@ msgstr ""
 "  -n, --quiet, --silent\n"
 "                 sopprime la stampa automatica del pattern space\n"
 
-#: sed/sed.c:107
+#: sed/sed.c:104
+#, c-format
 msgid ""
 "  -e script, --expression=script\n"
 "                 add the script to the commands to be executed\n"
@@ -398,7 +402,8 @@ msgstr ""
 "  -e script, --expression=script\n"
 "                 aggiunge lo script ai comandi da eseguire\n"
 
-#: sed/sed.c:109
+#: sed/sed.c:106
+#, c-format
 msgid ""
 "  -f script-file, --file=script-file\n"
 "                 add the contents of script-file to the commands to be "
@@ -408,7 +413,8 @@ msgstr ""
 "                 aggiunge il contenuto di file-script ai comandi da "
 "eseguire\n"
 
-#: sed/sed.c:111
+#: sed/sed.c:108
+#, c-format
 msgid ""
 "  -i[SUFFIX], --in-place[=SUFFIX]\n"
 "                 edit files in place (makes backup if extension supplied)\n"
@@ -417,7 +423,8 @@ msgstr ""
 "                 scrive il risultato sul file originale (facendo una copia\n"
 "                 se è fornita un'estensione)\n"
 
-#: sed/sed.c:113
+#: sed/sed.c:110
+#, c-format
 msgid ""
 "  -l N, --line-length=N\n"
 "                 specify the desired line-wrap length for the `l' command\n"
@@ -426,7 +433,8 @@ msgstr ""
 "                 specifica la lunghezza delle linee generate dal comando "
 "`l'\n"
 
-#: sed/sed.c:115
+#: sed/sed.c:112
+#, c-format
 msgid ""
 "  --posix\n"
 "                 disable all GNU extensions.\n"
@@ -434,7 +442,8 @@ msgstr ""
 "  --posix\n"
 "                 disabilita tutte le estensioni GNU.\n"
 
-#: sed/sed.c:117
+#: sed/sed.c:114
+#, c-format
 msgid ""
 "  -r, --regexp-extended\n"
 "                 use extended regular expressions in the script.\n"
@@ -442,18 +451,20 @@ msgstr ""
 "  -r, --regexp-extended\n"
 "                 usa la sintassi di `egrep' per le espressioni regolari\n"
 
-#: sed/sed.c:120
+#: sed/sed.c:117
+#, c-format
 msgid ""
 "  -s, --separate\n"
 "                 consider files as separate rather than as a single "
 "continuous\n"
 "                 long stream.\n"
 msgstr ""
-"%s  -s, --separate\n"
+"  -s, --separate\n"
 "                 considera i file di input come separati invece che come un\n"
 "                 unico file lungo.\n"
 
-#: sed/sed.c:123
+#: sed/sed.c:120
+#, c-format
 msgid ""
 "  -u, --unbuffered\n"
 "                 load minimal amounts of data from the input files and "
@@ -463,15 +474,18 @@ msgstr ""
 "  -u, --unbuffered\n"
 "                 carica e visualizza i dati una a pezzetti piu' piccoli\n"
 
-#: sed/sed.c:126
+#: sed/sed.c:123
+#, c-format
 msgid "      --help     display this help and exit\n"
 msgstr "      --help     mostra questo aiuto ed esce\n"
 
-#: sed/sed.c:127
+#: sed/sed.c:124
+#, c-format
 msgid "      --version  output version information and exit\n"
 msgstr "      --version  stampa le informazioni sulla versione ed esce\n"
 
-#: sed/sed.c:128
+#: sed/sed.c:125
+#, c-format
 msgid ""
 "\n"
 "If no -e, --expression, -f, or --file option is given, then the first\n"
@@ -489,7 +503,7 @@ msgstr ""
 "sono specificati file di input sarà letto lo standard input.\n"
 "\n"
 
-#: sed/sed.c:134
+#: sed/sed.c:131
 #, c-format
 msgid ""
 "E-mail bug reports to: %s .\n"
@@ -498,12 +512,12 @@ msgstr ""
 "Segnalare eventuali bug a: %s .\n"
 "Assicurarsi di includere la parola ``%s'' nell'oggetto del messaggio.\n"
 
-#: sed/sed.c:271
+#: sed/sed.c:268
 #, c-format
 msgid "super-sed version %s\n"
 msgstr "super-sed versione %s\n"
 
-#: sed/sed.c:272
+#: sed/sed.c:269
 #, c-format
 msgid ""
 "based on GNU sed version %s\n"
@@ -512,12 +526,12 @@ msgstr ""
 "basato su GNU sed versione %s\n"
 "\n"
 
-#: sed/sed.c:274
+#: sed/sed.c:271
 #, c-format
 msgid "GNU sed version %s\n"
 msgstr "GNU sed versione %s\n"
 
-#: sed/sed.c:276
+#: sed/sed.c:273
 #, c-format
 msgid ""
 "%s\n"

@@ -5,7 +5,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: sed 4.1.1\n"
-"POT-Creation-Date: 2004-07-13 20:07+0200\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2004-11-11 16:32+0100\n"
 "PO-Revision-Date: 2004-07-09 16:33+0300\n"
 "Last-Translator: Toomas Soome <Toomas.Soome@microlink.ee>\n"
 "Language-Team: Estonian <et@li.org>\n"
@@ -15,6 +16,7 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: pcre/pcregrep.c:130
+#, c-format
 msgid "Usage: pcregrep [-bepchilnsvx] pattern [file] ...\n"
 msgstr ""
 
@@ -375,7 +377,7 @@ msgstr "muudatusi tühjale regulaaravaldisele ei saa määrata"
 msgid "invalid reference \\%d on `s' command's RHS"
 msgstr "vigane viide \\%d käsu `s' paremas pooles"
 
-#: sed/sed.c:96
+#: sed/sed.c:93
 msgid ""
 "  -R, --regexp-perl\n"
 "                 use Perl 5's regular expressions syntax in the script.\n"
@@ -383,7 +385,7 @@ msgstr ""
 "  -R, --regexp-perl\n"
 "                 kasuta skriptis Perl 5 regulaaravaldiste süntaksit.\n"
 
-#: sed/sed.c:101
+#: sed/sed.c:98
 #, c-format
 msgid ""
 "Usage: %s [OPTION]... {script-only-if-no-other-script} [input-file]...\n"
@@ -393,7 +395,8 @@ msgstr ""
 "fail]...\n"
 "\n"
 
-#: sed/sed.c:105
+#: sed/sed.c:102
+#, c-format
 msgid ""
 "  -n, --quiet, --silent\n"
 "                 suppress automatic printing of pattern space\n"
@@ -401,7 +404,8 @@ msgstr ""
 "  -n, --quiet, --silent\n"
 "                 keela mustriruumi automaatne väljastamine\n"
 
-#: sed/sed.c:107
+#: sed/sed.c:104
+#, c-format
 msgid ""
 "  -e script, --expression=script\n"
 "                 add the script to the commands to be executed\n"
@@ -409,7 +413,8 @@ msgstr ""
 "  -e skript, --expression=skript\n"
 "                 lisa täidetavate käskluste skript\n"
 
-#: sed/sed.c:109
+#: sed/sed.c:106
+#, c-format
 msgid ""
 "  -f script-file, --file=script-file\n"
 "                 add the contents of script-file to the commands to be "
@@ -418,7 +423,8 @@ msgstr ""
 "  -f skripti-fail, --file=skripti-fail\n"
 "                 lisa skripti-faili sisu täidetavate käskluste hulka\n"
 
-#: sed/sed.c:111
+#: sed/sed.c:108
+#, c-format
 msgid ""
 "  -i[SUFFIX], --in-place[=SUFFIX]\n"
 "                 edit files in place (makes backup if extension supplied)\n"
@@ -426,7 +432,8 @@ msgstr ""
 "  -i[SUFIKS], --in-place[=SUFIKS]\n"
 "                 toimeta faile (kui kasutati sifiksit, loob ka varukoopia)\n"
 
-#: sed/sed.c:113
+#: sed/sed.c:110
+#, c-format
 msgid ""
 "  -l N, --line-length=N\n"
 "                 specify the desired line-wrap length for the `l' command\n"
@@ -434,7 +441,8 @@ msgstr ""
 "  -l N, --line-length=N\n"
 "                 määra `l' käsule soovitatav rea pikkus\n"
 
-#: sed/sed.c:115
+#: sed/sed.c:112
+#, c-format
 msgid ""
 "  --posix\n"
 "                 disable all GNU extensions.\n"
@@ -442,7 +450,8 @@ msgstr ""
 "  --posix\n"
 "                 blokeeri kõik GNU laiendused.\n"
 
-#: sed/sed.c:117
+#: sed/sed.c:114
+#, c-format
 msgid ""
 "  -r, --regexp-extended\n"
 "                 use extended regular expressions in the script.\n"
@@ -450,7 +459,8 @@ msgstr ""
 "  -r, --regexp-extended\n"
 "                 kasuta skriptis laiendatud regulaaravaldiste süntaksit.\n"
 
-#: sed/sed.c:120
+#: sed/sed.c:117
+#, c-format
 msgid ""
 "  -s, --separate\n"
 "                 consider files as separate rather than as a single "
@@ -460,7 +470,8 @@ msgstr ""
 "  -s, --separate\n"
 "                 käsitle faile ükshaaval, mitte ühe jätkuva voona.\n"
 
-#: sed/sed.c:123
+#: sed/sed.c:120
+#, c-format
 msgid ""
 "  -u, --unbuffered\n"
 "                 load minimal amounts of data from the input files and "
@@ -471,15 +482,18 @@ msgstr ""
 "                 loe sisendfailist minimaalne kogus andmeid ja tühjenda\n"
 "                 väljundpuhvreid sagedamini\n"
 
-#: sed/sed.c:126
+#: sed/sed.c:123
+#, c-format
 msgid "      --help     display this help and exit\n"
 msgstr "      --help     väljast see abiinfo ja lõpeta töö\n"
 
-#: sed/sed.c:127
+#: sed/sed.c:124
+#, c-format
 msgid "      --version  output version information and exit\n"
 msgstr "      --version  väljasta versiooniinfo ja lõpeta töö\n"
 
-#: sed/sed.c:128
+#: sed/sed.c:125
+#, c-format
 msgid ""
 "\n"
 "If no -e, --expression, -f, or --file option is given, then the first\n"
@@ -495,7 +509,7 @@ msgstr ""
 "sisendfailide nimed; kui sisendfaile ei antud, loetakse standardsisendit.\n"
 "\n"
 
-#: sed/sed.c:134
+#: sed/sed.c:131
 #, c-format
 msgid ""
 "E-mail bug reports to: %s .\n"
@@ -504,12 +518,12 @@ msgstr ""
 "Postitage teated vigadest: %s .\n"
 "Lisage kindlasti sõna ``%s'' ``Subject:'' reale.\n"
 
-#: sed/sed.c:271
+#: sed/sed.c:268
 #, c-format
 msgid "super-sed version %s\n"
 msgstr "super-sed versioon %s\n"
 
-#: sed/sed.c:272
+#: sed/sed.c:269
 #, c-format
 msgid ""
 "based on GNU sed version %s\n"
@@ -518,12 +532,12 @@ msgstr ""
 "põhineb GNU sed versioonil %s\n"
 "\n"
 
-#: sed/sed.c:274
+#: sed/sed.c:271
 #, c-format
 msgid "GNU sed version %s\n"
 msgstr "GNU sed versioon %s\n"
 
-#: sed/sed.c:276
+#: sed/sed.c:273
 #, c-format
 msgid ""
 "%s\n"

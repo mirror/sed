@@ -5,7 +5,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: sed 4.1.1\n"
-"POT-Creation-Date: 2004-07-13 20:07+0200\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2004-11-11 16:32+0100\n"
 "PO-Revision-Date: 2004-07-11 11:45+0200\n"
 "Last-Translator: Christian Rose <menthos@menthos.com>\n"
 "Language-Team: Swedish <sv@li.org>\n"
@@ -15,6 +16,7 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: pcre/pcregrep.c:130
+#, c-format
 msgid "Usage: pcregrep [-bepchilnsvx] pattern [file] ...\n"
 msgstr ""
 
@@ -379,7 +381,7 @@ msgstr "kan inte ange modifierare på tomt reguljärt uttryck"
 msgid "invalid reference \\%d on `s' command's RHS"
 msgstr "ogiltig referens \\%d på \"s\"-kommandots högersida"
 
-#: sed/sed.c:96
+#: sed/sed.c:93
 msgid ""
 "  -R, --regexp-perl\n"
 "                 use Perl 5's regular expressions syntax in the script.\n"
@@ -387,7 +389,7 @@ msgstr ""
 "  -R, --regexp-perl\n"
 "                 använd Perl 5:s syntax för reguljära uttryck i skriptet.\n"
 
-#: sed/sed.c:101
+#: sed/sed.c:98
 #, c-format
 msgid ""
 "Usage: %s [OPTION]... {script-only-if-no-other-script} [input-file]...\n"
@@ -396,7 +398,8 @@ msgstr ""
 "Användning: %s [FLAGGA]... {skript-endast-om-inga-andra} [indatafil]...\n"
 "\n"
 
-#: sed/sed.c:105
+#: sed/sed.c:102
+#, c-format
 msgid ""
 "  -n, --quiet, --silent\n"
 "                 suppress automatic printing of pattern space\n"
@@ -404,7 +407,8 @@ msgstr ""
 "  -n, --quiet, --silent\n"
 "                 förhindrar automatisk utskrift av mönsterutrymme\n"
 
-#: sed/sed.c:107
+#: sed/sed.c:104
+#, c-format
 msgid ""
 "  -e script, --expression=script\n"
 "                 add the script to the commands to be executed\n"
@@ -412,7 +416,8 @@ msgstr ""
 "  -e skript, --expression=skript\n"
 "                 lägg till skript till de kommandon som ska utföras\n"
 
-#: sed/sed.c:109
+#: sed/sed.c:106
+#, c-format
 msgid ""
 "  -f script-file, --file=script-file\n"
 "                 add the contents of script-file to the commands to be "
@@ -422,7 +427,8 @@ msgstr ""
 "                 lägg till innehållet i skriptfil till de kommandon som ska\n"
 "                 utföras\n"
 
-#: sed/sed.c:111
+#: sed/sed.c:108
+#, c-format
 msgid ""
 "  -i[SUFFIX], --in-place[=SUFFIX]\n"
 "                 edit files in place (makes backup if extension supplied)\n"
@@ -431,7 +437,8 @@ msgstr ""
 "                 redigera filer på plats (skapar säkerhetskopia om ändelse\n"
 "                 tillhandahålls)\n"
 
-#: sed/sed.c:113
+#: sed/sed.c:110
+#, c-format
 msgid ""
 "  -l N, --line-length=N\n"
 "                 specify the desired line-wrap length for the `l' command\n"
@@ -439,7 +446,8 @@ msgstr ""
 "  -l N, --line-length=N\n"
 "                 ange önskad radbrytningslängd för \"l\"-kommandot\n"
 
-#: sed/sed.c:115
+#: sed/sed.c:112
+#, c-format
 msgid ""
 "  --posix\n"
 "                 disable all GNU extensions.\n"
@@ -447,7 +455,8 @@ msgstr ""
 "  --posix\n"
 "                 inaktivera alla GNU-utökningar.\n"
 
-#: sed/sed.c:117
+#: sed/sed.c:114
+#, c-format
 msgid ""
 "  -r, --regexp-extended\n"
 "                 use extended regular expressions in the script.\n"
@@ -455,7 +464,8 @@ msgstr ""
 "  -r, --regexp-extended\n"
 "                 använd utökade reguljära uttryck i skriptet.\n"
 
-#: sed/sed.c:120
+#: sed/sed.c:117
+#, c-format
 msgid ""
 "  -s, --separate\n"
 "                 consider files as separate rather than as a single "
@@ -466,7 +476,8 @@ msgstr ""
 "                 betrakta filer som separata istället för som en\n"
 "                 kontinuerlig lång dataström.\n"
 
-#: sed/sed.c:123
+#: sed/sed.c:120
+#, c-format
 msgid ""
 "  -u, --unbuffered\n"
 "                 load minimal amounts of data from the input files and "
@@ -477,15 +488,18 @@ msgstr ""
 "                 läs in minimala mängder data från indatafilerna och töm\n"
 "                 utdatabufferterna oftare\n"
 
-#: sed/sed.c:126
+#: sed/sed.c:123
+#, c-format
 msgid "      --help     display this help and exit\n"
 msgstr "      --help     visa denna hjälptext och avsluta\n"
 
-#: sed/sed.c:127
+#: sed/sed.c:124
+#, c-format
 msgid "      --version  output version information and exit\n"
 msgstr "      --version  visa versionsinformation och avsluta\n"
 
-#: sed/sed.c:128
+#: sed/sed.c:125
+#, c-format
 msgid ""
 "\n"
 "If no -e, --expression, -f, or --file option is given, then the first\n"
@@ -501,7 +515,7 @@ msgstr ""
 "läses standard in.\n"
 "\n"
 
-#: sed/sed.c:134
+#: sed/sed.c:131
 #, c-format
 msgid ""
 "E-mail bug reports to: %s .\n"
@@ -511,12 +525,12 @@ msgstr ""
 "Ange ordet \"%s\" på något ställe i \"Ärende:\"-fältet.\n"
 "Skicka anmärkningar på översättningen till <sv@li.org>.\n"
 
-#: sed/sed.c:271
+#: sed/sed.c:268
 #, c-format
 msgid "super-sed version %s\n"
 msgstr "super-sed version %s\n"
 
-#: sed/sed.c:272
+#: sed/sed.c:269
 #, c-format
 msgid ""
 "based on GNU sed version %s\n"
@@ -525,12 +539,12 @@ msgstr ""
 "baserad på GNU sed version %s\n"
 "\n"
 
-#: sed/sed.c:274
+#: sed/sed.c:271
 #, c-format
 msgid "GNU sed version %s\n"
 msgstr "GNU sed version %s\n"
 
-#: sed/sed.c:276
+#: sed/sed.c:273
 #, c-format
 msgid ""
 "%s\n"

@@ -111,10 +111,11 @@ AM_GNU_GETTEXT_VERSION(0.14)
 AM_GNU_GETTEXT(no-libtool, need-ngettext, ../intl)
 AC_CONFIG_COMMANDS([gettext-fix], [
   sed -e 's/^mkinstalldirs *=.*/mkinstalldirs=$(MKINSTALLDIRS)/' \
-      -e 's/$(DOMAIN)/'$PACKAGE'/g' \
-      -e 's/$(XGETTEXT_OPTIONS)/-k_ -kN_/g' \
-      -e 's/$(top_builddir)/../g' po/Makefile > po/Makefile.tmp
-  mv po/Makefile.tmp po/Makefile], [PACKAGE=$PACKAGE])
+      intl/Makefile > intl/Makefile.tmp
+  mv intl/Makefile.tmp intl/Makefile
+  sed -e 's/^mkinstalldirs *=.*/mkinstalldirs=$(MKINSTALLDIRS)/' \
+      po/Makefile > po/Makefile.tmp
+  mv po/Makefile.tmp po/Makefile])
 
 AC_CONFIG_FILES([bootstrap.sh], chmod +x bootstrap.sh)
 AC_CONFIG_FILES([Makefile doc/Makefile \

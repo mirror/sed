@@ -45,6 +45,9 @@
 #ifdef HAVE_WCHAR_H
 # include <wchar.h>
 #endif
+#ifdef HAVE_LOCALE_H
+# include <locale.h>
+#endif
 #ifdef HAVE_WCTYPE_H
 # include <wctype.h>
 #endif
