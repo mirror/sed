@@ -16,8 +16,8 @@ SED = $(top_builddir)/sed/sed
 sed.texi: sed-in.texi groupify.sed
 	sed -nf groupify.sed < $(srcdir)/sed-in.texi > $(srcdir)/sed.texi
 
-sed.1: $(top_srcdir)/sed/sed.c $(top_srcdir)/configure.ac sed.x
-	$(HELP2MAN) -p sed --include sed.x $(SED) > $(srcdir)/sed.1
+sed.1: $(top_srcdir)/sed/sed.c $(top_srcdir)/configure.ac $(srcdir)/sed.x
+	$(HELP2MAN) -p sed --include $(srcdir)/sed.x $(SED) > $(srcdir)/sed.1
 
 dist-hook:
 	touch $(distdir)/sed.1
