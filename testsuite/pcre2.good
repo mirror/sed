@@ -1726,5 +1726,45 @@ No match
  0: ABABAB
  1: AB
     
+/[[.z.]]/
+    bbbccczzz
+ 0: z
+    bbbcccz
+ 0: z
+    *** Failers
+No match
+    bbbccc
+No match
+
+/[[.z.]]+z/x
+    bbbccczzz
+ 0: zzz
+    *** Failers
+No match
+    bbbcccz
+No match
+    bbbccc
+No match
+
+/[[=z=]]/
+    bbbccczzz
+ 0: z
+    bbbcccz
+ 0: z
+    *** Failers
+No match
+    bbbccc
+No match
+
+/[[=z=]]+z/x
+    bbbccczzz
+ 0: zzz
+    *** Failers
+No match
+    bbbcccz
+No match
+    bbbccc
+No match
+
 / End of testinput1 /
 

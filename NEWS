@@ -7,6 +7,10 @@ Sed 3.62 (aligned with GNU sed CVS at 2005-02-10)
 
 * fixed `make check' in non-English locales.
   
+* implemented [[.a.]] and [[=a=]] where the collating symbol can only
+  include a single character, and that will be the only matched character
+  independent of the locale.
+
 * output the result of commands a, r, R when a q command is found.
 
 -----------------------------------------------------------------------

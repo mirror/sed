@@ -1716,5 +1716,45 @@ No match: POSIX code 17: match failed
  0: ABABAB
  1: AB
     
+/[[.z.]]/
+    bbbccczzz
+ 0: z
+    bbbcccz
+ 0: z
+    *** Failers
+No match: POSIX code 17: match failed
+    bbbccc
+No match: POSIX code 17: match failed
+
+/[[.z.]]+z/x
+    bbbccczzz
+ 0: zzz
+    *** Failers
+No match: POSIX code 17: match failed
+    bbbcccz
+No match: POSIX code 17: match failed
+    bbbccc
+No match: POSIX code 17: match failed
+
+/[[=z=]]/
+    bbbccczzz
+ 0: z
+    bbbcccz
+ 0: z
+    *** Failers
+No match: POSIX code 17: match failed
+    bbbccc
+No match: POSIX code 17: match failed
+
+/[[=z=]]+z/x
+    bbbccczzz
+ 0: zzz
+    *** Failers
+No match: POSIX code 17: match failed
+    bbbcccz
+No match: POSIX code 17: match failed
+    bbbccc
+No match: POSIX code 17: match failed
+
 / End of testinput1 /
 

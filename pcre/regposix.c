@@ -742,12 +742,23 @@ compile_branch_posix (options, brackets, codeptr, ptrptr, errorptr, optchanged,
 		  goto FAILED;
 		}
 
+	      /* Recognize the POSIX constructions [.ch.] and [=ch=] for a
+	         single character. */
+	      if (c == '[' && (cd->end + 1) - ptr >= 5
+		  && (ptr[1] == '.' || ptr[1] == '=') && ptr[3] == ptr [1]
+		  && ptr[4] == ']')
+		{
+		  c = ptr[2];
+		  /* A further ++ptr is done below.  */
+		  ptr += 4;
+		}
+
 	      /* Handle POSIX class names. A square bracket that doesn't match the
 	         syntax is treated as a literal. We also recognize the POSIX
 	         constructions [.ch.] and [=ch=] ("collating elements") and
 	         fault them, as Perl 5.6 does. */
 
-	      if (c == '[' &&
+	      else if (c == '[' &&
 		  (ptr[1] == ':' || ptr[1] == '.' || ptr[1] == '=') &&
 		  check_posix_syntax (ptr, &tempptr, cd))
 		{
@@ -795,7 +806,7 @@ compile_branch_posix (options, brackets, codeptr, ptrptr, errorptr, optchanged,
 		}
 
 	      /* Escapes inside character classes are not POSIX */
-	      if (c == '\\')
+	      else if (c == '\\')
 		c =
 		  check_escape (&ptr, errorptr, *brackets, options, TRUE, cd);
 

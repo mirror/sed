@@ -925,4 +925,28 @@
 /(AB)*\1/x
     ABABAB
     
+/[[.z.]]/
+    bbbccczzz
+    bbbcccz
+    *** Failers
+    bbbccc
+
+/[[.z.]]+z/x
+    bbbccczzz
+    *** Failers
+    bbbcccz
+    bbbccc
+
+/[[=z=]]/
+    bbbccczzz
+    bbbcccz
+    *** Failers
+    bbbccc
+
+/[[=z=]]+z/x
+    bbbccczzz
+    *** Failers
+    bbbcccz
+    bbbccc
+
 / End of testinput1 /

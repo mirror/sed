@@ -1,3 +1,8 @@
+2005-02-10  Paolo Bonzini  <bonzini@gnu.org>
+
+	* regposix.c (compile_branch_posix): Support [[.a.]] and
+	[[=a=]] in a crippled way.
+
 2004-10-30  Paolo Bonzini  <bonzini@gnu.org>
 
 	* regstudy.c (prune_bracket): More improvements.  Remove
