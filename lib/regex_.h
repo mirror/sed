@@ -298,7 +298,8 @@ extern reg_syntax_t re_syntax_options;
 /* Like REG_NOTBOL, except for the end-of-line.  */
 #define REG_NOTEOL (1 << 1)
 
-/* Use pmatch[0] to set boundaries for regexec.  */
+/* Use PMATCH[0] to delimit the start and end of the search in the
+   buffer.  */
 #define REG_STARTEND (1 << 2)
 
 

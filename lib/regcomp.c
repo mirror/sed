@@ -867,7 +867,7 @@ init_dfa (dfa, pat_len)
       else
 	for (i = 0, ch = 0; i < BITSET_UINTS; ++i)
 	  for (j = 0; j < UINT_BITS; ++j, ++ch)
-	    if (btowc (ch) != WEOF)
+	    if (__btowc (ch) != WEOF)
 	      dfa->sb_char[i] |= 1 << j;
     }
 #endif
@@ -2239,22 +2239,20 @@ parse_expression (regexp, preg, token, syntax, nest, err)
 	dfa->has_mb_node = 1;
       break;
     case OP_WORD:
-      tree = build_charclass_op (dfa, regexp->trans, "alnum", "_", 0, err);
-      if (BE (*err != REG_NOERROR && tree == NULL, 0))
-	return NULL;
-      break;
     case OP_NOTWORD:
-      tree = build_charclass_op (dfa, regexp->trans, "alnum", "_", 1, err);
+      tree = build_charclass_op (dfa, regexp->trans,
+				 (const unsigned char *) "alnum",
+				 (const unsigned char *) "_",
+				 token->type == OP_NOTWORD, err);
       if (BE (*err != REG_NOERROR && tree == NULL, 0))
 	return NULL;
       break;
     case OP_SPACE:
-      tree = build_charclass_op (dfa, regexp->trans, "space", "", 0, err);
-      if (BE (*err != REG_NOERROR && tree == NULL, 0))
-	return NULL;
-      break;
     case OP_NOTSPACE:
-      tree = build_charclass_op (dfa, regexp->trans, "space", "", 1, err);
+      tree = build_charclass_op (dfa, regexp->trans,
+				 (const unsigned char *) "space",
+				 (const unsigned char *) "",
+				 token->type == OP_NOTSPACE, err);
       if (BE (*err != REG_NOERROR && tree == NULL, 0))
 	return NULL;
       break;
@@ -2684,7 +2682,7 @@ parse_bracket_exp (regexp, dfa, token, syntax, err)
      Seek the collating symbol entry correspondings to NAME.
      Return the index of the symbol in the SYMB_TABLE.  */
 
-  static inline int32_t
+  auto inline int32_t
   __attribute ((always_inline))
   seek_collating_symbol_entry (name, name_len)
 	 const unsigned char *name;
@@ -2717,7 +2715,7 @@ parse_bracket_exp (regexp, dfa, token, syntax, err)
      Look up the collation sequence value of BR_ELEM.
      Return the value if succeeded, UINT_MAX otherwise.  */
 
-  static inline unsigned int
+  auto inline unsigned int
   __attribute ((always_inline))
   lookup_collation_sequence_value (br_elem)
 	 bracket_elem_t *br_elem;
@@ -2785,7 +2783,7 @@ parse_bracket_exp (regexp, dfa, token, syntax, err)
      mbcset->range_ends, is a pointer argument sinse we may
      update it.  */
 
-  static inline reg_errcode_t
+  auto inline reg_errcode_t
   __attribute ((always_inline))
   build_range_exp (sbcset, mbcset, range_alloc, start_elem, end_elem)
 	 re_charset_t *mbcset;
@@ -2868,7 +2866,7 @@ parse_bracket_exp (regexp, dfa, token, syntax, err)
      COLL_SYM_ALLOC is the allocated size of mbcset->coll_sym, is a
      pointer argument sinse we may update it.  */
 
-  static inline reg_errcode_t
+  auto inline reg_errcode_t
   __attribute ((always_inline))
   build_collating_symbol (sbcset, mbcset, coll_sym_alloc, name)
 	 re_charset_t *mbcset;

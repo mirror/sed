@@ -242,7 +242,7 @@ build_wcs_buffer (pstr)
 	  for (i = 0; i < pstr->mb_cur_max && i < remain_len; ++i)
 	    {
 	      ch = pstr->raw_mbs [pstr->raw_mbs_idx + byte_idx + i];
-	      buf[i] = pstr->trans[ch];
+	      buf[i] = pstr->mbs[byte_idx + i] = pstr->trans[ch];
 	    }
 	  p = (const char *) buf;
 	}
@@ -373,7 +373,9 @@ build_wcs_upper_buffer (pstr)
       {
 	wchar_t wc;
 	const char *p;
+#ifdef _LIBC
 offsets_needed:
+#endif
 	remain_len = end_idx - byte_idx;
 	prev_st = pstr->cur_state;
 	if (BE (pstr->trans != NULL, 0))
@@ -398,7 +400,7 @@ offsets_needed:
 		int mbcdlen;
 
 		wcu = towupper (wc);
-		mbcdlen = wcrtomb (buf, wcu, &prev_st);
+		mbcdlen = wcrtomb ((char *) buf, wcu, &prev_st);
 		if (BE (mbclen == mbcdlen, 1))
 		  memcpy (pstr->mbs + byte_idx, buf, mbclen);
 		else
@@ -579,7 +581,7 @@ re_string_reconstruct (pstr, idx, eflags)
      int idx, eflags;
 {
   int offset = idx - pstr->raw_mbs_idx;
-  if (BE (offset < 0, 0))
+  if (offset < 0)
     {
       /* Reset buffer.  */
 #ifdef RE_ENABLE_I18N
@@ -599,10 +601,10 @@ re_string_reconstruct (pstr, idx, eflags)
       offset = idx;
     }
 
-  if (BE (offset != 0, 1))
+  if (offset != 0)
     {
       /* Are the characters which are already checked remain?  */
-      if (BE (offset < pstr->valid_raw_len, 1)
+      if (offset < pstr->valid_raw_len
 #ifdef RE_ENABLE_I18N
 	  /* Handling this would enlarge the code too much.
 	     Accept a slowdown in that case.  */
@@ -613,11 +615,11 @@ re_string_reconstruct (pstr, idx, eflags)
 	  /* Yes, move them to the front of the buffer.  */
 	  pstr->tip_context = re_string_context_at (pstr, offset - 1, eflags);
 #ifdef RE_ENABLE_I18N
-	  if (BE (pstr->mb_cur_max, 1) > 1)
+	  if (pstr->mb_cur_max > 1)
 	    memmove (pstr->wcs, pstr->wcs + offset,
 		     (pstr->valid_len - offset) * sizeof (wint_t));
 #endif /* RE_ENABLE_I18N */
-	  if (BE (pstr->mbs_allocated, 0))
+	  if (pstr->mbs_allocated)
 	    memmove (pstr->mbs, pstr->mbs + offset,
 		     pstr->valid_len - offset);
 	  pstr->valid_len -= offset;
@@ -715,7 +717,7 @@ re_string_reconstruct (pstr, idx, eflags)
 				      ? CONTEXT_NEWLINE : 0));
 	    }
 	}
-      if (!BE (pstr->mbs_allocated, 0))
+      if (!pstr->mbs_allocated)
 	pstr->mbs += offset;
     }
   pstr->raw_mbs_idx = idx;
@@ -724,7 +726,7 @@ re_string_reconstruct (pstr, idx, eflags)
 
   /* Then build the buffers.  */
 #ifdef RE_ENABLE_I18N
-  if (BE (pstr->mb_cur_max, 1) > 1)
+  if (pstr->mb_cur_max > 1)
     {
       if (pstr->icase)
 	{
@@ -737,17 +739,16 @@ re_string_reconstruct (pstr, idx, eflags)
     }
   else
 #endif /* RE_ENABLE_I18N */
-  if (BE (pstr->mbs_allocated, 0))
     {
       if (pstr->icase)
 	build_upper_buffer (pstr);
       else if (pstr->trans != NULL)
 	re_string_translate_buffer (pstr);
+      else
+	pstr->valid_len = pstr->len;
     }
-  else
-    pstr->valid_len = pstr->len;
-
   pstr->cur_idx = 0;
+
   return REG_NOERROR;
 }
 
@@ -845,17 +846,18 @@ re_string_context_at (input, idx, eflags)
      int idx, eflags;
 {
   int c;
-  if (BE (idx < 0, 0))
-    /* In this case, we use the value stored in input->tip_context,
-       since we can't know the character in input->mbs[-1] here.  */
-    return input->tip_context;
-
-  else if (BE (idx == input->len, 0))
-    return ((eflags & REG_NOTEOL) ? CONTEXT_ENDBUF
-	    : CONTEXT_NEWLINE | CONTEXT_ENDBUF);
-
+  if (idx < 0 || idx == input->len)
+    {
+      if (idx < 0)
+	/* In this case, we use the value stored in input->tip_context,
+	   since we can't know the character in input->mbs[-1] here.  */
+	return input->tip_context;
+      else /* (idx == input->len) */
+	return ((eflags & REG_NOTEOL) ? CONTEXT_ENDBUF
+		: CONTEXT_NEWLINE | CONTEXT_ENDBUF);
+    }
 #ifdef RE_ENABLE_I18N
-  else if (BE (input->mb_cur_max, 1) > 1)
+  if (input->mb_cur_max > 1)
     {
       wint_t wc;
       int wc_idx = idx;
@@ -1648,6 +1650,5 @@ free_state (state)
     }
   re_node_set_free (&state->nodes);
   re_free (state->trtable);
-  re_free (state->word_trtable);
   re_free (state);
 }
