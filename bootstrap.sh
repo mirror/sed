@@ -19,7 +19,7 @@ if test -f config.h; then :; else
 */
 
 #define PACKAGE "sed"
-#define VERSION "4.1.2-boot"
+#define VERSION "3.61-boot"
 #define SED_FEATURE_VERSION "4.1"
 #define BOOTSTRAP 1
 
@@ -70,6 +70,16 @@ ${CC} -DHAVE_CONFIG_H -I.. -I. -c obstack.c || exit 1
 ${CC} -DHAVE_CONFIG_H -I.. -I. -c regex.c || exit 1
 ${CC} -DHAVE_CONFIG_H -I.. -I. -c strerror.c || exit 1
 ${CC} -DHAVE_CONFIG_H -I.. -I. -c utils.c || exit 1
+
+cd ../pcre || exit 1
+${CC} -DHAVE_CONFIG_H -I.. -I. -I../lib -c regdebug.c || exit 1
+${CC} -DHAVE_CONFIG_H -I.. -I. -I../lib -c regexp.c || exit 1
+${CC} -DHAVE_CONFIG_H -I.. -I. -I../lib -c reginfo.c || exit 1
+${CC} -DHAVE_CONFIG_H -I.. -I. -I../lib -c regperl.c || exit 1
+${CC} -DHAVE_CONFIG_H -I.. -I. -I../lib -c regposix.c || exit 1
+${CC} -DHAVE_CONFIG_H -I.. -I. -I../lib -c regstudy.c || exit 1
+${CC} -DHAVE_CONFIG_H -I.. -I. -I../lib -c regsub.c || exit 1
+${CC} -DHAVE_CONFIG_H -I.. -I. -I../lib -c regtables.c || exit 1
 
 cd ../sed || exit 1
 ${CC} -DHAVE_CONFIG_H -I.. -I. -I../lib -c sed.c || exit 1
