@@ -18,8 +18,12 @@
    Software Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA
    02111-1307 USA.  */
 
+#include "config.h"
+
 #include <sys/types.h>
+#ifdef HAVE_MCHECK_H
 #include <mcheck.h>
+#endif
 #include <regex.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -45,7 +49,9 @@ main (void)
   size_t i;
   int n, ret = 0;
 
+#ifdef HAVE_MCHECK_H
   mtrace ();
+#endif
 
   for (i = 0; i < sizeof (tests) / sizeof (tests[0]); ++i)
     {
@@ -54,7 +60,7 @@ main (void)
 	{
 	  char buf[500];
 	  regerror (n, &re, buf, sizeof (buf));
-	  printf ("regcomp %zd failed: %s\n", i, buf);
+	  printf ("regcomp %lu failed: %s\n", i, buf);
 	  ret = 1;
 	  continue;
 	}
@@ -62,7 +68,7 @@ main (void)
       if (! regexec (&re, tests[i].string, tests[i].nmatch,
 		     tests[i].nmatch ? rm : NULL, 0))
 	{
-	  printf ("regexec %zd incorrectly matched\n", i);
+	  printf ("regexec %lu incorrectly matched\n", i);
 	  ret = 1;
 	}
 

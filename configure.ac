@@ -43,7 +43,8 @@ int main()
 
 AC_HEADER_DIRENT
 AC_CHECK_HEADERS(io.h limits.h locale.h stdarg.h alloca.h stddef.h errno.h \
-		 wchar.h wctype.h sys/file.h, [], [], [AC_INCLUDES_DEFAULT])
+		 wchar.h wctype.h sys/file.h mcheck.h, [], [],
+		 [AC_INCLUDES_DEFAULT])
 AC_C_CONST
 AC_TYPE_SIZE_T
 AC_CHECK_TYPE(ssize_t, int)
@@ -74,10 +75,6 @@ AC_ARG_WITH(included-regex,
 [  --with-included-regex   use included regex matcher (default=yes)], ,
 with_included_regex=yes)
 
-AC_ARG_ENABLE(regex-tests, 
-[  --enable-regex-tests    enable regex matcher regression tests (default=no)], ,
-enable_regex_tests=no)
-
 if test "x$with_included_regex" = xno; then
   AC_CHECK_HEADERS(regex.h)
   AC_CHECK_LIB(regex, re_search)
@@ -88,14 +85,21 @@ if test "x$with_included_regex" = xno; then
   fi
 fi
 
-if test "x$with_included_regex" = xno; then
+AC_ARG_ENABLE(regex-tests, 
+[  --enable-regex-tests    enable regex matcher regression tests (default=no)],
+[if test "x$with_included_regex" = xno; then
   enable_regex_tests=no
-fi
+fi],
+enable_regex_tests=$with_included_regex)
 
 AM_CONDITIONAL(TEST_REGEX, test "x$enable_regex_tests" != xno)
 if test "x$with_included_regex" != xno; then
   AC_CONFIG_LINKS(lib/regex.h:lib/regex_.h)
   AC_LIBOBJ(regex)
+fi
+if test "x$enable_regex_tests" = xyes; then
+  AC_DEFINE_UNQUOTED(_REGEX_RE_COMP, 1,
+    [Include BSD functions in regex, used by the testsuite])
 fi
 
 AC_ARG_ENABLE(html, 

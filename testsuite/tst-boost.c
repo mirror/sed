@@ -18,8 +18,12 @@
    Software Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA
    02111-1307 USA.  */
 
+#include "config.h"
+
 #include <sys/types.h>
+#ifdef HAVE_MCHECK_H
 #include <mcheck.h>
+#endif
 #include <regex.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -82,7 +86,9 @@ main (int argc, char **argv)
   regex_t re;
   regmatch_t rm[20];
 
+#ifdef HAVE_MCHECK_H
   mtrace ();
+#endif
 
   if (argc < 2)
     {

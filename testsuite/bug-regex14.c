@@ -18,9 +18,13 @@
    Software Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA
    02111-1307 USA.  */
 
+#include "config.h"
+
 #define _REGEX_RE_COMP
 #include <sys/types.h>
+#ifdef HAVE_MCHECK_H
 #include <mcheck.h>
+#endif
 #include <regex.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -32,7 +36,9 @@ main (void)
   size_t i;
   int ret = 0;
 
+#ifdef HAVE_MCHECK_H
   mtrace ();
+#endif
 
   for (i = 0; i < 100; ++i)
     {

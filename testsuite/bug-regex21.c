@@ -18,7 +18,11 @@
    Software Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA
    02111-1307 USA.  */
 
+#include "config.h"
+
+#ifdef HAVE_MCHECK_H
 #include <mcheck.h>
+#endif
 #include <regex.h>
 #include <stdio.h>
 
@@ -28,7 +32,9 @@ int main (void)
   int i;
   int ret = 0;
 
+#ifdef HAVE_MCHECK_H
   mtrace ();
+#endif
 
   for (i = 0; i < 32; ++i)
     {

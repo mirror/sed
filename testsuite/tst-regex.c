@@ -16,6 +16,8 @@
    Software Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA
    02111-1307 USA.  */
 
+#include "config.h"
+
 #define _GNU_SOURCE 1
 #include <alloca.h>
 #include <assert.h>
@@ -24,7 +26,9 @@
 #include <fcntl.h>
 #include <iconv.h>
 #include <locale.h>
+#ifdef HAVE_MCHECK_H
 #include <mcheck.h>
+#endif
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -58,7 +62,9 @@ main (int argc, char *argv[])
   size_t inlen;
   size_t outlen;
 
+#ifdef HAVE_MCHECK_H
   mtrace ();
+#endif
 
   if (!argv[1])
     exit (1);

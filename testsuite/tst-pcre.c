@@ -18,8 +18,12 @@
    Software Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA
    02111-1307 USA.  */
 
+#include "config.h"
+
 #include <sys/types.h>
+#ifdef HAVE_MCHECK_H
 #include <mcheck.h>
+#endif
 #include <regex.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -40,7 +44,9 @@ main (int argc, char **argv)
   int pattern_valid = 0, rm_valid = 0;
   size_t linenum;
 
+#ifdef HAVE_MCHECK_H
   mtrace ();
+#endif
 
   if (argc < 2)
     {
@@ -97,7 +103,7 @@ main (int argc, char **argv)
 	  rm_valid = 0;
 	  if (p == NULL)
 	    {
-	      printf ("%zd: Invalid pattern line: %s\n", linenum, line);
+	      printf ("%lu: Invalid pattern line: %s\n", linenum, line);
 	      ret = 1;
 	      continue;
 	    }
@@ -106,7 +112,7 @@ main (int argc, char **argv)
 	    ignorecase = 1;
 	  else if (p[1] != '\0')
 	    {
-	      printf ("%zd: Invalid pattern line: %s\n", linenum, line);
+	      printf ("%lu: Invalid pattern line: %s\n", linenum, line);
 	      ret = 1;
 	      continue;
 	    }
@@ -116,7 +122,7 @@ main (int argc, char **argv)
 	      pattern = realloc (pattern, p - line);
 	      if (pattern == NULL)
 		{
-		  printf ("%zd: Cannot record pattern: %m\n", linenum);
+		  printf ("%lu: Cannot record pattern: %m\n", linenum);
 		  ret = 1;
 		  break;
 		}
@@ -136,7 +142,7 @@ main (int argc, char **argv)
     
 	  if (!pattern_valid)
 	    {
-	      printf ("%zd: No previous valid pattern %s\n", linenum, line);
+	      printf ("%lu: No previous valid pattern %s\n", linenum, line);
 	      continue;
 	    }
 
@@ -145,7 +151,7 @@ main (int argc, char **argv)
 	      string = realloc (string, len - 3);
 	      if (string == NULL)
 		{
-		  printf ("%zd: Cannot record search string: %m\n", linenum);
+		  printf ("%lu: Cannot record search string: %m\n", linenum);
 		  ret = 1;
 		  break;
 		}
@@ -160,7 +166,7 @@ main (int argc, char **argv)
 	    {
 	      char buf[500];
 	      regerror (n, &re, buf, sizeof (buf));
-	      printf ("%zd: regcomp failed for %s: %s\n",
+	      printf ("%lu: regcomp failed for %s: %s\n",
 		      linenum, pattern, buf);
 	      ret = 1;
 	      continue;
@@ -179,7 +185,7 @@ main (int argc, char **argv)
 
       if (!rm_valid)
 	{
-	  printf ("%zd: No preceeding pattern or search string\n", linenum);
+	  printf ("%lu: No preceeding pattern or search string\n", linenum);
 	  ret = 1;
 	  continue;
 	}
@@ -188,7 +194,7 @@ main (int argc, char **argv)
 	{
 	  if (rm[0].rm_so != -1 || rm[0].rm_eo != -1)
 	    {
-	      printf ("%zd: /%s/ on %s unexpectedly matched %d..%d\n",
+	      printf ("%lu: /%s/ on %s unexpectedly matched %d..%d\n",
 		      linenum, pattern, string, rm[0].rm_so, rm[0].rm_eo);
 	      ret = 1;
 	    }
@@ -203,7 +209,7 @@ main (int argc, char **argv)
       num = strtoul (p, &p, 10);
       if (num >= 20 || *p != ':' || p[1] != ' ')
 	{
-	  printf ("%zd: Invalid line %s\n", linenum, line);
+	  printf ("%lu: Invalid line %s\n", linenum, line);
 	  ret = 1;
 	  continue;
 	}
@@ -212,7 +218,7 @@ main (int argc, char **argv)
 	{
 	  if (strcmp (p + 2, "<unset>") != 0)
 	    {
-	      printf ("%zd: /%s/ on %s unexpectedly failed to match register %ld %d..%d\n",
+	      printf ("%lu: /%s/ on %s unexpectedly failed to match register %ld %d..%d\n",
 		      linenum, pattern, string, num,
 		      rm[num].rm_so, rm[num].rm_eo);
 	      ret = 1;
@@ -225,7 +231,7 @@ main (int argc, char **argv)
 	  || strncmp (p + 2, string + rm[num].rm_so,
 		      rm[num].rm_eo - rm[num].rm_so) != 0)
 	{
-	  printf ("%zd: /%s/ on %s unexpectedly failed to match %s for register %ld %d..%d\n",
+	  printf ("%lu: /%s/ on %s unexpectedly failed to match %s for register %ld %d..%d\n",
 		  linenum, pattern, string, p + 2, num,
 		  rm[num].rm_so, rm[num].rm_eo);
 	  ret = 1;

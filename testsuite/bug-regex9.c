@@ -18,8 +18,12 @@
    Software Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA
    02111-1307 USA.  */
 
+#include "config.h"
+
 #include <sys/types.h>
+#ifdef HAVE_MCHECK_H
 #include <mcheck.h>
+#endif
 #include <regex.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -34,7 +38,9 @@ main (void)
   regmatch_t rm[2];
   int n;
 
+#ifdef HAVE_MCHECK_H
   mtrace ();
+#endif
 
   n = regcomp (&re, "^#! */.*/(k|ba||pdk|z)sh", REG_EXTENDED);
   if (n != 0)

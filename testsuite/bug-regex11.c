@@ -18,8 +18,12 @@
    Software Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA
    02111-1307 USA.  */
 
+#include "config.h"
+
 #include <sys/types.h>
+#ifdef HAVE_MCHECK_H
 #include <mcheck.h>
+#endif
 #include <regex.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -94,7 +98,9 @@ main (void)
   size_t i;
   int n, ret = 0;
 
+#ifdef HAVE_MCHECK_H
   mtrace ();
+#endif
 
   for (i = 0; i < sizeof (tests) / sizeof (tests[0]); ++i)
     {
@@ -103,14 +109,14 @@ main (void)
 	{
 	  char buf[500];
 	  regerror (n, &re, buf, sizeof (buf));
-	  printf ("%s: regcomp %zd failed: %s\n", tests[i].pattern, i, buf);
+	  printf ("%s: regcomp %lu failed: %s\n", tests[i].pattern, i, buf);
 	  ret = 1;
 	  continue;
 	}
 
       if (regexec (&re, tests[i].string, tests[i].nmatch, rm, 0))
 	{
-	  printf ("%s: regexec %zd failed\n", tests[i].pattern, i);
+	  printf ("%s: regexec %lu failed\n", tests[i].pattern, i);
 	  ret = 1;
 	  regfree (&re);
 	  continue;
@@ -122,7 +128,7 @@ main (void)
 	  {
 	    if (tests[i].rm[n].rm_so == -1 && tests[i].rm[n].rm_eo == -1)
 	      break;
-	    printf ("%s: regexec %zd match failure rm[%d] %d..%d\n",
+	    printf ("%s: regexec %lu match failure rm[%d] %d..%d\n",
 		    tests[i].pattern, i, n, rm[n].rm_so, rm[n].rm_eo);
 	    ret = 1;
 	    break;

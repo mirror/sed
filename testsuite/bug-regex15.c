@@ -1,8 +1,8 @@
 /* Test for memory/CPU leak in regcomp.  */
 
-#include <error.h>
-#include <sys/resource.h>
 #include <sys/types.h>
+#include <sys/time.h>
+#include <sys/resource.h>
 #include <regex.h>
 #include <stdio.h>
 #include <stdlib.h>
