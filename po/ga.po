@@ -5,7 +5,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: sed 4.1.1\n"
-"POT-Creation-Date: 2004-08-21 20:46+0200\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2004-11-09 20:01+0100\n"
 "PO-Revision-Date: 2004-07-07 11:04-0500\n"
 "Last-Translator: Kevin Patrick Scannell <scannell@SLU.EDU>\n"
 "Language-Team: Irish <ga@li.org>\n"
@@ -197,6 +198,7 @@ msgstr ""
 "\n"
 
 #: sed/sed.c:105
+#, c-format
 msgid ""
 "  -n, --quiet, --silent\n"
 "                 suppress automatic printing of pattern space\n"
@@ -205,6 +207,7 @@ msgstr ""
 "                 stop priontáil uathoibríoch den spás patrúin\n"
 
 #: sed/sed.c:107
+#, c-format
 msgid ""
 "  -e script, --expression=script\n"
 "                 add the script to the commands to be executed\n"
@@ -213,6 +216,7 @@ msgstr ""
 "                 cuir an script leis na horduithe le rith\n"
 
 #: sed/sed.c:109
+#, c-format
 msgid ""
 "  -f script-file, --file=script-file\n"
 "                 add the contents of script-file to the commands to be "
@@ -222,6 +226,7 @@ msgstr ""
 "                 cuir na línte i `comhad-script' leis na horduithe le rith\n"
 
 #: sed/sed.c:111
+#, c-format
 msgid ""
 "  -i[SUFFIX], --in-place[=SUFFIX]\n"
 "                 edit files in place (makes backup if extension supplied)\n"
@@ -231,6 +236,7 @@ msgstr ""
 "                 cúltaca má tá IARMHÍR tugtha\n"
 
 #: sed/sed.c:113
+#, c-format
 msgid ""
 "  -l N, --line-length=N\n"
 "                 specify the desired line-wrap length for the `l' command\n"
@@ -239,6 +245,7 @@ msgstr ""
 "                 ceap an fad timfhillte le haghaidh an ordaithe `l'\n"
 
 #: sed/sed.c:115
+#, c-format
 msgid ""
 "  --posix\n"
 "                 disable all GNU extensions.\n"
@@ -247,6 +254,7 @@ msgstr ""
 "                 díchumasaigh gach feabhsúchán GNU.\n"
 
 #: sed/sed.c:117
+#, c-format
 msgid ""
 "  -r, --regexp-extended\n"
 "                 use extended regular expressions in the script.\n"
@@ -255,6 +263,7 @@ msgstr ""
 "                 úsáid sloinn ionadaíochta feabhsaithe sa script.\n"
 
 #: sed/sed.c:120
+#, c-format
 msgid ""
 "  -s, --separate\n"
 "                 consider files as separate rather than as a single "
@@ -265,6 +274,7 @@ msgstr ""
 "                 féach ar comhaid ina leith seachas mar sruth leanúnach.\n"
 
 #: sed/sed.c:123
+#, c-format
 msgid ""
 "  -u, --unbuffered\n"
 "                 load minimal amounts of data from the input files and "
@@ -276,14 +286,17 @@ msgstr ""
 "                 na maoláin aschur níos minice\n"
 
 #: sed/sed.c:126
+#, c-format
 msgid "      --help     display this help and exit\n"
 msgstr "      --help     taispeáin an chabhair seo agus éirigh as\n"
 
 #: sed/sed.c:127
+#, c-format
 msgid "      --version  output version information and exit\n"
 msgstr "      --version  taispeáin eolas faoin leagan agus éirigh as\n"
 
 #: sed/sed.c:128
+#, c-format
 msgid ""
 "\n"
 "If no -e, --expression, -f, or --file option is given, then the first\n"
