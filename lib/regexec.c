@@ -1260,7 +1260,7 @@ proceed_next_node (mctx, nregs, regs, pidx, node, eps_via_nodes, fs)
 #endif /* RE_ENABLE_I18N */
       if (type == OP_BACK_REF)
 	{
-	  int subexp_idx = dfa->nodes[node].opr.idx;
+	  int subexp_idx = dfa->nodes[node].opr.idx + 1;
 	  naccepted = regs[subexp_idx].rm_eo - regs[subexp_idx].rm_so;
 	  if (fs != NULL)
 	    {
@@ -1853,7 +1853,7 @@ check_dst_limits (mctx, limits, dst_node, dst_idx, src_node, src_idx)
       int subexp_idx;
       struct re_backref_cache_entry *ent;
       ent = mctx->bkref_ents + limits->elems[lim_idx];
-      subexp_idx = dfa->nodes[ent->node].opr.idx - 1;
+      subexp_idx = dfa->nodes[ent->node].opr.idx;
 
       dst_pos = check_dst_limits_calc_pos (mctx, limits->elems[lim_idx],
 					   subexp_idx, dst_node, dst_idx,
@@ -1902,8 +1902,7 @@ check_dst_limits_calc_pos_1 (mctx, boundaries, subexp_idx, from_node, bkref_idx)
 		    continue;
 
 		  if (subexp_idx <= 8 * sizeof (ent->eps_reachable_subexps_map)
-		      && (ent->eps_reachable_subexps_map
-			  & (1 << (subexp_idx - 1))) == 0)
+		      && !(ent->eps_reachable_subexps_map & (1 << subexp_idx)))
 		    continue;
 
 		  /* Recurse trying to reach the OP_OPEN_SUBEXP and
@@ -1929,7 +1928,7 @@ check_dst_limits_calc_pos_1 (mctx, boundaries, subexp_idx, from_node, bkref_idx)
 		  if (cpos == 0 && (boundaries & 2))
 		    return 0;
 
-		  ent->eps_reachable_subexps_map &= ~(1 << (subexp_idx - 1));
+		  ent->eps_reachable_subexps_map &= ~(1 << subexp_idx);
 	        }
 	      while (ent++->more);
 	    }
@@ -2003,7 +2002,7 @@ check_subexp_limits (dfa, dest_nodes, candidates, limits, bkref_ents, str_idx)
       if (str_idx <= ent->subexp_from || ent->str_idx < str_idx)
 	continue; /* This is unrelated limitation.  */
 
-      subexp_idx = dfa->nodes[ent->node].opr.idx - 1;
+      subexp_idx = dfa->nodes[ent->node].opr.idx;
       if (ent->subexp_to == str_idx)
 	{
 	  int ops_node = -1;
@@ -2060,16 +2059,12 @@ check_subexp_limits (dfa, dest_nodes, candidates, limits, bkref_ents, str_idx)
 		{
 		  if (subexp_idx != dfa->nodes[node].opr.idx)
 		    continue;
-		  if ((type == OP_CLOSE_SUBEXP && ent->subexp_to != str_idx)
-		      || (type == OP_OPEN_SUBEXP))
-		    {
-		      /* It is against this limitation.
-			 Remove it form the current sifted state.  */
-		      err = sub_epsilon_src_nodes (dfa, node, dest_nodes,
-						   candidates);
-		      if (BE (err != REG_NOERROR, 0))
-			return err;
-		    }
+		  /* It is against this limitation.
+		     Remove it form the current sifted state.  */
+		  err = sub_epsilon_src_nodes (dfa, node, dest_nodes,
+					       candidates);
+		  if (BE (err != REG_NOERROR, 0))
+		    return err;
 		}
 	    }
 	}
@@ -2657,7 +2652,7 @@ get_subexp (mctx, bkref_node, bkref_str_idx)
       while (entry++->more);
     }
 
-  subexp_num = dfa->nodes[bkref_node].opr.idx - 1;
+  subexp_num = dfa->nodes[bkref_node].opr.idx;
 
   /* For each sub expression  */
   for (sub_top_idx = 0; sub_top_idx < mctx->nsub_tops; ++sub_top_idx)

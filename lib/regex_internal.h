@@ -495,13 +495,6 @@ struct re_dfastate_t
 };
 typedef struct re_dfastate_t re_dfastate_t;
 
-typedef struct
-{
-  /* start <= node < end  */
-  int start;
-  int end;
-} re_subexp_t;
-
 struct re_state_table_entry
 {
   int num;
@@ -606,7 +599,6 @@ struct re_fail_stack_t
 
 struct re_dfa_t
 {
-  re_subexp_t *subexps;
   re_token_t *nodes;
   int nodes_alloc;
   int nodes_len;
@@ -626,13 +618,15 @@ struct re_dfa_t
   int str_tree_storage_idx;
 
   /* number of subexpressions `re_nsub' is in regex_t.  */
-  int subexps_alloc;
   unsigned int state_hash_mask;
   int states_alloc;
   int init_node;
   int nbackref; /* The number of backreference in this dfa.  */
+
   /* Bitmap expressing which backreference is used.  */
   unsigned int used_bkref_map;
+  unsigned int completed_bkref_map;
+
   unsigned int has_plural_match : 1;
   /* If this dfa has "multibyte node", which is a backreference or
      a node which can accept multibyte character or multi character
