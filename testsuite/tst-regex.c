@@ -18,11 +18,9 @@
 
 #include "config.h"
 
-#define _GNU_SOURCE 1
 #include <alloca.h>
 #include <assert.h>
 #include <errno.h>
-#include <error.h>
 #include <fcntl.h>
 #include <iconv.h>
 #include <locale.h>
