@@ -6,7 +6,7 @@ ACLOCAL_AMFLAGS = -I config
 
 PACKAGE = sed
 
-SUBDIRS = intl lib po sed doc testsuite
+SUBDIRS = intl lib pcre po sed doc testsuite
 
 noinst_DATA = bootstrap.sh
 noinst_HEADERS = basicdefs.h
@@ -16,15 +16,3 @@ EXTRA_DIST = BUGS THANKS COPYING.DOC README.boot bootstrap.sh 	      \
 
 html:
 	cd doc && make html
-
-update-regex:
-	cd lib && \
-	  HOST=sources.redhat.com && \
-	  BASEURL="http://$$HOST/cgi-bin/cvsweb.cgi/~checkout~/libc/posix" && \
-	  QUERY='cvsroot=glibc&content-type=text/plain' && \
-	  wget -O regcomp.c "$$BASEURL/regcomp.c?$$QUERY" && \
-	  wget -O regexec.c "$$BASEURL/regexec.c?$$QUERY" && \
-	  wget -O regex.c "$$BASEURL/regex.c?$$QUERY" && \
-	  wget -O regex_.h "$$BASEURL/regex.h?$$QUERY" && \
-	  wget -O regex_internal.c "$$BASEURL/regex_internal.c?$$QUERY" && \
-	  wget -O regex_internal.h "$$BASEURL/regex_internal.h?$$QUERY"

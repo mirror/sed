@@ -1,0 +1,283 @@
+2004-03-04  Paolo Bonzini  <bonzini@gnu.org>
+
+	* regcomp.c: fix bugs in is_endline.
+
+2004-02-29  Paolo Bonzini  <bonzini@gnu.org>
+
+	* regperl.c, regposix.c: move common functions...
+	* regcomp.c: ... here.
+
+2004-02-29  Paolo Bonzini  <bonzini@gnu.org>
+
+	* internal.h: add OP_ANCHOR_MATCH, ESC_G.
+	* regdebug.c: Likewise.
+	* regexec.c: Likewise.
+	* regperl.c: Likewise.
+	* regposix.c: Likewise.
+	* regstudy.c: Likewise.
+
+2004-01-15  Paolo Bonzini  <bonzini@gnu.org>
+
+	* regexp.c: drop regexec2, replace with REG_STARTEND
+	found in NetBSD regexp.
+	* regexp.h: likewise.
+
+2003-09-19  Paolo Bonzini  <bonzini@gnu.org>
+
+	* regposix.c: recognize \s and \S.
+
+	* regposix.c: compile (a){0,2} to (a)?(a)? instead
+	of ((a)?(a))? so that it is possible to...
+	* regexec.c: not assign offsets to optional brackets
+	which match nothing, e.g. when matching (b?){1,2} to
+	`b'.  Actually, we do assign offsets the first time;
+	this does not hamper the POSIXicity of ssed because
+	anyway we don't get the wrong substitution for the
+	backreference on the RHS: e.g. if you have
+	s/(b?)?/<\1>/ with an empty pattern space, you'll get
+	<> in the pattern space no matter if \1 did not match
+	or if it matched the empty string at offsets [0,0).
+
+2003-01-03  Paolo Bonzini  <bonzini@gnu.org>
+
+	* regtables.c (pcre_maketables): add [:blank:]
+	* internal.h (cbit_blank): new
+	* regperl.c: add [:blank:]
+	* regposix.c: add [:blank:]
+
+2002-09-18  Paolo Bonzini  <bonzini@gnu.org>
+
+	* regposix.c (pcre_posix_compile_nuls): fix
+	error in determining length of .{1,64}
+	* regperl.c (pcre_perl_compile_nuls): likewise
+
+2002-01-06  Paolo Bonzini  <bonzini@gnu.org>
+
+	* regdebug.c: add _ONCE repetitions
+	* regexec.c: likewise
+	* regstudy.c: likewise
+	* internal.h: likewise
+
+2001-12-31  Paolo Bonzini  <bonzini@gnu.org>
+
+	** Version 3.55 released
+
+	* regposix.c (check_escape): inside a character class,
+	parse unknown escapes (like \" or \p) as two separate
+	characters.  Signaled by John Fremlin.
+
+2001-12-27  Paolo Bonzini  <bonzini@gnu.org>
+
+	** Version 3.54 released
+
+2001-12-19  Paolo Bonzini  <bonzini@gnu.org>
+
+	** Version 3.53 released
+
+	* regstudy.c (set_boyer_moore, set_start_bits): use new
+	OP_TYPE and OP_TYPENOT* opcodes instead of OP_DIGIT & co.
+	* regdebug.c (pcre_debug): likewise (print them)
+	* regperl.c (compile_branch): likewise (compile them)
+	* regposix.c (compile_branch): likewise (compile them)
+	* internal.h: likewise (define them); refine meaning of
+	bits in ctype table to allow for simpler OP_TYPE* code
+	* regtables.c (pcre_maketables): set newline table.
+
+2001-12-17  Paolo Bonzini  <bonzini@gnu.org>
+
+	* regstudy.c (set_bmtable, set_boyer_moore): implemented
+	Boyer-Moore algorithm for first character search
+	* regexec.c (pcre_exec): use the Boyer-Moore data
+
+2001-12-14  Paolo Bonzini  <bonzini@gnu.org>
+
+	* internal.h (pcre_extra): encapsulate start_bits in a union,
+	define PCRE_STUDY_BM
+	* regexec.c (pcre_match): access the `data' union in pcre_extra
+	* reginfo.c (pcre_info): likewise
+	* regstudy.c (pcre_study): likewise
+
+2001-12-13  Paolo Bonzini  <bonzini@gnu.org>
+
+	*** Version 3.52 released.
+	
+2001-12-12  Paolo Bonzini  <bonzini@gnu.org>
+
+	* internal.h: add max_match_size to pcre and compile_data
+	* regexec.c (pcre_match): use re->max_match_size
+	information
+	* regexec.c (pcre_match) [DEBUG]: debug first character
+	optimization
+	* regposix.c (compile_branch, pcre_posix_compile_nuls):
+	optimize regexps like xxxxxx$ where xxxxxx
+	cannot match more than a certain number of characters.
+	* regposix.c (is_endline): new function.
+
+2001-10-15  Paolo Bonzini  <bonzini@gnu.org>
+
+	*** Version 3.51 released.
+	
+2001-10-13  Paolo Bonzini  <bonzini@gnu.org>
+
+	* regposix.c(pcre_posix_compile_nuls,
+	basic_to_extended_regexp): fix code overflow
+	bug when a [*+?] is treated as a literal character.  This
+	is actually not mandated by POSIX, which specifies
+	"undefined behavior", but an internal error is not what
+	I had in mind...
+
+2001-09-25  Paolo Bonzini  <bonzini@gnu.org>
+
+	*** Version 3.50 released.
+	
+2001-06-05  Paolo Bonzini  <bonzini@gnu.org>
+
+	*** Version 3.49 released
+
+	* regposix.c(check_escape, pcre_posix_compile_nuls): in
+	POSIX regular expressions, inside classes, unrecognized
+	escapes must make the backslash and the following character
+	*really* independent; regexps like [/\] were previously broken.
+
+2001-03-22  Paolo Bonzini  <bonzini@gnu.org>
+
+	*** Version 3.48 released
+
+2001-03-02  Paolo Bonzini  <bonzini@gnu.org>
+
+	*** Version 3.47 released
+
+2001-02-21  Paolo Bonzini  <bonzini@gnu.org>
+
+	*** Version 3.46 released
+
+2001-02-09  Paolo Bonzini  <bonzini@gnu.org>
+	
+	* regposix.c(compile_branch, read_repeat_counts): support
+	GNU regex's behavior of compiling a{1,2}{2,3} like a{2,6}
+	(multiplying the minimum and maximum counts)
+	* regposix.c(basic_to_extended_regexp): compile * as a
+	literal asterisk if at the start of a branch
+
+2001-01-04  Paolo Bonzini  <bonzini@gnu.org>
+
+	* regexp.c(regncomp): pass REG_EXTENDED to the
+	compilation functions (becomes PCRE_EXTENDED)
+	
+2001-01-03  Paolo Bonzini  <bonzini@gnu.org>
+
+	* regposix.c(check_escape): don't support things like
+	[A\W]: it now means the same as [AW].  However,
+	[\n\r] still means a CR or LF (that is, escapes that
+	are character classes match a literal character, but
+	escapes that match non-printable characters match the
+	character).
+	* regposix.c(compile_branch): simplified to account
+	for the change above.
+
+2000-12-21  Paolo Bonzini  <bonzini@gnu.org>
+
+	* pcre.h [BOOTSTRAP]: include malloc.h
+	
+	* regexp.c: modified POSIX error messages to resemble
+	PCRE error messages whenever possible.
+
+	* regposix.c(compile_branch): raise an error if unmatched
+	braces are found.
+	
+2000-12-11  Paolo Bonzini  <bonzini@gnu.org>
+
+	* regposix.c: implement \o and \d like in GNU sed 3.02.80;
+	removed \0.
+
+2000-12-10  Paolo Bonzini  <bonzini@gnu.org>
+
+	* regposix.c(pcre_posix_compile_nuls): internationalized.
+	* regperl.c(pcre_compile_nuls): internationalized.
+	* pcregrep.c: internationalized.
+	* internal.h: add standard NLS crap.
+
+	* pcre.h: defined PCRE_ENGLISH_ERRORS
+	* regexp.c: use PCRE_ENGLISH_ERRORS
+	
+2000-12-08  Paolo Bonzini  <bonzini@gnu.org>
+
+	* regexp.c(regerror): modified a bit to ease i18n.
+	
+	* regposix.c: converted the behavior of \<digits> to POSIX
+	(e.g. \11 is not the eleventh backref and \321 is not an
+	octal sequence).
+
+2000-12-07  Paolo Bonzini  <bonzini@gnu.org>
+
+	* regdebug.c: added \< and \> to the opcode names table
+
+2000-11-21  Paolo Bonzini  <bonzini@gnu.org>
+
+	* regperl.c: handle regexps with embedded NULs
+	* regposix.c: ditto
+	
+	* pcre.h: use prototypes
+	* internal.h: ditto
+	* regexp.h: ditto
+
+	* regexp.h: declared regexec2, regncomp
+	* regexp.c: defined regexec2, regncomp
+
+2000-11-16  Paolo Bonzini  <bonzini@gnu.org>
+
+	* regposix.c: handle ^ and $ as literals if they're not the first or
+	the last character, respectively.
+	
+	* regexp.c(regexec): handle correctly pmatch == NULL
+	* regexec.c(pcre_exec): handle correctly pmatch == NULL
+
+2000-11-15  Paolo Bonzini  <bonzini@gnu.org>
+
+	* regposix.c: removed [:^alnum:] and the like; added \`
+	and \'; added basic regular expressions.
+
+	* regexp.c(regnexec): new function
+
+2000-11-14  Paolo Bonzini  <bonzini@gnu.org>
+
+	* internal.h: declared ESC_LESS and ESC_GREATER,
+	ESC_FIRST_CONSUME and ESC_LAST_CONSUME, OP_BEG_WORD and OP_END_WORD
+
+	* regexec.c(match): added OP_BEG_WORD and OP_END_WORD
+
+	* regposix.c: created from regperl.c
+
+	* regperl.c(compile_branch): use ESC_FIRST_CONSUME and ESC_LAST_CONSUME
+
+	* regexp.c(regcomp): handle PCRE_DOTALL differently for Perl and POSIX
+	regular expressions.
+
+2000-11-13  Paolo Bonzini  <bonzini@gnu.org>
+
+	Started work to merge with sed.
+
+	* AUTHORS: inserted myself...
+	* COPYING: replaced with GNU GPL.  Original terms stay in the
+	LICENCE file.
+	
+	* Makefile.in: remove libtool usage, not good for a bootstrapping
+	tool such as sed.
+	* configure.in: likewise; also changed AC_CHECK_FUNCS to
+	AC_REPLACE_FUNCS for memmove.
+
+	* regdebug.c: new file, created from part of pcre.c.
+	* regexec.c: new file, created from part of pcre.c.  Removed UTF-8.
+	* reginfo.c: new file, created from part of pcre.c.
+	* internal.h: don't do strange things with memmove declarations.
+	* regperl.c: new file, created from part of pcre.c.
+	* pcre.c: split into many sources, removed.
+
+	* regexp.c(regcomp, regexec): new name of pcreposix.c; use pcre_study
+	* regexp.h: new name of pcreposix.h; added re_study member
+
+2000-11-13  Paolo Bonzini  <bonzini@gnu.org>
+
+	* pcre.c(pcre_compile): Removed support for UTF-8.
+	The default tables are generated at run-time rather than
+	at compile-time to support cross compiling.

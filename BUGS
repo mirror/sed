@@ -26,6 +26,12 @@ for the bug, but that is not a very practical prospect.
 
 
 
+* KNOWN BUGS
+
+The regular expression routines provided must be checked more
+thoroughly against the POSIX.2 standard.
+
+
 * NON-BUGS
 
 `N' command on the last line

@@ -1,0 +1,1 @@
+* Make pcre/reg{perl,posix}.c handle [[=x=]] and [[.x.]] and MBCS

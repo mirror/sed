@@ -6,12 +6,12 @@ localedir = $(datadir)/locale
 sed_SOURCES = sed.c compile.c execute.c regexp.c fmt.c mbcs.c
 noinst_HEADERS = sed.h
 
-AM_CPPFLAGS = -I$(top_srcdir)/lib -I$(top_srcdir)/intl \
+AM_CPPFLAGS = -I$(top_srcdir)/lib -I$(top_srcdir)/intl -I$(top_srcdir)/pcre \
 	-I$(top_srcdir) -I$(top_builddir)/lib \
 	-DLOCALEDIR=\"$(localedir)\"
 
-sed_LDADD = ../lib/libsed.a @INTLLIBS@
-sed_DEPENDENCIES = ../lib/libsed.a
+sed_LDADD = ../pcre/libpcre.a ../lib/libsed.a @INTLLIBS@
+sed_DEPENDENCIES = ../pcre/libpcre.a ../lib/libsed.a
 
 $(PROGRAMS): $(LDADD)
 

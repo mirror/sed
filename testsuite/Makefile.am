@@ -1,23 +1,14 @@
 CLEANFILES = tmp* core *.core $(EXTRA_PROGRAMS) *.*out *.log
 
 TESTS = $(check_PROGRAMS) $(SEDTESTS)
-SEDTESTS =
 
-LDADD = ../lib/libsed.a
-noinst_HEADERS = testcases.h ptestcases.h
-AM_CPPFLAGS = -I../lib
+pcretest_LDADD = ../pcre/libpcre.a ../lib/libsed.a
+pcretest_DEPENDENCIES = ../pcre/libpcre.a ../lib/libsed.a
+check_PROGRAMS = pcretest
+AM_CPPFLAGS = -I$(top_srcdir) -I$(top_srcdir)/lib -I$(top_srcdir)/pcre
 
-if TEST_REGEX
-check_PROGRAMS = bug-regex7 \
-                 bug-regex8 bug-regex9 bug-regex10 bug-regex11 bug-regex12 \
-                 bug-regex13 bug-regex14 bug-regex15 bug-regex16 \
-                 bug-regex21 tst-pcre tst-boost runtests runptests tst-rxspencer
-
-SEDTESTS += space
-endif
-
-SEDTESTS += \
-        enable sep inclib 8bit newjis xabcx dollar noeol noeolw \
+SEDTESTS = \
+        space enable sep inclib 8bit newjis xabcx dollar noeol noeolw \
   	numsub numsub2 numsub3 numsub4 numsub5 0range bkslashes \
   	head madding mac-mf empty xbxcx xbxcx3 recall xemacs \
   	fasts uniq manis khadafy linecnt eval distrib 8to7 \
@@ -28,9 +19,10 @@ SEDTESTS += \
 
 TESTS_ENVIRONMENT = MAKE="$(MAKE)" VERSION="$(VERSION)" $(srcdir)/runtest
 
-EXTRA_DIST = \
-	PCRE.tests BOOST.tests SPENCER.tests \
-	runtest Makefile.tests \
+EXTRA_DIST = runtest Makefile.tests \
+        pcre1.good pcre1.inp pcre1p.good \
+        pcre2.good pcre2.inp pcre2p.good \
+        pcre3.good pcre3.inp pcre3p.good \
 	0range.good 0range.inp 0range.sed \
 	8bit.good 8bit.inp 8bit.sed \
 	8to7.good 8to7.inp 8to7.sed \

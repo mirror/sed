@@ -1,224 +1,181 @@
-Sed 4.1.3
+Sed 3.61a
 
-* added a note to BUGS and the manual about changed interpretation
-  of `s|abc\|def||'.
+* sed 3.61 had GNU sed 4.1's toplevel Makefile by mistake.  Fixed.
 
-* fixed `make check' in non-English locales.
-
-----------------------------------------------------------------------------
-Sed 4.1.2
-
-* fix bug in 'y' command in multi-byte character sets
-
-* fix severe bug in parsing of ranges with an embedded open bracket
-
-* fix off-by-one error when printing a "bad command" error
-
-----------------------------------------------------------------------------
-Sed 4.1.1
-
-* preserve permissions of in-place edited files
-
-* yield an error when running -i on terminals or other non regular files
-
-* do not interpret - as stdin when running in in-place editing mode
-
-* fix bug that prevented 's' command modifiers from working
-
-----------------------------------------------------------------------------
-Sed 4.1
-
-* // matches the last regular expression even in POSIXLY_CORRECT mode.
-
-* change the way we treat lines which are not terminated by a newline.
-Such lines are printed without the terminating newline (as before)
-but as soon as more text is sent to the same output stream, the
-missing newline is printed, so that the two lines don't concatenate.
-The behavior is now independent from POSIXLY_CORRECT because POSIX
-actually has undefined behavior in this case, and the new implementation
-arguably gives the ``least expected surprise''.  Thanks to Stepan
-Kasal for the implementation.
-
-* documentation improvements, with updated references to the POSIX.2
-specification
-
-* error messages on I/O errors are better, and -i does not leave temporary
-files around (e.g. when running ``sed -i'' on a directory).
-
-* escapes are accepted in the y command (for example: y/o/\n/ transforms
-o's into newlines)
-
-* -i option tries to set the owner and group to the same as the input file
-
-* `L' command is deprecated and will be removed in sed 4.2.
-
-* line number addresses are processed differently -- this is supposedly
-conformant to POSIX and surely more idiot-proof.  Line number addresses
-are not affected by jumping around them: they are activated and
-deactivated exactly where the script says, while previously
-    5,8b
-    1,5d
-would actually delete lines 1,2,3,4 and 9 (!).
-
-* multibyte characters are taken in consideration to compute the
-operands of s and y, provided you set LC_CTYPE correctly.  They are
-also considered by \l, \L, \u, \U, \E.
-
-* [\n] matches either backslash or 'n' when POSIXLY_CORRECT.
-
-* new option --posix, disables all GNU extensions.  POSIXLY_CORRECT only
-disables GNU extensions that violate the POSIX standard.
-
-* options -h and -V are not supported anymore, use --help and --version.
-
-* removed documentation for \s and \S which worked incorrectly
-
-* restored correct behavior for \w and \W: match [[:alnum:]_] and
-[^[:alnum:]_] (they used to match [[:alpha:]_] and [^[:alpha:]_]
-
-* the special address 0 can only be used in 0,/RE/ or 0~STEP addresses;
-other cases give an error (you are hindering portability for no reason
-if specifying 0,N and you are giving a dead command if specifying 0
-alone).
-
-* when a \ is used to escape the character that would terminate an operand
-of the s or y commands, the backslash is removed before the regex is
-compiled.  This is left undefined by POSIX; this behavior makes `s+x\+++g'
-remove occurrences of `x+', consistently with `s/x\///g'.  (However, if
-you enjoy yourself trying `s*x\***g', sed will use the `x*' regex, and you
-won't be able to pass down `x\*' while using * as the delimiter; ideas on
-how to simplify the parser in this respect, and/or gain more coherent
-semantics, are welcome).
-
-
-----------------------------------------------------------------------------
-Sed 4.0.9
+-----------------------------------------------------------------------
+Sed 3.61 (aligned with GNU sed 4.1)
 
 * 0 address behaves correctly in single-file (-i and -s) mode.
 
-* documentation improvements.
-
-* tested with many hosts and compilers.
-
-* updated regex matcher from upstream, with many bugfixes and speedups.
-
-* the `N' command's feature that is detailed in the BUGS file was disabled
-by the first change below in sed 4.0.8.  The behavior has now been
-restored, and is only enabled if POSIXLY_CORRECT behavior is not
-requested.
-
-----------------------------------------------------------------------------
-Sed 4.0.8
-
-* fix `sed n' printing the last line twice.
-
-* fix incorrect error message for invalid character classes.
-
-* fix segmentation violation with repeated empty subexpressions.
-
-* fix incorrect parsing of ^ after escaped (.
-
-* more comprehensive test suite (and with many expected failures...)
-
-----------------------------------------------------------------------------
-Sed 4.0.7
-
-* VPATH builds working on non-glibc machines
-
-* fixed bug in s///Np: was printing even if less than N matches were
-found.
-
-* fixed infinite loop on s///N when LHS matched a null string and
-there were not enough matches in pattern space
-
-* behavior of s///N is consistent with s///g when the LHS can match
-a null string (and the infinite loop did not happen :-)
-
-* updated some translations
-
-----------------------------------------------------------------------------
-Sed 4.0.6
+* // matches the last regular expression even in POSIXLY_CORRECT mode.
 
 * added parameter to `v' for the version of sed that is expected.
+  Also, `v' disables POSIXLY_CORRECT behavior.
 
-* configure switch --without-included-regex to use the system regex matcher
+* change the way we treat lines which are not terminated by a newline.
+  Such lines are printed without the terminating newline (as before)
+  but as soon as more text is sent to the same output stream, the
+  missing newline is printed, so that the two lines don't concatenate.
+  The behavior is now independent from POSIXLY_CORRECT because POSIX
+  actually has undefined behavior in this case, and the new implementation
+  arguably gives the ``least expected surprise''.  Thanks to Stepan
+  Kasal for discussing the issue and providing the implementation.
 
-* fix for -i option under Cygwin
+* documentation improvements, with updated references to the POSIX.2
+  specification
 
-----------------------------------------------------------------------------
-Sed 4.0.5
+* error messages on I/O errors are better, and -i does not leave temporary
+  files around (e.g. when running ``sed -i'' on a directory).
 
-* portability fixes
+* escapes are accepted in the y command (for example: y/o/\n/ transforms
+  o's into newlines)
+
+* fix for -i under Cygwin; also, the -i option tries to set the owner
+  and group to the same as the input file
 
 * improvements to some error messages (e.g. y/abc/defg/ incorrectly said
-`excess characters after command' instead of `y arguments have different
-lengths')
+  `excess characters after command' instead of `y arguments have
+  different lengths')
 
-* `a', `i', `l', `L', `r' accept two addresses except in POSIXLY_CORRECT
-mode.  Only `q' and `Q' do not accept two addresses in standard (GNU) mode.
-
-----------------------------------------------------------------------------
-Sed 4.0.4
-
-* documentation fixes
-
-* update regex matcher
-
-----------------------------------------------------------------------------
-Sed 4.0.3
-
-* fix packaging problem (two missing translation catalogs)
-
-----------------------------------------------------------------------------
-Sed 4.0.2
+* line number addresses are processed differently -- this is supposedly
+  conformant to POSIX and surely more idiot-proof.  Line number addresses
+  are not affected by jumping around them: they are activated and
+  deactivated exactly where the script says, while previously
+    5,8b
+    1,5d
+  would actually delete lines 1,2,3,4 and 9 (!).
 
 * more translations
 
-* fix build problems (vpath builds and bootstrap builds)
+* multibyte characters are taken in consideration to compute the
+  operands of s and y, provided you set LC_CTYPE correctly.  However,
+  the regular expression matcher does not support them yet.
 
-----------------------------------------------------------------------------
-Sed 4.0.1
+* new option --posix, disables all extensions.  POSIXLY_CORRECT only
+  disables extensions that violate the POSIX standard.
 
-* Remove last vestiges of super-sed
+* options -h and -V are not supported anymore, use --help and --version.
 
-* man page automatically built
+* Perl's \G escape is supported both in Perl and POSIX regexps (not in
+  GNU sed).
 
-* more translations provided
+* portability fixes
 
-* portability improvements
+* support for [[:blank:]] character class
 
-----------------------------------------------------------------------------
-Sed 4.0
+* the -i option tries to set the owner and group to the same as the input
+  file
 
-* Update regex matcher
+* the `L' command is deprecated and will be removed as soon as GNU sed
+  removes it.
 
-----------------------------------------------------------------------------
-Sed 3.96
+* the `N' command's feature that is detailed in the BUGS file is disabled
+  if POSIXLY_CORRECT behavior is requested.
 
-* `y' command supports multibyte character sets
+* the special address 0 can only be used in 0,/RE/ or 0~STEP addresses;
+  other cases give an error (you are hindering portability for no reason
+  if specifying 0,N and you are giving a dead command if specifying 0
+  alone).
 
-* Update regex matcher
+* `a', `i', `l', `L', `r' accept two addresses except in POSIXLY_CORRECT
+  mode.  Only `q' and `Q' do not accept two addresses in standard mode.
 
-----------------------------------------------------------------------------
-Sed 3.95
+* when a \ is used to escape the character that would terminate an operand
+  of the s or y commands, the character loses any meaning as a metacharacter.
+  This is left undefined by POSIX; this behavior makes `s+x\+++g' remove
+  occurrences of `x+', consistently with `s/x\///g'.
+
+-----------------------------------------------------------------------
+Sed 3.60 (aligned with GNU sed 4.0)
+
+* Maintainance release with no visible changes except more translations
+  were added.  Limits differences in source code between GNU sed 4.x
+  and ssed.
+
+-----------------------------------------------------------------------
+Sed 3.59
 
 * `R' command reads a single line from a file.
 
 * CR-LF pairs are always ignored under Windows, even if (under Cygwin)
-a disk is mounted as binary.
+  a disk is mounted as binary.
+
+* Fixed bug in the numeric parameter to `s'.  The replacement flag
+  was set on the first match of the regular expression, not on the Nth.
+
+* Fixed bug in /.{1,64}/
 
 * More attention to errors on stdout
 
 * New `W' command to write first line of pattern space to a file
 
+-----------------------------------------------------------------------
+Sed 3.58
+
 * Can customize line wrap width on single `l' commands
 
 * `L' command formats and reflows paragraphs like `fmt' does.
 
+* Upgraded to autoconf 2.53
+
+* When running a script with in-place editing, command ranges such as
+  /abc/,/def/, line numbers, and the special $ address are reset for
+  each file.  The same can be done with the new `-s' option when in-
+  place editing is off.
+
+-----------------------------------------------------------------------
+Sed 3.57
+
+* Fixed problems with `-i' when /tmp was on a different volume
+
+* Fixed problems in \[lLuUE] (due to a construct with undefined
+  behavior which some newer compilers optimized away)
+
+-----------------------------------------------------------------------
+Sed 3.56
+
+* Added another "heavy-weight" test (like dc.sed) to the testsuite.
+
+* Bug fix: after using the D command, the first line could have been
+considered valid by a subsequent [GH] command.
+
+* Prune impossible backtracking paths (e.g. b*c does not backtrack
+on b).
+
 * The test suite makefiles are better organized (this change is
 transparent however).
 
+-----------------------------------------------------------------------
+Sed 3.55
+
+* Bug fix: Inside a character class, an unrecognized escape sequence
+is interpreted as two separate characters: for example [\g] is a
+character class made of a backslash and a `g'.  I thought I had
+fixed this in 3.49, but that fix was not enough.
+
+-----------------------------------------------------------------------
+Sed 3.54
+
+* Bug fix: s/^xxxxx//p did not print (related to the optimization
+introduced by Sed 3.53).  This broke Automake 1.5's dependency
+tracking, so if you installed Sed 3.53 as the system sed you should
+configure with --disable-dependency-tracking.
+
+-----------------------------------------------------------------------
+Sed 3.53
+
+* Bug fix: The meanings \` and \' were swapped.
+
 * Compiles and bootstraps out-of-the-box under MinGW32 and Cygwin.
+
+* Faster on most regular expression because it uses the Boyer-Moore
+algorithm to process initial fixed-length strings.  The "set of
+possible first characters" algorithm is used as a fallback there
+is no such string (e.g. when a regex starts with a star or question
+mark pattern: [0-9]*).
+
+* Has a comprehensive test suite for both Posix and PERL regular
+expressions.
 
 * Optimizes cases when pattern space is truncated at its start or at
 its end by `D' or by a substitution command with an empty RHS.
@@ -229,14 +186,52 @@ For example scripts like this,
 whose behavior was quadratic with previous versions of sed, have
 now linear behavior.
 
+------------------------------------------------------------------------
+Sed 3.52
+
+* Merged with PCRE 3.7:
+ 
+** pcre_exec() was referring to its "code" argument before testing
+that argument for NULL (and giving an error if it was NULL).
+ 
+** The limit of 200 on non-capturing parentheses is a _nesting_ limit,
+not an absolute limit. Changed the text of the error message to make
+this clear, and likewise updated the man page.
+ 
+** The limit of 99 on the number of capturing subpatterns has been 
+removed.
+ 
 * New command `e' to pipe the output of a command into the output
 of sed.
 
 * New option `e' to pass the output of the `s' command through the
 Bourne shell and get the result into pattern space.
 
+* Simple minded optimization in the matcher: if the regexp is
+anchored to the end of the pattern, and the regexp cannot match
+more than some number of characters, leap to the end of pattern
+space minus that number of characters.  For example, abc[def]$
+will start matching four characters before the end of pattern
+space.
+
 * Switched to obstacks in the parser -- less memory-related bugs
 (there were none AFAIK but you never know) and less memory usage.
+
+------------------------------------------------------------------------
+Sed 3.51
+
+* Bug fix: behavior of undefined regular expressions (such as a single
+star `*') is more consistent with GNU sed and does not issue
+internal errors anymore.
+
+* Bug fix: fixed internal error when backslashed expressions appeared
+inside character classes (e.g. [\X]).  This broke autoconf 2.50 or
+later.
+
+------------------------------------------------------------------------
+Sed 3.50
+
+* Updated to latest autoconf and automake.
 
 * New option -i, to support in-place editing a la Perl.  Usually one
 had to use ed or, for more complex tasks, resort to Perl; this is
@@ -249,23 +244,59 @@ not definitive, though.
 * Bug fix: Made the behavior of s/A*/x/g (i.e. `s' command with a
 possibly empty LHS) more consistent:
 
-       pattern               GNU sed 3.x       GNU sed 4.x
+       pattern            3.49 or GNU sed       3.50
         B                      xBx               xBx
         BC                     xBxCx             xBxCx
         BAC                    xBxxCx            xBxCx
         BAAC                   xBxxCx            xBxCx
+
+Earlier versions matched a spurious empty string after the sequence
+of A's.
+
+------------------------------------------------------------------------
+Sed 3.49
+
+* Bug fix: Inside a character class, an unrecognized escape sequence
+is interpreted as two separate characters: for example [\g] is a
+character class made of a backslash and a `g'.  This change is
+needed for compatibility with autoconf 2.50.
+
+------------------------------------------------------------------------
+Sed 3.48
+
+* Bug fix: on the RHS of the `s' command, the syntax of the octal
+constants is the same as for Perl.  Note that it is not possible
+yet to specify more than 9 backreferences on the RHS of the `s'
+command.
+
+* Bug fix: \c is parsed on the RHS of the `s' command.
+
+* Bug fix: the q and Q commands could be misinterpreted, leading to
+spurious syntax errors in the following command
 
 * Bug fix: the // empty regular expressions now refers to the last
 regular expression that was matched, rather than to the last
 regular expression that was compiled.  This richer behavior seems
 to be the correct one (albeit neither one is POSIXLY_CORRECT).
 
-* Check for invalid backreferences in the RHS of the `s' command
-(e.g. s/1234/\1/)
+------------------------------------------------------------------------
+Sed 3.47
 
-* Support for \[lLuUE] in the RHS of the `s' command like in Perl.
+* This version adds a check for invalid backreferences in the
+RHS of the `s' command (e.g. s/1234/\1/) and support for
+\[lLuUE] in the RHS of the `s' command like in Perl.
 
-* New regular expression matcher
+------------------------------------------------------------------------
+Sed 3.46
+
+* This version is not an official GNU release, hence it is dubbed
+`super-sed' and uses a strange version number unlikely to clash
+with GNU sed's numbering.  It is my hope to merge super-sed's
+changes with GNU sed one day, but at the moment they should be
+considered separate programs at all effects.
+
+* It uses a different regular expression matcher which is much more
+faster (6x to 20x), especially on backreferences.
 
 * Bug fix: if a file was redirected to be stdin, sed did not consume
 it.  So
@@ -277,19 +308,24 @@ double-spaced TESTFILE, while the equivalent `useless use of cat'
 printed nothing (which is the correct behavior).  A test for this
 bug was added to the test suite.
 
+* A bug in the test suite (the khadafy test was run with BREs instead
+of EREs) has been corrected.
+
 * The documentation is now much better, with a few examples provided,
 and a thorough description of regular expressions.  The manual often
 refers to "GNU extensions", but if they are described here they are
 specific to this version.
 
-* Documented command-line option:
+* Added new command-line options:
   -r, --regexp-extended
     Use extended regexps -- e.g. (abc+) instead of \(abc\+\)
+  -R, --regexp-perl
+    Use Perl regexps (\l, \L, \u, \U, \E not supported)
 
 * Added feature to the `w' command and to the `w' option of the `s'
 command: if the file name is /dev/stderr, it means the standard
-error (inspired by awk); and similarly for /dev/stdout.  This is
-disabled if POSIXLY_CORRECT is set.
+error (inspired by awk).  This is disabled if POSIXLY_CORRECT is
+set.
 
 * Added `m' and `M' modifiers to `s' command for multi-line
 matching (Perl-style); in addresses, only `M' works.
@@ -300,7 +336,9 @@ an exit code from a sed script to the caller.
 * Added `T' command for `branch if failed'.
 
 * Added `v' command, which is a do-nothing intended to fail on
-seds that do not support GNU sed 4.0's extensions.
+seds that do not support super-sed's extensions.
+
+* Bootstrapping was tested and is known to work.
 
 ----------------------------------------------------------------------------
 Sed 3.02.80

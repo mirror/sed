@@ -21,7 +21,7 @@
 #endif
 
 #include "basicdefs.h"
-#include "regex.h"
+#include "regexp.h"
 
 #ifndef BOOTSTRAP
 #include <stdio.h>
@@ -250,5 +250,4 @@ extern int mb_cur_max;
 #endif
 
 extern int brlen P_ ((int ch, mbstate_t *ps));
-extern void initialize_mbcs P_ ((void));
 

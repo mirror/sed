@@ -7,7 +7,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: sed 4.0.9\n"
-"POT-Creation-Date: 2004-08-21 20:46+0200\n"
+"POT-Creation-Date: 2004-07-13 20:07+0200\n"
 "PO-Revision-Date: 2004-04-09 21:39+0200\n"
 "Last-Translator: Elros Cyriatan <cyriatan@fastmail.fm>\n"
 "Language-Team: Dutch <vertaling@nl.linux.org>\n"
@@ -16,6 +16,206 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Report-Msgid-Bugs-To: \n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
+
+#: pcre/pcregrep.c:130
+msgid "Usage: pcregrep [-bepchilnsvx] pattern [file] ...\n"
+msgstr ""
+
+#: pcre/pcregrep.c:212
+#, fuzzy, c-format
+msgid "pcregrep: unknown option %c\n"
+msgstr "Onbekende optie voor `s'"
+
+#: pcre/pcregrep.c:239
+#, c-format
+msgid "pcregrep: error in regex at offset %d: %s\n"
+msgstr ""
+
+#: pcre/pcregrep.c:248
+#, c-format
+msgid "pcregrep: error while studing regex: %s\n"
+msgstr ""
+
+#: pcre/pcregrep.c:268
+#, fuzzy, c-format
+msgid "pcregrep: failed to open %s: %s\n"
+msgstr "leesfout op %s: %s"
+
+#: pcre/regexp.c:48
+msgid "\\ at end of pattern"
+msgstr ""
+
+#: pcre/regexp.c:49
+msgid "\\c at end of pattern"
+msgstr ""
+
+#: pcre/regexp.c:50
+msgid "unrecognized character follows \\"
+msgstr ""
+
+#: pcre/regexp.c:51
+msgid "numbers out of order in {} quantifier"
+msgstr ""
+
+#: pcre/regexp.c:52
+msgid "number too big in {} quantifier"
+msgstr ""
+
+#: pcre/regexp.c:53 pcre/regexp.c:130
+msgid "missing terminating ] for character class"
+msgstr ""
+
+#: pcre/regexp.c:54
+#, fuzzy
+msgid "invalid escape sequence in character class"
+msgstr "Ongeldige tekenklasse naam"
+
+#: pcre/regexp.c:55 pcre/regexp.c:136
+msgid "range out of order in character class"
+msgstr ""
+
+#: pcre/regexp.c:56 pcre/regexp.c:128
+msgid "nothing to repeat"
+msgstr ""
+
+#: pcre/regexp.c:57
+msgid "operand of unlimited repeat could match the empty string"
+msgstr ""
+
+#: pcre/regexp.c:58
+msgid "internal error: unexpected repeat"
+msgstr ""
+
+#: pcre/regexp.c:59
+msgid "unrecognized character after (?"
+msgstr ""
+
+#: pcre/regexp.c:60
+msgid "unused error"
+msgstr ""
+
+#: pcre/regexp.c:61 pcre/regexp.c:129
+#, fuzzy
+msgid "unmatched braces"
+msgstr "Niet-overeenkomende `{'"
+
+#: pcre/regexp.c:62 pcre/regexp.c:139
+msgid "back reference to non-existent subpattern"
+msgstr ""
+
+#: pcre/regexp.c:63
+msgid "erroffset passed as NULL"
+msgstr ""
+
+#: pcre/regexp.c:64
+#, fuzzy
+msgid "unknown option bit(s) set"
+msgstr "Onbekende optie voor `s'"
+
+#: pcre/regexp.c:65
+#, fuzzy
+msgid "missing ) after comment"
+msgstr "Ontbrekende opdracht"
+
+#: pcre/regexp.c:66
+msgid "parentheses nested too deeply"
+msgstr ""
+
+#: pcre/regexp.c:67 pcre/regexp.c:137
+#, fuzzy
+msgid "regular expression too large"
+msgstr "Reguliere uitdrukking te groot"
+
+#: pcre/regexp.c:68 pcre/regexp.c:138
+msgid "failed to get memory"
+msgstr ""
+
+#: pcre/regexp.c:69 pcre/regexp.c:135
+msgid "unmatched parentheses"
+msgstr ""
+
+#: pcre/regexp.c:70
+msgid "internal error: code overflow"
+msgstr ""
+
+#: pcre/regexp.c:71
+msgid "unrecognized character after (?<"
+msgstr ""
+
+#: pcre/regexp.c:72
+msgid "lookbehind assertion is not fixed length"
+msgstr ""
+
+#: pcre/regexp.c:73
+msgid "malformed number after (?("
+msgstr ""
+
+#: pcre/regexp.c:74
+msgid "conditional group contains more than two branches"
+msgstr ""
+
+#: pcre/regexp.c:75
+msgid "assertion expected after (?("
+msgstr ""
+
+#: pcre/regexp.c:76
+msgid "(?p must be followed by )"
+msgstr ""
+
+#: pcre/regexp.c:77 pcre/regexp.c:132
+msgid "unknown POSIX class name"
+msgstr ""
+
+#: pcre/regexp.c:78
+#, fuzzy
+msgid "POSIX collating elements are not supported"
+msgstr "optie `e' niet ondersteund"
+
+#: pcre/regexp.c:79
+msgid "bad condition (?(0)"
+msgstr ""
+
+#: pcre/regexp.c:125
+msgid "internal error"
+msgstr ""
+
+#: pcre/regexp.c:126
+#, fuzzy
+msgid "invalid repeat counts in {}"
+msgstr "Ongeldige inhoud van \\{\\}"
+
+#: pcre/regexp.c:127
+msgid "pattern error"
+msgstr ""
+
+#: pcre/regexp.c:131
+msgid "bad collating element"
+msgstr ""
+
+#: pcre/regexp.c:133
+msgid "bad escape sequence"
+msgstr ""
+
+#: pcre/regexp.c:134
+msgid "empty expression"
+msgstr ""
+
+#: pcre/regexp.c:140
+msgid "bad argument"
+msgstr ""
+
+#: pcre/regexp.c:141
+msgid "match failed"
+msgstr ""
+
+#: pcre/regexp.c:182
+msgid "unknown error code"
+msgstr ""
+
+#: pcre/regexp.c:184
+#, c-format
+msgid "%s at offset %-6d"
+msgstr ""
 
 #: sed/compile.c:162
 #, fuzzy
@@ -362,74 +562,47 @@ msgstr "leesfout op %s: %s"
 msgid "cannot rename %s: %s"
 msgstr "%s: kan %s niet lezen: %s\n"
 
-#: lib/regcomp.c:150
-msgid "Success"
-msgstr "Succes"
+#~ msgid "Success"
+#~ msgstr "Succes"
 
-#: lib/regcomp.c:153
-msgid "No match"
-msgstr "Geen overeenkomst"
+#~ msgid "No match"
+#~ msgstr "Geen overeenkomst"
 
-#: lib/regcomp.c:156
-msgid "Invalid regular expression"
-msgstr "Ongeldige reguliere uitdrukking"
+#~ msgid "Invalid regular expression"
+#~ msgstr "Ongeldige reguliere uitdrukking"
 
-#: lib/regcomp.c:159
-msgid "Invalid collation character"
-msgstr "Ongeldig sorteerteken"
+#~ msgid "Invalid collation character"
+#~ msgstr "Ongeldig sorteerteken"
 
-#: lib/regcomp.c:162
-msgid "Invalid character class name"
-msgstr "Ongeldige tekenklasse naam"
+#~ msgid "Trailing backslash"
+#~ msgstr "Backslash aan het einde"
 
-#: lib/regcomp.c:165
-msgid "Trailing backslash"
-msgstr "Backslash aan het einde"
+#~ msgid "Invalid back reference"
+#~ msgstr "Ongeldige terugverwijzing"
 
-#: lib/regcomp.c:168
-msgid "Invalid back reference"
-msgstr "Ongeldige terugverwijzing"
+#~ msgid "Unmatched [ or [^"
+#~ msgstr "Niet-overeenkomende [ of [^"
 
-#: lib/regcomp.c:171
-msgid "Unmatched [ or [^"
-msgstr "Niet-overeenkomende [ of [^"
+#~ msgid "Unmatched ( or \\("
+#~ msgstr "Niet-overeenkomende ( of \\("
 
-#: lib/regcomp.c:174
-msgid "Unmatched ( or \\("
-msgstr "Niet-overeenkomende ( of \\("
+#~ msgid "Unmatched \\{"
+#~ msgstr "Niet-overeenkomende \\{"
 
-#: lib/regcomp.c:177
-msgid "Unmatched \\{"
-msgstr "Niet-overeenkomende \\{"
+#~ msgid "Invalid range end"
+#~ msgstr "Ongeldig bereikeinde"
 
-#: lib/regcomp.c:180
-msgid "Invalid content of \\{\\}"
-msgstr "Ongeldige inhoud van \\{\\}"
+#~ msgid "Memory exhausted"
+#~ msgstr "Geheugen uitgeput"
 
-#: lib/regcomp.c:183
-msgid "Invalid range end"
-msgstr "Ongeldig bereikeinde"
+#~ msgid "Invalid preceding regular expression"
+#~ msgstr "Ongeldige voorafgaande reguliere uitdrukking"
 
-#: lib/regcomp.c:186
-msgid "Memory exhausted"
-msgstr "Geheugen uitgeput"
+#~ msgid "Premature end of regular expression"
+#~ msgstr "Vroegtijdig einde van reguliere uitdrukking"
 
-#: lib/regcomp.c:189
-msgid "Invalid preceding regular expression"
-msgstr "Ongeldige voorafgaande reguliere uitdrukking"
+#~ msgid "Unmatched ) or \\)"
+#~ msgstr "Niet-overeenkomende ) of \\)"
 
-#: lib/regcomp.c:192
-msgid "Premature end of regular expression"
-msgstr "Vroegtijdig einde van reguliere uitdrukking"
-
-#: lib/regcomp.c:195
-msgid "Regular expression too big"
-msgstr "Reguliere uitdrukking te groot"
-
-#: lib/regcomp.c:198
-msgid "Unmatched ) or \\)"
-msgstr "Niet-overeenkomende ) of \\)"
-
-#: lib/regcomp.c:672
-msgid "No previous regular expression"
-msgstr "Geen eerdere reguliere uitdrukking"
+#~ msgid "No previous regular expression"
+#~ msgstr "Geen eerdere reguliere uitdrukking"

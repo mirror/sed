@@ -2,7 +2,7 @@
 info_TEXINFOS = sed.texi
 sed_TEXINFOS = config.texi version.texi
 dist_man_MANS = sed.1
-dist_noinst_DATA = sed.x sed-in.texi
+dist_noinst_DATA = sed.x sed-in.texi pcre.html
 dist_noinst_SCRIPTS = groupify.sed
 CLEANFILES = sed.html
 TEXI2DVI = $(top_srcdir)/config/texi2dvi --expand

@@ -4,6 +4,6 @@
 
 @end direntry
 
-@clear PERL
-@set SSEDEXT @acronym{GNU} extensions
-@set SSED @acronym{GNU} @command{sed}
+@set PERL
+@set SSEDEXT @acronym{ssed} extensions
+@set SSED @command{super-sed}

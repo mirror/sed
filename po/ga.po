@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: sed 4.1.1\n"
-"POT-Creation-Date: 2004-08-21 20:46+0200\n"
+"POT-Creation-Date: 2004-07-13 20:07+0200\n"
 "PO-Revision-Date: 2004-07-07 11:04-0500\n"
 "Last-Translator: Kevin Patrick Scannell <scannell@SLU.EDU>\n"
 "Language-Team: Irish <ga@li.org>\n"
@@ -14,6 +14,206 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=4; plural=n==1 ? 0 : (n>1 && n<7) ? 1 : (n>6 && n "
 "<11) ? 2 : 3;\n"
+
+#: pcre/pcregrep.c:130
+msgid "Usage: pcregrep [-bepchilnsvx] pattern [file] ...\n"
+msgstr ""
+
+#: pcre/pcregrep.c:212
+#, fuzzy, c-format
+msgid "pcregrep: unknown option %c\n"
+msgstr "rogha anaithnid i ndiaidh `s'"
+
+#: pcre/pcregrep.c:239
+#, c-format
+msgid "pcregrep: error in regex at offset %d: %s\n"
+msgstr ""
+
+#: pcre/pcregrep.c:248
+#, c-format
+msgid "pcregrep: error while studing regex: %s\n"
+msgstr ""
+
+#: pcre/pcregrep.c:268
+#, fuzzy, c-format
+msgid "pcregrep: failed to open %s: %s\n"
+msgstr "earráid ag léamh %s: %s"
+
+#: pcre/regexp.c:48
+msgid "\\ at end of pattern"
+msgstr ""
+
+#: pcre/regexp.c:49
+msgid "\\c at end of pattern"
+msgstr ""
+
+#: pcre/regexp.c:50
+msgid "unrecognized character follows \\"
+msgstr ""
+
+#: pcre/regexp.c:51
+msgid "numbers out of order in {} quantifier"
+msgstr ""
+
+#: pcre/regexp.c:52
+msgid "number too big in {} quantifier"
+msgstr ""
+
+#: pcre/regexp.c:53 pcre/regexp.c:130
+msgid "missing terminating ] for character class"
+msgstr ""
+
+#: pcre/regexp.c:54
+#, fuzzy
+msgid "invalid escape sequence in character class"
+msgstr "Aicme charachtair neamhbhailí"
+
+#: pcre/regexp.c:55 pcre/regexp.c:136
+msgid "range out of order in character class"
+msgstr ""
+
+#: pcre/regexp.c:56 pcre/regexp.c:128
+msgid "nothing to repeat"
+msgstr ""
+
+#: pcre/regexp.c:57
+msgid "operand of unlimited repeat could match the empty string"
+msgstr ""
+
+#: pcre/regexp.c:58
+msgid "internal error: unexpected repeat"
+msgstr ""
+
+#: pcre/regexp.c:59
+msgid "unrecognized character after (?"
+msgstr ""
+
+#: pcre/regexp.c:60
+msgid "unused error"
+msgstr ""
+
+#: pcre/regexp.c:61 pcre/regexp.c:129
+#, fuzzy
+msgid "unmatched braces"
+msgstr "`{' corr"
+
+#: pcre/regexp.c:62 pcre/regexp.c:139
+msgid "back reference to non-existent subpattern"
+msgstr ""
+
+#: pcre/regexp.c:63
+msgid "erroffset passed as NULL"
+msgstr ""
+
+#: pcre/regexp.c:64
+#, fuzzy
+msgid "unknown option bit(s) set"
+msgstr "rogha anaithnid i ndiaidh `s'"
+
+#: pcre/regexp.c:65
+#, fuzzy
+msgid "missing ) after comment"
+msgstr "ordú ar iarraidh"
+
+#: pcre/regexp.c:66
+msgid "parentheses nested too deeply"
+msgstr ""
+
+#: pcre/regexp.c:67 pcre/regexp.c:137
+#, fuzzy
+msgid "regular expression too large"
+msgstr "Slonn ionadaíochta rómhór"
+
+#: pcre/regexp.c:68 pcre/regexp.c:138
+msgid "failed to get memory"
+msgstr ""
+
+#: pcre/regexp.c:69 pcre/regexp.c:135
+msgid "unmatched parentheses"
+msgstr ""
+
+#: pcre/regexp.c:70
+msgid "internal error: code overflow"
+msgstr ""
+
+#: pcre/regexp.c:71
+msgid "unrecognized character after (?<"
+msgstr ""
+
+#: pcre/regexp.c:72
+msgid "lookbehind assertion is not fixed length"
+msgstr ""
+
+#: pcre/regexp.c:73
+msgid "malformed number after (?("
+msgstr ""
+
+#: pcre/regexp.c:74
+msgid "conditional group contains more than two branches"
+msgstr ""
+
+#: pcre/regexp.c:75
+msgid "assertion expected after (?("
+msgstr ""
+
+#: pcre/regexp.c:76
+msgid "(?p must be followed by )"
+msgstr ""
+
+#: pcre/regexp.c:77 pcre/regexp.c:132
+msgid "unknown POSIX class name"
+msgstr ""
+
+#: pcre/regexp.c:78
+#, fuzzy
+msgid "POSIX collating elements are not supported"
+msgstr "níl an rogha `e' ar fáil"
+
+#: pcre/regexp.c:79
+msgid "bad condition (?(0)"
+msgstr ""
+
+#: pcre/regexp.c:125
+msgid "internal error"
+msgstr ""
+
+#: pcre/regexp.c:126
+#, fuzzy
+msgid "invalid repeat counts in {}"
+msgstr "Ábhar neamhbhailí idir \\{\\}"
+
+#: pcre/regexp.c:127
+msgid "pattern error"
+msgstr ""
+
+#: pcre/regexp.c:131
+msgid "bad collating element"
+msgstr ""
+
+#: pcre/regexp.c:133
+msgid "bad escape sequence"
+msgstr ""
+
+#: pcre/regexp.c:134
+msgid "empty expression"
+msgstr ""
+
+#: pcre/regexp.c:140
+msgid "bad argument"
+msgstr ""
+
+#: pcre/regexp.c:141
+msgid "match failed"
+msgstr ""
+
+#: pcre/regexp.c:182
+msgid "unknown error code"
+msgstr ""
+
+#: pcre/regexp.c:184
+#, c-format
+msgid "%s at offset %-6d"
+msgstr ""
 
 #: sed/compile.c:162
 msgid "multiple `!'s"
@@ -372,75 +572,48 @@ msgstr "earráid ag léamh %s: %s"
 msgid "cannot rename %s: %s"
 msgstr "ní féidir %s a athainmniú: %s"
 
-#: lib/regcomp.c:150
-msgid "Success"
-msgstr "Bua!"
+#~ msgid "Success"
+#~ msgstr "Bua!"
 
-#: lib/regcomp.c:153
-msgid "No match"
-msgstr "Níl a leithéid ann"
+#~ msgid "No match"
+#~ msgstr "Níl a leithéid ann"
 
-#: lib/regcomp.c:156
-msgid "Invalid regular expression"
-msgstr "Slonn ionadaíochta neamhbhailí"
+#~ msgid "Invalid regular expression"
+#~ msgstr "Slonn ionadaíochta neamhbhailí"
 
-#: lib/regcomp.c:159
-msgid "Invalid collation character"
-msgstr "Carachtar cóimheasa neamhbhailí"
+#~ msgid "Invalid collation character"
+#~ msgstr "Carachtar cóimheasa neamhbhailí"
 
-#: lib/regcomp.c:162
-msgid "Invalid character class name"
-msgstr "Aicme charachtair neamhbhailí"
-
-#: lib/regcomp.c:165
-msgid "Trailing backslash"
-msgstr "Cúlslais ag deireadh"
+#~ msgid "Trailing backslash"
+#~ msgstr "Cúlslais ag deireadh"
 
 # coinage - KPS
-#: lib/regcomp.c:168
-msgid "Invalid back reference"
-msgstr "Cúltagairt neamhbhailí"
+#~ msgid "Invalid back reference"
+#~ msgstr "Cúltagairt neamhbhailí"
 
-#: lib/regcomp.c:171
-msgid "Unmatched [ or [^"
-msgstr "[ nó [^ corr"
+#~ msgid "Unmatched [ or [^"
+#~ msgstr "[ nó [^ corr"
 
-#: lib/regcomp.c:174
-msgid "Unmatched ( or \\("
-msgstr "( nó \\( corr"
+#~ msgid "Unmatched ( or \\("
+#~ msgstr "( nó \\( corr"
 
-#: lib/regcomp.c:177
-msgid "Unmatched \\{"
-msgstr "\\{ corr"
+#~ msgid "Unmatched \\{"
+#~ msgstr "\\{ corr"
 
-#: lib/regcomp.c:180
-msgid "Invalid content of \\{\\}"
-msgstr "Ábhar neamhbhailí idir \\{\\}"
+#~ msgid "Invalid range end"
+#~ msgstr "Deireadh raoin neamhbhailí"
 
-#: lib/regcomp.c:183
-msgid "Invalid range end"
-msgstr "Deireadh raoin neamhbhailí"
+#~ msgid "Memory exhausted"
+#~ msgstr "Cuimhne ídithe"
 
-#: lib/regcomp.c:186
-msgid "Memory exhausted"
-msgstr "Cuimhne ídithe"
+#~ msgid "Invalid preceding regular expression"
+#~ msgstr "Is neamhbhailí an slonn ionadaíochta roimh seo"
 
-#: lib/regcomp.c:189
-msgid "Invalid preceding regular expression"
-msgstr "Is neamhbhailí an slonn ionadaíochta roimh seo"
+#~ msgid "Premature end of regular expression"
+#~ msgstr "Deireadh le slonn ionadaíochta gan choinne"
 
-#: lib/regcomp.c:192
-msgid "Premature end of regular expression"
-msgstr "Deireadh le slonn ionadaíochta gan choinne"
+#~ msgid "Unmatched ) or \\)"
+#~ msgstr ") nó \\) corr"
 
-#: lib/regcomp.c:195
-msgid "Regular expression too big"
-msgstr "Slonn ionadaíochta rómhór"
-
-#: lib/regcomp.c:198
-msgid "Unmatched ) or \\)"
-msgstr ") nó \\) corr"
-
-#: lib/regcomp.c:672
-msgid "No previous regular expression"
-msgstr "Níl aon slonn ionadaíochta roimh seo"
+#~ msgid "No previous regular expression"
+#~ msgstr "Níl aon slonn ionadaíochta roimh seo"

@@ -1,5 +1,5 @@
 dnl Process this file with -*- autoconf -*- to produce a configure script.
-AC_INIT(sed, 4.1.2, bonzini@gnu.org, sed)
+AC_INIT(sed, 3.61, bonzini@gnu.org, ssed)
 AC_CONFIG_AUX_DIR(config)
 AC_CONFIG_SRCDIR([sed/sed.c])
 AM_CONFIG_HEADER(config.h:config_h.in)
@@ -66,37 +66,15 @@ AC_FUNC_OBSTACK
 AC_FUNC_MBRTOWC
 AC_TYPE_MBSTATE_T
 gl_FUNC_STRVERSCMP
-AC_REPLACE_FUNCS(memchr memcmp memmove strerror mkstemp)
+AC_REPLACE_FUNCS(memchr memcmp memmove strerror snprintf mkstemp)
 AC_CHECK_FUNCS(isatty bcopy bzero isascii memcpy memset strchr strtoul popen \
 		pathconf isblank fchown fchmod setlocale wcrtomb wcscoll btowc)
 
-AC_ARG_WITH(included-regex, 
-[  --with-included-regex   use included regex matcher (default=yes)], ,
-with_included_regex=yes)
-
-AC_ARG_ENABLE(regex-tests, 
-[  --enable-regex-tests    enable regex matcher regression tests (default=no)], ,
-enable_regex_tests=no)
-
-if test "x$with_included_regex" = xno; then
-  AC_CHECK_HEADERS(regex.h)
-  AC_CHECK_LIB(regex, re_search)
-  AC_CHECK_FUNC(re_search)
-  if test $ac_cv_header_regex_h = no || test $ac_cv_func_re_search = no; then
-    AC_MSG_WARN([GNU regex not found, falling back to the included version])
-    with_included_regex=yes
-  fi
-fi
-
-if test "x$with_included_regex" = xno; then
-  enable_regex_tests=no
-fi
-
-AM_CONDITIONAL(TEST_REGEX, test "x$enable_regex_tests" != xno)
-if test "x$with_included_regex" != xno; then
-  AC_CONFIG_LINKS(lib/regex.h:lib/regex_.h)
-  AC_LIBOBJ(regex)
-fi
+AC_ARG_ENABLE(pcregrep,
+[  --enable-pcregrep       build the pcregrep test program],
+PCREGREP=pcregrep,
+PCREGREP=)
+AC_SUBST(PCREGREP)
 
 AC_ARG_ENABLE(html, 
 [  --enable-html           build HTML manual (default=no)], ,
@@ -135,5 +113,5 @@ AM_GNU_GETTEXT(, need-ngettext)
 AC_CONFIG_FILES([bootstrap.sh], chmod +x bootstrap.sh)
 AC_CONFIG_FILES([Makefile doc/Makefile \
 lib/Makefile sed/Makefile testsuite/Makefile \
-po/Makefile.in intl/Makefile])
+po/Makefile.in intl/Makefile pcre/Makefile])
 AC_OUTPUT

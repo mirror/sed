@@ -1,0 +1,928 @@
+/the quick brown fox/
+    the quick brown fox
+    What do you know about the quick brown fox?
+    *** Failers
+    The quick brown FOX
+    What do you know about THE QUICK BROWN FOX?
+
+/The quick brown fox/i
+    the quick brown fox
+    The quick brown FOX
+    What do you know about the quick brown fox?
+    What do you know about THE QUICK BROWN FOX?
+
+/abcd\t\n\r\f\a\e\o071\x3b\$\\?caxyz/
+    abcd\t\n\r\f\a\e9;\$\\?caxyz
+
+/a*abc?xyz+pqr{3}ab{2,}xy{4,5}pq{0,6}AB{0,}zz/x
+    abxyzpqrrrabbxyyyypqAzz
+    abxyzpqrrrabbxyyyypqAzz
+    aabxyzpqrrrabbxyyyypqAzz
+    aaabxyzpqrrrabbxyyyypqAzz
+    aaaabxyzpqrrrabbxyyyypqAzz
+    abcxyzpqrrrabbxyyyypqAzz
+    aabcxyzpqrrrabbxyyyypqAzz
+    aaabcxyzpqrrrabbxyyyypAzz
+    aaabcxyzpqrrrabbxyyyypqAzz
+    aaabcxyzpqrrrabbxyyyypqqAzz
+    aaabcxyzpqrrrabbxyyyypqqqAzz
+    aaabcxyzpqrrrabbxyyyypqqqqAzz
+    aaabcxyzpqrrrabbxyyyypqqqqqAzz
+    aaabcxyzpqrrrabbxyyyypqqqqqqAzz
+    aaaabcxyzpqrrrabbxyyyypqAzz
+    abxyzzpqrrrabbxyyyypqAzz
+    aabxyzzzpqrrrabbxyyyypqAzz
+    aaabxyzzzzpqrrrabbxyyyypqAzz
+    aaaabxyzzzzpqrrrabbxyyyypqAzz
+    abcxyzzpqrrrabbxyyyypqAzz
+    aabcxyzzzpqrrrabbxyyyypqAzz
+    aaabcxyzzzzpqrrrabbxyyyypqAzz
+    aaaabcxyzzzzpqrrrabbxyyyypqAzz
+    aaaabcxyzzzzpqrrrabbbxyyyypqAzz
+    aaaabcxyzzzzpqrrrabbbxyyyyypqAzz
+    aaabcxyzpqrrrabbxyyyypABzz
+    aaabcxyzpqrrrabbxyyyypABBzz
+    >>>aaabxyzpqrrrabbxyyyypqAzz
+    >aaaabxyzpqrrrabbxyyyypqAzz
+    >>>>abcxyzpqrrrabbxyyyypqAzz
+    *** Failers
+    abxyzpqrrabbxyyyypqAzz
+    abxyzpqrrrrabbxyyyypqAzz
+    abxyzpqrrrabxyyyypqAzz
+    aaaabcxyzzzzpqrrrabbbxyyyyyypqAzz
+    aaaabcxyzzzzpqrrrabbbxyyypqAzz
+    aaabcxyzpqrrrabbxyyyypqqqqqqqAzz
+
+/^\(abc\)\{1,2\}zz/
+    abczz
+    abcabczz
+    *** Failers
+    zz
+    abcabcabczz
+    >>abczz
+
+/^(b+|a){1,2}c/x
+    bc
+    bbc
+    bbbc
+    bac
+    bbac
+    aac
+    abbbbbbbbbbbc
+    bbbbbbbbbbbac
+    *** Failers
+    aaac
+    abbbbbbbbbbbac
+
+/^\(b\+\|a\)\{1,2\}c/
+    bc
+    bbc
+    bbbc
+    bac
+    bbac
+    aac
+    abbbbbbbbbbbc
+    bbbbbbbbbbbac
+    *** Failers
+    aaac
+    abbbbbbbbbbbac
+
+/^(b+|a){1,2}?bc/x
+    bbc
+
+/^ba*\(ba\)\?bc/
+    babc
+    bbabc
+    bababc
+    *** Failers
+    bababbc
+    babababc
+
+# Under Perl rules, babc matches as this:
+#   first repetition of (ba|b*) sets subexpression 1 to ba
+#   second repetition of (ba|b*) sets subexpression 1 to the empty string
+#   then bc matches
+#
+# Under Posix rules, however, "a subexpression repeated by an
+# asterisk ('*') _or an interval expression_ shall not match a
+# null expression unless this is the only match for the
+# repetition or it is necessary to satisfy the exact or
+# minimum number of occurrences for the interval expression."
+# This goes against the general rule for greedy matching, anyway
+# it matches as this:
+#   first repetition of (ba|b*) sets subexpression 1 to ba
+#   second repetition of (ba|b*) is void and ignored
+#   bc matches
+/^(ba|b*){1,2}bc/x
+    babc
+    bbabc
+    babbbc
+    *** Failers
+    bababbc
+    babababc
+
+/^\ca\cA\c[\c{\c:/x
+    \x01\x01\e;z
+
+/^[]cde]/
+    ]thing
+    cthing
+    dthing
+    ething
+    *** Failers
+    athing
+    fthing
+
+/^[^]cde]/
+    athing
+    fthing
+    *** Failers
+    ]thing
+    cthing
+    dthing
+    ething
+
+/^\Å/
+    Å
+
+/^ˇ/
+    ˇ
+
+/^[0-9]+$/x
+    0
+    1
+    2
+    3
+    4
+    5
+    6
+    7
+    8
+    9
+    10
+    100
+    *** Failers
+    abc
+
+/^.*nter/x
+    enter
+    inter
+    uponter
+
+/b*c*b+/x
+    bbbb
+
+/^xxx[0-9]+$/x
+    xxx0
+    xxx1234
+    *** Failers
+    xxx
+
+/^.+[0-9][0-9][0-9]$/x
+    x123
+    xx123
+    123456
+    *** Failers
+    123
+    x1234
+
+/^.+[0-9][0-9][0-9]$/x
+    x123
+    xx123
+    123456
+    *** Failers
+    123
+    x1234
+
+/^([^!]+)!(.+)=apquxz\.ixr\.zzz\.ac\.uk$/x
+    abc!pqr=apquxz.ixr.zzz.ac.uk
+    *** Failers
+    !pqr=apquxz.ixr.zzz.ac.uk
+    abc!=apquxz.ixr.zzz.ac.uk
+    abc!pqr=apquxz:ixr.zzz.ac.uk
+    abc!pqr=apquxz.ixr.zzz.ac.ukk
+
+/:/
+    Well, we need a colon: somewhere
+    *** Failers
+    Fail if we don't
+
+/([0-9a-f:]+)$/xi
+    0abc
+    abc
+    fed
+    E
+    ::
+    5f03:12C0::932e
+    fed def
+    Any old stuff
+    *** Failers
+    0zzz
+    gzzz
+    fed\x20
+    Any old rubbish
+
+/^.*\.([0-9]{1,3})\.([0-9]{1,3})\.([0-9]{1,3})$/x
+    .1.2.3
+    A.12.123.0
+    *** Failers
+    .1.2.3333
+    1.2.3
+    1234.2.3
+
+/^([0-9]+)[ \t]+IN[ \t]+SOA[ \t]+([^ \t]+)[ \t]+([^ \t]+)[ \t]*\([ \t]*$/x
+    1 IN SOA non-sp1 non-sp2(
+    1    IN    SOA    non-sp1    non-sp2   (
+    *** Failers
+    1IN SOA non-sp1 non-sp2(
+
+/^[a-zA-Z0-9][a-zA-Z0-9\-]*(\.[a-zA-Z0-9][a-zA-z0-9\-]*)*\.$/x
+    a.
+    Z.
+    2.
+    ab-c.pq-r.
+    sxk.zzz.ac.uk.
+    x-.y-.
+    *** Failers
+    -abc.peq.
+
+/^[0-9a-f](\.[0-9a-f])*$/xi
+    a.b.c.d
+    A.B.C.D
+    a.b.c.1.2.3.C
+
+/^\".*\"[ \t]*(;.*)?$/x
+    \"1234\"
+    \"abcd\" ;
+    \"\" ; rhubarb
+    *** Failers
+    \"1234\" : things
+
+/^$/
+    \
+    *** Failers
+
+/^(a(b(c)))(d(e(f)))(h(i(j)))(k(l(m)))$/x
+    abcdefhijklm
+
+/^[A-Za-z_][^A-Za-z_][ \t][^ \t][0-9][^0-9]\x08[\n][\c]][\o022]/x
+    a+ Z0+\x08\n\x1d\x12
+
+/^[.^\\$|()*+?{,}]\+/
+    .^\$(*+)|{?,?}
+
+/^a*\w/x
+    z
+    az
+    aaaz
+    a
+    aa
+    aaaa
+    a+
+    aa+
+
+/^a*\w/
+    z
+    az
+    aaaz
+    a
+    aa
+    aaaa
+    a+
+    aa+
+
+/^a+\w/x
+    az
+    aaaz
+    aa
+    aaaa
+    aa+
+
+/^a\+\w/
+    az
+    aaaz
+    aa
+    aaaa
+    aa+
+
+/^[0-9]{8}\w{2,}/x
+    1234567890
+    12345678ab
+    12345678__
+    *** Failers
+    1234567
+
+/^[aeiou0-9]{4,5}$/x
+    uoie
+    1234
+    12345
+    aaaaa
+    *** Failers
+    123456
+
+/^[aeiou0-9]{4,5}/x
+    uoie
+    1234
+    12345
+    aaaaa
+    123456
+
+/\`(abc|def)=(\1){2,3}\'/x
+    abc=abcabc
+    def=defdefdef
+    *** Failers
+    abc=defdef
+
+/(cat(a(ract|tonic)|erpillar)) \1()2(3)/x
+    cataract cataract23
+    catatonic catatonic23
+    caterpillar caterpillar23
+
+
+/^From +([^ ]+) +[a-zA-Z][a-zA-Z][a-zA-Z] +[a-zA-Z][a-zA-Z][a-zA-Z] +[0-9]?[0-9] +[0-9][0-9]:[0-9][0-9]/x
+    From abcd  Mon Sep 01 12:33:02 1997
+
+/^From[ \t]+[^ \t]+[ \t]+([a-zA-Z]{3}[ \t]+){2}[0-9]{1,2}[ \t]+[0-9][0-9]:[0-9][0-9]/x
+    From abcd  Mon Sep 01 12:33:02 1997
+    From abcd  Mon Sep  1 12:33:02 1997
+    *** Failers
+    From abcd  Sep 01 12:33:02 1997
+
+/^12.34/xs
+    12\n34
+    12\r34
+
+/^(a)\1{2,3}(.)/x
+    aaab
+    aaaab
+    aaaaab
+    aaaaaab
+
+/^[ab]{1,3}(ab*|b)/x
+    aabbbbb
+
+/^[ab]{1,3}(ab*|b)/x
+    aabbbbb
+
+/^[ab]{1,3}(ab*|b)/x
+    aabbbbb
+
+/^[ab]{1,3}(ab*|b)/x
+    aabbbbb
+
+/abc\o0def\o00pqr\o000xyz\o0000AB/x
+    abc\0def\00pqr\000xyz\0000AB
+    abc456 abc\0def\00pqr\000xyz\0000ABCDE
+
+/abc\x0def\x00pqr\x000xyz\x0000AB/x
+    abc\x0def\x00pqr\x000xyz\x0000AB
+    abc456 abc\x0def\x00pqr\x000xyz\x0000ABCDE
+
+/^[\o000-\o037]/
+    \0A
+    \01B
+    \037C
+
+/\o0*/
+    \0\0\0\0
+
+/A\x0{2,3}Z/x
+    The A\x0\x0Z
+    An A\0\x0\0Z
+    *** Failers
+    A\0Z
+    A\0\x0\0\x0Z
+
+/^(cow|)\1(bell)/x
+    cowcowbell
+    bell
+    *** Failers
+    cowbell
+
+/^[ \t\n\r\f]/
+    \040abc
+    \x0cabc
+    \nabc
+    \rabc
+    \tabc
+    *** Failers
+    abc
+
+/^(a|)\1*b/x
+    ab
+    aaaab
+    b
+    *** Failers
+    acb
+
+/^(a|)\1+b/x
+    aab
+    aaaab
+    b
+    *** Failers
+    ab
+
+/^(a|)\1?b/x
+    ab
+    aab
+    b
+    *** Failers
+    acb
+
+/^(a|)\1{2}b/x
+    aaab
+    b
+    *** Failers
+    ab
+    aab
+    aaaab
+
+/^(a|)\1{2,3}b/x
+    aaab
+    aaaab
+    b
+    *** Failers
+    ab
+    aab
+    aaaaab
+
+/ab{1,3}bc/x
+    abbbbc
+    abbbc
+    abbc
+    *** Failers
+    abc
+    abbbbbc
+
+/([^.]*)\.([^:]*):[T ]+(.*)/x
+    track1.title:TBlah blah blah
+
+/([^.]*)\.([^:]*):[T ]+(.*)/xi
+    track1.title:TBlah blah blah
+
+/([^.]*)\.([^:]*):[t ]+(.*)/xi
+    track1.title:TBlah blah blah
+
+/^[W-c]+$/x
+    WXY_^abc
+    ***Failers
+    wxy
+
+/^[W-c]+$/xi
+    WXY_^abc
+    wxy_^ABC
+
+/^[\x3f-\x5F]+$/xi
+    WXY_^abc
+    wxy_^ABC
+
+/^abc$/
+    abc
+    *** Failers
+    qqq\nabc
+    abc\nzzz
+    qqq\nabc\nzzz
+
+/\`(.)*\'/xs
+    abc\ndef
+
+/[-az]+/x
+    az-
+    *** Failers
+    b
+
+/[az-]+/x
+    za-
+    *** Failers
+    b
+
+/[az-]+/x
+    a-z
+    *** Failers
+    b
+
+/[a-z]+/x
+    abcdxyz
+
+/[0-9-]+/x
+    12-34
+    *** Failers
+    aaa
+
+/[0-9-z]+/x
+    12-34z
+    *** Failers
+    aaa
+
+/\x5c/
+    \\
+
+/\x20Z/
+    the Zoo
+    *** Failers
+    Zulu
+
+/(abc)\1/xi
+    abcabc
+    ABCabc
+    abcABC
+
+/ab{3cd/
+    ab{3cd
+
+/ab{3,cd/
+    ab{3,cd
+
+/ab{3,4a}cd/
+    ab{3,4a}cd
+
+/{4,5a}bc/x
+    {4,5a}bc
+
+/^a.b/
+    a\rb
+    *** Failers
+    a\nb
+
+/abc$/
+    abc
+    *** Failers
+    abc\n
+    abc\ndef
+
+/(abc)\o123/x
+    abc\x53
+
+/(abc)\o223/x
+    abc\x93
+
+/(abc)\o323/x
+    abc\xd3
+
+/(abc)\500/x
+    abc\x40
+    abc\100
+
+/(abc)\5000/x
+    abc\x400
+    abc\x40\x30
+    abc\1000
+    abc\100\x30
+    abc\100\060
+    abc\100\60
+
+/abc\81/
+    abc\081
+    abc\0\x38\x31
+
+/abc\91/
+    abc\091
+    abc\0\x39\x31
+
+/(a)(b)(c)(d)(e)(f)(g)(h)(i)(j)(k)(l)\12/x
+    abcdefghijkla2
+
+/(a)(b)(c)(d)(e)(f)(g)(h)(i)(j)(k)\123/x
+    abcdefghijka23
+
+/ab\gdef/x
+    abgdef
+
+/a{0}bc/x
+    bc
+
+/(a|(bc)){0,0}xyz/x
+    xyz
+
+/abc[\o10]de/x
+    abc\010de
+
+/abc[\o1]de/x
+    abc\1de
+
+/(abc)[\o1]de/x
+    abc\1de
+
+/^([^a])([^\b])([^c]*)([^d]{3,4})/x
+    baNOTccccd
+    baNOTcccd
+    baNOTccd
+    bacccd
+    *** Failers
+    anything
+    b\bc   
+    baccd
+
+/[^a]/
+    Abc
+  
+/[^a]/i
+    Abc 
+
+/[^a]+/x
+    AAAaAbc
+  
+/[^a]+/xi
+    AAAaAbc 
+
+/[^a]+/x
+    bbb\nccc
+   
+/[^k]$/x
+    abc
+    *** Failers
+    abk   
+   
+/[^k]{2,3}$/x
+    abc
+    kbc
+    kabc 
+    *** Failers
+    abk
+    akb
+    akk 
+
+/^[0-9]{8,}\@.+[^k]$/x
+    12345678\@a.b.c.d
+    123456789\@x.y.z
+    *** Failers
+    12345678\@x.y.uk
+    1234567\@a.b.c.d       
+
+/(a)\1{8,}/x
+    aaaaaaaaa
+    aaaaaaaaaa
+    *** Failers
+    aaaaaaa   
+
+/[^a]/x
+    aaaabcd
+    aaAabcd 
+
+/[^a]/i
+    aaaabcd
+    aaAabcd 
+
+/[^az]/x
+    aaaabcd
+    aaAabcd 
+
+/[^az]/i
+    aaaabcd
+    aaAabcd 
+
+/\o000\o001\o002\o003\o004\o005\o006\o007\o010\o011\o012\o013\o014\o015\o016\o017\o020\o021\o022\o023\o024\o025\o026\o027\o030\o031\o032\o033\o034\o035\o036\o037\o040\o041\o042\o043\o044\o045\o046\o047\o050\o051\o052\o053\o054\o055\o056\o057\o060\o061\o062\o063\o064\o065\o066\o067\o070\o071\o072\o073\o074\o075\o076\o077\o100\o101\o102\o103\o104\o105\o106\o107\o110\o111\o112\o113\o114\o115\o116\o117\o120\o121\o122\o123\o124\o125\o126\o127\o130\o131\o132\o133\o134\o135\o136\o137\o140\o141\o142\o143\o144\o145\o146\o147\o150\o151\o152\o153\o154\o155\o156\o157\o160\o161\o162\o163\o164\o165\o166\o167\o170\o171\o172\o173\o174\o175\o176\o177\o200\o201\o202\o203\o204\o205\o206\o207\o210\o211\o212\o213\o214\o215\o216\o217\o220\o221\o222\o223\o224\o225\o226\o227\o230\o231\o232\o233\o234\o235\o236\o237\o240\o241\o242\o243\o244\o245\o246\o247\o250\o251\o252\o253\o254\o255\o256\o257\o260\o261\o262\o263\o264\o265\o266\o267\o270\o271\o272\o273\o274\o275\o276\o277\o300\o301\o302\o303\o304\o305\o306\o307\o310\o311\o312\o313\o314\o315\o316\o317\o320\o321\o322\o323\o324\o325\o326\o327\o330\o331\o332\o333\o334\o335\o336\o337\o340\o341\o342\o343\o344\o345\o346\o347\o350\o351\o352\o353\o354\o355\o356\o357\o360\o361\o362\o363\o364\o365\o366\o367\o370\o371\o372\o373\o374\o375\o376\o377/
+ \000\001\002\003\004\005\006\007\010\011\012\013\014\015\016\017\020\021\022\023\024\025\026\027\030\031\032\033\034\035\036\037\040\041\042\043\044\045\046\047\050\051\052\053\054\055\056\057\060\061\062\063\064\065\066\067\070\071\072\073\074\075\076\077\100\101\102\103\104\105\106\107\110\111\112\113\114\115\116\117\120\121\122\123\124\125\126\127\130\131\132\133\134\135\136\137\140\141\142\143\144\145\146\147\150\151\152\153\154\155\156\157\160\161\162\163\164\165\166\167\170\171\172\173\174\175\176\177\200\201\202\203\204\205\206\207\210\211\212\213\214\215\216\217\220\221\222\223\224\225\226\227\230\231\232\233\234\235\236\237\240\241\242\243\244\245\246\247\250\251\252\253\254\255\256\257\260\261\262\263\264\265\266\267\270\271\272\273\274\275\276\277\300\301\302\303\304\305\306\307\310\311\312\313\314\315\316\317\320\321\322\323\324\325\326\327\330\331\332\333\334\335\336\337\340\341\342\343\344\345\346\347\350\351\352\353\354\355\356\357\360\361\362\363\364\365\366\367\370\371\372\373\374\375\376\377
+
+/P[^*]TAIRE[^*]{1,6}LL/x
+    xxxxxxxxxxxPSTAIREISLLxxxxxxxxx
+
+/P[^*]TAIRE[^*]{1,}LL/x
+    xxxxxxxxxxxPSTAIREISLLxxxxxxxxx
+
+/(\.[0-9][0-9][1-9]?)[0-9]+/x
+    1.230003938
+    1.875000282   
+    1.235  
+                  
+/\b(foo)[ \t]+(\w+)/xi
+    Food is on the foo table
+    
+/foo(.*)bar/x
+    The food is under the bar in the barn.
+    
+/foo(.*)bar/x  
+    The food is under the bar in the barn.
+
+/(.*)([0-9]*)/x
+    I have 2 numbers: 53147
+    
+/(.*)([0-9]+)/x
+    I have 2 numbers: 53147
+ 
+/(.*)([0-9]*)/x
+    I have 2 numbers: 53147
+
+/(.*)([0-9]+)/x
+    I have 2 numbers: 53147
+
+/(.*)([0-9]+)$/x
+    I have 2 numbers: 53147
+
+/(.*)([0-9]+)$/x
+    I have 2 numbers: 53147
+
+/(.*)\b([0-9]+)$/x
+    I have 2 numbers: 53147
+
+/(.*[^0-9])([0-9]+)$/x
+    I have 2 numbers: 53147
+
+/^[W-]46]/x
+    W46]789 
+    -46]789
+    *** Failers
+    Wall
+    Zebra
+    42
+    [abcd] 
+    ]abcd[
+       
+/^[W-\46]/x
+    W46]789 
+    Wall
+    Zebra
+    Xylophone  
+    42
+    [abcd] 
+    \\backslash 
+    *** Failers
+    -46]789
+    well
+    
+/[0-9][0-9]\/[0-9][0-9]\/[0-9][0-9][0-9][0-9]/x
+    01/01/2000
+
+/^(a){0,0}/x
+    bcd
+    abc
+    aab     
+
+/^(a){0,1}/x
+    bcd
+    abc
+    aab  
+
+/^(a){0,2}/x
+    bcd
+    abc
+    aab  
+
+/^(a){0,3}/x
+    bcd
+    abc
+    aab
+    aaa   
+
+/^(a){0,}/x
+    bcd
+    abc
+    aab
+    aaa
+    aaaaaaaa    
+
+/^(a){1,1}/x
+    abc
+    aab  
+    *** Failers:
+    bcd
+
+/^(a){1,2}/x
+    abc
+    aab  
+    *** Failers:
+    bcd
+
+/^(a){1,3}/x
+    abc
+    aab
+    aaa   
+    *** Failers:
+    bcd
+
+/^(a){1,}/x
+    abc
+    aab
+    aaa
+    aaaaaaaa    
+    *** Failers:
+    bcd
+
+/.*\.gif/x
+    borfle\nbib.gif\nno
+
+/.{0,}\.gif/x
+    borfle\nbib.gif\nno
+
+/^.*\.gif/xs
+    borfle\nbib.gif\nno
+
+/.*$/
+    borfle\nbib.gif\nno
+
+/.*$/
+    *** Failers
+    borfle\nbib.gif\nno\n
+
+/(.*X|^B)/x
+    abcde\n1234Xyz
+    BarFoo 
+    *** Failers
+    abcde\nBar  
+
+/^.*B/x
+    **** Failers
+    abc\nB
+     
+/^[0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9]/x
+    123456654321
+  
+/^[0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9]/
+    123456654321
+  
+/^[abc]{12}/x
+    abcabcabcabc
+    
+/^[a-c]{12}/x
+    abcabcabcabc
+    
+/^(a|b|c){12}/x
+    abcabcabcabc 
+
+/^[abcdefghijklmnopqrstuvwxy0123456789]/x
+    n
+    *** Failers 
+    z 
+
+/abcde{0,0}/x
+    abcd
+    *** Failers
+    abce  
+
+/ab[cd]{0,0}e/x
+    abe
+    *** Failers
+    abcde 
+    
+/ab(c){0,0}d/x
+    abd
+    *** Failers
+    abcd   
+
+/a(b*)/x
+    a
+    ab
+    abbbb
+    *** Failers
+    bbbbb    
+    
+/ab[0-9]{0}e/x
+    abe
+    *** Failers
+    ab1e   
+    
+/"([^\\"]+|\\.)*"/x
+    the \"quick\" brown fox
+    \"the \\\"quick\\\" brown fox\" 
+
+/.*/g+
+    abc
+  
+/\b/g+
+    abc 
+
+/\b/+g
+    abc 
+
+//g
+    abc
+
+/a[^a]b/x
+    acb
+    a\nb  
+    
+/a.b/
+    acb
+    *** Failers
+    a\nb  
+
+/^(b+|a){1,2}c/x
+    bac
+    bbac
+    bbbac
+    bbbbac
+    bbbbbac 
+
+/^(b+|a){1,2}c/x
+    bac
+    bbac
+    bbbac
+    bbbbac
+    bbbbbac 
+    
+/\x0{ab}/
+    \0{ab} 
+
+/(A|B)*CD/x
+    CD 
+    
+/(A|B)*CD/x
+    CD 
+
+/(AB)*\1/x
+    ABABAB
+
+/(AB)*\1/x
+    ABABAB
+    
+/ End of testinput1 /

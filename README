@@ -1,7 +1,9 @@
-This is the GNU implementation of sed, the Unix stream editor.
+This is a version of sed based on GNU sed.  It is not
+a version of GNU sed, though.
 
-See the NEWS file for a brief summary and the ChangeLog for 
-more detailed descriptions of changes.
+There are several new features, including extended regular expression
+syntax, and some bug fixes; see the NEWS file for a brief summary
+and the ChangeLog for more detailed descriptions of changes.
 
 See the file INSTALL for generic compilation and installation
 instructions.
