@@ -1,7 +1,13 @@
 Sed 4.1.3
 
+* regex addresses do not use leftmost-longest matching.  In other words,
+  /.\+/ only looks for a single character, and does not try to find as
+  many of them as possible like it used to do.
+
 * added a note to BUGS and the manual about changed interpretation
-  of `s|abc\|def||'.
+  of `s|abc\|def||', and about localization issues.
+
+* fixed --disable-nls build problems on Solaris.
 
 * fixed `make check' in non-English locales.
 

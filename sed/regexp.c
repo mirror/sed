@@ -41,16 +41,90 @@ static const char errors[] =
 
 
 
-regex_t *
+static void
+compile_regex_1 (new_regex, needed_sub)
+  struct regex *new_regex;
+  int needed_sub;
+{
+#ifdef REG_PERL
+  int errcode;
+  errcode = regncomp(&new_regex->pattern, new_regex->re, new_regex->sz,
+		     (needed_sub ? 0 : REG_NOSUB)
+		     | new_regex->flags
+		     | extended_regexp_flags);
+
+  if (errcode)
+    {
+      char errorbuf[200];
+      regerror(errcode, NULL, errorbuf, 200);
+      bad_prog(gettext(errorbuf));
+    }
+#else
+  const char *error;
+  new_regex->pattern.fastmap = malloc (1 << (sizeof (char) * 8));
+  int syntax = ((extended_regexp_flags & REG_EXTENDED)
+		 ? RE_SYNTAX_POSIX_EXTENDED
+                 : RE_SYNTAX_POSIX_BASIC)
+		 & ~RE_UNMATCHED_RIGHT_PAREN_ORD;
+
+  syntax |= RE_NO_POSIX_BACKTRACKING;
+#ifdef RE_ICASE
+  syntax |= (new_regex->flags & REG_ICASE) ? RE_ICASE : 0;
+#endif
+#ifdef RE_NO_SUB
+  syntax |= needed_sub ? 0 : RE_NO_SUB;
+#endif
+
+  /* If REG_NEWLINE is set, newlines are treated differently.  */
+  if (new_regex->flags & REG_NEWLINE)
+    {
+      /* REG_NEWLINE implies neither . nor [^...] match newline.  */
+      syntax &= ~RE_DOT_NEWLINE;
+      syntax |= RE_HAT_LISTS_NOT_NEWLINE;
+    }
+
+  re_set_syntax (syntax);
+  error = re_compile_pattern (new_regex->re, new_regex->sz,
+			      &new_regex->pattern);
+  new_regex->pattern.newline_anchor = (new_regex->flags & REG_NEWLINE) != 0;
+
+  new_regex->pattern.translate = NULL;
+#ifndef RE_ICASE
+  if (new_regex->flags & REG_ICASE)
+    {
+      static char translate[1 << (sizeof(char) * 8)];
+      int i;
+      for (i = 0; i < sizeof(translate) / sizeof(char); i++)
+	translate[i] = tolower (i);
+
+      new_regex->pattern.translate = translate;
+    }
+#endif
+
+  if (error)
+    bad_prog(error);
+#endif
+
+  /* Just to be sure, I mark this as not POSIXLY_CORRECT behavior */
+  if (needed_sub
+      && new_regex->pattern.re_nsub < needed_sub - 1
+      && posixicity == POSIXLY_EXTENDED)
+    {
+      char buf[200];
+      sprintf(buf, _("invalid reference \\%d on `s' command's RHS"),
+	      needed_sub);
+      bad_prog(buf);
+    }
+}
+
+struct regex *
 compile_regex(b, flags, needed_sub)
   struct buffer *b;
   int flags;
   int needed_sub;
 {
-  regex_t *new_regex;
-
-  char *last_re = NULL;
-  size_t last_re_len;
+  struct regex *new_regex;
+  size_t re_len;
 
   /* // matches the last RE */
   if (size_buffer(b) == 0)
@@ -60,82 +134,19 @@ compile_regex(b, flags, needed_sub)
       return NULL;
     }
 
-  last_re_len = size_buffer(b);
-  last_re = ck_memdup(get_buffer(b), last_re_len);
-
-  new_regex = MALLOC(1, regex_t);
+  re_len = size_buffer(b);
+  new_regex = ck_malloc(sizeof (struct regex) + re_len - 1);
+  new_regex->flags = flags;
+  memcpy (new_regex->re, get_buffer(b), re_len);
 
 #ifdef REG_PERL
-  {
-    int errcode;
-    errcode = regncomp(new_regex, last_re, last_re_len,
-		       (needed_sub ? 0 : REG_NOSUB)
-		       | flags
-		       | extended_regexp_flags);
-
-    if (errcode)
-      {
-        char errorbuf[200];
-        regerror(errcode, NULL, errorbuf, 200);
-        bad_prog(gettext(errorbuf));
-      }
-  }
+  new_regex->sz = re_len;
 #else
-  new_regex->fastmap = malloc (1 << (sizeof (char) * 8));
-  {
-    const char *error;
-    int syntax = ((extended_regexp_flags & REG_EXTENDED)
-		   ? RE_SYNTAX_POSIX_EXTENDED
-                   : RE_SYNTAX_POSIX_BASIC)
-		   & ~RE_UNMATCHED_RIGHT_PAREN_ORD;
-
-    syntax |= RE_NO_POSIX_BACKTRACKING;
-#ifdef RE_ICASE
-    syntax |= (flags & REG_ICASE) ? RE_ICASE : 0;
+  /* GNU regex does not process \t & co. */
+  new_regex->sz = normalize_text(new_regex->re, re_len, TEXT_REGEX);
 #endif
 
-    /* If REG_NEWLINE is set, newlines are treated differently.  */
-    if (flags & REG_NEWLINE)
-      { /* REG_NEWLINE implies neither . nor [^...] match newline.  */
-        syntax &= ~RE_DOT_NEWLINE;
-        syntax |= RE_HAT_LISTS_NOT_NEWLINE;
-      }
-
-    /* GNU regex does not process \t & co. */
-    last_re_len = normalize_text(last_re, last_re_len, TEXT_REGEX);
-    re_set_syntax (syntax);
-    error = re_compile_pattern (last_re, last_re_len, new_regex);
-    new_regex->newline_anchor = (flags & REG_NEWLINE) != 0;
-
-    new_regex->translate = NULL;
-#ifndef RE_ICASE
-    if (flags & REG_ICASE)
-      {
-        static char translate[1 << (sizeof(char) * 8)];
-	int i;
-	for (i = 0; i < sizeof(translate) / sizeof(char); i++)
-	  translate[i] = tolower (i);
-
-        new_regex->translate = translate;
-      }
-#endif
-
-    if (error)
-      bad_prog(error);
-  }
-#endif
-
-  FREE(last_re);
-
-  /* Just to be sure, I mark this as not POSIXLY_CORRECT behavior */
-  if (new_regex->re_nsub < needed_sub && posixicity == POSIXLY_EXTENDED)
-    {
-      char buf[200];
-      sprintf(buf, _("invalid reference \\%d on `s' command's RHS"),
-	      needed_sub);
-      bad_prog(buf);
-    }
-
+  compile_regex_1 (new_regex, needed_sub);
   return new_regex;
 }
 
@@ -179,7 +190,7 @@ copy_regs (regs, pmatch, nregs)
 
 int
 match_regex(regex, buf, buflen, buf_start_offset, regarray, regsize)
-  regex_t *regex;
+  struct regex *regex;
   char *buf;
   size_t buflen;
   size_t buf_start_offset;
@@ -187,7 +198,7 @@ match_regex(regex, buf, buflen, buf_start_offset, regarray, regsize)
   int regsize;
 {
   int ret;
-  static regex_t *regex_last;
+  static struct regex *regex_last;
 #ifdef REG_PERL
   regmatch_t rm[10], *regmatch = rm;
   if (regsize > 10)
@@ -209,16 +220,19 @@ match_regex(regex, buf, buflen, buf_start_offset, regarray, regsize)
 #ifdef REG_PERL
   regmatch[0].rm_so = CAST(int)buf_start_offset;
   regmatch[0].rm_eo = CAST(int)buflen;
-  ret = regexec (regex, buf, regsize, regmatch, REG_STARTEND);
+  ret = regexec (&regex->pattern, buf, regsize, regmatch, REG_STARTEND);
 
   if (regsize)
     copy_regs (regarray, regmatch, regsize);
 
   return (ret == 0);
 #else
-  regex->regs_allocated = REGS_REALLOCATE;
+  if (regex->pattern.no_sub && regsize)
+    compile_regex_1 (regex, regsize);
 
-  ret = re_search (regex, buf, buflen, buf_start_offset,
+  regex->pattern.regs_allocated = REGS_REALLOCATE;
+
+  ret = re_search (&regex->pattern, buf, buflen, buf_start_offset,
 		   buflen - buf_start_offset,
 		   regsize ? regarray : NULL);
 
@@ -230,9 +244,9 @@ match_regex(regex, buf, buflen, buf_start_offset, regarray, regsize)
 #ifdef DEBUG_LEAKS
 void
 release_regex(regex)
-  regex_t *regex;
+  struct regex *regex;
 {
-  regfree(regex);
+  regfree(&regex->pattern);
   FREE(regex);
 }
 #endif /*DEBUG_LEAKS*/

@@ -1261,7 +1261,7 @@ compile_program(vector)
 
 	    flags = mark_subst_opts(cur_cmd->x.cmd_subst);
 	    cur_cmd->x.cmd_subst->regx =
-	      compile_regex(b, flags, cur_cmd->x.cmd_subst->max_id);
+	      compile_regex(b, flags, cur_cmd->x.cmd_subst->max_id + 1);
 	    free_buffer(b);
 	  }
 	  break;

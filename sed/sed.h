@@ -52,6 +52,13 @@ struct text_buf {
   size_t text_length;
 };
 
+struct regex {
+  regex_t pattern;
+  int flags;
+  size_t sz;
+  char re[1];
+};
+  
 enum replacement_types {
   REPL_ASIS = 0,
   REPL_UPPERCASE = 1,
@@ -99,7 +106,7 @@ struct addr {
   enum addr_types addr_type;
   countT addr_number;
   countT addr_step;
-  regex_t *addr_regex;
+  struct regex *addr_regex;
 };
 
 
@@ -112,7 +119,7 @@ struct replacement {
 };
 
 struct subst {
-  regex_t *regx;
+  struct regex *regx;
   struct replacement *replacement;
   countT numb;		/* if >0, only substitute for match number "numb" */
   struct output *outf;	/* 'w' option given */
@@ -187,12 +194,12 @@ void check_final_program P_((struct vector *));
 void rewind_read_files P_((void));
 void finish_program P_((struct vector *));
 
-regex_t *compile_regex P_((struct buffer *b, int flags, int needed_sub));
-int match_regex P_((regex_t *regex,
+struct regex *compile_regex P_((struct buffer *b, int flags, int needed_sub));
+int match_regex P_((struct regex *regex,
 		    char *buf, size_t buflen, size_t buf_start_offset,
 		    struct re_registers *regarray, int regsize));
 #ifdef DEBUG_LEAKS
-void release_regex P_((regex_t *));
+void release_regex P_((struct regex *));
 #endif
 
 int process_files P_((struct vector *, char **argv));

@@ -19,7 +19,7 @@ endif
 SEDTESTS += \
         enable sep inclib 8bit newjis xabcx dollar noeol noeolw \
   	numsub numsub2 numsub3 numsub4 numsub5 0range bkslashes \
-  	head madding mac-mf empty xbxcx xbxcx3 recall xemacs \
+  	head madding mac-mf empty xbxcx xbxcx3 recall recall2 xemacs \
   	fasts uniq manis khadafy linecnt eval distrib 8to7 \
 	allsub cv-vars classes middle bsd stdin flipcase \
 	insens subwrite writeout readin \
@@ -69,6 +69,7 @@ EXTRA_DIST = \
 	numsub5.good numsub5.inp numsub5.sed \
 	readin.good readin.in2 readin.inp readin.sed \
 	recall.good recall.inp recall.sed \
+	recall2.good recall2.inp recall2.sed \
 	sep.good sep.inp sep.sed \
 	subwrite.inp subwrite.sed  subwrt1.good subwrt2.good \
 	uniq.good uniq.inp uniq.sed \
