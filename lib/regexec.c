@@ -91,6 +91,9 @@ static int sift_states_iter_mb (const re_match_context_t *mctx,
 #endif /* RE_ENABLE_I18N */
 static reg_errcode_t sift_states_backward (re_match_context_t *mctx,
 					   re_sift_context_t *sctx) internal_function;
+static reg_errcode_t build_sifted_states (re_match_context_t *mctx,
+					  re_sift_context_t *sctx, int str_idx,
+					  re_node_set *cur_dest) internal_function;
 static reg_errcode_t update_cur_sifted_state (re_match_context_t *mctx,
 					      re_sift_context_t *sctx,
 					      int str_idx,
@@ -114,8 +117,8 @@ static reg_errcode_t check_subexp_limits (re_dfa_t *dfa,
 					  struct re_backref_cache_entry *bkref_ents,
 					  int str_idx) internal_function;
 static reg_errcode_t sift_states_bkref (re_match_context_t *mctx,
-					re_sift_context_t *sctx,
-					int str_idx, re_node_set *candidates) internal_function;
+					re_sift_context_t *sctx, int str_idx,
+					const re_node_set *candidates) internal_function;
 static reg_errcode_t clean_state_log_if_needed (re_match_context_t *mctx,
 					        int next_state_log_idx) internal_function;
 static reg_errcode_t merge_state_array (re_dfa_t *dfa, re_dfastate_t **dst,
@@ -574,8 +577,6 @@ re_exec (s)
 }
 #endif /* _REGEX_RE_COMP */
 
-static re_node_set empty_set;
-
 /* Internal entry point.  */
 
 /* Searches for a compiled pattern PREG in the string STRING, whose
@@ -638,8 +639,6 @@ re_search_internal (preg, string, length, start, range, stop, nmatch, pmatch,
         return REG_NOMATCH;
       start = range = 0;
     }
-
-  re_node_set_init_empty (&empty_set);
 
   /* We must check the longest matching, if nmatch > 0.  */
   fl_longest_match = (nmatch != 0 || dfa->nbackref);
@@ -1527,12 +1526,10 @@ sift_states_backward (mctx, sctx)
   int null_cnt = 0;
   int str_idx = sctx->last_str_idx;
   re_node_set cur_dest;
-  re_node_set *cur_src; /* Points the state_log[str_idx]->nodes  */
 
 #ifdef DEBUG
   assert (mctx->state_log != NULL && mctx->state_log[str_idx] != NULL);
 #endif
-  cur_src = &mctx->state_log[str_idx]->nodes;
 
   /* Build sifted state_log[str_idx].  It has the nodes which can epsilon
      transit to the last_node and the last_node itself.  */
@@ -1546,7 +1543,7 @@ sift_states_backward (mctx, sctx)
   /* Then check each states in the state_log.  */
   while (str_idx > 0)
     {
-      int i, ret;
+      int ret;
       /* Update counters.  */
       null_cnt = (sctx->sifted_states[str_idx] == NULL) ? null_cnt + 1 : 0;
       if (null_cnt > mctx->max_mb_elem_len)
@@ -1558,56 +1555,12 @@ sift_states_backward (mctx, sctx)
 	}
       re_node_set_empty (&cur_dest);
       --str_idx;
-      cur_src = ((mctx->state_log[str_idx] == NULL) ? &empty_set
-		 : &mctx->state_log[str_idx]->nodes);
 
-      /* Then build the next sifted state.
-	 We build the next sifted state on `cur_dest', and update
-	 `sifted_states[str_idx]' with `cur_dest'.
-	 Note:
-	 `cur_dest' is the sifted state from `state_log[str_idx + 1]'.
-	 `cur_src' points the node_set of the old `state_log[str_idx]'.  */
-      for (i = 0; i < cur_src->nelem; i++)
+      if (mctx->state_log[str_idx])
 	{
-	  int prev_node = cur_src->elems[i];
-	  int naccepted = 0;
-	  re_token_type_t type = dfa->nodes[prev_node].type;
-
-	  if (IS_EPSILON_NODE (type))
-	    continue;
-#ifdef RE_ENABLE_I18N
-	  /* If the node may accept `multi byte'.  */
-	  if (ACCEPT_MB_NODE (type))
-	    naccepted = sift_states_iter_mb (mctx, sctx, prev_node,
-					     str_idx, sctx->last_str_idx);
-
-#endif /* RE_ENABLE_I18N */
-	  /* We don't check backreferences here.
-	     See update_cur_sifted_state().  */
-
-	  if (!naccepted
-	      && check_node_accept (mctx, dfa->nodes + prev_node, str_idx)
-	      && STATE_NODE_CONTAINS (sctx->sifted_states[str_idx + 1],
-				      dfa->nexts[prev_node]))
-	    naccepted = 1;
-
-	  if (naccepted == 0)
-	    continue;
-
-	  if (sctx->limits.nelem)
-	    {
-	      int to_idx = str_idx + naccepted;
-	      if (check_dst_limits (mctx, &sctx->limits,
-				    dfa->nexts[prev_node], to_idx,
-				    prev_node, str_idx))
-		continue;
-	    }
-	  ret = re_node_set_insert (&cur_dest, prev_node);
-	  if (BE (ret == -1, 0))
-	    {
-	      err = REG_ESPACE;
-	      goto free_return;
-	    }
+	  err = build_sifted_states (mctx, sctx, str_idx, &cur_dest);
+          if (BE (err != REG_NOERROR, 0))
+	    goto free_return;
 	}
 
       /* Add all the nodes which satisfy the following conditions:
@@ -1622,6 +1575,65 @@ sift_states_backward (mctx, sctx)
  free_return:
   re_node_set_free (&cur_dest);
   return err;
+}
+
+static reg_errcode_t
+build_sifted_states (mctx, sctx, str_idx, cur_dest)
+     re_match_context_t *mctx;
+     re_sift_context_t *sctx;
+     int str_idx;
+     re_node_set *cur_dest;
+{
+  re_dfa_t *const dfa = mctx->dfa;
+  re_node_set *cur_src = &mctx->state_log[str_idx]->nodes;
+  int i, ret, err;
+
+  /* Then build the next sifted state.
+     We build the next sifted state on `cur_dest', and update
+     `sifted_states[str_idx]' with `cur_dest'.
+     Note:
+     `cur_dest' is the sifted state from `state_log[str_idx + 1]'.
+     `cur_src' points the node_set of the old `state_log[str_idx]'.  */
+  for (i = 0; i < cur_src->nelem; i++)
+    {
+      int prev_node = cur_src->elems[i];
+      int naccepted = 0;
+      re_token_type_t type = dfa->nodes[prev_node].type;
+
+      if (IS_EPSILON_NODE (type))
+	continue;
+#ifdef RE_ENABLE_I18N
+      /* If the node may accept `multi byte'.  */
+      if (ACCEPT_MB_NODE (type))
+	naccepted = sift_states_iter_mb (mctx, sctx, prev_node,
+					 str_idx, sctx->last_str_idx);
+#endif /* RE_ENABLE_I18N */
+
+      /* We don't check backreferences here.
+	 See update_cur_sifted_state().  */
+      if (!naccepted
+	  && check_node_accept (mctx, dfa->nodes + prev_node, str_idx)
+	  && STATE_NODE_CONTAINS (sctx->sifted_states[str_idx + 1],
+				  dfa->nexts[prev_node]))
+	naccepted = 1;
+
+      if (naccepted == 0)
+	continue;
+
+      if (sctx->limits.nelem)
+	{
+	  int to_idx = str_idx + naccepted;
+	  if (check_dst_limits (mctx, &sctx->limits,
+				dfa->nexts[prev_node], to_idx,
+				prev_node, str_idx))
+	    continue;
+	}
+      ret = re_node_set_insert (cur_dest, prev_node);
+      if (BE (ret == -1, 0))
+	return REG_ESPACE;
+    }
+
+  return REG_NOERROR;
 }
 
 /* Helper functions.  */
@@ -1691,34 +1703,37 @@ update_cur_sifted_state (mctx, sctx, str_idx, dest_nodes)
   re_dfa_t *const dfa = mctx->dfa;
   reg_errcode_t err;
   const re_node_set *candidates;
-  candidates = ((mctx->state_log[str_idx] == NULL) ? &empty_set
+  candidates = ((mctx->state_log[str_idx] == NULL) ? NULL
 		: &mctx->state_log[str_idx]->nodes);
 
-  /* At first, add the nodes which can epsilon transit to a node in
-     DEST_NODE.  */
-  if (dest_nodes->nelem)
+  if (dest_nodes->nelem == 0)
+    sctx->sifted_states[str_idx] = NULL;
+  else
     {
-      err = add_epsilon_src_nodes (dfa, dest_nodes, candidates);
+      if (candidates)
+	{
+	  /* At first, add the nodes which can epsilon transit to a node in
+	     DEST_NODE.  */
+	  err = add_epsilon_src_nodes (dfa, dest_nodes, candidates);
+	  if (BE (err != REG_NOERROR, 0))
+	    return err;
+	  
+	  /* Then, check the limitations in the current sift_context.  */
+	  if (sctx->limits.nelem)
+	    {
+	      err = check_subexp_limits (dfa, dest_nodes, candidates, &sctx->limits,
+					 mctx->bkref_ents, str_idx);
+	      if (BE (err != REG_NOERROR, 0))
+		return err;
+	    }
+	}
+
+      sctx->sifted_states[str_idx] = re_acquire_state (&err, dfa, dest_nodes);
       if (BE (err != REG_NOERROR, 0))
 	return err;
     }
 
-  /* Then, check the limitations in the current sift_context.  */
-  if (dest_nodes->nelem && sctx->limits.nelem)
-    {
-      err = check_subexp_limits (dfa, dest_nodes, candidates, &sctx->limits,
-				 mctx->bkref_ents, str_idx);
-      if (BE (err != REG_NOERROR, 0))
-	return err;
-    }
-
-  /* Update state_log.  */
-  sctx->sifted_states[str_idx] = re_acquire_state (&err, dfa, dest_nodes);
-  if (BE (sctx->sifted_states[str_idx] == NULL && err != REG_NOERROR, 0))
-    return err;
-
-  if ((mctx->state_log[str_idx] != NULL
-       && mctx->state_log[str_idx]->has_backref))
+  if (candidates && mctx->state_log[str_idx]->has_backref)
     {
       err = sift_states_bkref (mctx, sctx, str_idx, candidates);
       if (BE (err != REG_NOERROR, 0))
@@ -2039,7 +2054,7 @@ sift_states_bkref (mctx, sctx, str_idx, candidates)
      re_match_context_t *mctx;
      re_sift_context_t *sctx;
      int str_idx;
-     re_node_set *candidates;
+     const re_node_set *candidates;
 {
   re_dfa_t *const dfa = mctx->dfa;
   reg_errcode_t err;
