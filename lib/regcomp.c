@@ -58,7 +58,7 @@ static int search_duplicated_node (re_dfa_t *dfa, int org_node,
 static reg_errcode_t calc_eclosure (re_dfa_t *dfa);
 static reg_errcode_t calc_eclosure_iter (re_node_set *new_set, re_dfa_t *dfa,
 					 int node, int root);
-static void calc_inveclosure (re_dfa_t *dfa);
+static reg_errcode_t calc_inveclosure (re_dfa_t *dfa);
 static int fetch_number (re_string_t *input, re_token_t *token,
 			 reg_syntax_t syntax);
 static void fetch_token (re_token_t *result, re_string_t *input,
@@ -1132,9 +1132,8 @@ analyze (preg)
   dfa->org_indices = re_malloc (int, dfa->nodes_alloc);
   dfa->edests = re_malloc (re_node_set, dfa->nodes_alloc);
   dfa->eclosures = re_malloc (re_node_set, dfa->nodes_alloc);
-  dfa->inveclosures = re_malloc (re_node_set, dfa->nodes_alloc);
   if (BE (dfa->nexts == NULL || dfa->org_indices == NULL || dfa->edests == NULL
-	  || dfa->eclosures == NULL || dfa->inveclosures == NULL, 0))
+	  || dfa->eclosures == NULL, 0))
     return REG_ESPACE;
 
   dfa->subexp_map = re_malloc (int, preg->re_nsub);
@@ -1167,7 +1166,18 @@ analyze (preg)
   ret = calc_eclosure (dfa);
   if (BE (ret != REG_NOERROR, 0))
     return ret;
-  calc_inveclosure (dfa);
+
+  /* We only need this during the prune_impossible_nodes pass in regexec.c;
+     do not compute it otherwise since it can become quadratic.  */
+  if ((!preg->no_sub && preg->re_nsub > 0 && dfa->has_plural_match)
+      || dfa->nbackref)
+    {
+      dfa->inveclosures = re_malloc (re_node_set, dfa->nodes_len);
+      if (BE (dfa->inveclosures == NULL, 0))
+        return REG_ESPACE;
+      ret = calc_inveclosure (dfa);
+    }
+
   return ret;
 }
 
@@ -1600,19 +1610,26 @@ duplicate_node (new_idx, dfa, org_idx, constraint)
   return REG_NOERROR;
 }
 
-static void
+static reg_errcode_t
 calc_inveclosure (dfa)
      re_dfa_t *dfa;
 {
-  int src, idx, dest;
+  int src, idx, ret;
+  for (idx = 0; idx < dfa->nodes_len; ++idx)
+    re_node_set_init_empty (dfa->inveclosures + idx);
+
   for (src = 0; src < dfa->nodes_len; ++src)
     {
+      int *elems = dfa->eclosures[src].elems;
       for (idx = 0; idx < dfa->eclosures[src].nelem; ++idx)
 	{
-	  dest = dfa->eclosures[src].elems[idx];
-	  re_node_set_insert_last (dfa->inveclosures + dest, src);
+	  ret = re_node_set_insert_last (dfa->inveclosures + elems[idx], src);
+	  if (BE (ret == -1, 0))
+	    return REG_ESPACE;
 	}
     }
+
+  return REG_NOERROR;
 }
 
 /* Calculate "eclosure" for all the node in DFA.  */
