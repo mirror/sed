@@ -1466,6 +1466,7 @@ execute_program(vec, input)
             case 'q':
               if (!no_default_output)
                 output_line(line.active, line.length, line.chomped, &output_file);
+	      dump_append_queue();
 
 	    case 'Q':
 	      return cur_cmd->x.int_arg == -1 ? 0 : cur_cmd->x.int_arg;

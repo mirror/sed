@@ -9,7 +9,7 @@ AM_CPPFLAGS = -I$(top_srcdir) -I$(top_srcdir)/lib -I$(top_srcdir)/pcre \
 	-I$(top_builddir)/intl -I$(top_srcdir)/intl
 
 SEDTESTS = \
-        space enable sep inclib 8bit newjis xabcx dollar noeol noeolw \
+        space appquit enable sep inclib 8bit newjis xabcx dollar noeol noeolw \
   	numsub numsub2 numsub3 numsub4 numsub5 0range bkslashes \
   	head madding mac-mf empty xbxcx xbxcx3 recall recall2 xemacs \
   	fasts uniq manis khadafy linecnt eval distrib 8to7 \
@@ -28,6 +28,7 @@ EXTRA_DIST = runtest Makefile.tests \
 	8bit.good 8bit.inp 8bit.sed \
 	8to7.good 8to7.inp 8to7.sed \
 	allsub.good allsub.inp allsub.sed \
+	appquit.good appquit.inp appquit.sed \
 	binary.good binary.inp binary.sed binary2.sed binary3.sed \
 	bkslashes.good bkslashes.inp bkslashes.sed \
 	bsd.good bsd.sh \

@@ -1,4 +1,4 @@
-Sed 3.62 (aligned with GNU sed 4.1.3)
+Sed 3.62 (aligned with GNU sed CVS at 2005-02-10)
   
 * added a note to BUGS and the manual about changed interpretation
   of `s|abc\|def||', and about localization issues.
@@ -7,6 +7,8 @@ Sed 3.62 (aligned with GNU sed 4.1.3)
 
 * fixed `make check' in non-English locales.
   
+* output the result of commands a, r, R when a q command is found.
+
 -----------------------------------------------------------------------
 Sed 3.61a
 

@@ -13,7 +13,7 @@ RM=rm -f
 
 enable sep inclib 8bit 8to7 newjis xabcx dollar noeol bkslashes \
 numsub head madding mac-mf empty xbxcx xbxcx3 recall recall2 xemacs \
-fasts uniq manis linecnt khadafy allsub flipcase space::
+appquit fasts uniq manis linecnt khadafy allsub flipcase space::
 	$(SEDENV) $(SED) -f $(srcdir)/$@.sed \
 		< $(srcdir)/$@.inp > $@.out 
 	$(CMP) $(srcdir)/$@.good $@.out 
