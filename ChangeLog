@@ -1,3 +1,7 @@
+2004-12-26  Paolo Bonzini  <bonzini@gnu.org>
+
+	* doc/sed-in.texi [!PERL]: Likewise.
+
 2004-11-15  Paolo Bonzini  <bonzini@gnu.org>
 
 	* sed/execute.c (str_append_modified): Copy the first character
