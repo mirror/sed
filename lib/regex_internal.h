@@ -629,6 +629,7 @@ struct re_dfa_t
   int nbackref; /* The number of backreference in this dfa.  */
 
   /* Bitmap expressing which backreference is used.  */
+  unsigned int empty_bkref_map;
   unsigned int used_bkref_map;
   unsigned int completed_bkref_map;
 
