@@ -1254,7 +1254,7 @@ proceed_next_node (mctx, nregs, regs, pidx, node, eps_via_nodes, fs)
       re_token_type_t type = dfa->nodes[node].type;
 
 #ifdef RE_ENABLE_I18N
-      if (ACCEPT_MB_NODE (type))
+      if (dfa->nodes[node].accept_mb)
 	naccepted = check_node_accept_bytes (dfa, node, &mctx->input, *pidx);
       else
 #endif /* RE_ENABLE_I18N */
@@ -1620,7 +1620,7 @@ build_sifted_states (mctx, sctx, str_idx, cur_dest)
 	continue;
 #ifdef RE_ENABLE_I18N
       /* If the node may accept `multi byte'.  */
-      if (ACCEPT_MB_NODE (type))
+      if (dfa->nodes[prev_node].accept_mb)
 	naccepted = sift_states_iter_mb (mctx, sctx, prev_node,
 					 str_idx, sctx->last_str_idx);
 #endif /* RE_ENABLE_I18N */
@@ -2476,7 +2476,7 @@ transit_state_mb (mctx, pstate)
 	}
 
       /* How many bytes the node can accept?  */
-      if (ACCEPT_MB_NODE (dfa->nodes[cur_node_idx].type))
+      if (dfa->nodes[cur_node_idx].accept_mb)
 	naccepted = check_node_accept_bytes (dfa, cur_node_idx, &mctx->input,
 					     re_string_cur_idx (&mctx->input));
       if (naccepted == 0)
@@ -3015,7 +3015,7 @@ check_arrival_add_next_nodes (mctx, str_idx, cur_nodes, next_nodes)
 	continue;
 #ifdef RE_ENABLE_I18N
       /* If the node may accept `multi byte'.  */
-      if (ACCEPT_MB_NODE (type))
+      if (dfa->nodes[cur_node].accept_mb)
 	{
 	  naccepted = check_node_accept_bytes (dfa, cur_node, &mctx->input,
 					       str_idx);

@@ -1788,6 +1788,7 @@ peek_token (token, input, syntax)
 
   token->word_char = 0;
 #ifdef RE_ENABLE_I18N
+  token->accept_mb = 0;
   token->mb_partial = 0;
   if (input->mb_cur_max > 1 &&
       !re_string_first_byte (input, re_string_cur_idx (input)))
@@ -2383,6 +2384,9 @@ parse_expression (regexp, preg, token, syntax, nest, err)
       fetch_token (token, regexp, syntax);
       return tree;
     case OP_PERIOD:
+#ifdef RE_ENABLE_I18N
+      token->accept_mb = dfa->mb_cur_max > 1;
+#endif
       tree = re_dfa_add_tree_node (dfa, NULL, NULL, token);
       if (BE (tree == NULL, 0))
 	{
@@ -3314,6 +3318,7 @@ parse_bracket_exp (regexp, dfa, token, syntax, err)
 	  return work_tree;
 	}
       br_token.type = COMPLEX_BRACKET;
+      br_token.accept_mb = 1;
       br_token.opr.mbcset = mbcset;
       mbc_tree = re_dfa_add_tree_node (dfa, NULL, NULL, &br_token);
       if (BE (mbc_tree == NULL, 0))
@@ -3704,6 +3709,7 @@ build_charclass_op (dfa, trans, class_name, extra, non_match, err)
       bin_tree_t *mbc_tree;
       /* Build a tree for complex bracket.  */
       br_token.type = COMPLEX_BRACKET;
+      br_token.accept_mb = 1;
       br_token.opr.mbcset = mbcset;
       dfa->has_mb_node = 1;
       mbc_tree = re_dfa_add_tree_node (dfa, NULL, NULL, &br_token);

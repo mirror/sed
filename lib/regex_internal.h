@@ -284,6 +284,7 @@ typedef struct
   unsigned int duplicated : 1;
   unsigned int opt_subexp : 1;
 #ifdef RE_ENABLE_I18N
+  unsigned int accept_mb : 1;
   /* These 2 bits can be moved into the union if needed (e.g. if running out
      of bits; move opr.c to opr.c.c and move the flags to opr.c.flags).  */
   unsigned int mb_partial : 1;
@@ -292,8 +293,6 @@ typedef struct
 } re_token_t;
 
 #define IS_EPSILON_NODE(type) ((type) & EPSILON_BIT)
-#define ACCEPT_MB_NODE(type) \
-  ((type) >= OP_PERIOD && (type) <= OP_UTF8_PERIOD)
 
 struct re_string_t
 {

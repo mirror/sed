@@ -1560,16 +1560,13 @@ create_ci_newstate (dfa, nodes, hash)
       re_token_type_t type = node->type;
       if (type == CHARACTER && !node->constraint)
 	continue;
+#ifdef RE_ENABLE_I18N
+      newstate->accept_mb |= node->accept_mb;
+#endif /* RE_ENABLE_I18N */
 
       /* If the state has the halt node, the state is a halt state.  */
-      else if (type == END_OF_RE)
+      if (type == END_OF_RE)
 	newstate->halt = 1;
-#ifdef RE_ENABLE_I18N
-      else if (type == COMPLEX_BRACKET
-	       || type == OP_UTF8_PERIOD
-	       || (type == OP_PERIOD && dfa->mb_cur_max > 1))
-	newstate->accept_mb = 1;
-#endif /* RE_ENABLE_I18N */
       else if (type == OP_BACK_REF)
 	newstate->has_backref = 1;
       else if (type == ANCHOR || node->constraint)
@@ -1613,15 +1610,13 @@ create_cd_newstate (dfa, nodes, context, hash)
 
       if (type == CHARACTER && !constraint)
 	continue;
-      /* If the state has the halt node, the state is a halt state.  */
-      else if (type == END_OF_RE)
-	newstate->halt = 1;
 #ifdef RE_ENABLE_I18N
-      else if (type == COMPLEX_BRACKET
-	       || type == OP_UTF8_PERIOD
-	       || (type == OP_PERIOD && dfa->mb_cur_max > 1))
-	newstate->accept_mb = 1;
+      newstate->accept_mb |= node->accept_mb;
 #endif /* RE_ENABLE_I18N */
+
+      /* If the state has the halt node, the state is a halt state.  */
+      if (type == END_OF_RE)
+	newstate->halt = 1;
       else if (type == OP_BACK_REF)
 	newstate->has_backref = 1;
       else if (type == ANCHOR)
