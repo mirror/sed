@@ -313,9 +313,9 @@ compile_branch_perl (options, brackets, codeptr, ptrptr, errorptr, optchanged, r
   int prevreqchar;
   int condcount = 0;
   int subcountlits = 0;
-  register int c;
-  register uschar *code = *codeptr;
-  uschar *tempcode;
+  int c;
+  uschar *start;
+  uschar *code = *codeptr;
   const uschar *ptr = *ptrptr;
   const uschar *tempptr;
   uschar *previous = NULL;
@@ -438,7 +438,7 @@ compile_branch_perl (options, brackets, codeptr, ptrptr, errorptr, optchanged, r
 		{
 		  BOOL local_negate = FALSE;
 		  int posix_class, i;
-		  register const uschar *cbits = cd->cbits;
+		  const uschar *cbits = cd->cbits;
 
 		  if (ptr[1] != ':')
 		    {
@@ -504,7 +504,7 @@ compile_branch_perl (options, brackets, codeptr, ptrptr, errorptr, optchanged, r
 		    c = '\b';
 		  else if (c < 0)
 		    {
-		      register const uschar *cbits = cd->cbits;
+		      const uschar *cbits = cd->cbits;
 		      class_charcount = 10;
 		      switch (-c)
 			{
@@ -891,7 +891,7 @@ compile_branch_perl (options, brackets, codeptr, ptrptr, errorptr, optchanged, r
 	  else if ((int) *previous >= OP_BRA || (int) *previous == OP_ONCE ||
 		   (int) *previous == OP_COND)
 	    {
-	      register int i;
+	      int i;
 	      int ketoffset = 0;
 	      int len = code - previous;
 	      uschar *bralink = NULL;
@@ -904,7 +904,7 @@ compile_branch_perl (options, brackets, codeptr, ptrptr, errorptr, optchanged, r
 
 	      if (repeat_max == -1)
 		{
-		  register uschar *ket = previous;
+		  uschar *ket = previous;
 		  do
 		    ket += (ket[1] << 8) + ket[2];
 		  while (*ket != OP_KET);
@@ -1257,21 +1257,19 @@ compile_branch_perl (options, brackets, codeptr, ptrptr, errorptr, optchanged, r
 		bravalue = OP_BRA + *brackets;
 	    }
 
-	  /* Process nested bracketed re. Assertions may not be repeated, but other
-	     kinds can be. We copy code into a non-register variable in order to be able
-	     to pass its address because some compilers complain otherwise. Pass in a
-	     new setting for the ims options if they have changed. */
+	  /* Process nested bracketed re. Assertions may not be repeated, but other kinds
+	     can be. Pass in a new setting for the ims options if they have changed. */
 
 	  previous = (bravalue >= OP_ONCE) ? code : NULL;
 	  *code = bravalue;
-	  tempcode = code;
+	  start = code;
 
 	  if (!compile_regex (
 			       options | PCRE_INGROUP,	/* Set for all nested groups */
 			 ((options & PCRE_IMS) != (newoptions & PCRE_IMS)) ?
 			       newoptions & PCRE_IMS : -1,	/* Pass ims options if changed */
 			       brackets,	/* Capturing bracket count */
-			       &tempcode,	/* Where to put code (updated) */
+			       &code,	/* Where to put code (updated) */
 			       &ptr,	/* Input pointer (updated) */
 			       errorptr,	/* Where to put an error message */
 			       (bravalue == OP_ASSERTBACK ||
@@ -1284,7 +1282,7 @@ compile_branch_perl (options, brackets, codeptr, ptrptr, errorptr, optchanged, r
 	    goto FAILED;
 
 	  /* At the end of compiling, code is still pointing to the start of the
-	     group, while tempcode has been updated to point past the end of the group
+	     group, while code has been updated to point past the end of the group
 	     and any option resetting that may follow it. The pattern pointer (ptr)
 	     is on the bracket. */
 
@@ -1293,7 +1291,7 @@ compile_branch_perl (options, brackets, codeptr, ptrptr, errorptr, optchanged, r
 
 	  else if (bravalue == OP_COND)
 	    {
-	      uschar *tc = code;
+	      uschar *tc = start;
 	      condcount = 0;
 
 	      do
@@ -1327,10 +1325,6 @@ compile_branch_perl (options, brackets, codeptr, ptrptr, errorptr, optchanged, r
 	      if (bravalue != OP_ASSERT)
 		*countlits += subcountlits;
 	    }
-
-	  /* Now update the main code pointer to the end of the group. */
-
-	  code = tempcode;
 
 	  /* Error if hit end of pattern */
 

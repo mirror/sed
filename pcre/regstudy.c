@@ -192,28 +192,30 @@ set_boyer_moore (code, bmtable, length, caseless, cd)
 {
   const uschar *tcode = code + 3;
   BOOL try_next = TRUE;
-  int old_length;
 
   /* If the branch has more than one alternative, it's too
      complicated, so exit. */
   if (code[(code[1] << 8) + code[2]] == OP_ALT)
     return length;
 
-  while (try_next && length < 255)
+  do
     {
-      register int c = *tcode;
-      old_length = length;
+      int i;
 
-    NEXT_OPCODE:
-
-      switch (c)
+      switch (*tcode)
 	{
+	default:
+	  /* If a branch starts with a bracket, recurse to set the string
+	     from within them. That's all for this branch. */
+	  if ((int) *tcode >= OP_BRA)
+	    length = set_boyer_moore (tcode, bmtable, length, caseless, cd);
+	  return length;
+
 	  /* Skip over extended extraction bracket number */
 		
 	case OP_BRANUMBER:
 	  tcode += 3;
 	  break;
-
 
 	  /* Skip over lookbehind assertions */
 
@@ -262,13 +264,15 @@ set_boyer_moore (code, bmtable, length, caseless, cd)
 
 	case OP_EXACT:
 	  length += (tcode[1] << 8) + tcode[2];
+	  if (length > 255)
+	    length = 255;
 	  set_bmtable (bmtable, tcode[3], length, caseless, cd);
 	  tcode += 4;
 	  break;
 
 	case OP_CHARS:
 	  {
-	    register int nchars = tcode[1];
+	    int nchars = tcode[1];
 	    if (nchars > 255 - length)
 	      nchars = 255 - length;
 
@@ -284,9 +288,9 @@ set_boyer_moore (code, bmtable, length, caseless, cd)
 	  tcode++;
 	REPEATTYPENOT:
 	  length++;
-	  for (c = 0; c < 255; c++)
-	    if (!*tcode || !(cd->ctypes[c] & (1 << *tcode)))
-	      set_bmtable (bmtable, c, length, caseless, cd);
+	  for (i = 0; i < 255; i++)
+	    if (!*tcode || !(cd->ctypes[i] & (1 << *tcode)))
+	      set_bmtable (bmtable, i, length, caseless, cd);
 
 	  break;
 
@@ -294,9 +298,9 @@ set_boyer_moore (code, bmtable, length, caseless, cd)
 	  tcode++;
 	REPEATTYPE:
 	  length++;
-	  for (c = 0; c < 255; c++)
-	    if (cd->ctypes[c] & (*tcode ? 1 << *tcode : 0))
-	      set_bmtable (bmtable, c, length, caseless, cd);
+	  for (i = 0; i < 255; i++)
+	    if (cd->ctypes[i] & (*tcode ? 1 << *tcode : 0))
+	      set_bmtable (bmtable, i, length, caseless, cd);
 
 	  break;
 
@@ -371,7 +375,7 @@ set_boyer_moore (code, bmtable, length, caseless, cd)
 	case OP_CL_MINQUERY:
 	case OP_CL_ONCEQUERY:
 	  {
-	    register const uschar *classptr = tcode + 1;
+	    const uschar *classptr = tcode + 1;
 	    tcode++;
 	    switch (tcode[-1])
 	      {
@@ -405,30 +409,18 @@ set_boyer_moore (code, bmtable, length, caseless, cd)
 		      
 	      default:
 		length++;
-		for (c = 0; c < 255; c++)
-		  if (classptr[c >> 3] & (1 << (c & 7)))
-		    set_bmtable (bmtable, c, length, caseless, cd);
+		for (i = 0; i < 255; i++)
+		  if (classptr[i >> 3] & (1 << (i & 7)))
+		    set_bmtable (bmtable, i, length, caseless, cd);
 		break;
 	      }
 
 	    tcode += 32;
 	    break;		/* End of class handling */
 	  }
-
-	default:
-	  /* Undo the effect of a OP_TYPE... opcode */
-	  length = old_length;
-
-	  /* If a branch starts with a bracket, recurse to set the string
-	     from within them. That's all for this branch. */
-
-	  if ((int) *tcode >= OP_BRA)
-	      length = set_boyer_moore (tcode, bmtable,
-					length, caseless, cd);
-	  try_next = FALSE;
-	  break;
 	}			/* End of switch */
     }			/* End of try_next loop */
+  while (try_next && length < 255);
 
   return length;
 }
@@ -460,7 +452,7 @@ set_start_bits (code, start_bits, caseless, cd)
      BOOL caseless;
      compile_data *cd;
 {
-  register int c;
+  int i;
 
   /* This next statement and the later reference to dummy are here in order to
      trick the optimizer of the IBM C compiler for OS/2 into generating correct
@@ -475,7 +467,7 @@ set_start_bits (code, start_bits, caseless, cd)
       const uschar *tcode = code + 3;
       BOOL try_next = TRUE;
 
-      while (try_next)
+      do
 	{
 	  /* If a branch starts with a bracket or a positive lookahead assertion,
 	     recurse to set bits from within them. That's all for this branch. */
@@ -484,212 +476,215 @@ set_start_bits (code, start_bits, caseless, cd)
 	    {
 	      if (!set_start_bits (tcode, start_bits, caseless, cd))
 		return FALSE;
-	      try_next = FALSE;
+	      break;
 	    }
 
-	  else
-	    switch (*tcode)
-	      {
-	      default:
+	  switch (*tcode)
+	    {
+	    default:
+	      if ((int) *tcode >= OP_BRA || *tcode == OP_ASSERT)
+		abort ();
+	      else
 		return FALSE;
 
-		/* Skip over extended extraction bracket number */
+	      /* Skip over extended extraction bracket number */
 		
-	      case OP_BRANUMBER:
-		tcode += 3;
-		break;
+	    case OP_BRANUMBER:
+	      tcode += 3;
+	      break;
 
-		/* Skip over lookbehind and negative lookahead assertions */
-
-	      case OP_ASSERT_NOT:
-	      case OP_ASSERTBACK:
-	      case OP_ASSERTBACK_NOT:
-		do
-		  tcode += (tcode[1] << 8) + tcode[2];
-		while (*tcode == OP_ALT);
-		tcode += 3;
-		break;
-
+	      /* Skip over lookbehind and negative lookahead assertions */
+	      
+	    case OP_ASSERT_NOT:
+	    case OP_ASSERTBACK:
+	    case OP_ASSERTBACK_NOT:
+	      do
+		tcode += (tcode[1] << 8) + tcode[2];
+	      while (*tcode == OP_ALT);
+	      tcode += 3;
+	      break;
+	      
 		/* Skip over an option setting, changing the caseless flag */
+	      
+	    case OP_OPT:
+	      caseless = (tcode[1] & PCRE_CASELESS) != 0;
+	      tcode += 2;
+	      break;
+	      
+	      /* BRAZERO does the bracket, but carries on. */
+	      
+	    case OP_BRAZERO:
+	    case OP_BRAMINZERO:
+	      if (!set_start_bits (++tcode, start_bits, caseless, cd))
+		return FALSE;
+	      dummy = 1;
+	      do
+		tcode += (tcode[1] << 8) + tcode[2];
+	      while (*tcode == OP_ALT);
+	      tcode += 3;
+	      break;
+	      
+	      /* Single-char * or ? sets the bit and tries the next item */
+	      
+	    case OP_MAXSTAR:
+	    case OP_MINSTAR:
+	    case OP_ONCESTAR:
+	    case OP_MAXQUERY:
+	    case OP_MINQUERY:
+	    case OP_ONCEQUERY:
+	      set_bit (start_bits, tcode[1], caseless, cd);
+	      tcode += 2;
+	      break;
 
-	      case OP_OPT:
-		caseless = (tcode[1] & PCRE_CASELESS) != 0;
-		tcode += 2;
-		break;
-
-		/* BRAZERO does the bracket, but carries on. */
-
-	      case OP_BRAZERO:
-	      case OP_BRAMINZERO:
-		if (!set_start_bits (++tcode, start_bits, caseless, cd))
+	      /* Single-char upto sets the bit and tries the next */
+	      
+	    case OP_MAXUPTO:
+	    case OP_MINUPTO:
+	    case OP_ONCEUPTO:
+	      set_bit (start_bits, tcode[3], caseless, cd);
+	      tcode += 4;
+	      break;
+	      
+	      /* At least one single char sets the bit and stops */
+	      
+	    case OP_EXACT:	/* Fall through */
+	      tcode++;
+	      
+	    case OP_CHARS:	/* Fall through */
+	      tcode++;
+	      
+	    case OP_MAXPLUS:
+	    case OP_MINPLUS:
+	    case OP_ONCEPLUS:
+	      set_bit (start_bits, tcode[1], caseless, cd);
+	      try_next = FALSE;
+	      break;
+	      
+	      /* Single character type sets the bits and stops */
+	      
+	    case OP_TYPENOT:
+	      tcode++;
+	      try_next = FALSE;
+	    REPEATTYPENOT:
+	      if (!*tcode)
+		return FALSE;
+	      
+	      for (i = 0; i < 32; i++)
+		start_bits[i] |= ~cd->cbits[i + *tcode * 32];
+	      break;
+	      
+	    case OP_TYPE:
+	      tcode++;
+	      try_next = FALSE;
+	    REPEATTYPE:
+	      if (!*tcode)
 		  return FALSE;
-		dummy = 1;
-		do
-		  tcode += (tcode[1] << 8) + tcode[2];
-		while (*tcode == OP_ALT);
-		tcode += 3;
-		break;
-
-		/* Single-char * or ? sets the bit and tries the next item */
-
-	      case OP_MAXSTAR:
-	      case OP_MINSTAR:
-	      case OP_ONCESTAR:
-	      case OP_MAXQUERY:
-	      case OP_MINQUERY:
-	      case OP_ONCEQUERY:
-		set_bit (start_bits, tcode[1], caseless, cd);
+	      
+	      for (i = 0; i < 32; i++)
+		start_bits[i] |= cd->cbits[i + *tcode * 32];
+	      break;
+	      
+	      /* One or more character type fudges the pointer and restarts. */
+	      
+	    case OP_TYPEEXACT:
 		tcode += 2;
-		break;
-
-		/* Single-char upto sets the bit and tries the next */
-
-	      case OP_MAXUPTO:
-	      case OP_MINUPTO:
-	      case OP_ONCEUPTO:
-		set_bit (start_bits, tcode[3], caseless, cd);
-		tcode += 4;
-		break;
-
-		/* At least one single char sets the bit and stops */
-
-	      case OP_EXACT:	/* Fall through */
+		
+	    case OP_TYPE_MAXPLUS:
+	    case OP_TYPE_MINPLUS:
+	    case OP_TYPE_ONCEPLUS:
+	      tcode++;
+	      try_next = FALSE;
+	      goto REPEATTYPE;
+	      
+	      /* Zero or more repeats of character types set the bits and then
+		 try again. */
+	      
+	    case OP_TYPE_MAXUPTO:
+	    case OP_TYPE_MINUPTO:
+	    case OP_TYPE_ONCEUPTO:
+	      tcode += 2;	/* Fall through */
+	      
+	    case OP_TYPE_MAXSTAR:
+	    case OP_TYPE_MINSTAR:
+	    case OP_TYPE_ONCESTAR:
+	    case OP_TYPE_MAXQUERY:
+	    case OP_TYPE_MINQUERY:
+	    case OP_TYPE_ONCEQUERY:
+	      tcode++;
+	      goto REPEATTYPE;
+	      break;
+	      
+	      /* One or more character type fudges the pointer and restarts. */
+	      
+	    case OP_TYPENOTEXACT:
+	      tcode += 2;	/* Fall through */
+	      
+	    case OP_TYPENOT_MAXPLUS:
+	    case OP_TYPENOT_MINPLUS:
+	    case OP_TYPENOT_ONCEPLUS:
+	      try_next = FALSE;
+	      goto REPEATTYPENOT;
+	      
+	    case OP_TYPENOT_MAXUPTO:
+	    case OP_TYPENOT_MINUPTO:
+	    case OP_TYPENOT_ONCEUPTO:
+	      tcode += 2;	/* Fall through */
+	      
+	    case OP_TYPENOT_MAXSTAR:
+	    case OP_TYPENOT_MINSTAR:
+	    case OP_TYPENOT_ONCESTAR:
+	    case OP_TYPENOT_MAXQUERY:
+	    case OP_TYPENOT_MINQUERY:
+	    case OP_TYPENOT_ONCEQUERY:
+	      tcode++;
+	      goto REPEATTYPENOT;
+	      
+	      /* Character class: set the bits and either carry on or not,
+		 according to the repeat count. */
+	      
+	    case OP_CLASS:
+	    case OP_CL_MAXSTAR:
+	    case OP_CL_MINSTAR:
+	    case OP_CL_ONCESTAR:
+	    case OP_CL_MAXPLUS:
+	    case OP_CL_MINPLUS:
+	    case OP_CL_ONCEPLUS:
+	    case OP_CL_MAXQUERY:
+	    case OP_CL_MINQUERY:
+	    case OP_CL_ONCEQUERY:
+	    case OP_CL_MAXRANGE:
+	    case OP_CL_MINRANGE:
+	    case OP_CL_ONCERANGE:
+	      {
 		tcode++;
+		for (i = 0; i < 32; i++)
+		  start_bits[i] |= tcode[i];
+		tcode += 32;
+		switch (tcode[-33])
+		  {
+		  case OP_CL_MAXSTAR:
+		  case OP_CL_MINSTAR:
+		  case OP_CL_ONCESTAR:
+		  case OP_CL_MAXQUERY:
+		  case OP_CL_MINQUERY:
+		  case OP_CL_ONCEQUERY:
+		    break;
+		    
+		  case OP_CL_MAXRANGE:
+		  case OP_CL_MINRANGE:
+		  case OP_CL_ONCERANGE:
+		    if (((tcode[1] << 8) + tcode[2]) == 0)
+		      tcode += 4;
+		    else
+		      try_next = FALSE;
+		    break;
+		  }
+	      }
+	      break;		/* End of class handling */
 
-	      case OP_CHARS:	/* Fall through */
-		tcode++;
-
-	      case OP_MAXPLUS:
-	      case OP_MINPLUS:
-	      case OP_ONCEPLUS:
-		set_bit (start_bits, tcode[1], caseless, cd);
-		try_next = FALSE;
-		break;
-
-		/* Single character type sets the bits and stops */
-
-	      case OP_TYPENOT:
-		tcode++;
-		try_next = FALSE;
-	      REPEATTYPENOT:
-		if (!*tcode)
-		  return FALSE;
-
-		for (c = 0; c < 32; c++)
-		  start_bits[c] |= ~cd->cbits[c + *tcode * 32];
-		break;
-
-	      case OP_TYPE:
-		tcode++;
-		try_next = FALSE;
-	      REPEATTYPE:
-		if (!*tcode)
-		  return FALSE;
-
-		for (c = 0; c < 32; c++)
-		  start_bits[c] |= cd->cbits[c + *tcode * 32];
-		break;
-
-		/* One or more character type fudges the pointer and restarts. */
-
-	      case OP_TYPEEXACT:
-		tcode += 2;
-
-	      case OP_TYPE_MAXPLUS:
-	      case OP_TYPE_MINPLUS:
-	      case OP_TYPE_ONCEPLUS:
-		tcode++;
-		try_next = FALSE;
-		goto REPEATTYPE;
-
-		/* Zero or more repeats of character types set the bits and then
-		   try again. */
-
-	      case OP_TYPE_MAXUPTO:
-	      case OP_TYPE_MINUPTO:
-	      case OP_TYPE_ONCEUPTO:
-		tcode += 2;	/* Fall through */
-
-	      case OP_TYPE_MAXSTAR:
-	      case OP_TYPE_MINSTAR:
-	      case OP_TYPE_ONCESTAR:
-	      case OP_TYPE_MAXQUERY:
-	      case OP_TYPE_MINQUERY:
-	      case OP_TYPE_ONCEQUERY:
-		tcode++;
-		goto REPEATTYPE;
-		break;
-
-		/* One or more character type fudges the pointer and restarts. */
-
-	      case OP_TYPENOTEXACT:
-		tcode += 2;	/* Fall through */
-
-	      case OP_TYPENOT_MAXPLUS:
-	      case OP_TYPENOT_MINPLUS:
-	      case OP_TYPENOT_ONCEPLUS:
-		try_next = FALSE;
-		goto REPEATTYPENOT;
-
-	      case OP_TYPENOT_MAXUPTO:
-	      case OP_TYPENOT_MINUPTO:
-	      case OP_TYPENOT_ONCEUPTO:
-		tcode += 2;	/* Fall through */
-
-	      case OP_TYPENOT_MAXSTAR:
-	      case OP_TYPENOT_MINSTAR:
-	      case OP_TYPENOT_ONCESTAR:
-	      case OP_TYPENOT_MAXQUERY:
-	      case OP_TYPENOT_MINQUERY:
-	      case OP_TYPENOT_ONCEQUERY:
-		tcode++;
-		goto REPEATTYPENOT;
-
-		/* Character class: set the bits and either carry on or not,
-		   according to the repeat count. */
-
-	      case OP_CLASS:
-	      case OP_CL_MAXSTAR:
-	      case OP_CL_MINSTAR:
-	      case OP_CL_ONCESTAR:
-	      case OP_CL_MAXPLUS:
-	      case OP_CL_MINPLUS:
-	      case OP_CL_ONCEPLUS:
-	      case OP_CL_MAXQUERY:
-	      case OP_CL_MINQUERY:
-	      case OP_CL_ONCEQUERY:
-	      case OP_CL_MAXRANGE:
-	      case OP_CL_MINRANGE:
-	      case OP_CL_ONCERANGE:
-		{
-		  tcode++;
-		  for (c = 0; c < 32; c++)
-		    start_bits[c] |= tcode[c];
-		  tcode += 32;
-		  switch (tcode[-33])
-		    {
-		    case OP_CL_MAXSTAR:
-		    case OP_CL_MINSTAR:
-		    case OP_CL_ONCESTAR:
-		    case OP_CL_MAXQUERY:
-		    case OP_CL_MINQUERY:
-		    case OP_CL_ONCEQUERY:
-		      break;
-
-		    case OP_CL_MAXRANGE:
-		    case OP_CL_MINRANGE:
-		    case OP_CL_ONCERANGE:
-		      if (((tcode[1] << 8) + tcode[2]) == 0)
-			tcode += 4;
-		      else
-			try_next = FALSE;
-		      break;
-		    }
-		}
-		break;		/* End of class handling */
-
-	      }			/* End of switch */
+	    }			/* End of switch */
 	}			/* End of try_next loop */
+      while (try_next);
 
       code += (code[1] << 8) + code[2];		/* Advance to next branch */
     }

@@ -247,8 +247,8 @@ find_fixedlength (code, options)
 {
   int length = -1;
 
-  register int branchlength = 0;
-  register uschar *cc = code + 3;
+  int branchlength = 0;
+  uschar *cc = code + 3;
 
 /* Scan along the opcodes for this branch. If we get to the end of the
    branch, check the length against that of the other branches. */
@@ -256,7 +256,7 @@ find_fixedlength (code, options)
   for (;;)
     {
       int d;
-      register int op = *cc;
+      int op = *cc;
       if (op >= OP_BRA)
 	op = OP_BRA;
 
@@ -453,7 +453,7 @@ check_posix_name (ptr, len)
      const uschar *ptr;
      int len;
 {
-  register int yield = 0;
+  int yield = 0;
   while (posix_name_lengths[yield] != 0)
     {
       if (len == posix_name_lengths[yield] &&
@@ -733,14 +733,14 @@ first_significant_code (code, options, optbit, optstop)
 
 static BOOL
 is_anchored (code, options)
-     register const uschar *code;
+     const uschar *code;
      int *options;
 {
   do
     {
       const uschar *scode = first_significant_code (code + 3, options,
 						    PCRE_MULTILINE, FALSE);
-      register int op = *scode;
+      int op = *scode;
       if (op >= OP_BRA || op == OP_ASSERT || op == OP_ONCE || op == OP_COND)
 	{
 	  if (!is_anchored (scode, options))
@@ -783,7 +783,7 @@ is_startline (code)
   do
     {
       const uschar *scode = first_significant_code (code + 3, NULL, 0, FALSE);
-      register int op = *scode;
+      int op = *scode;
       if (op >= OP_BRA || op == OP_ASSERT || op == OP_ONCE || op == OP_COND)
 	{
 	  if (!is_startline (scode))
@@ -990,13 +990,13 @@ find_firstchar (code, options)
      const uschar *code;
      int *options;
 {
-  register int c = -1;
+  int c = -1;
   do
     {
       int d;
       const uschar *scode = first_significant_code (code + 3, options,
 						    PCRE_CASELESS, TRUE);
-      register int op = *scode;
+      int op = *scode;
 
       if (op >= OP_BRA)
 	op = OP_BRA;

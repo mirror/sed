@@ -1,5 +1,15 @@
 2004-10-29  Paolo Bonzini  <bonzini@gnu.org>
 
+	* regstudy.c (set_start_bits, set_boyer_moore): Do several
+	cleanups, including removing unused variables/labels, and
+	turning while loops to do/whiles if it can be done safely.
+	* regcomp.c: Do not use register.
+	* regperl.c: Do not use register.
+	* regposix.c: Do not use register.  Simplify code to not
+	test for unused opcodes (OP_COND, OP_ASSERT, etc.).
+
+2004-10-29  Paolo Bonzini  <bonzini@gnu.org>
+
 	* regstudy.c (prune_bracket): Distinguish correctly the
 	character class at the beginning vs. at the ending of a
 	subexpression.  Be more precise in the presence of alternatives

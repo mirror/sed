@@ -280,9 +280,8 @@ compile_branch_posix (options, brackets, codeptr, ptrptr, errorptr, optchanged,
   int condcount = 0;
   int subcountlits = 0;
   BOOL first = TRUE;
-  register int c;
-  register uschar *code = *codeptr;
-  uschar *tempcode;
+  int c;
+  uschar *code = *codeptr;
   const uschar *ptr = *ptrptr;
   const uschar *tempptr;
   uschar *previous = NULL;
@@ -517,10 +516,9 @@ compile_branch_posix (options, brackets, codeptr, ptrptr, errorptr, optchanged,
 	  /* If previous was a bracket group, we may have to replicate it in certain
 	     cases. */
 
-	  else if ((int) *previous >= OP_BRA || (int) *previous == OP_ONCE ||
-		   (int) *previous == OP_COND)
+	  else if ((int) *previous >= OP_BRA)
 	    {
-	      register int i;
+	      int i;
 	      int ketoffset = 0;
 	      int len = code - previous;
 
@@ -532,7 +530,7 @@ compile_branch_posix (options, brackets, codeptr, ptrptr, errorptr, optchanged,
 
 	      if (repeat_max == -1)
 		{
-		  register uschar *ket = previous;
+		  uschar *ket = previous;
 		  do
 		    ket += (ket[1] << 8) + ket[2];
 		  while (*ket != OP_KET);
@@ -754,7 +752,7 @@ compile_branch_posix (options, brackets, codeptr, ptrptr, errorptr, optchanged,
 		  check_posix_syntax (ptr, &tempptr, cd))
 		{
 		  int posix_class, i;
-		  register const uschar *cbits = cd->cbits;
+		  const uschar *cbits = cd->cbits;
 
 		  if (ptr[1] != ':')
 		    {
@@ -958,25 +956,22 @@ compile_branch_posix (options, brackets, codeptr, ptrptr, errorptr, optchanged,
 	  else
 	    bravalue = OP_BRA + *brackets;
 
-	  /* Process nested bracketed re. Assertions may not be repeated, but other
-	     kinds can be. We copy code into a non-register variable in order to be able
-	     to pass its address because some compilers complain otherwise. Pass in a
-	     new setting for the ims options if they have changed. */
+	  /* Process nested bracketed re. Assertions may not be repeated, but other kinds
+	     can be. Pass in a new setting for the ims options if they have changed. */
 
 	  previous = code;
 	  *code = bravalue;
-	  tempcode = code;
 
 	  if (!compile_regex (options | PCRE_INGROUP,	/* Set for all nested groups */
 			      ((options & PCRE_IMS) !=
 			       (newoptions & PCRE_IMS)) ? newoptions &
 			      PCRE_IMS : -1,	/* Pass ims options if changed */
 			      brackets,	/* Capturing bracket count */
-			      &tempcode,	/* Where to put code (updated) */
+			      &code,	/* Where to put code (updated) */
 			      &ptr,	/* Input pointer (updated) */
 			      errorptr,	/* Where to put an error message */
 			      FALSE,	/* Whether this is a lookbehind assertion */
-			      skipbytes,		/* Skip over OP_COND/OP_BRANUMBER */
+			      skipbytes,		/* Skip over OP_BRANUMBER */
 			      &subreqchar,	/* For possible last char */
 			      &subcountlits,	/* For literal count */
 			      cd,	/* Tables block */
@@ -984,31 +979,9 @@ compile_branch_posix (options, brackets, codeptr, ptrptr, errorptr, optchanged,
 	    goto FAILED;
 
 	  /* At the end of compiling, code is still pointing to the start of the
-	     group, while tempcode has been updated to point past the end of the group
+	     group, while code has been updated to point past the end of the group
 	     and any option resetting that may follow it. The pattern pointer (ptr)
 	     is on the bracket. */
-
-	  /* If this is a conditional bracket, check that there are no more than
-	     two branches in the group. */
-
-	  else if (bravalue == OP_COND)
-	    {
-	      uschar *tc = code;
-	      condcount = 0;
-
-	      do
-		{
-		  condcount++;
-		  tc += (tc[1] << 8) | tc[2];
-		}
-	      while (*tc != OP_KET);
-
-	      if (condcount > 2)
-		{
-		  *errorptr = pcre_estrings[27];
-		  goto FAILED;
-		}
-	    }
 
 	  /* Handle updating of the required character. If the subpattern didn't
 	     set one, leave it as it was. Otherwise, update it for normal brackets of
@@ -1018,20 +991,12 @@ compile_branch_posix (options, brackets, codeptr, ptrptr, errorptr, optchanged,
 	     the definition of prevreqchar and subcountlits outside the main loop so
 	     that they can be accessed for the back off. */
 
-	  if (subreqchar > 0 &&
-	      (bravalue >= OP_BRA || bravalue == OP_ONCE
-	       || bravalue == OP_ASSERT || (bravalue == OP_COND
-					    && condcount == 2)))
+	  if (subreqchar > 0 && bravalue >= OP_BRA)
 	    {
 	      prevreqchar = *reqchar;
 	      *reqchar = subreqchar;
-	      if (bravalue != OP_ASSERT)
-		*countlits += subcountlits;
+	      *countlits += subcountlits;
 	    }
-
-	  /* Now update the main code pointer to the end of the group. */
-
-	  code = tempcode;
 
 	  /* Error if hit end of pattern */
 

@@ -136,7 +136,7 @@ pchars (p, length, is_subject, md)
 static BOOL
 match_ref (offset, eptr, length, md, ims)
      int offset;
-     register const uschar *eptr;
+     const uschar *eptr;
      int length;
      match_data *md;
      unsigned long int ims;
@@ -206,8 +206,8 @@ match_ref (offset, eptr, length, md, ims)
 
 static BOOL
 match (eptr, ecode, offset_top, md, ims, eptrb, flags)
-     register const uschar *eptr;
-     register const uschar *ecode;
+     const uschar *eptr;
+     const uschar *ecode;
      int offset_top;
      match_data *md;
      unsigned long int ims;
@@ -235,8 +235,8 @@ match (eptr, ecode, offset_top, md, ims, eptrb, flags)
     {
       int op = (int) *ecode;
       int min, max, ctype;
-      register int i;
-      register int c;
+      int i;
+      int c;
       int kind = 0;
 
       /* Opening capturing bracket. If there is space in the offset vector, save
@@ -934,9 +934,7 @@ match (eptr, ecode, offset_top, md, ims, eptrb, flags)
 	    if (length == 0)
 	      continue;
 
-	    /* First, ensure the minimum number of matches are present. We get back
-	       the length of the reference string explicitly rather than passing the
-	       address of eptr, so that eptr can be a register variable. */
+	    /* First, ensure the minimum number of matches are present.  */
 
 	    for (i = 1; i <= min; i++)
 	      {
@@ -1121,10 +1119,10 @@ match (eptr, ecode, offset_top, md, ims, eptrb, flags)
 
 	case OP_CHARS:
 	  {
-	    register int length = ecode[1];
+	    int length = ecode[1];
 	    ecode += 2;
 
-#ifdef DEBUG			/* Sigh. Some compilers never learn. */
+#ifdef DEBUG
 	    if (eptr >= md->end_subject)
 	      printf ("matching subject <null> against pattern ");
 	    else
@@ -1853,8 +1851,8 @@ pcre_exec (re, extra, subject, length, start_offset, options, offsets, offsetcou
      initialize them to avoid reading uninitialized locations. */
   if (match_block.offset_vector != NULL)
     {
-      register int *iptr = match_block.offset_vector + ocount;
-      register int *iend = iptr - resetcount / 2 + 1;
+      int *iptr = match_block.offset_vector + ocount;
+      int *iend = iptr - resetcount / 2 + 1;
       while (--iptr >= iend)
 	*iptr = -1;
     }
@@ -1878,8 +1876,8 @@ pcre_exec (re, extra, subject, length, start_offset, options, offsets, offsetcou
   do
     {
       int rc;
-      register int *iptr = match_block.offset_vector;
-      register int *iend = iptr + resetcount;
+      int *iptr = match_block.offset_vector;
+      int *iend = iptr + resetcount;
 #ifdef DEBUG
       int skipped_chars = 0;
 #endif
@@ -1954,7 +1952,7 @@ pcre_exec (re, extra, subject, length, start_offset, options, offsets, offsetcou
 	{
 	  while (start_match < end_subject)
 	    {
-	      register int c = *start_match;
+	      int c = *start_match;
 	      if ((start_bits[c / 8] & (1 << (c & 7))) == 0)
 #ifdef DEBUG
 		skipped_chars++,
@@ -1987,7 +1985,7 @@ pcre_exec (re, extra, subject, length, start_offset, options, offsets, offsetcou
 
       if (req_char >= 0)
 	{
-	  register const uschar *p = start_match + ((first_char >= 0) ? 1 : 0);
+	  const uschar *p = start_match + ((first_char >= 0) ? 1 : 0);
 
 	  /* We don't need to repeat the search if we haven't yet reached the
 	     place we found it at last time. */
@@ -2014,7 +2012,7 @@ pcre_exec (re, extra, subject, length, start_offset, options, offsets, offsetcou
 		{
 		  while (p < end_subject)
 		    {
-		      register int pp = *p++;
+		      int pp = *p++;
 		      if (pp == req_char || pp == req_char2)
 			{
 			  p--;
