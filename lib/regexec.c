@@ -2469,9 +2469,12 @@ transit_state_mb (mctx, pstate)
     {
       re_node_set dest_nodes, *new_nodes;
       int cur_node_idx = pstate->nodes.elems[i];
-      int naccepted = 0, dest_idx;
+      int naccepted, dest_idx;
       unsigned int context;
       re_dfastate_t *dest_state;
+
+      if (!dfa->nodes[cur_node_idx].accept_mb)
+        continue;
 
       if (dfa->nodes[cur_node_idx].constraint)
 	{
@@ -2484,9 +2487,8 @@ transit_state_mb (mctx, pstate)
 	}
 
       /* How many bytes the node can accept?  */
-      if (dfa->nodes[cur_node_idx].accept_mb)
-	naccepted = check_node_accept_bytes (dfa, cur_node_idx, &mctx->input,
-					     re_string_cur_idx (&mctx->input));
+      naccepted = check_node_accept_bytes (dfa, cur_node_idx, &mctx->input,
+					   re_string_cur_idx (&mctx->input));
       if (naccepted == 0)
 	continue;
 
@@ -2500,9 +2502,7 @@ transit_state_mb (mctx, pstate)
 #ifdef DEBUG
       assert (dfa->nexts[cur_node_idx] != -1);
 #endif
-      /* `cur_node_idx' may point the entity of the OP_CONTEXT_NODE,
-	 then we use pstate->nodes.elems[i] instead.  */
-      new_nodes = dfa->eclosures + dfa->nexts[pstate->nodes.elems[i]];
+      new_nodes = dfa->eclosures + dfa->nexts[cur_node_idx];
 
       dest_state = mctx->state_log[dest_idx];
       if (dest_state == NULL)
