@@ -1,4 +1,11 @@
-2004-11-11  Paolo Bonzini  <bonzini@gnu
+2004-11-15  Paolo Bonzini  <bonzini@gnu.org>
+
+	* sed/execute.c (str_append_modified): Copy the first character
+	when using \l or \u in a multi-byte configuration.  Use
+	WCRTOMB instead of wcrtomb.
+	* sed/sed.h (WCRTOMB): New.
+
+2004-11-11  Paolo Bonzini  <bonzini@gnu.org>
 
 	* tst-rxspecer.c: Do not mix instructions and
 	declarations.

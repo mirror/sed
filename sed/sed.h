@@ -233,9 +233,17 @@ extern int mb_cur_max;
   (mb_cur_max == 1 ? \
    (*(pwc) = btowc (*(unsigned char *) (s)), 1) : \
    mbrtowc ((pwc), (s), (n), (ps)))
+
+#define WCRTOMB(s, wc, ps) \
+  (mb_cur_max == 1 ? \
+   (*(s) = wctob ((wint_t) (wc)), 1) : \
+   wcrtomb ((s), (wc), (ps)))
 #else
 #define MBRTOWC(pwc, s, n, ps) \
   mbrtowc ((pwc), (s), (n), (ps))
+
+#define WCRTOMB(s, wc, ps) \
+  wcrtomb ((s), (wc), (ps))
 #endif
 
 #define MBRLEN(s, n, ps) \
