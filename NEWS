@@ -1,3 +1,13 @@
+Sed 3.62 (aligned with GNU sed 4.1.3)
+  
+* added a note to BUGS and the manual about changed interpretation
+  of `s|abc\|def||', and about localization issues.
+
+* fixed --disable-nls build problems on Solaris.
+
+* fixed `make check' in non-English locales.
+  
+-----------------------------------------------------------------------
 Sed 3.61a
 
 * sed 3.61 had GNU sed 4.1's toplevel Makefile by mistake.  Fixed.

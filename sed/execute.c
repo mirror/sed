@@ -1072,7 +1072,6 @@ do_subst(sub)
   countT count = 0;	/* number of matches found */
   bool again = true;
 
-#define MAX_BACKREFERENCES 10
   static struct re_registers regs;
 
   if (s_accum.alloc == 0)
@@ -1082,7 +1081,7 @@ do_subst(sub)
   /* The first part of the loop optimizes s/xxx// when xxx is at the
      start, and s/xxx$// */
   if (!match_regex(sub->regx, line.active, line.length, start,
-		   &regs, MAX_BACKREFERENCES))
+		   &regs, sub->max_id + 1))
     return;
   
   if (!sub->replacement && sub->numb <= 1)
@@ -1160,7 +1159,7 @@ do_subst(sub)
   while (again
 	 && start <= line.length
 	 && match_regex(sub->regx, line.active, line.length, start,
-			&regs, MAX_BACKREFERENCES));
+			&regs, sub->max_id + 1));
 
   /* Copy stuff to the right of the last match into the output string. */
   if (start < line.length)

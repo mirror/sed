@@ -13,8 +13,9 @@ SED = $(top_builddir)/sed/sed
 # scripts we group comments with lines following them;
 # since mantaining the "@group...@end group" manually
 # is a burden, we do this automatically
-sed.texi: sed-in.texi groupify.sed
-	sed -nf groupify.sed < $(srcdir)/sed-in.texi > $(srcdir)/sed.texi
+$(srcdir)/sed.texi: sed-in.texi $(srcdir)/groupify.sed
+	sed -nf $(srcdir)/groupify.sed \
+	  < $(srcdir)/sed-in.texi > $(srcdir)/sed.texi
 
 sed.1: $(top_srcdir)/sed/sed.c $(top_srcdir)/configure.ac $(srcdir)/sed.x
 	$(HELP2MAN) -p sed --include $(srcdir)/sed.x $(SED) > $(srcdir)/sed.1

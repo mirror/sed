@@ -1,5 +1,34 @@
 2004-12-26  Paolo Bonzini  <bonzini@gnu.org>
 
+	Do not use leftmost-longest matching for addresses.
+
+	* NEWS: Add a note about this.
+	* testsuite/recall2.good, testsuite/recall2.inp,
+	testsuite/recall2.sed: New test.
+	* testsuite/Makefile.am, testsuite/Makefile.tests: Add the
+	recall2 test.
+	* sed/sed.h (struct regex): New.
+	(struct addr, struct subst, compile_regex, match_regex,
+	release_regex): Use it instead of regex_t.
+	* sed/compile.c (compile_program): Update for new meaning of
+	the third parameter of compile_regex.
+	* sed/execute.c (do_subst): Pass less conservative value to
+	the regsize parameter of match_regex.
+	* sed/regexp.c (compile_regex_1): New, extracted out of
+	compile_regex.  The third parameter, needed_sub, now includes
+	\0 (so 10 means that \0 .. \9 are needed).  Pass RE_NO_SUB
+	if needed_sub is zero.
+	(compile_regex): Accept a struct regex instead of a regex_t.
+	Save the regular expression's text.
+	(match_regex): Accept a struct regex instead of a regex_t.
+	Recompile the pattern if it was compiled with RE_NO_SUB.
+	(release_regex): Accept a struct regex instead of a regex_t.
+
+	* doc/Makefile.am: Generate sed.texi correctly when
+	building outside srcdir.
+
+2004-12-26  Paolo Bonzini  <bonzini@gnu.org>
+
 	* doc/sed-in.texi [!PERL]: Likewise.
 
 2004-11-15  Paolo Bonzini  <bonzini@gnu.org>
