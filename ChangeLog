@@ -1,5 +1,14 @@
 2005-02-10  Paolo Bonzini  <bonzini@gnu.org>
 
+	* testsuite/appquit.good, testsuite/appquit.inp,
+	testsuite/appquit.sed: New testcase.
+	* testsuite/readin.sed: Quit after the last r command.
+	* testsuite/readin.good: Adjust.
+	* sed/execute.c (execute_program): Dump the results of the
+	a/r/R commands just before quitting.
+
+2005-02-10  Paolo Bonzini  <bonzini@gnu.org>
+
 	* sed/regexp.c: Fix off-by-one error in the "invalid reference
 	to subexpression" message.  Debian bug 294339.
 

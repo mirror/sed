@@ -1,3 +1,8 @@
+Sed 4.1.5
+
+* output the result of commands a, r, R when a q command is found.
+
+----------------------------------------------------------------------------
 Sed 4.1.4
 
 * \B correctly means "not on a word boundary" rather than "inside a word"
