@@ -1,7 +1,6 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: ssed 3.46\n"
-"Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2004-11-11 16:32+0100\n"
 "PO-Revision-Date: 2000-12-21 12:44+0100\n"
 "Last-Translator: Paolo Bonzini <bonzini@gnu.org>\n"
@@ -9,6 +8,8 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=ISO-8859-1\n"
 "Content-Transfer-Encoding: 8-bit\n"
+"Report-Msgid-Bugs-To: \n"
+"Report-Msgid-Bugs-To: \n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 
 #: pcre/pcregrep.c:130
@@ -336,7 +337,7 @@ msgstr "impossibile modificare il file %s: è un terminale"
 msgid "couldn't edit %s: not a regular file"
 msgstr "impossibile modificare il file %s: non è un file regolare"
 
-#: sed/execute.c:683 lib/utils.c:196
+#: lib/utils.c:196 sed/execute.c:683
 #, c-format
 msgid "couldn't open temporary file %s: %s"
 msgstr "impossibile aprire il file temporaneo %s: %s"

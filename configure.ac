@@ -3,7 +3,7 @@ AC_INIT(sed, 3.61, bonzini@gnu.org, ssed)
 AC_CONFIG_AUX_DIR(config)
 AC_CONFIG_SRCDIR([sed/sed.c])
 AM_CONFIG_HEADER(config.h:config_h.in)
-AC_PREREQ(2.53)
+AC_PREREQ(2.59)
 AM_INIT_AUTOMAKE
 
 SED_FEATURE_VERSION=4.1

@@ -6,7 +6,6 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: sed 4.0.6\n"
-"Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2004-11-11 16:32+0100\n"
 "PO-Revision-Date: 2003-04-02 17:20+0200\n"
 "Last-Translator: Primo¾ Peterlin <primoz.peterlin@biofiz.mf.uni-lj.si>\n"
@@ -14,6 +13,8 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=ISO-8859-2\n"
 "Content-Transfer-Encoding: 8-bit\n"
+"Report-Msgid-Bugs-To: \n"
+"Report-Msgid-Bugs-To: \n"
 "Plural-Forms: nplurals=4; plural=(n%100==1 ? 1 : n%100==2 ? 2 : n%100==3 || n"
 "%100==4 ? 3 : 0);\n"
 
@@ -365,7 +366,7 @@ msgstr "Datoteke %s ni mogoèe odpreti: %s"
 msgid "couldn't edit %s: not a regular file"
 msgstr ""
 
-#: sed/execute.c:683 lib/utils.c:196
+#: lib/utils.c:196 sed/execute.c:683
 #, fuzzy, c-format
 msgid "couldn't open temporary file %s: %s"
 msgstr "Datoteke %s ni mogoèe odpreti: %s"

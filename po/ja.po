@@ -9,7 +9,6 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: GNU sed 4.0.6\n"
-"Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2004-11-11 16:32+0100\n"
 "PO-Revision-Date: 2004-04-21 23:53+0900\n"
 "Last-Translator: IIDA Yosiaki <iida@gnu.org>\n"
@@ -17,6 +16,8 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=EUC-JP\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Report-Msgid-Bugs-To: \n"
+"Report-Msgid-Bugs-To: \n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
 #: pcre/pcregrep.c:130
@@ -367,7 +368,7 @@ msgstr "ファイル%sを開けませんでした: %s"
 msgid "couldn't edit %s: not a regular file"
 msgstr ""
 
-#: sed/execute.c:683 lib/utils.c:196
+#: lib/utils.c:196 sed/execute.c:683
 #, fuzzy, c-format
 msgid "couldn't open temporary file %s: %s"
 msgstr "一時ファイルを開けませんでした: %s: %s"

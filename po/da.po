@@ -5,7 +5,6 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: sed 4.0.8\n"
-"Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2004-11-11 16:32+0100\n"
 "PO-Revision-Date: 2003-10-25 08:00+0200\n"
 "Last-Translator: Byrial Ole Jensen <byrial@image.dk>\n"
@@ -13,6 +12,8 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=iso-8859-1\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Report-Msgid-Bugs-To: \n"
+"Report-Msgid-Bugs-To: \n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 
 #: pcre/pcregrep.c:130
@@ -363,7 +364,7 @@ msgstr "kunne ikke åbne filen %s: %s"
 msgid "couldn't edit %s: not a regular file"
 msgstr ""
 
-#: sed/execute.c:683 lib/utils.c:196
+#: lib/utils.c:196 sed/execute.c:683
 #, fuzzy, c-format
 msgid "couldn't open temporary file %s: %s"
 msgstr "kunne ikke åbne midlertidig fil %s: %s"

@@ -1,5 +1,5 @@
 /*  GNU SED, a batch stream editor.
-    Copyright (C) 1999, 2002, 2003 Free Software Foundation, Inc.
+    Copyright (C) 1999, 2002, 2003, 2004, 2005 Free Software Foundation, Inc.
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -61,7 +61,6 @@ compile_regex_1 (new_regex, needed_sub)
     }
 #else
   const char *error;
-  new_regex->pattern.fastmap = malloc (1 << (sizeof (char) * 8));
   int syntax = ((extended_regexp_flags & REG_EXTENDED)
 		 ? RE_SYNTAX_POSIX_EXTENDED
                  : RE_SYNTAX_POSIX_BASIC)
@@ -74,6 +73,8 @@ compile_regex_1 (new_regex, needed_sub)
 #ifdef RE_NO_SUB
   syntax |= needed_sub ? 0 : RE_NO_SUB;
 #endif
+
+  new_regex->pattern.fastmap = malloc (1 << (sizeof (char) * 8));
 
   /* If REG_NEWLINE is set, newlines are treated differently.  */
   if (new_regex->flags & REG_NEWLINE)

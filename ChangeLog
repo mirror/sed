@@ -1,3 +1,7 @@
+2005-01-25  Paolo Bonzini  <bonzini@gnu.org>
+
+	* sed/regexp.c: Fix building on GCC 2.95 and earlier.
+
 2004-12-26  Paolo Bonzini  <bonzini@gnu.org>
 
 	Do not use leftmost-longest matching for addresses.
