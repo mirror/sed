@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: sed 4.0.8\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-11-09 20:01+0100\n"
+"POT-Creation-Date: 2004-11-11 15:28+0100\n"
 "PO-Revision-Date: 2003-10-26 09:28+0100\n"
 "Last-Translator: Mihály Gyulai <gyulai@fbi.hu>\n"
 "Language-Team: Hungarian <translation-team-hu@lists.sourceforge.net>\n"
@@ -194,7 +194,7 @@ msgstr "Nem lehet módosítót megadni üres reguláris kifejezéshez"
 msgid "invalid reference \\%d on `s' command's RHS"
 msgstr "Hibás hivatkozás (\\%d) a(z) `s' parancs RHS-ére"
 
-#: sed/sed.c:96
+#: sed/sed.c:93
 msgid ""
 "  -R, --regexp-perl\n"
 "                 use Perl 5's regular expressions syntax in the script.\n"
@@ -202,28 +202,28 @@ msgstr ""
 "  -R --regexp-perl\n"
 "                Perl 5 reguláris kifejezés nyelvtanának használata.\n"
 
-#: sed/sed.c:101
+#: sed/sed.c:98
 #, c-format
 msgid ""
 "Usage: %s [OPTION]... {script-only-if-no-other-script} [input-file]...\n"
 "\n"
 msgstr ""
 
-#: sed/sed.c:105
+#: sed/sed.c:102
 #, c-format
 msgid ""
 "  -n, --quiet, --silent\n"
 "                 suppress automatic printing of pattern space\n"
 msgstr ""
 
-#: sed/sed.c:107
+#: sed/sed.c:104
 #, c-format
 msgid ""
 "  -e script, --expression=script\n"
 "                 add the script to the commands to be executed\n"
 msgstr ""
 
-#: sed/sed.c:109
+#: sed/sed.c:106
 #, c-format
 msgid ""
 "  -f script-file, --file=script-file\n"
@@ -231,28 +231,28 @@ msgid ""
 "executed\n"
 msgstr ""
 
-#: sed/sed.c:111
+#: sed/sed.c:108
 #, c-format
 msgid ""
 "  -i[SUFFIX], --in-place[=SUFFIX]\n"
 "                 edit files in place (makes backup if extension supplied)\n"
 msgstr ""
 
-#: sed/sed.c:113
+#: sed/sed.c:110
 #, c-format
 msgid ""
 "  -l N, --line-length=N\n"
 "                 specify the desired line-wrap length for the `l' command\n"
 msgstr ""
 
-#: sed/sed.c:115
+#: sed/sed.c:112
 #, c-format
 msgid ""
 "  --posix\n"
 "                 disable all GNU extensions.\n"
 msgstr ""
 
-#: sed/sed.c:117
+#: sed/sed.c:114
 #, fuzzy, c-format
 msgid ""
 "  -r, --regexp-extended\n"
@@ -261,7 +261,7 @@ msgstr ""
 "  -R --regexp-perl\n"
 "                Perl 5 reguláris kifejezés nyelvtanának használata.\n"
 
-#: sed/sed.c:120
+#: sed/sed.c:117
 #, c-format
 msgid ""
 "  -s, --separate\n"
@@ -270,7 +270,7 @@ msgid ""
 "                 long stream.\n"
 msgstr ""
 
-#: sed/sed.c:123
+#: sed/sed.c:120
 #, c-format
 msgid ""
 "  -u, --unbuffered\n"
@@ -279,17 +279,17 @@ msgid ""
 "                 the output buffers more often\n"
 msgstr ""
 
-#: sed/sed.c:126
+#: sed/sed.c:123
 #, c-format
 msgid "      --help     display this help and exit\n"
 msgstr ""
 
-#: sed/sed.c:127
+#: sed/sed.c:124
 #, c-format
 msgid "      --version  output version information and exit\n"
 msgstr ""
 
-#: sed/sed.c:128
+#: sed/sed.c:125
 #, c-format
 msgid ""
 "\n"
@@ -300,7 +300,7 @@ msgid ""
 "\n"
 msgstr ""
 
-#: sed/sed.c:134
+#: sed/sed.c:131
 #, c-format
 msgid ""
 "E-mail bug reports to: %s .\n"
@@ -309,12 +309,12 @@ msgstr ""
 "A fordítási hibákat kérem a gyulai@fbi.hu címre küldeni. \n"
 "Angolul ide: %s . A levél Tárgy mezejében legyen ott a `%s' szó.\n"
 
-#: sed/sed.c:271
+#: sed/sed.c:268
 #, c-format
 msgid "super-sed version %s\n"
 msgstr "super-sed verzió %s\n"
 
-#: sed/sed.c:272
+#: sed/sed.c:269
 #, fuzzy, c-format
 msgid ""
 "based on GNU sed version %s\n"
@@ -323,12 +323,12 @@ msgstr ""
 "A GNU 3.02.80-as sed verzión alapszik\n"
 "\n"
 
-#: sed/sed.c:274
+#: sed/sed.c:271
 #, c-format
 msgid "GNU sed version %s\n"
 msgstr "GNU sed verzió %s\n"
 
-#: sed/sed.c:276
+#: sed/sed.c:273
 #, c-format
 msgid ""
 "%s\n"
@@ -437,6 +437,6 @@ msgstr "Túl nagy reguláris kifejezés"
 msgid "Unmatched ) or \\)"
 msgstr "Nincs párban ) vagy \\)"
 
-#: lib/regcomp.c:672
+#: lib/regcomp.c:690
 msgid "No previous regular expression"
 msgstr "Nincsen elõzõ reguláris kifejezés"
