@@ -54,7 +54,7 @@ static unsigned re_copy_regs (struct re_registers *regs, regmatch_t *pmatch,
 			      int nregs, int regs_allocated) internal_function;
 static inline re_dfastate_t *acquire_init_state_context
      (reg_errcode_t *err, const re_match_context_t *mctx, int idx)
-     internal_function;
+     __attribute ((always_inline)) internal_function;
 static reg_errcode_t prune_impossible_nodes (re_match_context_t *mctx)
      internal_function;
 static int check_matching (re_match_context_t *mctx, int fl_longest_match,
@@ -121,8 +121,8 @@ static reg_errcode_t check_subexp_limits (re_dfa_t *dfa,
 					  struct re_backref_cache_entry *bkref_ents,
 					  int str_idx) internal_function;
 static reg_errcode_t sift_states_bkref (re_match_context_t *mctx,
-					re_sift_context_t *sctx, int str_idx,
-					const re_node_set *candidates) internal_function;
+					re_sift_context_t *sctx,
+					int str_idx, const re_node_set *candidates) internal_function;
 static reg_errcode_t clean_state_log_if_needed (re_match_context_t *mctx,
 					        int next_state_log_idx) internal_function;
 static reg_errcode_t merge_state_array (re_dfa_t *dfa, re_dfastate_t **dst,
@@ -1525,7 +1525,6 @@ sift_states_backward (mctx, sctx)
      re_match_context_t *mctx;
      re_sift_context_t *sctx;
 {
-  re_dfa_t *const dfa = mctx->dfa;
   reg_errcode_t err;
   int null_cnt = 0;
   int str_idx = sctx->last_str_idx;
@@ -1547,7 +1546,6 @@ sift_states_backward (mctx, sctx)
   /* Then check each states in the state_log.  */
   while (str_idx > 0)
     {
-      int ret;
       /* Update counters.  */
       null_cnt = (sctx->sifted_states[str_idx] == NULL) ? null_cnt + 1 : 0;
       if (null_cnt > mctx->max_mb_elem_len)
@@ -1590,7 +1588,7 @@ build_sifted_states (mctx, sctx, str_idx, cur_dest)
 {
   re_dfa_t *const dfa = mctx->dfa;
   re_node_set *cur_src = &mctx->state_log[str_idx]->nodes;
-  int i, ret, err;
+  int i;
 
   /* Then build the next sifted state.
      We build the next sifted state on `cur_dest', and update
@@ -1603,6 +1601,7 @@ build_sifted_states (mctx, sctx, str_idx, cur_dest)
       int prev_node = cur_src->elems[i];
       int naccepted = 0;
       re_token_type_t type = dfa->nodes[prev_node].type;
+      int ret;
 
       if (IS_EPSILON_NODE (type))
 	continue;
@@ -1721,7 +1720,7 @@ update_cur_sifted_state (mctx, sctx, str_idx, dest_nodes)
 	  err = add_epsilon_src_nodes (dfa, dest_nodes, candidates);
 	  if (BE (err != REG_NOERROR, 0))
 	    return err;
-	  
+
 	  /* Then, check the limitations in the current sift_context.  */
 	  if (sctx->limits.nelem)
 	    {
@@ -1939,7 +1938,6 @@ check_dst_limits_calc_pos (mctx, limit, subexp_idx, from_node, str_idx, bkref_id
      re_match_context_t *mctx;
      int limit, subexp_idx, from_node, str_idx, bkref_idx;
 {
-  re_dfa_t *const dfa = mctx->dfa;
   struct re_backref_cache_entry *lim = mctx->bkref_ents + limit;
   int boundaries;
 
