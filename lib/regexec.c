@@ -1891,49 +1891,49 @@ check_dst_limits_calc_pos_1 (mctx, boundaries, subexp_idx, from_node, bkref_idx)
       switch (dfa->nodes[node].type)
 	{
 	case OP_BACK_REF:
-	  {
-	    struct re_backref_cache_entry *ent = mctx->bkref_ents + bkref_idx;
-	    do
-	      {
-		int dst, cpos;
+	  if (bkref_idx != -1)
+	    {
+	      struct re_backref_cache_entry *ent = mctx->bkref_ents + bkref_idx;
+	      do
+	        {
+		  int dst, cpos;
 
-		if (ent->node != node)
-		  continue;
+		  if (ent->node != node)
+		    continue;
 
-		if (subexp_idx <= 8 * sizeof (ent->eps_reachable_subexps_map)
-		    && (ent->eps_reachable_subexps_map
-			& (1 << (subexp_idx - 1))) == 0)
-		  continue;
+		  if (subexp_idx <= 8 * sizeof (ent->eps_reachable_subexps_map)
+		      && (ent->eps_reachable_subexps_map
+			  & (1 << (subexp_idx - 1))) == 0)
+		    continue;
 
-		/* Recurse trying to reach the OP_OPEN_SUBEXP and
-		   OP_CLOSE_SUBEXP cases below.  But, if the
-		   destination node is the same node as the source
-		   node, don't recurse because it would cause an
-		   infinite loop: a regex that exhibits this behavior
-		   is ()\1*\1*  */
-		dst = dfa->edests[node].elems[0];
-		if (dst == from_node)
-		  {
-		    if (boundaries & 1)
-		      return -1;
-		    else /* if (boundaries & 2) */
-		      return 0;
-		  }
+		  /* Recurse trying to reach the OP_OPEN_SUBEXP and
+		     OP_CLOSE_SUBEXP cases below.  But, if the
+		     destination node is the same node as the source
+		     node, don't recurse because it would cause an
+		     infinite loop: a regex that exhibits this behavior
+		     is ()\1*\1*  */
+		  dst = dfa->edests[node].elems[0];
+		  if (dst == from_node)
+		    {
+		      if (boundaries & 1)
+		        return -1;
+		      else /* if (boundaries & 2) */
+		        return 0;
+		    }
 
-		cpos = check_dst_limits_calc_pos_1 (mctx, boundaries,
-						    subexp_idx, dst, bkref_idx);
+		  cpos =
+		    check_dst_limits_calc_pos_1 (mctx, boundaries, subexp_idx,
+						 dst, bkref_idx);
+		  if (cpos == -1 /* && (boundaries & 1) */)
+		    return -1;
+		  if (cpos == 0 && (boundaries & 2))
+		    return 0;
 
-		if (cpos == -1 /* && (boundaries & 1) */)
-		  return -1;
-
-		if (cpos == 0 && (boundaries & 2))
-		  return 0;
-
-		ent->eps_reachable_subexps_map &= ~(1 << (subexp_idx - 1));
-	      }
-	    while (ent++->more);
-	    break;
-	  }
+		  ent->eps_reachable_subexps_map &= ~(1 << (subexp_idx - 1));
+	        }
+	      while (ent++->more);
+	    }
+	  break;
 
 	case OP_OPEN_SUBEXP:
 	  if ((boundaries & 1) && subexp_idx == dfa->nodes[node].opr.idx)
