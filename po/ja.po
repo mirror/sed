@@ -1,6 +1,6 @@
 # Japanese messages for GNU sed
-# Copyright (C) 1999, 2002, 2003, 2004 Free Software Foundation, Inc.
-# IIDA Yosiaki <iida@gnu.org>, 1999, 2002, 2003, 2004.
+# Copyright (C) 1999, 2002, 2003, 2004, 2005 Free Software Foundation, Inc.
+# IIDA Yosiaki <iida@gnu.org>, 1999, 2002, 2003, 2004, 2005.
 # This file is distributed under the same license as the GNU sed package.
 # Contributed by
 # Yasuyuki Furukawa <yasu@on.cs.keio.ac.jp>, 1999.
@@ -8,133 +8,117 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: GNU sed 4.0.6\n"
-"POT-Creation-Date: 2004-11-11 15:28+0100\n"
-"PO-Revision-Date: 2004-04-21 23:53+0900\n"
+"Project-Id-Version: GNU sed 4.1.1\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2004-07-01 18:32+0200\n"
+"PO-Revision-Date: 2005-02-01 21:02+0900\n"
 "Last-Translator: IIDA Yosiaki <iida@gnu.org>\n"
 "Language-Team: Japanese <translation-team-ja@lists.sourceforge.net>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=EUC-JP\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Report-Msgid-Bugs-To: \n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
 #: sed/compile.c:162
-#, fuzzy
 msgid "multiple `!'s"
-msgstr "複数の`!'があります"
+msgstr "複数の「!」です"
 
 #: sed/compile.c:163
-#, fuzzy
 msgid "unexpected `,'"
-msgstr "予期されない`,'です"
+msgstr "予期せぬ「,」です"
 
 #: sed/compile.c:164
-#, fuzzy
 msgid "invalid usage of +N or ~N as first address"
-msgstr "+Nや~Nを最初のアドレスに指定することはできません"
+msgstr "最初のアドレスへの+Nや~Nの指定は無効です"
 
 #: sed/compile.c:165
-#, fuzzy
 msgid "unmatched `{'"
-msgstr "`{'が釣合いません"
+msgstr "釣り合わない「{」です"
 
 #: sed/compile.c:166
-#, fuzzy
 msgid "unexpected `}'"
-msgstr "予期されない`}'です"
+msgstr "予期せぬ「}」です"
 
 #: sed/compile.c:167
-#, fuzzy
 msgid "extra characters after command"
 msgstr "コマンドの後ろに余計な文字があります"
 
 #: sed/compile.c:168
-#, fuzzy
 msgid "expected \\ after `a', `c' or `i'"
 msgstr "\\が「a」「c」「i」の後に予期されます"
 
 #: sed/compile.c:169
 msgid "`}' doesn't want any addresses"
-msgstr "`}'にアドレスはいりません"
+msgstr "「}」にアドレスは不要です"
 
 #: sed/compile.c:170
 msgid ": doesn't want any addresses"
-msgstr ":にアドレスはいりません"
+msgstr ":にアドレスは不要です"
 
 #: sed/compile.c:171
-#, fuzzy
 msgid "comments don't accept any addresses"
 msgstr "コメントはアドレスを受け付けません"
 
 #: sed/compile.c:172
-#, fuzzy
 msgid "missing command"
 msgstr "コマンドが足りません"
 
 #: sed/compile.c:173
-#, fuzzy
 msgid "command only uses one address"
-msgstr "コマンドはひとつのアドレスだけを使います"
+msgstr "コマンドはアドレスを1つだけ使います"
 
 #: sed/compile.c:174
-#, fuzzy
 msgid "unterminated address regex"
 msgstr "アドレスregexが終了していません"
 
 #: sed/compile.c:175
-#, fuzzy
 msgid "unterminated `s' command"
-msgstr "`s'コマンドが終了していません"
+msgstr "「s」コマンドが終了していません"
 
 #: sed/compile.c:176
-#, fuzzy
 msgid "unterminated `y' command"
-msgstr "`y'コマンドが終了していません"
+msgstr "「y」コマンドが終了していません"
 
 #: sed/compile.c:177
-#, fuzzy
 msgid "unknown option to `s'"
-msgstr "`s'へのオプションが不明です"
+msgstr "「s」へのオプションが未知です"
 
 #: sed/compile.c:178
 msgid "multiple `p' options to `s' command"
-msgstr "`s'コマンドに対して複数の`p'オプションがあります"
+msgstr "「s」コマンドに複数の「p」オプション"
 
 #: sed/compile.c:179
 msgid "multiple `g' options to `s' command"
-msgstr "`s'コマンドに対して複数の`g'オプションがあります"
+msgstr "「s」コマンドに複数の「g」オプション"
 
 #: sed/compile.c:180
 msgid "multiple number options to `s' command"
-msgstr "`s'コマンドに対して複数の数値オプションがあります"
+msgstr "「s」コマンドに複数の数値オプション"
 
 #: sed/compile.c:181
 msgid "number option to `s' command may not be zero"
-msgstr "`s'コマンドへの数値オプションは零ではいけません"
+msgstr "「s」コマンドへの数値オプションは零ではいけません"
 
 #: sed/compile.c:182
-#, fuzzy
 msgid "strings for `y' command are different lengths"
-msgstr "yコマンドへの文字列の長さが違います"
+msgstr "「y」コマンドへの文字列の長さが、違います"
 
 #: sed/compile.c:183
 msgid "delimiter character is not a single-byte character"
-msgstr ""
+msgstr "区切り文字が、単一バイト文字でありません"
 
 #: sed/compile.c:184
 msgid "expected newer version of sed"
 msgstr "sedの新版が前提です"
 
 #: sed/compile.c:185
-#, fuzzy
 msgid "invalid usage of line address 0"
-msgstr "コマンドはひとつのアドレスだけを使います"
+msgstr "無効な行アドレス0の使用法"
 
 #: sed/compile.c:186
-#, fuzzy, c-format
+#, c-format
 msgid "unknown command: `%c'"
-msgstr "不明なコマンドです:"
+msgstr "未知のコマンドです: 「%c」"
 
 #: sed/compile.c:209
 #, c-format
@@ -147,9 +131,9 @@ msgid "%s: -e expression #%lu, char %lu: %s\n"
 msgstr "%s: -e 表現 #%lu, 文字数 %lu: %s\n"
 
 #: sed/compile.c:1644
-#, fuzzy, c-format
+#, c-format
 msgid "can't find label for jump to `%s'"
-msgstr "`%s'へのジャンプのラベルが見つかりません"
+msgstr "「%s」へのジャンプのラベルが見つかりません"
 
 #: sed/execute.c:649
 #, c-format
@@ -157,17 +141,17 @@ msgid "%s: can't read %s: %s\n"
 msgstr "%s: %sを読み込めません: %s\n"
 
 #: sed/execute.c:672
-#, fuzzy, c-format
+#, c-format
 msgid "couldn't edit %s: is a terminal"
-msgstr "ファイル%sを開けませんでした: %s"
+msgstr "%sは、編集できませんでした: 端末です"
 
 #: sed/execute.c:676
-#, fuzzy, c-format
+#, c-format
 msgid "couldn't edit %s: not a regular file"
-msgstr "ファイル%sを開けませんでした: %s"
+msgstr "%sは、編集できませんでした: 通常ファイルでありません"
 
-#: lib/utils.c:196 sed/execute.c:683
-#, fuzzy, c-format
+#: sed/execute.c:683 lib/utils.c:196
+#, c-format
 msgid "couldn't open temporary file %s: %s"
 msgstr "一時ファイルを開けませんでした: %s: %s"
 
@@ -177,28 +161,26 @@ msgstr "子プロセスのエラー"
 
 #: sed/execute.c:1209
 msgid "option `e' not supported"
-msgstr "eオプションは、サポートされていません"
+msgstr "「e」オプションは、サポートされていません"
 
 #: sed/execute.c:1390
 msgid "`e' command not supported"
-msgstr "eコマンドは、サポートされていません"
+msgstr "「e」コマンドは、サポートされていません"
 
 #: sed/regexp.c:39
-#, fuzzy
 msgid "no previous regular expression"
 msgstr "直前の正規表現が、ありません"
 
 #: sed/regexp.c:40
-#, fuzzy
 msgid "cannot specify modifiers on empty regexp"
 msgstr "修飾子は、空の正規表現に指定できません"
 
 #: sed/regexp.c:134
-#, fuzzy, c-format
+#, c-format
 msgid "invalid reference \\%d on `s' command's RHS"
 msgstr "「s」コマンドの右側に無効な\\%dの参照"
 
-#: sed/sed.c:93
+#: sed/sed.c:96
 msgid ""
 "  -R, --regexp-perl\n"
 "                 use Perl 5's regular expressions syntax in the script.\n"
@@ -206,95 +188,99 @@ msgstr ""
 "  -R, --regexp-perl\n"
 "                 スクリプトでPerl 5の正規表現構文を使う。\n"
 
-#: sed/sed.c:98
+#: sed/sed.c:101
 #, c-format
 msgid ""
 "Usage: %s [OPTION]... {script-only-if-no-other-script} [input-file]...\n"
 "\n"
 msgstr ""
+"使用法: %s [オプション]... {スクリプト(他になければ)} [入力ファイル]...\n"
+"\n"
 
-#: sed/sed.c:102
-#, c-format
+#: sed/sed.c:105
 msgid ""
-"  -n, --quiet, --silent\n"
+"-n, --quiet, --silent\n"
 "                 suppress automatic printing of pattern space\n"
 msgstr ""
+"-n, --quiet, --silent\n"
+"                 パターン・スペースの自動出力を抑制\n"
 
-#: sed/sed.c:104
-#, c-format
+#: sed/sed.c:107
 msgid ""
 "  -e script, --expression=script\n"
 "                 add the script to the commands to be executed\n"
 msgstr ""
+"  -e スクリプト, --expression=スクリプト\n"
+"                 実行するコマンドとしてスクリプトを追加\n"
 
-#: sed/sed.c:106
-#, c-format
+#: sed/sed.c:109
 msgid ""
 "  -f script-file, --file=script-file\n"
-"                 add the contents of script-file to the commands to be "
-"executed\n"
+"                 add the contents of script-file to the commands to be executed\n"
 msgstr ""
+"  -f スクリプト・ファイル, --file=スクリプト・ファイル\n"
+"                 実行するコマンドとしてスクリプト・ファイルの内容を追加\n"
 
-#: sed/sed.c:108
-#, c-format
+#: sed/sed.c:111
 msgid ""
 "  -i[SUFFIX], --in-place[=SUFFIX]\n"
 "                 edit files in place (makes backup if extension supplied)\n"
 msgstr ""
+"  -i[接尾辞], --in-place[=接尾辞]\n"
+"                 ファイルをその場で編集 (拡張子があれば、バックアップを作成)\n"
 
-#: sed/sed.c:110
-#, c-format
+#: sed/sed.c:113
 msgid ""
 "  -l N, --line-length=N\n"
 "                 specify the desired line-wrap length for the `l' command\n"
 msgstr ""
+"  -l N, --line-length=N\n"
+"                 「l」コマンド用の行折返し長を指定\n"
 
-#: sed/sed.c:112
-#, c-format
+#: sed/sed.c:115
 msgid ""
 "  --posix\n"
 "                 disable all GNU extensions.\n"
 msgstr ""
+"  --posix\n"
+"                 GNU拡張を全部禁止。\n"
 
-#: sed/sed.c:114
-#, fuzzy, c-format
+#: sed/sed.c:117
 msgid ""
 "  -r, --regexp-extended\n"
 "                 use extended regular expressions in the script.\n"
 msgstr ""
-"  -R, --regexp-perl\n"
-"                 スクリプトでPerl 5の正規表現構文を使う。\n"
-
-#: sed/sed.c:117
-#, c-format
-msgid ""
-"  -s, --separate\n"
-"                 consider files as separate rather than as a single "
-"continuous\n"
-"                 long stream.\n"
-msgstr ""
+"  -r, --regexp-extended\n"
+"                 スクリプトで拡張正規表現を使用。\n"
 
 #: sed/sed.c:120
-#, c-format
 msgid ""
-"  -u, --unbuffered\n"
-"                 load minimal amounts of data from the input files and "
-"flush\n"
-"                 the output buffers more often\n"
+"  -s, --separate\n"
+"                 consider files as separate rather than as a single continuous\n"
+"                 long stream.\n"
 msgstr ""
+"  -s, --separate\n"
+"                 ファイルを一連の入力にせず、別々に処理。\n"
 
 #: sed/sed.c:123
-#, c-format
+msgid ""
+"  -u, --unbuffered\n"
+"                 load minimal amounts of data from the input files and flush\n"
+"                 the output buffers more often\n"
+msgstr ""
+"  -u, --unbuffered\n"
+"                 入力ファイルから極小のデータを取り込み、\n"
+"                 ちょくちょく出力バッファーに掃出し\n"
+
+#: sed/sed.c:126
 msgid "      --help     display this help and exit\n"
-msgstr ""
+msgstr "      --help     この説明を表示して終了\n"
 
-#: sed/sed.c:124
-#, c-format
+#: sed/sed.c:127
 msgid "      --version  output version information and exit\n"
-msgstr ""
+msgstr "      --version  バージョン情報を表示して終了\n"
 
-#: sed/sed.c:125
-#, c-format
+#: sed/sed.c:128
 msgid ""
 "\n"
 "If no -e, --expression, -f, or --file option is given, then the first\n"
@@ -303,38 +289,43 @@ msgid ""
 "specified, then the standard input is read.\n"
 "\n"
 msgstr ""
+"\n"
+"-e、--expression、-f、--fileオプションのどれもないと、オプション以外の\n"
+"最初の引数をsedスクリプトとして解釈します。残りの引数は全部、入力ファ\n"
+"イル名となります。入力ファイルの指定がないと、標準入力を読み込みます。\n"
+"\n"
 
-#: sed/sed.c:131
+#: sed/sed.c:134
 #, c-format
 msgid ""
 "E-mail bug reports to: %s .\n"
 "Be sure to include the word ``%s'' somewhere in the ``Subject:'' field.\n"
 msgstr ""
 "電子メールによるバグ報告の宛先: %s\n"
-"報告する際には``Subject:''フィールドのどこかに``%s''を入れてください。\n"
+"報告の際、“Subject:”フィールドのどこかに“%s”を入れてください。\n"
 
-#: sed/sed.c:268
+#: sed/sed.c:271
 #, c-format
 msgid "super-sed version %s\n"
 msgstr "super-sed %s版\n"
 
-#: sed/sed.c:269
-#, fuzzy, c-format
+#: sed/sed.c:272
+#, c-format
 msgid ""
 "based on GNU sed version %s\n"
 "\n"
 msgstr ""
-"原作GNU sed 3.02.80版\n"
+"原作GNU sed %s版\n"
 "\n"
 
-#: sed/sed.c:271
+#: sed/sed.c:274
 #, c-format
 msgid "GNU sed version %s\n"
 msgstr ""
 "GNU sed %s版\n"
 "\n"
 
-#: sed/sed.c:273
+#: sed/sed.c:276
 #, c-format
 msgid ""
 "%s\n"
@@ -349,19 +340,17 @@ msgstr ""
 "\n"
 "訳注: 非常に重要な文章のため、原文を残しています。\n"
 "  -- 参考訳\n"
-"これはフリー・ソフトウェアです。複製の条件に関しては、ソースをご覧くださ"
-"い。\n"
-"保証は一切ありません。営利目的や法で定められた範囲での特定目的のための適合"
-"性\n"
-"もありません。\n"
+"これはフリー・ソフトウェアです。複製の条件に関しては、ソースをご覧くださ\n"
+"い。保証は一切ありません。営利目的や法で定められた範囲での特定目的のため\n"
+"の適合性もありません。\n"
 
 #: lib/utils.c:98 lib/utils.c:336
-#, fuzzy, c-format
+#, c-format
 msgid "cannot remove %s: %s"
-msgstr "%s: %sを読み込めません: %s\n"
+msgstr "%sを削除できません: %s"
 
 #: lib/utils.c:143
-#, fuzzy, c-format
+#, c-format
 msgid "couldn't open file %s: %s"
 msgstr "ファイル%sを開けませんでした: %s"
 
@@ -378,9 +367,9 @@ msgid "read error on %s: %s"
 msgstr "%sの読込みエラー: %s"
 
 #: lib/utils.c:341
-#, fuzzy, c-format
+#, c-format
 msgid "cannot rename %s: %s"
-msgstr "%s: %sを読み込めません: %s\n"
+msgstr "%sの名前を変更できません: %s"
 
 #: lib/regcomp.c:150
 msgid "Success"
@@ -440,7 +429,7 @@ msgstr "無効な先行正規表現"
 
 #: lib/regcomp.c:192
 msgid "Premature end of regular expression"
-msgstr "予期せぬ正規表現の終端"
+msgstr "早過ぎる正規表現終端"
 
 #: lib/regcomp.c:195
 msgid "Regular expression too big"
@@ -448,8 +437,8 @@ msgstr "大き過ぎる正規表現"
 
 #: lib/regcomp.c:198
 msgid "Unmatched ) or \\)"
-msgstr ")や\\)が一致しません"
+msgstr "釣り合わない)や\\)"
 
-#: lib/regcomp.c:690
+#: lib/regcomp.c:672
 msgid "No previous regular expression"
 msgstr "直前の正規表現が、ありません"

@@ -1,3 +1,7 @@
+2005-02-08  Paolo Bonzini  <bonzini@gnu.org>
+
+	* lib/obstack.h: include config.h.
+
 2005-02-01  Paolo Bonzini  <bonzini@gnu.org>
 
 	* doc/Makefile.am: Don't enable MAKEINFO_HTML and TEXI2HTML_HTML

@@ -106,6 +106,10 @@ Summary:
 #ifndef _OBSTACK_H
 #define _OBSTACK_H 1
 
+#ifdef HAVE_CONFIG_H
+#include "config.h"
+#endif
+
 #ifdef __cplusplus
 extern "C" {
 #endif
