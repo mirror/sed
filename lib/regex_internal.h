@@ -544,6 +544,7 @@ struct re_backref_cache_entry
   int str_idx;
   int subexp_from;
   int subexp_to;
+  char more;
 };
 
 typedef struct
