@@ -293,7 +293,6 @@ build_wcs_upper_buffer (pstr)
   byte_idx = pstr->valid_len;
   end_idx = (pstr->bufs_len > pstr->len) ? pstr->len : pstr->bufs_len;
 
-#ifdef _LIBC
   /* The following optimization assumes that the wchar_t encoding is
      always ISO 10646.  */
   if (! pstr->map_notascii && pstr->trans == NULL && !pstr->offsets_needed)
@@ -368,14 +367,11 @@ build_wcs_upper_buffer (pstr)
       return REG_NOERROR;
     }
   else
-#endif
     for (src_idx = pstr->valid_raw_len; byte_idx < end_idx;)
       {
 	wchar_t wc;
 	const char *p;
-#ifdef _LIBC
 offsets_needed:
-#endif
 	remain_len = end_idx - byte_idx;
 	prev_st = pstr->cur_state;
 	if (BE (pstr->trans != NULL, 0))
@@ -647,7 +643,6 @@ re_string_reconstruct (pstr, idx, eflags)
 	      int wcs_idx;
 	      wint_t wc = WEOF;
 
-#ifdef _LIBC
 	      if (pstr->is_utf8)
 		{
 		  const unsigned char *raw, *p, *q, *end;
@@ -687,7 +682,6 @@ re_string_reconstruct (pstr, idx, eflags)
 			break;
 		      }
 		}
-#endif
 	      if (wc == WEOF)
 		pstr->valid_len = re_string_skip_chars (pstr, idx, &wc) - idx;
 	      if (BE (pstr->valid_len, 0))

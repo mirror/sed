@@ -824,6 +824,7 @@ init_dfa (dfa, pat_len)
      int pat_len;
 {
   int table_size;
+  char *codeset_name;
 
   memset (dfa, '\0', sizeof (re_dfa_t));
 
@@ -847,13 +848,36 @@ init_dfa (dfa, pat_len)
   dfa->subexps = re_malloc (re_subexp_t, dfa->subexps_alloc);
 
   dfa->mb_cur_max = MB_CUR_MAX;
-#ifdef _LIBC
+#if defined _LIBC
+  codeset_name = _NL_CURRENT (LC_CTYPE, _NL_CTYPE_CODESET_NAME);
+#elif defined HAVE_LANGINFO_CODESET
+  codeset_name = nl_langinfo (CODESET);
+#else
+  codeset_name = getenv ("LC_ALL");
+  if (codeset_name == NULL || codeset[0] == '\0')
+    codeset_name = getenv ("LC_CTYPE");
+  if (codeset_name == NULL || codeset[0] == '\0')
+    codeset_name = getenv ("LANG");
+  if (codeset_name == NULL)
+    codeset_name = "";
+  else if (strchr (codeset_name, '.')
+    codeset_name = strchr (codeset_name, '.') + 1;
+#endif
+
   if (dfa->mb_cur_max == 6
-      && strcmp (_NL_CURRENT (LC_CTYPE, _NL_CTYPE_CODESET_NAME), "UTF-8") == 0)
+      && (strcasecmp (codeset_name, "UTF-8") == 0
+	  || strcasecmp (codeset_name, "UTF8") == 0))
     dfa->is_utf8 = 1;
+
+#ifdef _LIBC
   dfa->map_notascii = (_NL_CURRENT_WORD (LC_CTYPE, _NL_CTYPE_MAP_TO_NONASCII)
 		       != 0);
+#else
+  /* We check exhaustively in the loop below if this charset is a
+     superset of ASCII.  */
+  dfa->map_notascii = 0;
 #endif
+
 #ifdef RE_ENABLE_I18N
   if (dfa->mb_cur_max > 1)
     {
@@ -867,8 +891,15 @@ init_dfa (dfa, pat_len)
       else
 	for (i = 0, ch = 0; i < BITSET_UINTS; ++i)
 	  for (j = 0; j < UINT_BITS; ++j, ++ch)
-	    if (__btowc (ch) != WEOF)
-	      dfa->sb_char[i] |= 1 << j;
+	    {
+	      wchar_t wch = __btowc (ch);
+	      if (wch != WEOF)
+	        dfa->sb_char[i] |= 1 << j;
+#ifndef _LIBC
+	      if (ch <= 127 && wch != (wchar_t) ch)
+	        dfa->map_notascii = 1;
+#endif
+	    }
     }
 #endif
 
