@@ -101,3 +101,21 @@ regex syntax clashes (problems with backslashes)
   to delete every line up to the first one including `abc', and this
   is obtained with `0,/abc/d'.
 
+
+`[a-z]' is case insensitive
+
+  You are encountering problems with locales.  POSIX mandates that `[a-z]'
+  uses the current locale's collation order -- in C parlance, that means
+  strcoll(3) instead of strcmp(3).  Some locales have a case insensitive
+  strcoll, others don't: one of those that have problems is Estonian.
+
+  Another problem is that [a-z] tries to use collation symbols.  This
+  only happens if you are on the GNU system, using GNU libc's regular
+  expression matcher instead of compiling the one supplied with GNU sed.
+  In a Danish locale, for example, the regular expression `^[a-z]$'
+  matches the string `aa', because aa is a single collating symbol that
+  comes after `a' and before `b'; `ll' behaves similarly in Spanish
+  locales, or `ij' in Dutch locales.
+
+  To work around these problems, which may cause bugs in shell scripts,
+  set the LC_COLLATE and LC_CTYPE environment variables to `C'.
