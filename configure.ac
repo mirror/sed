@@ -1,5 +1,5 @@
 dnl Process this file with -*- autoconf -*- to produce a configure script.
-AC_INIT(sed, 3.61, bonzini@gnu.org, ssed)
+AC_INIT(sed, 3.62, bonzini@gnu.org, ssed)
 AC_CONFIG_AUX_DIR(config)
 AC_CONFIG_SRCDIR([sed/sed.c])
 AM_CONFIG_HEADER(config.h:config_h.in)
