@@ -1,5 +1,7 @@
 Sed 4.1.4
 
+* \B correctly means "not on a word boundary" rather than "inside a word"
+
 * bugfixes for platform without internationalization
 
 * more thorough testing framework for tarballs (`make full-distcheck')
