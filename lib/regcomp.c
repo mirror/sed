@@ -43,7 +43,7 @@ static reg_errcode_t postorder (bin_tree_t *root,
 				void *extra);
 static reg_errcode_t optimize_subexps (void *extra, bin_tree_t *node);
 static reg_errcode_t lower_subexps (void *extra, bin_tree_t *node);
-static bin_tree_t *lower_subexp (reg_errcode_t *err, regex_t *preg, 
+static bin_tree_t *lower_subexp (reg_errcode_t *err, regex_t *preg,
 				 bin_tree_t *node);
 static reg_errcode_t calc_first (void *extra, bin_tree_t *node);
 static reg_errcode_t calc_next (void *extra, bin_tree_t *node);
@@ -1168,7 +1168,7 @@ analyze (preg)
     return ret;
 
   /* We only need this during the prune_impossible_nodes pass in regexec.c;
-     do not compute it otherwise since it can become quadratic.  */
+     skip it if p_i_n will not run, as calc_inveclosure can be quadratic.  */
   if ((!preg->no_sub && preg->re_nsub > 0 && dfa->has_plural_match)
       || dfa->nbackref)
     {
@@ -1259,7 +1259,6 @@ optimize_subexps (extra, node)
      bin_tree_t *node;
 {
   re_dfa_t *dfa = (re_dfa_t *) extra;
-  int successful = 0;
 
   if (node->token.type == OP_BACK_REF && dfa->subexp_map)
     {
@@ -1372,8 +1371,6 @@ calc_next (extra, node)
      void *extra;
      bin_tree_t *node;
 {
-  re_dfa_t *dfa = (re_dfa_t *) extra;
-
   switch (node->token.type)
     {
     case OP_DUP_ASTERISK:
@@ -1407,11 +1404,11 @@ link_nfa_nodes (extra, node)
     {
     case CONCAT:
       break;
-      
+
     case END_OF_RE:
       assert (node->next == NULL);
       break;
-      
+
     case OP_DUP_ASTERISK:
     case OP_ALT:
       {
@@ -1430,25 +1427,25 @@ link_nfa_nodes (extra, node)
 	err = re_node_set_init_2 (dfa->edests + idx, left, right);
       }
       break;
-      
+
     case ANCHOR:
     case OP_OPEN_SUBEXP:
     case OP_CLOSE_SUBEXP:
       err = re_node_set_init_1 (dfa->edests + idx, node->next->node_idx);
       break;
-      
+
     case OP_BACK_REF:
       dfa->nexts[idx] = node->next->node_idx;
       if (node->token.type == OP_BACK_REF)
 	re_node_set_init_1 (dfa->edests + idx, dfa->nexts[idx]);
       break;
-      
+
     default:
       assert (!IS_EPSILON_NODE (node->token.type));
       dfa->nexts[idx] = node->next->node_idx;
       break;
     }
-  
+
   return err;
 }
 
@@ -2355,13 +2352,22 @@ parse_expression (regexp, preg, token, syntax, nest, err)
 	   & (WORD_DELIM | NOT_WORD_DELIM | WORD_FIRST | WORD_LAST))
 	  && dfa->word_ops_used == 0)
 	init_word_char (dfa);
-      if (token->opr.ctx_type >= DUMMY_CONSTRAINT)
+      if (token->opr.ctx_type == WORD_DELIM
+          || token->opr.ctx_type == NOT_WORD_DELIM)
 	{
-	  int delim = (token->opr.ctx_type == WORD_DELIM);
 	  bin_tree_t *tree_first, *tree_last;
-	  token->opr.ctx_type = delim ? WORD_FIRST : INSIDE_WORD;
-	  tree_first = create_token_tree (dfa, NULL, NULL, token);
-	  token->opr.ctx_type = delim ? WORD_LAST : OUTSIDE_WORD;
+	  if (token->opr.ctx_type == WORD_DELIM)
+	    {
+	      token->opr.ctx_type = WORD_FIRST;
+	      tree_first = create_token_tree (dfa, NULL, NULL, token);
+	      token->opr.ctx_type = WORD_LAST;
+            }
+          else
+            {
+	      token->opr.ctx_type = INSIDE_WORD;
+	      tree_first = create_token_tree (dfa, NULL, NULL, token);
+	      token->opr.ctx_type = INSIDE_NOTWORD;
+            }
 	  tree_last = create_token_tree (dfa, NULL, NULL, token);
 	  tree = create_tree (dfa, tree_first, tree_last, OP_ALT);
 	  if (BE (tree_first == NULL || tree_last == NULL || tree == NULL, 0))

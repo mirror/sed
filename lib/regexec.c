@@ -1,5 +1,5 @@
 /* Extended regular expression matching and search library.
-   Copyright (C) 2002, 2003, 2004, 2005 Free Software Foundation, Inc.
+   Copyright (C) 2002, 2003, 2004 Free Software Foundation, Inc.
    This file is part of the GNU C Library.
    Contributed by Isamu Hasegawa <isamu@yamato.ibm.com>.
 
@@ -3301,12 +3301,12 @@ build_trtable (dfa, state)
 #ifdef _LIBC
   if (__libc_use_alloca ((sizeof (re_node_set) + sizeof (bitset)) * SBC_MAX))
     dests_node = (re_node_set *)
-		 alloca ((sizeof (re_node_set) + sizeof (bitset)) * SBC_MAX);
+      alloca ((sizeof (re_node_set) + sizeof (bitset)) * SBC_MAX);
   else
 #endif
     {
       dests_node = (re_node_set *)
-		   malloc ((sizeof (re_node_set) + sizeof (bitset)) * SBC_MAX);
+	malloc ((sizeof (re_node_set) + sizeof (bitset)) * SBC_MAX);
       if (BE (dests_node == NULL, 0))
 	return 0;
       dests_node_malloced = 1;
@@ -3314,7 +3314,7 @@ build_trtable (dfa, state)
   dests_ch = (bitset *) (dests_node + SBC_MAX);
 
   /* Initialize transiton table.  */
-  state->word_trtable = state->trtable = 0;
+  state->word_trtable = state->trtable = NULL;
 
   /* At first, group all nodes belonging to `state' into several
      destinations.  */
@@ -3327,7 +3327,7 @@ build_trtable (dfa, state)
       if (ndests == 0)
 	{
 	  state->trtable = (re_dfastate_t **)
-	    calloc (sizeof (re_dfastate_t *), SBC_MAX);;
+	    calloc (sizeof (re_dfastate_t *), SBC_MAX);
 	  return 1;
 	}
       return 0;
@@ -3341,12 +3341,12 @@ build_trtable (dfa, state)
   if (__libc_use_alloca ((sizeof (re_node_set) + sizeof (bitset)) * SBC_MAX
 			 + ndests * 3 * sizeof (re_dfastate_t *)))
     dest_states = (re_dfastate_t **)
-		  alloca (ndests * 3 * sizeof (re_dfastate_t *));
+      alloca (ndests * 3 * sizeof (re_dfastate_t *));
   else
 #endif
     {
       dest_states = (re_dfastate_t **)
-		    malloc (ndests * 3 * sizeof (re_dfastate_t *));
+	malloc (ndests * 3 * sizeof (re_dfastate_t *));
       if (BE (dest_states == NULL, 0))
 	{
 out_free:
@@ -3393,8 +3393,7 @@ out_free:
 	  if (BE (dest_states_word[i] == NULL && err != REG_NOERROR, 0))
 	    goto out_free;
 
-	  if (dest_states[i] != dest_states_word[i]
-	      && dfa->mb_cur_max > 1)
+	  if (dest_states[i] != dest_states_word[i] && dfa->mb_cur_max > 1)
 	    need_word_trtable = 1;
 
 	  dest_states_nl[i] = re_acquire_state_context (&err, dfa, &follows,

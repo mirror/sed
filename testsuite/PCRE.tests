@@ -1420,23 +1420,17 @@ No match
     -a-
 No match
 
-/\B.\b/
+/\By\b/
     xy
  0: y
-    x.!?y
- 0: ?
 
-/\b.\B/
+/\by\B/
     yz
  0: y
-    x.!?y
- 0: .
 
-/\B.\B/
+/\By\B/
     xyz
  0: y
-    x.!?y
- 0: !
 
 /\w/
     a
