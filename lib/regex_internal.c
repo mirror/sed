@@ -1641,6 +1641,7 @@ free_state (state)
       re_free (state->entrance_nodes);
     }
   re_node_set_free (&state->nodes);
+  re_free (state->word_trtable);
   re_free (state->trtable);
   re_free (state);
 }
