@@ -1731,4 +1731,7 @@
     *** Failers
     bcdef    
 
+/a*(a{2}b)/
+    aaaab
+
 / End of testinput3 /       

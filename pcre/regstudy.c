@@ -725,57 +725,47 @@ set_start_bits (code, start_bits, caseless, cd)
 
 BOOL
 prune_bracket (prevptr, codeptr, bracket_start, 
-	       bracket_end, caseless, cd, end)
+	       bracket_end, caseless, cd, p_init, p_end)
      uschar       **prevptr, **codeptr;
      BOOL         caseless;
-     bitset       *bracket_start, *bracket_end;
+     bitset       *bracket_start, *bracket_end, *p_init, *p_end;
      compile_data *cd;
-     bitset       end;
 {
-  bitset prev_class, curr_class, start;
-  uschar *previous = NULL, *current, *code = *codeptr;
-  int backref;
+  bitset all_alternatives_start, all_alternatives_end;
+  bitset prev_class, curr_class, start, end;
+  uschar *previous, *current, *code = *codeptr;
   BOOL is_final_opcode = FALSE;
-  BOOL found_start = FALSE;
-  BOOL had_alt = FALSE;
+  BOOL found_start, end_same_as_start;
   BOOL can_be_empty;
-      
-  /* For extended extraction brackets (large number), we have to fish out the
-     number from a dummy opcode at the start. */
 
-  if (*code < OP_BRA)
-    {
-      backref = 0;
-      
-      /* Skip over the assertion at the beginning of a conditional */
-      if (*code == OP_COND && code[3] == OP_ASSERT)
-	code += (code[4] << 8) | code[5];
-    }
-  else
-    {
-      backref = *code - OP_BRA;
-      if (backref > EXTRACT_BASIC_MAX) 
-	backref = (code[4] << 8) | code[5];
-    }
+  /* Skip over the assertion at the beginning of a conditional */
+  if (*code == OP_COND && code[3] == OP_ASSERT)
+    code += (code[4] << 8) | code[5];
 
   code += 3;
   current = code;
-  memset (curr_class, 0, 32);
+
+  memset (all_alternatives_start, 0, 32);
+  memset (all_alternatives_end, 0, 32);
+
+ restart:
+  if (p_end)
+    memcpy (curr_class, p_end, 32);
+  else
+    memset (curr_class, 0, 32);
+
+  memset (start, 0, 32);
   memset (end, ~0, 32);
+  previous = NULL;
+  found_start = FALSE;
 
   for (;;)
     {
-      int i, c;
-      /* Undefining CONSERVATIVE seems to work, and optimizes cases like
-	 b*c*b+ by leaving b* as is but pruning the c* backtracking path. */
-
-#ifdef CONSERVATIVE
-      memcpy (prev_class, end, 32);
-#else
+      int i, backref;
       memcpy (prev_class, curr_class, 32);
-#endif
       memset (curr_class, 0, 32);
       can_be_empty = TRUE;
+      end_same_as_start = TRUE;
 
       switch (*code)
 	{
@@ -792,36 +782,45 @@ prune_bracket (prevptr, codeptr, bracket_start,
 	case OP_KET_MINSTAR:
 	case OP_KET_MAXSTAR:
 	case OP_KET_ONCESTAR:
-	  code += 3;
-	  can_be_empty = FALSE;
 	  is_final_opcode = TRUE;
-	  memcpy (curr_class, prev_class, 32);
-
-	  if (backref > 0)
-	    {
-	      if (found_start)
-		memcpy (&bracket_start[backref], start, 32);
-	      else
-		memset (&bracket_start[backref], ~0, 32);
-	      if (had_alt)
-		memset (&bracket_end[backref], ~0, 32);
-	      else
-		memcpy (&bracket_end[backref], end, 32);
-	    }
-	  break;
 
 	case OP_ALT:
 	  code += 3;
-	  had_alt = TRUE;
-	  found_start = FALSE;
 	  can_be_empty = FALSE;
-	  memset (curr_class, ~0, 32);
-	  break;
+	  memcpy (curr_class, prev_class, 32);
+
+	  if (found_start)
+	    for (i = 0; i < 32; i++)
+	      {
+		all_alternatives_start[i] |= start[i];
+		all_alternatives_end[i] |= end[i];
+	      }
+	  else
+	    {
+	      memset (all_alternatives_start, ~0, 32);
+	      memset (all_alternatives_end, ~0, 32);
+	    }
+
+	  if (is_final_opcode)
+	    {
+	      if (p_init)
+	        memcpy (p_init, all_alternatives_start, 32);
+	      if (p_end)
+	        memcpy (p_end, all_alternatives_end, 32);
+
+	      *prevptr = current;
+	      *codeptr = code;
+	      return found_start;
+	    }
+	  else
+	    goto restart;
 
 	  /* Skip over things that don't match chars */
 
 	case OP_DOLL:
 	case OP_EODN:
+	  end_same_as_start = FALSE;
+	  memcpy (end, prev_class, 32);
 	  memset (curr_class, ~0, 32);
 	  curr_class[13 / 8] ^= 1 << (13 % 8);
 
@@ -834,19 +833,21 @@ prune_bracket (prevptr, codeptr, bracket_start,
 
 	case OP_NOT_WORD_BOUNDARY:
 	case OP_WORD_BOUNDARY:
+	  end_same_as_start = FALSE;
+	  memcpy (end, prev_class, 32);
 	  memset (curr_class, ~0, 32);
 	  code++;
 	  break;
 
 	case OP_BEG_WORD:
-	  for (c = 0; c < 32; c++)
-	    curr_class[c] = cd->cbits[c + cbit_word];
+	  for (i = 0; i < 32; i++)
+	    curr_class[i] = cd->cbits[i + cbit_word];
 	  code++;
 	  break;
 
 	case OP_END_WORD:
-	  for (c = 0; c < 32; c++)
-	    curr_class[c] = ~cd->cbits[c + cbit_word];
+	  for (i = 0; i < 32; i++)
+	    curr_class[i] = ~cd->cbits[i + cbit_word];
 	  code++;
 	  break;
 
@@ -863,7 +864,9 @@ prune_bracket (prevptr, codeptr, bracket_start,
 
 	case OP_ASSERT:
 	  prune_bracket (&current, &code, bracket_start, bracket_end,
-			 caseless, cd, &curr_class);
+			 caseless, cd, &curr_class, &end);
+	  memcpy (end, prev_class, 32);
+	  end_same_as_start = FALSE;
 	  break;
 
 	case OP_ASSERT_NOT:
@@ -882,16 +885,20 @@ prune_bracket (prevptr, codeptr, bracket_start,
 	  code += 2;
 	  break;
 
-	  /* BRAZERO does the bracket, but carries on. */
+	  /* BRAZERO does the bracket, but can be empty the classes. */
 
 	case OP_BRAZERO:
 	case OP_BRAMINZERO:
 	  code++;
 	  prune_bracket (&current, &code, bracket_start, bracket_end,
-			 caseless, cd, &curr_class);
+			 caseless, cd, &curr_class, &end);
+	  end_same_as_start = FALSE;
+	  memset (curr_class, ~0, 32);
+	  for (i = 0; i < 32; i++)
+	    end[i] |= prev_class[i];
 	  break;
 
-		/* Single character type sets the bits and stops */
+	  /* Single character type sets the bits */
 
 	case OP_TYPENOT:
 	  code++;
@@ -900,8 +907,8 @@ prune_bracket (prevptr, codeptr, bracket_start,
 	  if (!*code)
 	    memset (curr_class, ~0, 32);
 	  else
-	    for (c = 0; c < 32; c++)
-	      curr_class[c] = ~cd->cbits[c + *code * 32];
+	    for (i = 0; i < 32; i++)
+	      curr_class[i] = ~cd->cbits[i + *code * 32];
 
 	  code++;
 	  break;
@@ -913,8 +920,8 @@ prune_bracket (prevptr, codeptr, bracket_start,
 	  if (!*code)
 	    memset (curr_class, ~0, 32);
 	  else
-	    for (c = 0; c < 32; c++)
-	      curr_class[c] = cd->cbits[c + *code * 32];
+	    for (i = 0; i < 32; i++)
+	      curr_class[i] = cd->cbits[i + *code * 32];
 
 	  code++;
 	  break;
@@ -922,6 +929,7 @@ prune_bracket (prevptr, codeptr, bracket_start,
 	case OP_CHARS:
 	  code++;
 	  can_be_empty = FALSE;
+	  end_same_as_start = FALSE;
 	  set_bit (curr_class, code[1], caseless, cd);
 	  code += 1 + (int) *code;
 	  memset (end, 0, 32);
@@ -939,8 +947,8 @@ prune_bracket (prevptr, codeptr, bracket_start,
 	  can_be_empty = FALSE;
 	REPEATNOT:
 	  set_bit (curr_class, *code++, caseless, cd);
-	  for (c = 0; c < 32; c++)
-	    curr_class[c] = ~curr_class[c];
+	  for (i = 0; i < 32; i++)
+	    curr_class[i] = ~curr_class[i];
 
 	  break;
 
@@ -956,8 +964,8 @@ prune_bracket (prevptr, codeptr, bracket_start,
 	  can_be_empty = FALSE;
 	  goto REPEATTYPE;
 
-		/* Zero or more repeats of character types set the bits and then
-		   try again. */
+	  /* Zero or more repeats of character types set the bits and then
+	     try again. */
 
 	case OP_TYPE_MAXUPTO:
 	case OP_TYPE_MINUPTO:
@@ -1012,8 +1020,8 @@ prune_bracket (prevptr, codeptr, bracket_start,
 	  can_be_empty = FALSE;
 	  goto REPEATCHARS;
 
-		/* Zero or more repeats of character types set the bits and then
-		   try again. */
+	  /* Zero or more repeats of character types set the bits and then
+	     try again. */
 
 	case OP_MAXUPTO:
 	case OP_MINUPTO:
@@ -1059,7 +1067,7 @@ prune_bracket (prevptr, codeptr, bracket_start,
 	  goto REPEATNOT;
 
 	  /* Character class: set the bits and either carry on or not,
-		   according to the repeat count. */
+	     according to the repeat count. */
 
 	case OP_CLASS:
 	case OP_CL_MAXSTAR:
@@ -1076,8 +1084,8 @@ prune_bracket (prevptr, codeptr, bracket_start,
 	case OP_CL_ONCERANGE:
 	  {
 	    code++;
-	    for (c = 0; c < 32; c++)
-	      curr_class[c] |= code[c];
+	    for (i = 0; i < 32; i++)
+	      curr_class[i] |= code[i];
 	    code += 32;
 	    switch (code[-33])
 	      {
@@ -1106,7 +1114,7 @@ prune_bracket (prevptr, codeptr, bracket_start,
 	  break;		/* End of class handling */
 
 	  /* Character class: set the bits and either carry on or not,
-		   according to the repeat count. */
+	     according to the repeat count. */
 
 	case OP_REF:
 	case OP_REF_MAXSTAR:
@@ -1125,7 +1133,7 @@ prune_bracket (prevptr, codeptr, bracket_start,
 	    int number = (code[1] << 8) | code[2];
 	    code += 3;
 	    memcpy (curr_class, bracket_start[number], 32);
-	    memcpy (end, bracket_end[number], 32);
+	    end_same_as_start = FALSE;
 	    switch (code[-3])
 	      {
 	      case OP_REF_MAXSTAR:
@@ -1134,30 +1142,47 @@ prune_bracket (prevptr, codeptr, bracket_start,
 	      case OP_REF_MAXQUERY:
 	      case OP_REF_MINQUERY:
 	      case OP_REF_ONCEQUERY:
+		for (i = 0; i < 32; i++)
+		  end[i] = bracket_end[number][i];
 		break;
-
+		
 	      case OP_REF_MAXRANGE:
 	      case OP_REF_MINRANGE:
 	      case OP_REF_ONCERANGE:
 		if (((code[1] << 8) + code[2]) == 0)
 		  code += 4;
-		break;
+
+	      case OP_REF_MAXPLUS:
+	      case OP_REF_MINPLUS:
+	      case OP_REF_ONCEPLUS:
+		memcpy (end, bracket_end[number], 32);
 	      }
 	  }
 	  break;		/* End of class handling */
 
 	default:
-	  if ((int) *code >= OP_BRA || *code == OP_ONCE || *code == OP_COND)
+	  if ((int) *code >= OP_BRA)
 	    {
-	      can_be_empty = !prune_bracket(&current, &code,
-					    bracket_start, bracket_end,
-					    caseless, cd, &curr_class);
-	      break;
+	      backref = *code - OP_BRA;
+	      if (backref > EXTRACT_BASIC_MAX)
+	        backref = (code[4] << 8) | code[5];
+	    }
+	  else if (*code == OP_ONCE || *code == OP_COND)
+	    backref = 0;
+	  else
+	    {
+	      printf ("What's this `%s'?\n", pcre_OP_names[*code]);
+	      abort();
 	    }
 
-	  printf ("What's this `%s'?\n", pcre_OP_names[*code]);
-	  abort();
+	  can_be_empty = !prune_bracket(&current, &code,
+					bracket_start, bracket_end,
+					caseless, cd, &curr_class, &end);
 
+	  memcpy (bracket_start[backref], curr_class, 32);
+	  memcpy (bracket_end[backref], end, 32);
+	  end_same_as_start = FALSE;
+	  break;
 	}			/* End of switch */
 
       if (previous)
@@ -1175,8 +1200,7 @@ prune_bracket (prevptr, codeptr, bracket_start,
 	    }
 	}
 
-      if (*current != OP_CHARS && 
-	  (*current <= OP_REF || *current >= OP_REF_ONCERANGE))
+      if (end_same_as_start)
 	{
 	  if (can_be_empty)
 	    {
@@ -1195,14 +1219,6 @@ prune_bracket (prevptr, codeptr, bracket_start,
 	  found_start = !can_be_empty;
 	  for (i = 0; i < 32; i++)
 	    start[i] |= curr_class[i];
-	}
-
-      if (is_final_opcode)
-	{
-	  *prevptr = current;
-	  *codeptr = code;
-	  memcpy (end, curr_class, 32);
-	  return found_start;
 	}
 
       previous = (pruned[*current] == *current) ? NULL : current;
@@ -1232,9 +1248,9 @@ prune_backtracking_paths (re, caseless, cd)
      BOOL          caseless;
      compile_data  *cd;
 {
-  bitset curr_class;
   uschar *code = re->code, *current;
 
+  /* The first entry is used as scratch in both bitsets.  */
   bitset *bracket_start = (bitset *)
     alloca(sizeof(bitset) * (1 + re->top_bracket));
 
@@ -1242,7 +1258,7 @@ prune_backtracking_paths (re, caseless, cd)
     alloca(sizeof(bitset) * (1 + re->top_bracket));
 
   prune_bracket (&current, &code, bracket_start, bracket_end,
-		 caseless, cd, &curr_class);
+		 caseless, cd, NULL, NULL);
 }
 
 

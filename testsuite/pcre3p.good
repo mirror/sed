@@ -2993,5 +2993,10 @@ No match: POSIX code 17: match failed
     bcdef    
 No match: POSIX code 17: match failed
 
+/a*(a{2}b)/
+    aaaab
+ 0: aaaab
+ 1: aab
+
 / End of testinput3 /       
 

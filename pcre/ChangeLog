@@ -1,5 +1,12 @@
 2004-10-29  Paolo Bonzini  <bonzini@gnu.org>
 
+	* regstudy.c (prune_bracket): Distinguish correctly the
+	character class at the beginning vs. at the ending of a
+	subexpression.  Be more precise in the presence of alternatives
+	and optional subexpressions.
+
+2004-10-29  Paolo Bonzini  <bonzini@gnu.org>
+
 	* internal.h: fix formatting.
 
 2004-03-04  Paolo Bonzini  <bonzini@gnu.org>

@@ -3007,5 +3007,10 @@ No match
     bcdef    
 No match
 
+/a*(a{2}b)/
+    aaaab
+ 0: aaaab
+ 1: aab
+
 / End of testinput3 /       
 
