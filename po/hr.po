@@ -5,7 +5,6 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: sed 3.02a\n"
-"Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2004-11-11 15:28+0100\n"
 "PO-Revision-Date: 2002-06-14 15:17-01\n"
 "Last-Translator: Denis Lackovic <delacko@fly.srk.fer.hr>\n"
@@ -13,6 +12,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Report-Msgid-Bugs-To: \n"
 "Plural-Forms: nplurals=2; plural=(n==1?0:1);\n"
 "X-Generator: TransDict server\n"
 
@@ -162,7 +162,7 @@ msgstr "Ne mogu otvoriti datoteku %s"
 msgid "couldn't edit %s: not a regular file"
 msgstr "Ne mogu otvoriti datoteku %s"
 
-#: sed/execute.c:683 lib/utils.c:196
+#: lib/utils.c:196 sed/execute.c:683
 #, fuzzy, c-format
 msgid "couldn't open temporary file %s: %s"
 msgstr "Ne mogu otvoriti datoteku %s"

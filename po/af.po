@@ -6,7 +6,6 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: sed 4.0.9\n"
-"Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2004-11-11 15:28+0100\n"
 "PO-Revision-Date: 2004-01-11 21:06+0000\n"
 "Last-Translator: Ysbeer <ysbeer@af.org.za>\n"
@@ -14,6 +13,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Report-Msgid-Bugs-To: \n"
 "Plural-Forms: nplurals=2; plural=n!=1;\n"
 
 #: sed/compile.c:162
@@ -163,7 +163,7 @@ msgstr "Kon nie die lêer %s oopmaak nie: %s"
 msgid "couldn't edit %s: not a regular file"
 msgstr "Kon nie die lêer %s oopmaak nie: %s"
 
-#: sed/execute.c:683 lib/utils.c:196
+#: lib/utils.c:196 sed/execute.c:683
 #, fuzzy, c-format
 msgid "couldn't open temporary file %s: %s"
 msgstr "Kon nie tydelike lêer %s oopmaak nie: %s"

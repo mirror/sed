@@ -1,3 +1,10 @@
+Sed 4.1.4
+
+* bugfixes for platform without internationalization
+
+* more thorough testing framework for tarballs (`make full-distcheck')
+
+----------------------------------------------------------------------------
 Sed 4.1.3
 
 * regex addresses do not use leftmost-longest matching.  In other words,

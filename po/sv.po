@@ -5,7 +5,6 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: sed 4.1.1\n"
-"Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2004-11-11 15:28+0100\n"
 "PO-Revision-Date: 2004-07-11 11:45+0200\n"
 "Last-Translator: Christian Rose <menthos@menthos.com>\n"
@@ -13,6 +12,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=iso-8859-1\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Report-Msgid-Bugs-To: \n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: sed/compile.c:162
@@ -146,7 +146,7 @@ msgstr "kunde inte redigera %s: är en terminal"
 msgid "couldn't edit %s: not a regular file"
 msgstr "kunde inte redigera %s: inte en vanlig fil"
 
-#: sed/execute.c:683 lib/utils.c:196
+#: lib/utils.c:196 sed/execute.c:683
 #, c-format
 msgid "couldn't open temporary file %s: %s"
 msgstr "kunde inte öppna temporära filen %s: %s"

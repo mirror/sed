@@ -5,7 +5,6 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: sed 4.1.1\n"
-"Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2004-11-11 15:28+0100\n"
 "PO-Revision-Date: 2004-07-09 16:33+0300\n"
 "Last-Translator: Toomas Soome <Toomas.Soome@microlink.ee>\n"
@@ -13,6 +12,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=iso-8859-15\n"
 "Content-Transfer-Encoding: 8-bit\n"
+"Report-Msgid-Bugs-To: \n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: sed/compile.c:162
@@ -146,7 +146,7 @@ msgstr "%s ei saa toimetada: see on terminal"
 msgid "couldn't edit %s: not a regular file"
 msgstr "%s ei saa toimetada: see ei ole tavaline fail"
 
-#: sed/execute.c:683 lib/utils.c:196
+#: lib/utils.c:196 sed/execute.c:683
 #, c-format
 msgid "couldn't open temporary file %s: %s"
 msgstr "ajutist faili %s ei saa avada: %s"

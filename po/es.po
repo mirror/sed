@@ -5,7 +5,6 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: sed 4.0.8\n"
-"Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2004-11-11 15:28+0100\n"
 "PO-Revision-Date: 2003-10-24 12:38-0500\n"
 "Last-Translator: Cristian Othón Martínez Vera <cfuga@itam.mx>\n"
@@ -13,6 +12,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=ISO-8859-1\n"
 "Content-Transfer-Encoding: 8-bit\n"
+"Report-Msgid-Bugs-To: \n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: sed/compile.c:162
@@ -162,7 +162,7 @@ msgstr "No se puede abrir el fichero %s: %s"
 msgid "couldn't edit %s: not a regular file"
 msgstr "No se puede abrir el fichero %s: %s"
 
-#: sed/execute.c:683 lib/utils.c:196
+#: lib/utils.c:196 sed/execute.c:683
 #, fuzzy, c-format
 msgid "couldn't open temporary file %s: %s"
 msgstr "No se puede abrir el fichero temporal %s: %s"

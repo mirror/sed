@@ -1,9 +1,9 @@
 dnl Process this file with -*- autoconf -*- to produce a configure script.
-AC_INIT(sed, 4.1.2, bonzini@gnu.org, sed)
+AC_INIT(sed, 4.1.4, bonzini@gnu.org, sed)
 AC_CONFIG_AUX_DIR(config)
 AC_CONFIG_SRCDIR([sed/sed.c])
 AM_CONFIG_HEADER(config.h:config_h.in)
-AC_PREREQ(2.53)
+AC_PREREQ(2.59)
 AM_INIT_AUTOMAKE
 
 SED_FEATURE_VERSION=4.1
@@ -71,6 +71,13 @@ AC_REPLACE_FUNCS(memchr memcmp memmove strerror mkstemp)
 AC_CHECK_FUNCS(isatty bcopy bzero isascii memcpy memset strchr strtoul popen \
 		pathconf isblank fchown fchmod setlocale wcrtomb wcscoll btowc)
 
+AC_ARG_ENABLE(i18n,
+[  --disable-i18n          disable internationalization (default=yes)], ,
+enable_i18n=yes)
+if test "x$enable_i18n" = xno; then
+  ac_cv_func_wcscoll=false
+fi
+
 AC_ARG_WITH(included-regex, 
 [  --with-included-regex   use included regex matcher (default=yes)], ,
 with_included_regex=yes)
@@ -86,7 +93,7 @@ if test "x$with_included_regex" = xno; then
 fi
 
 AC_ARG_ENABLE(regex-tests, 
-[  --enable-regex-tests    enable regex matcher regression tests (default=no)],
+[  --enable-regex-tests    enable regex matcher regression tests (default=yes)],
 [if test "x$with_included_regex" = xno; then
   enable_regex_tests=no
 fi],

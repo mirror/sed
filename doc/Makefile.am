@@ -28,8 +28,8 @@ dist-hook:
 # sources
 if MAKEINFO_HTML
 sed.html: sed.texi sed.info
-	cd $(srcdir) \
-	  && $(MAKEINFO) --html `echo $< | sed 's,.*/,,'`
+	builddir=`pwd` && cd $(srcdir) && \
+	  $(MAKEINFO) --html --no-split -o $$builddir/sed.html sed.texi
 
 html: sed.html
 
@@ -39,8 +39,9 @@ endif
 # These rules are used together with TEXI2HTML
 if TEXI2HTML_HTML
 sed.html: sed.texi sed.info
-	cd $(srcdir) \
-	  && $(TEXI2HTML) `echo $< | sed 's,.*/,,'`
+	cp $(srcdir)/*.texi . && \
+	  $(TEXI2HTML) sed.texi && \
+	  rn *.texi
 
 html: sed.html
 

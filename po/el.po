@@ -5,7 +5,6 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: GNU sed 3.02.80\n"
-"Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2004-11-11 15:28+0100\n"
 "PO-Revision-Date: 2002-03-08 12:57+0000\n"
 "Last-Translator: Simos Xenitellis <simos@hellug.gr>\n"
@@ -13,6 +12,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=iso-8859-7\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Report-Msgid-Bugs-To: \n"
 
 #: sed/compile.c:162
 #, fuzzy
@@ -161,7 +161,7 @@ msgstr "Δεν μπόρεσα να ανοίξω το αρχείο %s"
 msgid "couldn't edit %s: not a regular file"
 msgstr "Δεν μπόρεσα να ανοίξω το αρχείο %s"
 
-#: sed/execute.c:683 lib/utils.c:196
+#: lib/utils.c:196 sed/execute.c:683
 #, fuzzy, c-format
 msgid "couldn't open temporary file %s: %s"
 msgstr "Δεν μπόρεσα να ανοίξω το αρχείο %s"

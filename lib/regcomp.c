@@ -1,5 +1,5 @@
 /* Extended regular expression matching and search library.
-   Copyright (C) 2002, 2003, 2004 Free Software Foundation, Inc.
+   Copyright (C) 2002, 2003, 2004, 2005 Free Software Foundation, Inc.
    This file is part of the GNU C Library.
    Contributed by Isamu Hasegawa <isamu@yamato.ibm.com>.
 
@@ -875,9 +875,9 @@ init_dfa (dfa, pat_len)
   codeset_name = nl_langinfo (CODESET);
 # else
   codeset_name = getenv ("LC_ALL");
-  if (codeset_name == NULL || codeset[0] == '\0')
+  if (codeset_name == NULL || codeset_name[0] == '\0')
     codeset_name = getenv ("LC_CTYPE");
-  if (codeset_name == NULL || codeset[0] == '\0')
+  if (codeset_name == NULL || codeset_name[0] == '\0')
     codeset_name = getenv ("LANG");
   if (codeset_name == NULL)
     codeset_name = "";
@@ -3314,17 +3314,18 @@ parse_bracket_exp (regexp, dfa, token, syntax, err)
 	}
     }
   else
+#endif /* not RE_ENABLE_I18N */
     {
+#ifdef RE_ENABLE_I18N
+      free_charset (mbcset);
+#endif
       /* Build a tree for simple bracket.  */
       br_token.type = SIMPLE_BRACKET;
       br_token.opr.sbcset = sbcset;
       work_tree = create_token_tree (dfa, NULL, NULL, &br_token);
       if (BE (work_tree == NULL, 0))
         goto parse_bracket_exp_espace;
-
-      free_charset (mbcset);
     }
-#endif /* not RE_ENABLE_I18N */
   return work_tree;
 
  parse_bracket_exp_espace:

@@ -6,7 +6,6 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: GNU sed 4.0.8\n"
-"Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2004-11-11 15:28+0100\n"
 "PO-Revision-Date: 2003-10-25 17:22+0200\n"
 "Last-Translator: Marcel Telka <marcel@telka.sk>\n"
@@ -14,6 +13,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Report-Msgid-Bugs-To: \n"
 "Plural-Forms: nplurals=3; plural= (n==1) ? 1 : (n>=2 && n<=4) ? 2 : 0;\n"
 
 #: sed/compile.c:162
@@ -163,7 +163,7 @@ msgstr "Nebolo možné otvoriť súbor %s: %s"
 msgid "couldn't edit %s: not a regular file"
 msgstr "Nebolo možné otvoriť súbor %s: %s"
 
-#: sed/execute.c:683 lib/utils.c:196
+#: lib/utils.c:196 sed/execute.c:683
 #, fuzzy, c-format
 msgid "couldn't open temporary file %s: %s"
 msgstr "Nebolo možné otvoriť dočasný súbor %s: %s"
