@@ -187,7 +187,7 @@ enum
     OP_CHARS,			/* Match string of characters */
     OP_MAXSTAR,			/* The maximizing and minimizing versions of */
     OP_MINSTAR,			/* all these opcodes must come in triples, with */
-    OP_ONCESTAR,		        /* the minimizing one second and the */
+    OP_ONCESTAR,	        /* the minimizing one second and the */
     OP_MAXPLUS,	                /* no-backtracking one third. */
     OP_MINPLUS,			/* This first set applies to single characters */
     OP_ONCEPLUS,
