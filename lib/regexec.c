@@ -175,8 +175,8 @@ static reg_errcode_t check_arrival_expand_ecl_sub (re_dfa_t *dfa,
 static reg_errcode_t expand_bkref_cache (re_match_context_t *mctx,
 					 re_node_set *cur_nodes, int cur_str,
 					 int subexp_num, int type) internal_function;
-static int build_trtable (re_dfa_t *dfa,
-			  re_dfastate_t *state) internal_function;
+static re_dfastate_t **build_trtable (re_dfa_t *dfa,
+				      re_dfastate_t *state) internal_function;
 #ifdef RE_ENABLE_I18N
 static int check_node_accept_bytes (re_dfa_t *dfa, int node_idx,
 				    const re_string_t *input, int idx) internal_function;
@@ -684,11 +684,12 @@ re_search_internal (preg, string, length, start, range, stop, nmatch, pmatch,
   left_lim = (range < 0) ? start + range : start;
   right_lim = (range < 0) ? start : start + range;
   sb = dfa->mb_cur_max == 1;
-  match_kind = 
-    (fastmap ? 8 : 0)
-    | (sb || !(preg->syntax & RE_ICASE || t) ? 4 : 0)
-    | (range >= 0 ? 2 : 0)
-    | (t != NULL ? 1 : 0);
+  match_kind =
+    (fastmap
+     ? ((sb || !(preg->syntax & RE_ICASE || t) ? 4 : 0)
+	| (range >= 0 ? 2 : 0)
+	| (t != NULL ? 1 : 0))
+     : 8);
 
   for (;; match_first += incr)
     {
@@ -703,19 +704,18 @@ re_search_internal (preg, string, length, start, range, stop, nmatch, pmatch,
 	 save on code size.  We use a switch statement for speed.  */
       switch (match_kind)
 	{
-	case 0: case 1: case 2: case 3:
-	case 4: case 5: case 6: case 7:
+	case 8:
 	  /* No fastmap.  */
 	  break;
 
-	case 15:
+	case 7:
 	  /* Fastmap with single-byte translation, match forward.  */
 	  while (BE (match_first < right_lim, 1)
 		 && !fastmap[t[(unsigned char) string[match_first]]])
 	    ++match_first;
 	  goto forward_match_found_start_or_reached_end;
 
-	case 14:
+	case 6:
 	  /* Fastmap without translation, match forward.  */
 	  while (BE (match_first < right_lim, 1)
 		 && !fastmap[(unsigned char) string[match_first]])
@@ -731,8 +731,8 @@ re_search_internal (preg, string, length, start, range, stop, nmatch, pmatch,
 	    }
 	  break;
 
-	case 12:
-	case 13:
+	case 4:
+	case 5:
 	  /* Fastmap without multi-byte translation, match backwards.  */
 	  while (match_first >= left_lim)
 	    {
@@ -745,7 +745,7 @@ re_search_internal (preg, string, length, start, range, stop, nmatch, pmatch,
 	  if (match_first < left_lim)
 	    goto free_return;
 	  break;
-	  
+
 	default:
 	  /* In this case, we can't determine easily the current byte,
 	     since it might be a component byte of a multibyte
@@ -754,19 +754,20 @@ re_search_internal (preg, string, length, start, range, stop, nmatch, pmatch,
 	    {
 	      /* If MATCH_FIRST is out of the valid range, reconstruct the
 		 buffers.  */
-	      if (mctx.input.raw_mbs_idx + mctx.input.valid_raw_len <= match_first
-		  || match_first < mctx.input.raw_mbs_idx)
+	      unsigned int offset = match_first - mctx.input.raw_mbs_idx;
+	      if (BE (offset >= (unsigned int) mctx.input.valid_raw_len, 0))
 		{
 		  err = re_string_reconstruct (&mctx.input, match_first,
 					       eflags);
 		  if (BE (err != REG_NOERROR, 0))
 		    goto free_return;
+
+		  offset = match_first - mctx.input.raw_mbs_idx;
 		}
 	      /* If MATCH_FIRST is out of the buffer, leave it as '\0'.
 		 Note that MATCH_FIRST must not be smaller than 0.  */
-	      ch = ((match_first >= length) ? 0
-		    : re_string_byte_at (&mctx.input,
-					 match_first - mctx.input.raw_mbs_idx));
+	      ch = (match_first >= length
+		    ? 0 : re_string_byte_at (&mctx.input, offset));
 	      if (fastmap[ch])
 		break;
 	      match_first += incr;
@@ -881,6 +882,18 @@ re_search_internal (preg, string, length, start, range, stop, nmatch, pmatch,
 	    pmatch[reg_idx].rm_so += match_first;
 	    pmatch[reg_idx].rm_eo += match_first;
 	  }
+
+      if (dfa->subexp_map)
+        for (reg_idx = 0;
+             reg_idx + 1 < nmatch && reg_idx < preg->re_nsub;
+             reg_idx++)
+          if (dfa->subexp_map[reg_idx] != reg_idx)
+            {
+              pmatch[reg_idx + 1].rm_so
+                = pmatch[dfa->subexp_map[reg_idx] + 1].rm_so;
+              pmatch[reg_idx + 1].rm_eo
+                = pmatch[dfa->subexp_map[reg_idx] + 1].rm_eo;
+            }
     }
 
  free_return:
@@ -2200,36 +2213,36 @@ transit_state (err, mctx, state)
      re_match_context_t *mctx;
      re_dfastate_t *state;
 {
+  re_dfa_t *const dfa = mctx->dfa;
   re_dfastate_t **trtable;
   unsigned char ch;
 
 #ifdef RE_ENABLE_I18N
-      /* If the current state can accept multibyte.  */
-      if (BE (state->accept_mb, 0))
-	{
-	  *err = transit_state_mb (mctx, state);
-	  if (BE (*err != REG_NOERROR, 0))
-	    return NULL;
-	}
+  /* If the current state can accept multibyte.  */
+  if (BE (state->accept_mb, 0))
+    {
+      *err = transit_state_mb (mctx, state);
+      if (BE (*err != REG_NOERROR, 0))
+	return NULL;
+    }
 #endif /* RE_ENABLE_I18N */
 
   /* Then decide the next state with the single byte.  */
-#if 0
-  if (0)
-    /* don't use transition table  */
-    return transit_state_sb (err, mctx, state);
-#endif
-
-  /* Use transition table  */
-  ch = re_string_fetch_byte (&mctx->input);
-  for (;;)
+  if (1)
     {
+      /* Use transition table  */
+      ch = re_string_fetch_byte (&mctx->input);
       trtable = state->trtable;
-      if (BE (trtable != NULL, 1))
-	return trtable[ch];
-
-      trtable = state->word_trtable;
-      if (BE (trtable != NULL, 1))
+      if (trtable == NULL)
+        {
+          trtable = build_trtable (dfa, state);
+          if (trtable == NULL)
+	    {
+	      *err = REG_ESPACE;
+	      return NULL;
+	    }
+	}
+      if (BE (state->word_trtable, 0))
         {
 	  unsigned int context;
 	  context
@@ -2241,15 +2254,14 @@ transit_state (err, mctx, state)
 	  else
 	    return trtable[ch];
 	}
-
-      if (!build_trtable (mctx->dfa, state))
-	{
-	  *err = REG_ESPACE;
-	  return NULL;
-	}
-
-      /* Retry, we now have a transition table.  */
+      else
+	return trtable[ch];
     }
+#if 0
+  else
+    /* don't use transition table  */
+    return transit_state_sb (err, mctx, state);
+#endif
 }
 
 /* Update the state_log if we need */
@@ -3253,15 +3265,15 @@ expand_bkref_cache (mctx, cur_nodes, cur_str, subexp_num,
 }
 
 /* Build transition table for the state.
-   Return 1 if succeeded, otherwise return NULL.  */
+   Return the new table if succeeded, otherwise return NULL.  */
 
-static int
+static re_dfastate_t **
 build_trtable (dfa, state)
     re_dfa_t *dfa;
     re_dfastate_t *state;
 {
   reg_errcode_t err;
-  int i, j, ch, need_word_trtable = 0;
+  int i, j, ch;
   unsigned int elem, mask;
   int dests_node_malloced = 0, dest_states_malloced = 0;
   int ndests; /* Number of the destination states from `state'.  */
@@ -3285,13 +3297,13 @@ build_trtable (dfa, state)
       dests_node = (re_node_set *)
 		   malloc ((sizeof (re_node_set) + sizeof (bitset)) * SBC_MAX);
       if (BE (dests_node == NULL, 0))
-	return 0;
+	return NULL;
       dests_node_malloced = 1;
     }
   dests_ch = (bitset *) (dests_node + SBC_MAX);
 
   /* Initialize transiton table.  */
-  state->word_trtable = state->trtable = 0;
+  state->word_trtable = 0;
 
   /* At first, group all nodes belonging to `state' into several
      destinations.  */
@@ -3300,14 +3312,14 @@ build_trtable (dfa, state)
     {
       if (dests_node_malloced)
 	free (dests_node);
-      /* Return 0 in case of an error, 1 otherwise.  */
+      /* Return NULL in case of an error, trtable otherwise.  */
       if (ndests == 0)
 	{
 	  state->trtable = (re_dfastate_t **)
 	    calloc (sizeof (re_dfastate_t *), SBC_MAX);;
-	  return 1;
+	  return state->trtable;
 	}
-      return 0;
+      return NULL;
     }
 
   err = re_node_set_alloc (&follows, ndests + 1);
@@ -3334,7 +3346,7 @@ out_free:
 	    re_node_set_free (dests_node + i);
 	  if (dests_node_malloced)
 	    free (dests_node);
-	  return 0;
+	  return NULL;
 	}
       dest_states_malloced = 1;
     }
@@ -3372,7 +3384,7 @@ out_free:
 
 	  if (dest_states[i] != dest_states_word[i]
 	      && dfa->mb_cur_max > 1)
-	    need_word_trtable = 1;
+	    state->word_trtable = 1;
 
 	  dest_states_nl[i] = re_acquire_state_context (&err, dfa, &follows,
 							CONTEXT_NEWLINE);
@@ -3387,14 +3399,13 @@ out_free:
       bitset_merge (acceptable, dests_ch[i]);
     }
 
-  if (!BE (need_word_trtable, 0))
+  if (!BE (state->word_trtable, 0))
     {
       /* We don't care about whether the following character is a word
 	 character, or we are in a single-byte character set so we can
 	 discern by looking at the character code: allocate a
 	 256-entry transition table.  */
-      trtable = state->trtable =
-	(re_dfastate_t **) calloc (sizeof (re_dfastate_t *), SBC_MAX);
+      trtable = (re_dfastate_t **) calloc (sizeof (re_dfastate_t *), SBC_MAX);
       if (BE (trtable == NULL, 0))
 	goto out_free;
 
@@ -3424,8 +3435,8 @@ out_free:
 	 by looking at the character code: build two 256-entry
 	 transition tables, one starting at trtable[0] and one
 	 starting at trtable[SBC_MAX].  */
-      trtable = state->word_trtable =
-	(re_dfastate_t **) calloc (sizeof (re_dfastate_t *), 2 * SBC_MAX);
+      trtable = (re_dfastate_t **) calloc (sizeof (re_dfastate_t *),
+					   2 * SBC_MAX);
       if (BE (trtable == NULL, 0))
 	goto out_free;
 
@@ -3456,7 +3467,7 @@ out_free:
 	  {
 	    /* k-th destination accepts newline character.  */
 	    trtable[NEWLINE_CHAR] = dest_states_nl[j];
-	    if (need_word_trtable)
+	    if (state->word_trtable)
 	      trtable[NEWLINE_CHAR + SBC_MAX] = dest_states_nl[j];
 	    /* There must be only one destination which accepts
 	       newline.  See group_nodes_into_DFAstates.  */
@@ -3474,7 +3485,8 @@ out_free:
   if (dests_node_malloced)
     free (dests_node);
 
-  return 1;
+  state->trtable = trtable;
+  return trtable;
 }
 
 /* Group all nodes belonging to STATE into several destinations.

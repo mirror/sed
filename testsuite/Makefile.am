@@ -10,8 +10,8 @@ AM_CPPFLAGS = -I../lib
 if TEST_REGEX
 check_PROGRAMS = bug-regex7 \
                  bug-regex8 bug-regex9 bug-regex10 bug-regex11 bug-regex12 \
-                 bug-regex13 bug-regex14 bug-regex15 bug-regex16 \
-                 bug-regex21 tst-pcre tst-boost runtests runptests tst-rxspencer
+                 bug-regex13 bug-regex14 bug-regex15 bug-regex16 bug-regex21 \
+                 tst-pcre tst-boost runtests runptests tst-rxspencer tst-regex2
 
 SEDTESTS += space
 endif

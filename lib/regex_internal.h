@@ -189,6 +189,7 @@ typedef enum
   OP_DUP_PLUS = EPSILON_BIT | 4,
   OP_DUP_QUESTION = EPSILON_BIT | 5,
   ANCHOR = EPSILON_BIT | 6,
+  OP_DELETED_SUBEXP = EPSILON_BIT | 7,
 
   /* Tree type, these are used only by tree. */
   CONCAT = 16,
@@ -481,7 +482,7 @@ struct re_dfastate_t
   unsigned int hash;
   re_node_set nodes;
   re_node_set *entrance_nodes;
-  struct re_dfastate_t **trtable, **word_trtable;
+  struct re_dfastate_t **trtable;
   unsigned int context : 4;
   unsigned int halt : 1;
   /* If this state can accept `multi byte'.
@@ -491,6 +492,7 @@ struct re_dfastate_t
   /* If this state has backreference node(s).  */
   unsigned int has_backref : 1;
   unsigned int has_constraint : 1;
+  unsigned int word_trtable : 1;
 };
 typedef struct re_dfastate_t re_dfastate_t;
 
@@ -549,7 +551,7 @@ struct re_backref_cache_entry
   int subexp_to;
   char more;
   char unused;
-  short eps_reachable_subexps_map;
+  unsigned short int eps_reachable_subexps_map;
 };
 
 typedef struct
@@ -643,6 +645,7 @@ struct re_dfa_t
   int mb_cur_max;
   bitset word_char;
   reg_syntax_t syntax;
+  int *subexp_map;
 #ifdef DEBUG
   char* re_str;
 #endif

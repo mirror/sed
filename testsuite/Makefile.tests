@@ -116,18 +116,21 @@ quiet::
 bug-regex7$(EXEEXT) bug-regex8$(EXEEXT) bug-regex9$(EXEEXT) \
 bug-regex10$(EXEEXT) bug-regex11$(EXEEXT) bug-regex12$(EXEEXT) \
 bug-regex13$(EXEEXT) bug-regex14$(EXEEXT) bug-regex15$(EXEEXT) bug-regex16$(EXEEXT) \
-bug-regex21$(EXEEXT) runtests$(EXEEXT) runptests$(EXEEXT):
+bug-regex21$(EXEEXT) runtests$(EXEEXT) runptests$(EXEEXT)::
 	echo "$(SEDENV) ./$@ > `echo $@ | $(SED) s/$(EXEEXT)$$/.log/`"
 	@$(SEDENV) ./$@ > `echo $@ | $(SED) s/$(EXEEXT)$$/.log/`
 
-tst-pcre$(EXEEXT):
+tst-pcre$(EXEEXT)::
 	$(SEDENV) ./tst-pcre $(srcdir)/PCRE.tests > tst-pcre.log
 
-tst-boost$(EXEEXT):
+tst-boost$(EXEEXT)::
 	$(SEDENV) ./tst-boost $(srcdir)/BOOST.tests > tst-boost.log
 
-tst-rxspencer$(EXEEXT):
+tst-rxspencer$(EXEEXT)::
 	$(SEDENV) ./tst-rxspencer $(srcdir)/SPENCER.tests > tst-spencer.log
+
+tst-regex2$(EXEEXT)::
+	$(SEDENV) ./tst-regex2 $(srcdir)/tst-regex2.c > tst-regex2.log
 
 # The following target is not used in GNU sed builds (only super-sed)
 
@@ -150,5 +153,5 @@ pcretest$(EXEEXT)::
 bug-regex7$(EXEEXT) bug-regex8$(EXEEXT) bug-regex9$(EXEEXT) \
 bug-regex10$(EXEEXT) bug-regex11$(EXEEXT) bug-regex12$(EXEEXT) \
 bug-regex13$(EXEEXT) bug-regex14$(EXEEXT) bug-regex15$(EXEEXT) bug-regex16$(EXEEXT) \
-bug-regex21$(EXEEXT) runtests$(EXEEXT) runptests$(EXEEXT) \
+bug-regex21$(EXEEXT) runtests$(EXEEXT) runptests$(EXEEXT) tst-regex2$(EXEEXT) \
 tst-pcre$(EXEEXT) tst-boost$(EXEEXT) tst-rxspencer$(EXEEXT) pcretest$(EXEEXT)
