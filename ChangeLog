@@ -1,3 +1,8 @@
+2005-02-10  Paolo Bonzini  <bonzini@gnu.org>
+
+	* sed/regexp.c: Fix off-by-one error in the "invalid reference
+	to subexpression" message.  Debian bug 294339.
+
 2005-02-08  Paolo Bonzini  <bonzini@gnu.org>
 
 	* lib/obstack.h: include config.h.

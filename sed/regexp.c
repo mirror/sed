@@ -113,7 +113,7 @@ compile_regex_1 (new_regex, needed_sub)
     {
       char buf[200];
       sprintf(buf, _("invalid reference \\%d on `s' command's RHS"),
-	      needed_sub);
+	      needed_sub - 1);
       bad_prog(buf);
     }
 }
