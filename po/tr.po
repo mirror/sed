@@ -1,0 +1,439 @@
+# translation of sed-4.0.9.tr.po to Turkish
+# Copyright (C) 2003 Free Software Foundation, Inc.
+# Deniz Akkus Kanca <deniz@arayan.com>, 2001,2003, 2004.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: sed 4.0.9\n"
+"POT-Creation-Date: 2004-08-21 20:46+0200\n"
+"PO-Revision-Date: 2004-05-19 18:06+0300\n"
+"Last-Translator: Deniz Akkus Kanca <deniz@arayan.com>\n"
+"Language-Team: Turkish <gnu-tr-u12a@lists.sourceforge.net>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: KBabel 1.0.2\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+#: sed/compile.c:162
+#, fuzzy
+msgid "multiple `!'s"
+msgstr "Birden fazla '!'"
+
+#: sed/compile.c:163
+#, fuzzy
+msgid "unexpected `,'"
+msgstr "Beklenmeyen ','"
+
+#: sed/compile.c:164
+#, fuzzy
+msgid "invalid usage of +N or ~N as first address"
+msgstr "İlk adres olarak +N veya ~N kullanılamaz"
+
+#: sed/compile.c:165
+#, fuzzy
+msgid "unmatched `{'"
+msgstr "Eşleşmeyen '{'"
+
+#: sed/compile.c:166
+#, fuzzy
+msgid "unexpected `}'"
+msgstr "Beklenmeyen '}'"
+
+#: sed/compile.c:167
+#, fuzzy
+msgid "extra characters after command"
+msgstr "Komuttan sonra fazla karakterler var"
+
+#: sed/compile.c:168
+#, fuzzy
+msgid "expected \\ after `a', `c' or `i'"
+msgstr "`a', `c' veya `i' sonrası \\ beklendi"
+
+#: sed/compile.c:169
+msgid "`}' doesn't want any addresses"
+msgstr "'}' için adres istenmez"
+
+#: sed/compile.c:170
+msgid ": doesn't want any addresses"
+msgstr ": için hiç adres istenmez"
+
+#: sed/compile.c:171
+#, fuzzy
+msgid "comments don't accept any addresses"
+msgstr "Açıklamalarda adres kabul edilmez"
+
+#: sed/compile.c:172
+#, fuzzy
+msgid "missing command"
+msgstr "Komut eksik"
+
+#: sed/compile.c:173
+#, fuzzy
+msgid "command only uses one address"
+msgstr "Komutta yalnızca tek adres kullanılır"
+
+#: sed/compile.c:174
+#, fuzzy
+msgid "unterminated address regex"
+msgstr "Sonlandırılmamış adres düzenli ifadesi"
+
+#: sed/compile.c:175
+#, fuzzy
+msgid "unterminated `s' command"
+msgstr "Sonlandırılmamış 's' komutu"
+
+#: sed/compile.c:176
+#, fuzzy
+msgid "unterminated `y' command"
+msgstr "Sonlandırılmamış 'y' komutu"
+
+#: sed/compile.c:177
+#, fuzzy
+msgid "unknown option to `s'"
+msgstr "`s' komutuna bilinmeyen seçenek verilmiş"
+
+#: sed/compile.c:178
+msgid "multiple `p' options to `s' command"
+msgstr "`s' komutuna birden fazla `p' seçeneği verilmiş"
+
+#: sed/compile.c:179
+msgid "multiple `g' options to `s' command"
+msgstr "`s' komutuna birden fazla `g' seçeneği verilmiş"
+
+#: sed/compile.c:180
+msgid "multiple number options to `s' command"
+msgstr "`s' komutuna birden fazla sayı seçeneği verilmiş"
+
+#: sed/compile.c:181
+msgid "number option to `s' command may not be zero"
+msgstr "`s' komutuna verilen sayı seçeneği sıfır olamaz"
+
+#: sed/compile.c:182
+#, fuzzy
+msgid "strings for `y' command are different lengths"
+msgstr "y komutu için dizgeler değişik uzunluklarda"
+
+#: sed/compile.c:183
+msgid "delimiter character is not a single-byte character"
+msgstr ""
+
+#: sed/compile.c:184
+msgid "expected newer version of sed"
+msgstr "sed'in daha yeni bir sürümü beklendi"
+
+#: sed/compile.c:185
+#, fuzzy
+msgid "invalid usage of line address 0"
+msgstr "Adres değiştirici hatalı kullanılmış"
+
+#: sed/compile.c:186
+#, fuzzy, c-format
+msgid "unknown command: `%c'"
+msgstr "Bilinmeyen komut:"
+
+#: sed/compile.c:209
+#, c-format
+msgid "%s: file %s line %lu: %s\n"
+msgstr "%s: dosya %s satır %lu: %s\n"
+
+#: sed/compile.c:212
+#, c-format
+msgid "%s: -e expression #%lu, char %lu: %s\n"
+msgstr "%s: -e ifade #%lu, harf %lu: %s\n"
+
+#: sed/compile.c:1644
+#, fuzzy, c-format
+msgid "can't find label for jump to `%s'"
+msgstr "`%s'e atlamak için etiket bulunamıyor"
+
+#: sed/execute.c:649
+#, c-format
+msgid "%s: can't read %s: %s\n"
+msgstr "%s: %s okunamıyor: %s\n"
+
+#: sed/execute.c:672
+#, fuzzy, c-format
+msgid "couldn't edit %s: is a terminal"
+msgstr "%d sayıda öğe %s'e yazılamadı: %s"
+
+#: sed/execute.c:676
+#, c-format
+msgid "couldn't edit %s: not a regular file"
+msgstr ""
+
+#: sed/execute.c:683 lib/utils.c:196
+#, fuzzy, c-format
+msgid "couldn't open temporary file %s: %s"
+msgstr "Geçici dosya %s açılamadı: %s"
+
+#: sed/execute.c:1207 sed/execute.c:1388
+msgid "error in subprocess"
+msgstr "altsüreçte hata"
+
+#: sed/execute.c:1209
+msgid "option `e' not supported"
+msgstr " e' seçeneği desteklenmiyor"
+
+#: sed/execute.c:1390
+msgid "`e' command not supported"
+msgstr "`e' komutu desteklenmiyor"
+
+#: sed/regexp.c:39
+#, fuzzy
+msgid "no previous regular expression"
+msgstr "Daha önce düzenli ifade yok"
+
+#: sed/regexp.c:40
+#, fuzzy
+msgid "cannot specify modifiers on empty regexp"
+msgstr "Boş düzenli ifadeye değiştirici atanamaz"
+
+#: sed/regexp.c:134
+#, fuzzy, c-format
+msgid "invalid reference \\%d on `s' command's RHS"
+msgstr "`s' komutunun RHS'sinde geçersiz \\%d referansı"
+
+#: sed/sed.c:96
+msgid ""
+"  -R, --regexp-perl\n"
+"                 use Perl 5's regular expressions syntax in the script.\n"
+msgstr ""
+"  -R, --regexp-perl\n"
+"                 betikte Perl 5'in düzenli ifade sözdizimini kullanır.\n"
+
+#: sed/sed.c:101
+#, c-format
+msgid ""
+"Usage: %s [OPTION]... {script-only-if-no-other-script} [input-file]...\n"
+"\n"
+msgstr ""
+
+#: sed/sed.c:105
+msgid ""
+"  -n, --quiet, --silent\n"
+"                 suppress automatic printing of pattern space\n"
+msgstr ""
+
+#: sed/sed.c:107
+msgid ""
+"  -e script, --expression=script\n"
+"                 add the script to the commands to be executed\n"
+msgstr ""
+
+#: sed/sed.c:109
+msgid ""
+"  -f script-file, --file=script-file\n"
+"                 add the contents of script-file to the commands to be "
+"executed\n"
+msgstr ""
+
+#: sed/sed.c:111
+msgid ""
+"  -i[SUFFIX], --in-place[=SUFFIX]\n"
+"                 edit files in place (makes backup if extension supplied)\n"
+msgstr ""
+
+#: sed/sed.c:113
+msgid ""
+"  -l N, --line-length=N\n"
+"                 specify the desired line-wrap length for the `l' command\n"
+msgstr ""
+
+#: sed/sed.c:115
+msgid ""
+"  --posix\n"
+"                 disable all GNU extensions.\n"
+msgstr ""
+
+#: sed/sed.c:117
+#, fuzzy
+msgid ""
+"  -r, --regexp-extended\n"
+"                 use extended regular expressions in the script.\n"
+msgstr ""
+"  -R, --regexp-perl\n"
+"                 betikte Perl 5'in düzenli ifade sözdizimini kullanır.\n"
+
+#: sed/sed.c:120
+msgid ""
+"  -s, --separate\n"
+"                 consider files as separate rather than as a single "
+"continuous\n"
+"                 long stream.\n"
+msgstr ""
+
+#: sed/sed.c:123
+msgid ""
+"  -u, --unbuffered\n"
+"                 load minimal amounts of data from the input files and "
+"flush\n"
+"                 the output buffers more often\n"
+msgstr ""
+
+#: sed/sed.c:126
+msgid "      --help     display this help and exit\n"
+msgstr ""
+
+#: sed/sed.c:127
+msgid "      --version  output version information and exit\n"
+msgstr ""
+
+#: sed/sed.c:128
+msgid ""
+"\n"
+"If no -e, --expression, -f, or --file option is given, then the first\n"
+"non-option argument is taken as the sed script to interpret.  All\n"
+"remaining arguments are names of input files; if no input files are\n"
+"specified, then the standard input is read.\n"
+"\n"
+msgstr ""
+
+#: sed/sed.c:134
+#, c-format
+msgid ""
+"E-mail bug reports to: %s .\n"
+"Be sure to include the word ``%s'' somewhere in the ``Subject:'' field.\n"
+msgstr ""
+"Yazılım hatalarını %s adresine, çeviri hatalarını \n"
+"<gnu-tr-u12a@lists.sourceforge.net> adresine bildirin. \n"
+"``%s'' sözcüğünün Konu başlığında yer almasına dikkat edin. \n"
+
+#: sed/sed.c:271
+#, c-format
+msgid "super-sed version %s\n"
+msgstr "super-sed sürüm %s\n"
+
+#: sed/sed.c:272
+#, fuzzy, c-format
+msgid ""
+"based on GNU sed version %s\n"
+"\n"
+msgstr ""
+"GNU sed sürümü 3.02.80 temel alınmıştır\n"
+"\n"
+
+#: sed/sed.c:274
+#, c-format
+msgid "GNU sed version %s\n"
+msgstr "GNU sed sürümü %s\n"
+
+#: sed/sed.c:276
+#, c-format
+msgid ""
+"%s\n"
+"This is free software; see the source for copying conditions.  There is NO\n"
+"warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE,\n"
+"to the extent permitted by law.\n"
+msgstr ""
+"%s\n"
+"Bu serbest yazılımdır; kopyalama koşulları için kaynak koduna bakınız.\n"
+"Hiçbir garantisi yoktur; hatta SATILABİLİRLİĞİ veya HERHANGİ BİR AMACA\n"
+"UYGUNLUĞU için bile garanti verilmez.\n"
+
+#: lib/utils.c:98 lib/utils.c:336
+#, fuzzy, c-format
+msgid "cannot remove %s: %s"
+msgstr "%s: %s okunamıyor: %s\n"
+
+#: lib/utils.c:143
+#, fuzzy, c-format
+msgid "couldn't open file %s: %s"
+msgstr "%s dosyası açılamadı: %s"
+
+#: lib/utils.c:220
+#, c-format
+msgid "couldn't write %d item to %s: %s"
+msgid_plural "couldn't write %d items to %s: %s"
+msgstr[0] "%d sayıda öğe %s'e yazılamadı: %s"
+msgstr[1] "%d sayıda öğe %s'e yazılamadı: %s"
+
+#: lib/utils.c:235 lib/utils.c:251
+#, c-format
+msgid "read error on %s: %s"
+msgstr "%s'de okuma hatası: %s"
+
+#: lib/utils.c:341
+#, fuzzy, c-format
+msgid "cannot rename %s: %s"
+msgstr "%s: %s okunamıyor: %s\n"
+
+#: lib/regcomp.c:150
+msgid "Success"
+msgstr "Başarılı"
+
+#: lib/regcomp.c:153
+msgid "No match"
+msgstr "Eşleşme bulunamadı"
+
+#
+#: lib/regcomp.c:156
+msgid "Invalid regular expression"
+msgstr "Hatalı düzenli ifade"
+
+#: lib/regcomp.c:159
+msgid "Invalid collation character"
+msgstr "Hatalı birleştirme karakteri"
+
+#: lib/regcomp.c:162
+msgid "Invalid character class name"
+msgstr "Hatalı karakter sınıf ismi"
+
+#: lib/regcomp.c:165
+msgid "Trailing backslash"
+msgstr "Sonda fazla gerikesme var"
+
+#: lib/regcomp.c:168
+msgid "Invalid back reference"
+msgstr "Hatalı geri referans"
+
+#
+#: lib/regcomp.c:171
+msgid "Unmatched [ or [^"
+msgstr "Eşleşmeyen [ veya [^"
+
+#
+#: lib/regcomp.c:174
+msgid "Unmatched ( or \\("
+msgstr "Eşleşmeyen ( veya \\("
+
+#
+#: lib/regcomp.c:177
+msgid "Unmatched \\{"
+msgstr "Eşleşmeyen \\{"
+
+#: lib/regcomp.c:180
+msgid "Invalid content of \\{\\}"
+msgstr "\\{\\} içeriği hatalı"
+
+#: lib/regcomp.c:183
+msgid "Invalid range end"
+msgstr "Geçersiz kapsam sonu"
+
+#: lib/regcomp.c:186
+msgid "Memory exhausted"
+msgstr "Bellek tükendi"
+
+#
+#: lib/regcomp.c:189
+msgid "Invalid preceding regular expression"
+msgstr "Bir önceki düzenli ifade hatalı"
+
+#
+#: lib/regcomp.c:192
+msgid "Premature end of regular expression"
+msgstr "Düzenli ifade erken sonlandı"
+
+#
+#: lib/regcomp.c:195
+msgid "Regular expression too big"
+msgstr "Düzenli ifade fazla büyük"
+
+#
+#: lib/regcomp.c:198
+msgid "Unmatched ) or \\)"
+msgstr "Eşleşmeyen ) or \\)"
+
+#: lib/regcomp.c:672
+msgid "No previous regular expression"
+msgstr "Daha önce düzenli ifade yok"

@@ -1,0 +1,425 @@
+# Czech translations for GNU sed package.
+# Copyright (C) 1998 Free Software Foundation, Inc.
+# Jaroslav Fojtik <fojtik@cmp.felk.cvut.cz>, 1998.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: sed 3.02.80\n"
+"POT-Creation-Date: 2004-08-21 20:46+0200\n"
+"PO-Revision-Date: 2001-08-05 19:52+02:00\n"
+"Last-Translator: Vladimir Michl <Vladimir.Michl@seznam.cz>\n"
+"Language-Team: Czech <cs@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=ISO-8859-2\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Report-Msgid-Bugs-To: \n"
+
+#: sed/compile.c:162
+#, fuzzy
+msgid "multiple `!'s"
+msgstr "Vícenásobný `!'"
+
+#: sed/compile.c:163
+#, fuzzy
+msgid "unexpected `,'"
+msgstr "Neoèekáváná `,'"
+
+#: sed/compile.c:164
+#, fuzzy
+msgid "invalid usage of +N or ~N as first address"
+msgstr "+N nebo ~N nelze pou¾ít jako první adresu"
+
+#: sed/compile.c:165
+#, fuzzy
+msgid "unmatched `{'"
+msgstr "Neodpovídající `{'"
+
+#: sed/compile.c:166
+#, fuzzy
+msgid "unexpected `}'"
+msgstr "Neoèekávaná `}'"
+
+#: sed/compile.c:167
+#, fuzzy
+msgid "extra characters after command"
+msgstr "Nadbyteèné znaky po pøíkazu"
+
+#: sed/compile.c:168
+msgid "expected \\ after `a', `c' or `i'"
+msgstr ""
+
+#: sed/compile.c:169
+msgid "`}' doesn't want any addresses"
+msgstr "`}' nevy¾aduje jakoukoliv adresu"
+
+#: sed/compile.c:170
+msgid ": doesn't want any addresses"
+msgstr ": nechce jakoukoliv adresu"
+
+#: sed/compile.c:171
+#, fuzzy
+msgid "comments don't accept any addresses"
+msgstr "V komentáøi není pøípustná jakákoliv adresa"
+
+#: sed/compile.c:172
+#, fuzzy
+msgid "missing command"
+msgstr "Chybìjící pøíkaz"
+
+#: sed/compile.c:173
+#, fuzzy
+msgid "command only uses one address"
+msgstr "Pøíkaz pou¾ívá pouze jedinou adresu"
+
+#: sed/compile.c:174
+#, fuzzy
+msgid "unterminated address regex"
+msgstr "Neukonèená adresa regulárního výrazu"
+
+#: sed/compile.c:175
+#, fuzzy
+msgid "unterminated `s' command"
+msgstr "Neukonèený pøíkaz `s'"
+
+#: sed/compile.c:176
+#, fuzzy
+msgid "unterminated `y' command"
+msgstr "Neukonèený pøíkaz `y'"
+
+#: sed/compile.c:177
+#, fuzzy
+msgid "unknown option to `s'"
+msgstr "Neznámý pøepínaè pro `s'"
+
+#: sed/compile.c:178
+msgid "multiple `p' options to `s' command"
+msgstr "vícenásobné pou¾ití pøepínaèe `p' s pøíkazem `s'"
+
+#: sed/compile.c:179
+msgid "multiple `g' options to `s' command"
+msgstr "vícenásobné pou¾ití pøepínaèe `g' s pøíkazem `s'"
+
+#: sed/compile.c:180
+msgid "multiple number options to `s' command"
+msgstr "pøíkaz `s' mù¾e mít maximálnì jednu èíselnou volbu"
+
+#: sed/compile.c:181
+msgid "number option to `s' command may not be zero"
+msgstr "èíselná volba pøíkazu `s' nemù¾e být nula"
+
+#: sed/compile.c:182
+#, fuzzy
+msgid "strings for `y' command are different lengths"
+msgstr "øetìzce pro pøíkaz `y' musí být stejnì dlouhé"
+
+#: sed/compile.c:183
+msgid "delimiter character is not a single-byte character"
+msgstr ""
+
+#: sed/compile.c:184
+msgid "expected newer version of sed"
+msgstr ""
+
+#: sed/compile.c:185
+#, fuzzy
+msgid "invalid usage of line address 0"
+msgstr "Chybné pou¾ití adresy modifikátoru"
+
+#: sed/compile.c:186
+#, fuzzy, c-format
+msgid "unknown command: `%c'"
+msgstr "Neznámý pøíkaz:"
+
+#: sed/compile.c:209
+#, c-format
+msgid "%s: file %s line %lu: %s\n"
+msgstr "%s: soubor %s, øádek %lu: %s\n"
+
+#: sed/compile.c:212
+#, c-format
+msgid "%s: -e expression #%lu, char %lu: %s\n"
+msgstr "%s: -e výraz #%lu, znak %lu: %s\n"
+
+#: sed/compile.c:1644
+#, fuzzy, c-format
+msgid "can't find label for jump to `%s'"
+msgstr "Návì¹tí pro skok na `%s' nelze najít"
+
+#: sed/execute.c:649
+#, c-format
+msgid "%s: can't read %s: %s\n"
+msgstr "%s: %s nelze èíst: %s\n"
+
+#: sed/execute.c:672
+#, fuzzy, c-format
+msgid "couldn't edit %s: is a terminal"
+msgstr "Soubor %s nelze otevøít"
+
+#: sed/execute.c:676
+#, c-format
+msgid "couldn't edit %s: not a regular file"
+msgstr ""
+
+#: sed/execute.c:683 lib/utils.c:196
+#, fuzzy, c-format
+msgid "couldn't open temporary file %s: %s"
+msgstr "Soubor %s nelze otevøít"
+
+#: sed/execute.c:1207 sed/execute.c:1388
+msgid "error in subprocess"
+msgstr ""
+
+#: sed/execute.c:1209
+msgid "option `e' not supported"
+msgstr ""
+
+#: sed/execute.c:1390
+msgid "`e' command not supported"
+msgstr ""
+
+#: sed/regexp.c:39
+msgid "no previous regular expression"
+msgstr ""
+
+#: sed/regexp.c:40
+msgid "cannot specify modifiers on empty regexp"
+msgstr ""
+
+#: sed/regexp.c:134
+#, c-format
+msgid "invalid reference \\%d on `s' command's RHS"
+msgstr ""
+
+#: sed/sed.c:96
+msgid ""
+"  -R, --regexp-perl\n"
+"                 use Perl 5's regular expressions syntax in the script.\n"
+msgstr ""
+
+#: sed/sed.c:101
+#, c-format
+msgid ""
+"Usage: %s [OPTION]... {script-only-if-no-other-script} [input-file]...\n"
+"\n"
+msgstr ""
+
+#: sed/sed.c:105
+msgid ""
+"  -n, --quiet, --silent\n"
+"                 suppress automatic printing of pattern space\n"
+msgstr ""
+
+#: sed/sed.c:107
+msgid ""
+"  -e script, --expression=script\n"
+"                 add the script to the commands to be executed\n"
+msgstr ""
+
+#: sed/sed.c:109
+msgid ""
+"  -f script-file, --file=script-file\n"
+"                 add the contents of script-file to the commands to be "
+"executed\n"
+msgstr ""
+
+#: sed/sed.c:111
+msgid ""
+"  -i[SUFFIX], --in-place[=SUFFIX]\n"
+"                 edit files in place (makes backup if extension supplied)\n"
+msgstr ""
+
+#: sed/sed.c:113
+msgid ""
+"  -l N, --line-length=N\n"
+"                 specify the desired line-wrap length for the `l' command\n"
+msgstr ""
+
+#: sed/sed.c:115
+msgid ""
+"  --posix\n"
+"                 disable all GNU extensions.\n"
+msgstr ""
+
+#: sed/sed.c:117
+msgid ""
+"  -r, --regexp-extended\n"
+"                 use extended regular expressions in the script.\n"
+msgstr ""
+
+#: sed/sed.c:120
+msgid ""
+"  -s, --separate\n"
+"                 consider files as separate rather than as a single "
+"continuous\n"
+"                 long stream.\n"
+msgstr ""
+
+#: sed/sed.c:123
+msgid ""
+"  -u, --unbuffered\n"
+"                 load minimal amounts of data from the input files and "
+"flush\n"
+"                 the output buffers more often\n"
+msgstr ""
+
+#: sed/sed.c:126
+msgid "      --help     display this help and exit\n"
+msgstr ""
+
+#: sed/sed.c:127
+msgid "      --version  output version information and exit\n"
+msgstr ""
+
+#: sed/sed.c:128
+msgid ""
+"\n"
+"If no -e, --expression, -f, or --file option is given, then the first\n"
+"non-option argument is taken as the sed script to interpret.  All\n"
+"remaining arguments are names of input files; if no input files are\n"
+"specified, then the standard input is read.\n"
+"\n"
+msgstr ""
+
+#: sed/sed.c:134
+#, c-format
+msgid ""
+"E-mail bug reports to: %s .\n"
+"Be sure to include the word ``%s'' somewhere in the ``Subject:'' field.\n"
+msgstr ""
+"Chyby v programu oznamujte na adrese: %s (anglicky).\n"
+"Kamkoliv do polo¾ky ``Subject:'' vlo¾te ``%s''.\n"
+"Pøipomínky k pøekladu zasílejte na adresu <cs@li.org> (èesky).\n"
+
+#: sed/sed.c:271
+#, c-format
+msgid "super-sed version %s\n"
+msgstr ""
+
+#: sed/sed.c:272
+#, c-format
+msgid ""
+"based on GNU sed version %s\n"
+"\n"
+msgstr ""
+
+#: sed/sed.c:274
+#, c-format
+msgid "GNU sed version %s\n"
+msgstr ""
+
+#: sed/sed.c:276
+#, c-format
+msgid ""
+"%s\n"
+"This is free software; see the source for copying conditions.  There is NO\n"
+"warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE,\n"
+"to the extent permitted by law.\n"
+msgstr ""
+"  %s\n"
+"  Toto je volné programové vybavení; podmínky pro kopírování a roz¹iøování\n"
+"naleznete ve zdrojových textech. Toto programové vybavení je zcela BEZ "
+"ZÁRUKY,\n"
+"a to i bez záruky PRODEJNOSTI nebo VHODNOSTI PRO NÌJAKÝ KONKRÉTNÍ ÚÈEL.\n"
+
+#: lib/utils.c:98 lib/utils.c:336
+#, fuzzy, c-format
+msgid "cannot remove %s: %s"
+msgstr "%s: %s nelze èíst: %s\n"
+
+#: lib/utils.c:143
+#, fuzzy, c-format
+msgid "couldn't open file %s: %s"
+msgstr "Soubor %s nelze otevøít"
+
+#: lib/utils.c:220
+#, fuzzy, c-format
+msgid "couldn't write %d item to %s: %s"
+msgid_plural "couldn't write %d items to %s: %s"
+msgstr[0] "%d polo¾ek nelze do %s zapsat: %s"
+msgstr[1] "%d polo¾ek nelze do %s zapsat: %s"
+
+#: lib/utils.c:235 lib/utils.c:251
+#, c-format
+msgid "read error on %s: %s"
+msgstr "chyba pøi ètení z %s: %s"
+
+#: lib/utils.c:341
+#, fuzzy, c-format
+msgid "cannot rename %s: %s"
+msgstr "%s: %s nelze èíst: %s\n"
+
+#: lib/regcomp.c:150
+msgid "Success"
+msgstr ""
+
+#: lib/regcomp.c:153
+msgid "No match"
+msgstr ""
+
+#: lib/regcomp.c:156
+msgid "Invalid regular expression"
+msgstr ""
+
+#: lib/regcomp.c:159
+msgid "Invalid collation character"
+msgstr ""
+
+#: lib/regcomp.c:162
+msgid "Invalid character class name"
+msgstr ""
+
+#: lib/regcomp.c:165
+msgid "Trailing backslash"
+msgstr ""
+
+#: lib/regcomp.c:168
+msgid "Invalid back reference"
+msgstr ""
+
+#: lib/regcomp.c:171
+#, fuzzy
+msgid "Unmatched [ or [^"
+msgstr "Neodpovídající `{'"
+
+#: lib/regcomp.c:174
+#, fuzzy
+msgid "Unmatched ( or \\("
+msgstr "Neodpovídající `{'"
+
+#: lib/regcomp.c:177
+#, fuzzy
+msgid "Unmatched \\{"
+msgstr "Neodpovídající `{'"
+
+#: lib/regcomp.c:180
+msgid "Invalid content of \\{\\}"
+msgstr ""
+
+#: lib/regcomp.c:183
+msgid "Invalid range end"
+msgstr ""
+
+#: lib/regcomp.c:186
+msgid "Memory exhausted"
+msgstr ""
+
+#: lib/regcomp.c:189
+msgid "Invalid preceding regular expression"
+msgstr ""
+
+#: lib/regcomp.c:192
+msgid "Premature end of regular expression"
+msgstr ""
+
+#: lib/regcomp.c:195
+msgid "Regular expression too big"
+msgstr ""
+
+#: lib/regcomp.c:198
+#, fuzzy
+msgid "Unmatched ) or \\)"
+msgstr "Neodpovídající `{'"
+
+#: lib/regcomp.c:672
+msgid "No previous regular expression"
+msgstr ""
