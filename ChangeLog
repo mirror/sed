@@ -1,3 +1,8 @@
+2005-02-01  Paolo Bonzini  <bonzini@gnu.org>
+
+	* doc/Makefile.am: Don't enable MAKEINFO_HTML and TEXI2HTML_HTML
+	rules unless BUILD_HTML.
+
 2005-01-25  Paolo Bonzini  <bonzini@gnu.org>
 
 	* sed/regexp.c: Fix building on GCC 2.95 and earlier.

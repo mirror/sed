@@ -23,38 +23,31 @@ sed.1: $(top_srcdir)/sed/sed.c $(top_srcdir)/configure.ac $(srcdir)/sed.x
 dist-hook:
 	touch $(distdir)/sed.1
 
+# This rule is used if --enable-html is passed
+if BUILD_HTML
+docdir = $(datadir)/doc
+doc_DATA = sed.html
+
+all: html
+
+html: sed.html
+
+.PHONY: html
+endif
+
 # Having a dependancy on sed.info automatically makes
 # sed.html dependant on sed.texi and all the included
 # sources
 if MAKEINFO_HTML
-docdir = $(datadir)/doc
-doc_DATA = sed.html
-
 sed.html: sed.texi sed.info
 	builddir=`pwd` && cd $(srcdir) && \
 	  $(MAKEINFO) --html --no-split -o $$builddir/sed.html sed.texi
-
-html: sed.html
-
-.PHONY: html
 endif
 
 # These rules are used together with TEXI2HTML
 if TEXI2HTML_HTML
-docdir = $(datadir)/doc
-doc_DATA = sed.html
-
 sed.html: sed.texi sed.info
 	cp $(srcdir)/*.texi . && \
 	  $(TEXI2HTML) sed.texi && \
 	  rn *.texi
-
-html: sed.html
-
-.PHONY: html
-endif
-
-# This rule is used if --enable-html is passed
-if BUILD_HTML
-all: html
 endif
