@@ -2874,13 +2874,35 @@ bug@dots{}).
 
 @item @code{0a} does not work (gives an error)
 There is no line 0.  0 is a special address that is only used to treat
-addresses like @samp{0,/@var{RE}/} as active when the script starts: if
-you write @samp{1,/abc/d} and the first line includes the word @samp{abc},
+addresses like @code{0,/@var{RE}/} as active when the script starts: if
+you write @code{1,/abc/d} and the first line includes the word @samp{abc},
 then that match would be ignored because address ranges must span at least
 two lines (barring the end of the file); but what you probably wanted is
 to delete every line up to the first one including @samp{abc}, and this
-is obtained with @samp{0,/abc/d}.
+is obtained with @code{0,/abc/d}.
+
+@ifclear PERL
+@item @code{[a-z]} is case insensitive
+You are encountering problems with locales.  POSIX mandates that @code{[a-z]}
+uses the current locale's collation order -- in C parlance, that means using
+@code{strcoll(3)} instead of @code{strcmp(3)}.  Some locales have a
+case-insensitive collation order, others don't: one of those that have
+problems is Estonian.
+
+Another problem is that @code{[a-z]} tries to use collation symbols.
+This only happens if you are on the @acronym{GNU} system, using
+@acronym{GNU} libc's regular expression matcher instead of compiling the
+one supplied with @acronym{GNU} sed.  In a Danish locale, for example,
+the regular expression @code{^[a-z]$} matches the string @samp{aa},
+because this is a single collating symbol that comes after @samp{a}
+and before @samp{b}; @samp{ll} behaves similarly in Spanish
+locales, or @samp{ij} in Dutch locales.
+
+To work around these problems, which may cause bugs in shell scripts, set
+the @env{LC_COLLATE} and @env{LC_CTYPE} environment variables to @samp{C}.
+@end ifclear
 @end table
+
 
 @node Extended regexps
 @appendix Extended regular expressions
