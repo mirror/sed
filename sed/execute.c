@@ -313,6 +313,8 @@ str_append_modified(to, string, length, type)
             type &= ~(REPL_LOWERCASE_FIRST | REPL_UPPERCASE_FIRST);
 	    if (type == REPL_ASIS)
 	      {
+		n = WCRTOMB (to->active + to->length, wc, &to->mbstate);
+		to->length += n;
 		str_append(to, string, length);
 	        return;
 	      }
@@ -324,7 +326,7 @@ str_append_modified(to, string, length, type)
           wc = towlower(wc);
 
 	/* Copy the new wide character to the end of the string. */
-	n = wcrtomb (to->active + to->length, wc, &to->mbstate);
+	n = WCRTOMB (to->active + to->length, wc, &to->mbstate);
         to->length += n;
 	if (n == -1)
 	  {
