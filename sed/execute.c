@@ -1709,10 +1709,14 @@ process_files(the_program, argv)
 #ifdef EXPERIMENTAL_DASH_N_OPTIMIZATION
   branches = count_branches(the_program);
 #endif /*EXPERIMENTAL_DASH_N_OPTIMIZATION*/
-  input.file_list = stdin_argv;
   input.reset_at_next_file = true;
   if (argv && *argv)
     input.file_list = argv;
+  else if (in_place_extension)
+    panic(_("no input files"));
+  else
+    input.file_list = stdin_argv;
+
   input.bad_count = 0;
   input.line_number = 0;
   input.read_fn = read_always_fail;

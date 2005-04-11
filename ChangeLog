@@ -1,3 +1,8 @@
+2005-04-04  Paolo Bonzini  <bonzini@gnu.org>
+
+	* sed/execute.c (process_files): Do not add a default
+	command-line in in-place editing mode.
+
 2005-02-10  Paolo Bonzini  <bonzini@gnu.org>
 
 	* testsuite/appquit.good, testsuite/appquit.inp,
