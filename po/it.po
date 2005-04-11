@@ -5,14 +5,14 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: sed 4.0a\n"
-"POT-Creation-Date: 2004-11-11 15:28+0100\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2005-04-11 15:53+0200\n"
 "PO-Revision-Date: 2002-11-26 12:44+0100\n"
 "Last-Translator: Paolo Bonzini <bonzini@gnu.org>\n"
 "Language-Team: Italian <tp@lists.linux.it>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=ISO-8859-1\n"
 "Content-Transfer-Encoding: 8-bit\n"
-"Report-Msgid-Bugs-To: \n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 
 # sed/compile.c:166
@@ -158,42 +158,46 @@ msgid "can't find label for jump to `%s'"
 msgstr "impossibile trovare un'etichetta per il salto a `%s'"
 
 # sed/execute.c:516
-#: sed/execute.c:649
+#: sed/execute.c:651
 #, c-format
 msgid "%s: can't read %s: %s\n"
 msgstr "%s: impossibile leggere %s: %s\n"
 
 # sed/execute.c:675
-#: sed/execute.c:672
+#: sed/execute.c:674
 #, c-format
 msgid "couldn't edit %s: is a terminal"
 msgstr "impossibile modificare %s: è un terminale"
 
-#: sed/execute.c:676
+#: sed/execute.c:678
 #, c-format
 msgid "couldn't edit %s: not a regular file"
 msgstr "impossibile modificare %s: non è un file normale"
 
 # lib/utils.c:131
-#: lib/utils.c:196 sed/execute.c:683
+#: sed/execute.c:685 lib/utils.c:196
 #, c-format
 msgid "couldn't open temporary file %s: %s"
 msgstr "impossibile aprire il file temporaneo %s: %s"
 
 # sed/execute.c:1003 sed/execute.c:1183
-#: sed/execute.c:1207 sed/execute.c:1388
+#: sed/execute.c:1208 sed/execute.c:1389
 msgid "error in subprocess"
 msgstr "errore in un sottoprocesso"
 
 # sed/execute.c:1005
-#: sed/execute.c:1209
+#: sed/execute.c:1210
 msgid "option `e' not supported"
 msgstr "opzione `e' non supportata"
 
 # sed/execute.c:1185
-#: sed/execute.c:1390
+#: sed/execute.c:1391
 msgid "`e' command not supported"
 msgstr "comando `e' non supportato"
+
+#: sed/execute.c:1716
+msgid "no input files"
+msgstr "nessun file in ingresso"
 
 # lib/regcomp.c:658 sed/regex.c:47
 #: sed/regexp.c:39
@@ -206,7 +210,7 @@ msgid "cannot specify modifiers on empty regexp"
 msgstr "non è possibile specificare dei modificatori per l'espressione vuota"
 
 # sed/regex.c:146
-#: sed/regexp.c:134
+#: sed/regexp.c:115
 #, c-format
 msgid "invalid reference \\%d on `s' command's RHS"
 msgstr "riferimento non valido \\%d nel secondo membro del comando `s'"
@@ -430,87 +434,87 @@ msgid "cannot rename %s: %s"
 msgstr "impossibile rinominare %s: %s"
 
 # lib/regcomp.c:179
-#: lib/regcomp.c:150
+#: lib/regcomp.c:160
 msgid "Success"
 msgstr "Successo"
 
 # lib/regcomp.c:182
-#: lib/regcomp.c:153
+#: lib/regcomp.c:163
 msgid "No match"
 msgstr "Nessuna corrispondenza trovata"
 
 # lib/regcomp.c:185
-#: lib/regcomp.c:156
+#: lib/regcomp.c:166
 msgid "Invalid regular expression"
 msgstr "Espressione regolare non valida"
 
 # lib/regcomp.c:188
-#: lib/regcomp.c:159
+#: lib/regcomp.c:169
 msgid "Invalid collation character"
 msgstr "Carattere di ordinamento non valido"
 
 # lib/regcomp.c:191
-#: lib/regcomp.c:162
+#: lib/regcomp.c:172
 msgid "Invalid character class name"
 msgstr "Nome non valido per una classe di caratteri"
 
 # lib/regcomp.c:194
-#: lib/regcomp.c:165
+#: lib/regcomp.c:175
 msgid "Trailing backslash"
 msgstr "Barra rovesciata alla fine dell'espressione regolare"
 
 # lib/regcomp.c:197
-#: lib/regcomp.c:168
+#: lib/regcomp.c:178
 msgid "Invalid back reference"
 msgstr "Riferimento non valido"
 
 # lib/regcomp.c:200
-#: lib/regcomp.c:171
+#: lib/regcomp.c:181
 msgid "Unmatched [ or [^"
 msgstr "`[' non bilanciata"
 
 # lib/regcomp.c:203
-#: lib/regcomp.c:174
+#: lib/regcomp.c:184
 msgid "Unmatched ( or \\("
 msgstr "`(' o `\\(' non bilanciata"
 
 # lib/regcomp.c:206
-#: lib/regcomp.c:177
+#: lib/regcomp.c:187
 msgid "Unmatched \\{"
 msgstr "`\\{' non bilanciata"
 
 # lib/regcomp.c:209
-#: lib/regcomp.c:180
+#: lib/regcomp.c:190
 msgid "Invalid content of \\{\\}"
 msgstr "numero di ripetizioni specificato tra graffe non valido"
 
 # lib/regcomp.c:212
-#: lib/regcomp.c:183
+#: lib/regcomp.c:193
 msgid "Invalid range end"
 msgstr "Fine dell'intervallo non valida"
 
 # lib/regcomp.c:215
-#: lib/regcomp.c:186
+#: lib/regcomp.c:196
 msgid "Memory exhausted"
 msgstr "Memoria esaurita"
 
 # lib/regcomp.c:218
-#: lib/regcomp.c:189
+#: lib/regcomp.c:199
 msgid "Invalid preceding regular expression"
 msgstr "Espressione regolare precedente non valida"
 
 # lib/regcomp.c:221
-#: lib/regcomp.c:192
+#: lib/regcomp.c:202
 msgid "Premature end of regular expression"
 msgstr "Fine prematura dell'espressione regolare"
 
 # lib/regcomp.c:224
-#: lib/regcomp.c:195
+#: lib/regcomp.c:205
 msgid "Regular expression too big"
 msgstr "Espressione regolare troppo grande"
 
 # lib/regcomp.c:227
-#: lib/regcomp.c:198
+#: lib/regcomp.c:208
 msgid "Unmatched ) or \\)"
 msgstr "`)' o `\\)' non bilanciata"
 

@@ -5,14 +5,14 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: sed 4.0.9\n"
-"POT-Creation-Date: 2004-11-11 15:28+0100\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2005-04-11 15:53+0200\n"
 "PO-Revision-Date: 2004-05-19 18:06+0300\n"
 "Last-Translator: Deniz Akkus Kanca <deniz@arayan.com>\n"
 "Language-Team: Turkish <gnu-tr-u12a@lists.sourceforge.net>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Report-Msgid-Bugs-To: \n"
 "X-Generator: KBabel 1.0.2\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
@@ -148,37 +148,41 @@ msgstr "%s: -e ifade #%lu, harf %lu: %s\n"
 msgid "can't find label for jump to `%s'"
 msgstr "`%s'e atlamak için etiket bulunamıyor"
 
-#: sed/execute.c:649
+#: sed/execute.c:651
 #, c-format
 msgid "%s: can't read %s: %s\n"
 msgstr "%s: %s okunamıyor: %s\n"
 
-#: sed/execute.c:672
+#: sed/execute.c:674
 #, fuzzy, c-format
 msgid "couldn't edit %s: is a terminal"
 msgstr "%d sayıda öğe %s'e yazılamadı: %s"
 
-#: sed/execute.c:676
+#: sed/execute.c:678
 #, fuzzy, c-format
 msgid "couldn't edit %s: not a regular file"
 msgstr "%d sayıda öğe %s'e yazılamadı: %s"
 
-#: lib/utils.c:196 sed/execute.c:683
+#: sed/execute.c:685 lib/utils.c:196
 #, fuzzy, c-format
 msgid "couldn't open temporary file %s: %s"
 msgstr "Geçici dosya %s açılamadı: %s"
 
-#: sed/execute.c:1207 sed/execute.c:1388
+#: sed/execute.c:1208 sed/execute.c:1389
 msgid "error in subprocess"
 msgstr "altsüreçte hata"
 
-#: sed/execute.c:1209
+#: sed/execute.c:1210
 msgid "option `e' not supported"
 msgstr " e' seçeneği desteklenmiyor"
 
-#: sed/execute.c:1390
+#: sed/execute.c:1391
 msgid "`e' command not supported"
 msgstr "`e' komutu desteklenmiyor"
+
+#: sed/execute.c:1716
+msgid "no input files"
+msgstr ""
 
 #: sed/regexp.c:39
 #, fuzzy
@@ -190,7 +194,7 @@ msgstr "Daha önce düzenli ifade yok"
 msgid "cannot specify modifiers on empty regexp"
 msgstr "Boş düzenli ifadeye değiştirici atanamaz"
 
-#: sed/regexp.c:134
+#: sed/regexp.c:115
 #, fuzzy, c-format
 msgid "invalid reference \\%d on `s' command's RHS"
 msgstr "`s' komutunun RHS'sinde geçersiz \\%d referansı"
@@ -370,79 +374,79 @@ msgstr "%s'de okuma hatası: %s"
 msgid "cannot rename %s: %s"
 msgstr "%s: %s okunamıyor: %s\n"
 
-#: lib/regcomp.c:150
+#: lib/regcomp.c:160
 msgid "Success"
 msgstr "Başarılı"
 
-#: lib/regcomp.c:153
+#: lib/regcomp.c:163
 msgid "No match"
 msgstr "Eşleşme bulunamadı"
 
 #
-#: lib/regcomp.c:156
+#: lib/regcomp.c:166
 msgid "Invalid regular expression"
 msgstr "Hatalı düzenli ifade"
 
-#: lib/regcomp.c:159
+#: lib/regcomp.c:169
 msgid "Invalid collation character"
 msgstr "Hatalı birleştirme karakteri"
 
-#: lib/regcomp.c:162
+#: lib/regcomp.c:172
 msgid "Invalid character class name"
 msgstr "Hatalı karakter sınıf ismi"
 
-#: lib/regcomp.c:165
+#: lib/regcomp.c:175
 msgid "Trailing backslash"
 msgstr "Sonda fazla gerikesme var"
 
-#: lib/regcomp.c:168
+#: lib/regcomp.c:178
 msgid "Invalid back reference"
 msgstr "Hatalı geri referans"
 
 #
-#: lib/regcomp.c:171
+#: lib/regcomp.c:181
 msgid "Unmatched [ or [^"
 msgstr "Eşleşmeyen [ veya [^"
 
 #
-#: lib/regcomp.c:174
+#: lib/regcomp.c:184
 msgid "Unmatched ( or \\("
 msgstr "Eşleşmeyen ( veya \\("
 
 #
-#: lib/regcomp.c:177
+#: lib/regcomp.c:187
 msgid "Unmatched \\{"
 msgstr "Eşleşmeyen \\{"
 
-#: lib/regcomp.c:180
+#: lib/regcomp.c:190
 msgid "Invalid content of \\{\\}"
 msgstr "\\{\\} içeriği hatalı"
 
-#: lib/regcomp.c:183
+#: lib/regcomp.c:193
 msgid "Invalid range end"
 msgstr "Geçersiz kapsam sonu"
 
-#: lib/regcomp.c:186
+#: lib/regcomp.c:196
 msgid "Memory exhausted"
 msgstr "Bellek tükendi"
 
 #
-#: lib/regcomp.c:189
+#: lib/regcomp.c:199
 msgid "Invalid preceding regular expression"
 msgstr "Bir önceki düzenli ifade hatalı"
 
 #
-#: lib/regcomp.c:192
+#: lib/regcomp.c:202
 msgid "Premature end of regular expression"
 msgstr "Düzenli ifade erken sonlandı"
 
 #
-#: lib/regcomp.c:195
+#: lib/regcomp.c:205
 msgid "Regular expression too big"
 msgstr "Düzenli ifade fazla büyük"
 
 #
-#: lib/regcomp.c:198
+#: lib/regcomp.c:208
 msgid "Unmatched ) or \\)"
 msgstr "Eşleşmeyen ) or \\)"
 

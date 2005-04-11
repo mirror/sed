@@ -5,14 +5,14 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: GNU sed 3.02.80\n"
-"POT-Creation-Date: 2004-11-11 15:28+0100\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2005-04-11 15:53+0200\n"
 "PO-Revision-Date: 2001-10-12 17:26+0900\n"
 "Last-Translator: Jong-Hoon Ryu <redhat4u@netian.com>\n"
 "Language-Team: Korean <ko@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=EUC-KR\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Report-Msgid-Bugs-To: \n"
 
 #: sed/compile.c:162
 #, fuzzy
@@ -145,36 +145,40 @@ msgstr "%s: -e expression #%lu, char %lu: %s\n"
 msgid "can't find label for jump to `%s'"
 msgstr "`%s' (으)로 점프할 레이블을 찾을 수 없습니다"
 
-#: sed/execute.c:649
+#: sed/execute.c:651
 #, c-format
 msgid "%s: can't read %s: %s\n"
 msgstr "%s: %s (을)를 읽을 수 없음: %s\n"
 
-#: sed/execute.c:672
+#: sed/execute.c:674
 #, fuzzy, c-format
 msgid "couldn't edit %s: is a terminal"
 msgstr "%s 파일을 열 수 없습니다"
 
-#: sed/execute.c:676
+#: sed/execute.c:678
 #, fuzzy, c-format
 msgid "couldn't edit %s: not a regular file"
 msgstr "%s 파일을 열 수 없습니다"
 
-#: lib/utils.c:196 sed/execute.c:683
+#: sed/execute.c:685 lib/utils.c:196
 #, fuzzy, c-format
 msgid "couldn't open temporary file %s: %s"
 msgstr "%s 파일을 열 수 없습니다"
 
-#: sed/execute.c:1207 sed/execute.c:1388
+#: sed/execute.c:1208 sed/execute.c:1389
 msgid "error in subprocess"
 msgstr ""
 
-#: sed/execute.c:1209
+#: sed/execute.c:1210
 msgid "option `e' not supported"
 msgstr ""
 
-#: sed/execute.c:1390
+#: sed/execute.c:1391
 msgid "`e' command not supported"
+msgstr ""
+
+#: sed/execute.c:1716
+msgid "no input files"
 msgstr ""
 
 #: sed/regexp.c:39
@@ -185,7 +189,7 @@ msgstr ""
 msgid "cannot specify modifiers on empty regexp"
 msgstr ""
 
-#: sed/regexp.c:134
+#: sed/regexp.c:115
 #, c-format
 msgid "invalid reference \\%d on `s' command's RHS"
 msgstr ""
@@ -358,74 +362,74 @@ msgstr "%s 의 내용 읽기 오류: %s"
 msgid "cannot rename %s: %s"
 msgstr "%s: %s (을)를 읽을 수 없음: %s\n"
 
-#: lib/regcomp.c:150
+#: lib/regcomp.c:160
 msgid "Success"
 msgstr ""
 
-#: lib/regcomp.c:153
+#: lib/regcomp.c:163
 msgid "No match"
 msgstr ""
 
-#: lib/regcomp.c:156
+#: lib/regcomp.c:166
 msgid "Invalid regular expression"
 msgstr ""
 
-#: lib/regcomp.c:159
+#: lib/regcomp.c:169
 msgid "Invalid collation character"
 msgstr ""
 
-#: lib/regcomp.c:162
+#: lib/regcomp.c:172
 msgid "Invalid character class name"
 msgstr ""
 
-#: lib/regcomp.c:165
+#: lib/regcomp.c:175
 msgid "Trailing backslash"
 msgstr ""
 
-#: lib/regcomp.c:168
+#: lib/regcomp.c:178
 msgid "Invalid back reference"
 msgstr ""
 
-#: lib/regcomp.c:171
+#: lib/regcomp.c:181
 #, fuzzy
 msgid "Unmatched [ or [^"
 msgstr "`{' 가 일치하지 않습니다"
 
-#: lib/regcomp.c:174
+#: lib/regcomp.c:184
 #, fuzzy
 msgid "Unmatched ( or \\("
 msgstr "`{' 가 일치하지 않습니다"
 
-#: lib/regcomp.c:177
+#: lib/regcomp.c:187
 #, fuzzy
 msgid "Unmatched \\{"
 msgstr "`{' 가 일치하지 않습니다"
 
-#: lib/regcomp.c:180
+#: lib/regcomp.c:190
 msgid "Invalid content of \\{\\}"
 msgstr ""
 
-#: lib/regcomp.c:183
+#: lib/regcomp.c:193
 msgid "Invalid range end"
 msgstr ""
 
-#: lib/regcomp.c:186
+#: lib/regcomp.c:196
 msgid "Memory exhausted"
 msgstr ""
 
-#: lib/regcomp.c:189
+#: lib/regcomp.c:199
 msgid "Invalid preceding regular expression"
 msgstr ""
 
-#: lib/regcomp.c:192
+#: lib/regcomp.c:202
 msgid "Premature end of regular expression"
 msgstr ""
 
-#: lib/regcomp.c:195
+#: lib/regcomp.c:205
 msgid "Regular expression too big"
 msgstr ""
 
-#: lib/regcomp.c:198
+#: lib/regcomp.c:208
 #, fuzzy
 msgid "Unmatched ) or \\)"
 msgstr "`{' 가 일치하지 않습니다"

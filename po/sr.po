@@ -5,14 +5,14 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: sed 4.0.9\n"
-"POT-Creation-Date: 2004-11-11 15:28+0100\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2005-04-11 15:53+0200\n"
 "PO-Revision-Date: 2004-01-13 22:51-0500\n"
 "Last-Translator: Aleksandar Jelenak <jelenak@netlinkplus.net>\n"
 "Language-Team: Serbian <sr@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Report-Msgid-Bugs-To: \n"
 "Plural-Forms: nplurals=3;    plural=n%10==1 && n%100!=11 ? 0 :  (n%10>=2 && n"
 "%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 
@@ -148,37 +148,41 @@ msgstr "%s: -e израз #%lu, знак %lu: %s\n"
 msgid "can't find label for jump to `%s'"
 msgstr "Не могу да нађем ознаку за скок на „%s“"
 
-#: sed/execute.c:649
+#: sed/execute.c:651
 #, c-format
 msgid "%s: can't read %s: %s\n"
 msgstr "%s: не може читати  %s: %s\n"
 
-#: sed/execute.c:672
+#: sed/execute.c:674
 #, fuzzy, c-format
 msgid "couldn't edit %s: is a terminal"
 msgstr "Не може се отворити датотека %s: %s"
 
-#: sed/execute.c:676
+#: sed/execute.c:678
 #, fuzzy, c-format
 msgid "couldn't edit %s: not a regular file"
 msgstr "Не може се отворити датотека %s: %s"
 
-#: lib/utils.c:196 sed/execute.c:683
+#: sed/execute.c:685 lib/utils.c:196
 #, fuzzy, c-format
 msgid "couldn't open temporary file %s: %s"
 msgstr "Не могу отворити привремену датотеку %s: %s"
 
-#: sed/execute.c:1207 sed/execute.c:1388
+#: sed/execute.c:1208 sed/execute.c:1389
 msgid "error in subprocess"
 msgstr "грешка у потпроцесу"
 
-#: sed/execute.c:1209
+#: sed/execute.c:1210
 msgid "option `e' not supported"
 msgstr "опција „e“ није подржана"
 
-#: sed/execute.c:1390
+#: sed/execute.c:1391
 msgid "`e' command not supported"
 msgstr "наредба „e“ није подржана"
+
+#: sed/execute.c:1716
+msgid "no input files"
+msgstr ""
 
 #: sed/regexp.c:39
 #, fuzzy
@@ -190,7 +194,7 @@ msgstr "Без претходног регуларног израза"
 msgid "cannot specify modifiers on empty regexp"
 msgstr "Не може се навести измењивач празном рег. изразу"
 
-#: sed/regexp.c:134
+#: sed/regexp.c:115
 #, fuzzy, c-format
 msgid "invalid reference \\%d on `s' command's RHS"
 msgstr "Неисправна референца \\%d на десној страни наредбе „s“"
@@ -370,71 +374,71 @@ msgstr "грешка учитавања на %s: %s"
 msgid "cannot rename %s: %s"
 msgstr "%s: не може читати  %s: %s\n"
 
-#: lib/regcomp.c:150
+#: lib/regcomp.c:160
 msgid "Success"
 msgstr "Успех"
 
-#: lib/regcomp.c:153
+#: lib/regcomp.c:163
 msgid "No match"
 msgstr "Без поклапања"
 
-#: lib/regcomp.c:156
+#: lib/regcomp.c:166
 msgid "Invalid regular expression"
 msgstr "Неисправни регуларни израз"
 
-#: lib/regcomp.c:159
+#: lib/regcomp.c:169
 msgid "Invalid collation character"
 msgstr "Неисправни знак прикупљања"
 
-#: lib/regcomp.c:162
+#: lib/regcomp.c:172
 msgid "Invalid character class name"
 msgstr "Неисправно име класе знакова"
 
-#: lib/regcomp.c:165
+#: lib/regcomp.c:175
 msgid "Trailing backslash"
 msgstr "Пратећа обрнута коса црта"
 
-#: lib/regcomp.c:168
+#: lib/regcomp.c:178
 msgid "Invalid back reference"
 msgstr "Неисправна повратна референца"
 
-#: lib/regcomp.c:171
+#: lib/regcomp.c:181
 msgid "Unmatched [ or [^"
 msgstr "Неспарено [ или ^["
 
-#: lib/regcomp.c:174
+#: lib/regcomp.c:184
 msgid "Unmatched ( or \\("
 msgstr "Неспарено ( или \\("
 
-#: lib/regcomp.c:177
+#: lib/regcomp.c:187
 msgid "Unmatched \\{"
 msgstr "Неспарено \\{"
 
-#: lib/regcomp.c:180
+#: lib/regcomp.c:190
 msgid "Invalid content of \\{\\}"
 msgstr "Неисправни садржај у \\{\\}"
 
-#: lib/regcomp.c:183
+#: lib/regcomp.c:193
 msgid "Invalid range end"
 msgstr "Неисправни крај опсега"
 
-#: lib/regcomp.c:186
+#: lib/regcomp.c:196
 msgid "Memory exhausted"
 msgstr "Меморија исцрпљена"
 
-#: lib/regcomp.c:189
+#: lib/regcomp.c:199
 msgid "Invalid preceding regular expression"
 msgstr "Неисправан претходећи регуларни израз"
 
-#: lib/regcomp.c:192
+#: lib/regcomp.c:202
 msgid "Premature end of regular expression"
 msgstr "Преран крај регуларног израза"
 
-#: lib/regcomp.c:195
+#: lib/regcomp.c:205
 msgid "Regular expression too big"
 msgstr "Регуларни израз сувише велик"
 
-#: lib/regcomp.c:198
+#: lib/regcomp.c:208
 msgid "Unmatched ) or \\)"
 msgstr "Неспарено ) или \\)"
 

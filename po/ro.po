@@ -7,14 +7,14 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: sed 4.0.8\n"
-"POT-Creation-Date: 2004-11-11 15:28+0100\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2005-04-11 15:53+0200\n"
 "PO-Revision-Date: 2003-11-22 12:00-0500\n"
 "Last-Translator: Laurentiu Buzdugan <buzdugan@voyager.net>\n"
 "Language-Team: Romanian <translation-team-ro@lists.sourceforge.net>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=ISO-8859-2\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Report-Msgid-Bugs-To: \n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: sed/compile.c:162
@@ -149,37 +149,41 @@ msgstr "%s: -e expresia #%lu, caracterul %lu: %s\n"
 msgid "can't find label for jump to `%s'"
 msgstr "Nu pot gãsi eticheta pentru saltul la `%s'"
 
-#: sed/execute.c:649
+#: sed/execute.c:651
 #, c-format
 msgid "%s: can't read %s: %s\n"
 msgstr "%s: nu pot citi %s: %s\n"
 
-#: sed/execute.c:672
+#: sed/execute.c:674
 #, fuzzy, c-format
 msgid "couldn't edit %s: is a terminal"
 msgstr "Nu am putut deschide fiºierul %s: %s"
 
-#: sed/execute.c:676
+#: sed/execute.c:678
 #, fuzzy, c-format
 msgid "couldn't edit %s: not a regular file"
 msgstr "Nu am putut deschide fiºierul %s: %s"
 
-#: lib/utils.c:196 sed/execute.c:683
+#: sed/execute.c:685 lib/utils.c:196
 #, fuzzy, c-format
 msgid "couldn't open temporary file %s: %s"
 msgstr "Nu am putut deschide fiºierul temporar %s: %s"
 
-#: sed/execute.c:1207 sed/execute.c:1388
+#: sed/execute.c:1208 sed/execute.c:1389
 msgid "error in subprocess"
 msgstr "eroare în subproces"
 
-#: sed/execute.c:1209
+#: sed/execute.c:1210
 msgid "option `e' not supported"
 msgstr "opþiunea `e' nu e suportatã"
 
-#: sed/execute.c:1390
+#: sed/execute.c:1391
 msgid "`e' command not supported"
 msgstr "comanda `e' nu e suportatã"
+
+#: sed/execute.c:1716
+msgid "no input files"
+msgstr ""
 
 #: sed/regexp.c:39
 #, fuzzy
@@ -191,7 +195,7 @@ msgstr "Nici o expresie regularã anterioarã"
 msgid "cannot specify modifiers on empty regexp"
 msgstr "Nu se pot specifica modificatori pentru regexp vidã"
 
-#: sed/regexp.c:134
+#: sed/regexp.c:115
 #, fuzzy, c-format
 msgid "invalid reference \\%d on `s' command's RHS"
 msgstr "Referinþã invalidã \\%d pentru RHS-ul comanzii `s'"
@@ -373,71 +377,71 @@ msgstr "eroare citire pentru %s: %s"
 msgid "cannot rename %s: %s"
 msgstr "%s: nu pot citi %s: %s\n"
 
-#: lib/regcomp.c:150
+#: lib/regcomp.c:160
 msgid "Success"
 msgstr "Succes"
 
-#: lib/regcomp.c:153
+#: lib/regcomp.c:163
 msgid "No match"
 msgstr "Nici o potrivire"
 
-#: lib/regcomp.c:156
+#: lib/regcomp.c:166
 msgid "Invalid regular expression"
 msgstr "Expresie regularã incorectã"
 
-#: lib/regcomp.c:159
+#: lib/regcomp.c:169
 msgid "Invalid collation character"
 msgstr "Colaþiune de caractere incorectã"
 
-#: lib/regcomp.c:162
+#: lib/regcomp.c:172
 msgid "Invalid character class name"
 msgstr "Nume de clasã de caractere incorect"
 
-#: lib/regcomp.c:165
+#: lib/regcomp.c:175
 msgid "Trailing backslash"
 msgstr "Backslash în coadã"
 
-#: lib/regcomp.c:168
+#: lib/regcomp.c:178
 msgid "Invalid back reference"
 msgstr "Referinþã înapoi incorectã"
 
-#: lib/regcomp.c:171
+#: lib/regcomp.c:181
 msgid "Unmatched [ or [^"
 msgstr "[ sau [^ fãrã pereche"
 
-#: lib/regcomp.c:174
+#: lib/regcomp.c:184
 msgid "Unmatched ( or \\("
 msgstr "( sau \\( fãrã pereche"
 
-#: lib/regcomp.c:177
+#: lib/regcomp.c:187
 msgid "Unmatched \\{"
 msgstr "\\{ fãrã pereche"
 
-#: lib/regcomp.c:180
+#: lib/regcomp.c:190
 msgid "Invalid content of \\{\\}"
 msgstr "Conþinut incorect pentru \\{\\}"
 
-#: lib/regcomp.c:183
+#: lib/regcomp.c:193
 msgid "Invalid range end"
 msgstr "Sfârºit de interval incorect"
 
-#: lib/regcomp.c:186
+#: lib/regcomp.c:196
 msgid "Memory exhausted"
 msgstr "Memorie epuizatã"
 
-#: lib/regcomp.c:189
+#: lib/regcomp.c:199
 msgid "Invalid preceding regular expression"
 msgstr "Expresie regularã precedentã incorectã"
 
-#: lib/regcomp.c:192
+#: lib/regcomp.c:202
 msgid "Premature end of regular expression"
 msgstr "Sfârºit prematur al expresiei regulare"
 
-#: lib/regcomp.c:195
+#: lib/regcomp.c:205
 msgid "Regular expression too big"
 msgstr "Expresie regularã prea mare"
 
-#: lib/regcomp.c:198
+#: lib/regcomp.c:208
 msgid "Unmatched ) or \\)"
 msgstr ") sau \\) fãrã pereche"
 

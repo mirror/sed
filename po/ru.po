@@ -6,14 +6,14 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: sed-4.1.1\n"
-"POT-Creation-Date: 2004-11-11 15:28+0100\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2005-04-11 15:53+0200\n"
 "PO-Revision-Date: 2004-07-07 17:54+0300\n"
 "Last-Translator: Pavel Maryanov <acid_jack@ukr.net>\n"
 "Language-Team: Russian <ru@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=KOI8-R\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Report-Msgid-Bugs-To: \n"
 "Plural-Forms: nplurals=2; plural=n>1;\n"
 "X-Generator: KBabel 1.3\n"
 
@@ -133,37 +133,41 @@ msgstr "%s: -e выражение #%lu, символ %lu: %s\n"
 msgid "can't find label for jump to `%s'"
 msgstr "невозможно найти метку для перехода к `%s'"
 
-#: sed/execute.c:649
+#: sed/execute.c:651
 #, c-format
 msgid "%s: can't read %s: %s\n"
 msgstr "%s: невозможно прочитать %s: %s\n"
 
-#: sed/execute.c:672
+#: sed/execute.c:674
 #, c-format
 msgid "couldn't edit %s: is a terminal"
 msgstr "невозможно редактировать %s: это терминал"
 
-#: sed/execute.c:676
+#: sed/execute.c:678
 #, c-format
 msgid "couldn't edit %s: not a regular file"
 msgstr "невозможно редактировать %s: это не обычный файл"
 
-#: lib/utils.c:196 sed/execute.c:683
+#: sed/execute.c:685 lib/utils.c:196
 #, c-format
 msgid "couldn't open temporary file %s: %s"
 msgstr "невозможно открыть временный файл %s: %s"
 
-#: sed/execute.c:1207 sed/execute.c:1388
+#: sed/execute.c:1208 sed/execute.c:1389
 msgid "error in subprocess"
 msgstr "ошибка в подпроцессе"
 
-#: sed/execute.c:1209
+#: sed/execute.c:1210
 msgid "option `e' not supported"
 msgstr "опция `e' не поддерживается"
 
-#: sed/execute.c:1390
+#: sed/execute.c:1391
 msgid "`e' command not supported"
 msgstr "команда `e' не поддерживается"
+
+#: sed/execute.c:1716
+msgid "no input files"
+msgstr ""
 
 #: sed/regexp.c:39
 msgid "no previous regular expression"
@@ -173,7 +177,7 @@ msgstr "нет предыдущего регулярного выражения"
 msgid "cannot specify modifiers on empty regexp"
 msgstr "невозможно указать модификаторы в пустом регулярном выражении"
 
-#: sed/regexp.c:134
+#: sed/regexp.c:115
 #, c-format
 msgid "invalid reference \\%d on `s' command's RHS"
 msgstr "недопустимая ссылка \\%d на RHS команды `s'"
@@ -382,71 +386,71 @@ msgstr "ошибка чтения %s: %s"
 msgid "cannot rename %s: %s"
 msgstr "невозможно переименовать %s: %s"
 
-#: lib/regcomp.c:150
+#: lib/regcomp.c:160
 msgid "Success"
 msgstr "Успешно"
 
-#: lib/regcomp.c:153
+#: lib/regcomp.c:163
 msgid "No match"
 msgstr "Нет соотвествия"
 
-#: lib/regcomp.c:156
+#: lib/regcomp.c:166
 msgid "Invalid regular expression"
 msgstr "Недопустимое регулярное выражение"
 
-#: lib/regcomp.c:159
+#: lib/regcomp.c:169
 msgid "Invalid collation character"
 msgstr "Недопустимый символ сравнения"
 
-#: lib/regcomp.c:162
+#: lib/regcomp.c:172
 msgid "Invalid character class name"
 msgstr "Недопустимое имя для класса символа"
 
-#: lib/regcomp.c:165
+#: lib/regcomp.c:175
 msgid "Trailing backslash"
 msgstr "Завершающая обратная косая черта"
 
-#: lib/regcomp.c:168
+#: lib/regcomp.c:178
 msgid "Invalid back reference"
 msgstr "Недопустимая обратная ссылка"
 
-#: lib/regcomp.c:171
+#: lib/regcomp.c:181
 msgid "Unmatched [ or [^"
 msgstr "Непарный символ [ или [^"
 
-#: lib/regcomp.c:174
+#: lib/regcomp.c:184
 msgid "Unmatched ( or \\("
 msgstr "Непарный символ ( or \\("
 
-#: lib/regcomp.c:177
+#: lib/regcomp.c:187
 msgid "Unmatched \\{"
 msgstr "Непарный символ \\{"
 
-#: lib/regcomp.c:180
+#: lib/regcomp.c:190
 msgid "Invalid content of \\{\\}"
 msgstr "Недопустимое содержимое в \\{\\}"
 
-#: lib/regcomp.c:183
+#: lib/regcomp.c:193
 msgid "Invalid range end"
 msgstr "Недопустимое окончание диапазона"
 
-#: lib/regcomp.c:186
+#: lib/regcomp.c:196
 msgid "Memory exhausted"
 msgstr "Память исчерпана"
 
-#: lib/regcomp.c:189
+#: lib/regcomp.c:199
 msgid "Invalid preceding regular expression"
 msgstr "Недопустимое предшествующее регулярное выражение"
 
-#: lib/regcomp.c:192
+#: lib/regcomp.c:202
 msgid "Premature end of regular expression"
 msgstr "Преждевременное окончание регулярного выражения"
 
-#: lib/regcomp.c:195
+#: lib/regcomp.c:205
 msgid "Regular expression too big"
 msgstr "Регулярное выражение слишком большое"
 
-#: lib/regcomp.c:198
+#: lib/regcomp.c:208
 msgid "Unmatched ) or \\)"
 msgstr "Непарный символ ) или \\)"
 
