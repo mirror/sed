@@ -463,7 +463,7 @@ snarf_char_class(b, cur_stat)
   ch = inchar();
   if (ch == '^')
     ch = add_then_next(b, ch);
-  else if (ch == CLOSE_BRACKET)
+  if (ch == CLOSE_BRACKET)
     ch = add_then_next(b, ch);
   
   /* States are:

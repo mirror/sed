@@ -1,3 +1,8 @@
+2005-05-16  Eero Hakkinen  <eero17@bigfoot.com>
+
+	* sed/compile.c (snarf_char_class): Fix handling of 
+	[^]xyz].
+
 2005-04-04  Paolo Bonzini  <bonzini@gnu.org>
 
 	* sed/execute.c (process_files): Do not add a default
