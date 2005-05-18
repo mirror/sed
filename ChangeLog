@@ -1,3 +1,8 @@
+2005-05-18  Maciej W. Rozycki  <macro@linux-mips.org>
+
+	* configure.ac: Use a cache variable for the libcP test.
+	* configure: Regenerate.
+
 2005-05-16  Eero Hakkinen  <eero17@bigfoot.com>
 
 	* sed/compile.c (snarf_char_class): Fix handling of 
