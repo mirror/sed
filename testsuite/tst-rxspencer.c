@@ -15,8 +15,8 @@
 
    You should have received a copy of the GNU Lesser General Public
    License along with the GNU C Library; if not, write to the Free
-   Software Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA
-   02111-1307 USA.  */
+   Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
+   02110-1301 USA.  */
 
 #include "config.h"
 
@@ -188,7 +188,8 @@ check_match (regmatch_t *rm, int idx, const char *string,
 	  return 1;
 	}
 
-      if (strncmp (string + rm[idx].rm_so, match + 1, strlen (match + 1) ?: 1))
+      if (strncmp (string + rm[idx].rm_so, match + 1, strlen (match + 1)
+						      ? strlen (match + 1) : 1))
 	{
 	  printf ("%s rm[%d] not matching %s\n", fail, idx, match);
 	  return 1;
@@ -299,7 +300,7 @@ test (const char *pattern, int cflags, const char *string, int eflags,
 	  if (p != NULL)
 	    *p = '\0';
 	}
-      ret = check_match (rm, n, string, matches ?: "-", fail);
+      ret = check_match (rm, n, string, matches ? matches : "-", fail);
       if (p)
 	{
 	  *p = ',';
