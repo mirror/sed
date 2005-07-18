@@ -15,8 +15,8 @@
 
    You should have received a copy of the GNU Lesser General Public
    License along with the GNU C Library; if not, write to the Free
-   Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
-   02110-1301 USA.  */
+   Software Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA
+   02111-1307 USA.  */
 
 #ifndef _REGEX_INTERNAL_H
 #define _REGEX_INTERNAL_H 1
@@ -39,6 +39,14 @@
 #if defined HAVE_WCTYPE_H || defined _LIBC
 # include <wctype.h>
 #endif /* HAVE_WCTYPE_H || _LIBC */
+#if defined _LIBC
+# include <bits/libc-lock.h>
+#else
+# define __libc_lock_define(CLASS,NAME)
+# define __libc_lock_init(NAME) do { } while (0)
+# define __libc_lock_lock(NAME) do { } while (0)
+# define __libc_lock_unlock(NAME) do { } while (0)
+#endif
 
 /* In case that the system doesn't have isblank().  */
 #if !defined _LIBC && !defined HAVE_ISBLANK && !defined isblank
@@ -60,7 +68,7 @@
 # ifdef _LIBC
 #  undef gettext
 #  define gettext(msgid) \
-  INTUSE(__dcgettext) (INTUSE(_libc_intl_domainname), msgid, LC_MESSAGES)
+  INTUSE(__dcgettext) (_libc_intl_domainname, msgid, LC_MESSAGES)
 # endif
 #else
 # define gettext(msgid) (msgid)
@@ -629,7 +637,6 @@ struct re_dfa_t
   int nbackref; /* The number of backreference in this dfa.  */
 
   /* Bitmap expressing which backreference is used.  */
-  unsigned int empty_bkref_map;
   unsigned int used_bkref_map;
   unsigned int completed_bkref_map;
 
@@ -648,6 +655,7 @@ struct re_dfa_t
 #ifdef DEBUG
   char* re_str;
 #endif
+  __libc_lock_define (, lock)
 };
 
 #ifndef RE_NO_INTERNAL_PROTOTYPES

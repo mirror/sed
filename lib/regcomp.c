@@ -15,8 +15,8 @@
 
    You should have received a copy of the GNU Lesser General Public
    License along with the GNU C Library; if not, write to the Free
-   Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
-   02110-1301 USA.  */
+   Software Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA
+   02111-1307 USA.  */
 
 static reg_errcode_t re_compile_internal (regex_t *preg, const char * pattern,
 					  int length, reg_syntax_t syntax);
@@ -359,7 +359,8 @@ re_compile_fastmap_iter (bufp, init_state, fastmap)
 	      memset (&state, 0, sizeof (state));
 	      if (mbrtowc (&wc, (const char *) buf, p - buf,
 			   &state) == p - buf
-		  && __wcrtomb ((char *) buf, towlower (wc), &state) > 0)
+		  && (__wcrtomb ((char *) buf, towlower (wc), &state)
+		      != (size_t) -1))
 		re_set_fastmap (fastmap, 0, buf[0]);
 	    }
 #endif
@@ -409,12 +410,13 @@ re_compile_fastmap_iter (bufp, init_state, fastmap)
 	      char buf[256];
 	      mbstate_t state;
 	      memset (&state, '\0', sizeof (state));
-	      __wcrtomb (buf, cset->mbchars[i], &state);
-	      re_set_fastmap (fastmap, icase, *(unsigned char *) buf);
+	      if (__wcrtomb (buf, cset->mbchars[i], &state) != (size_t) -1)
+		re_set_fastmap (fastmap, icase, *(unsigned char *) buf);
 	      if ((bufp->syntax & RE_ICASE) && dfa->mb_cur_max > 1)
 		{
-		  __wcrtomb (buf, towlower (cset->mbchars[i]), &state);
-		  re_set_fastmap (fastmap, 0, *(unsigned char *) buf);
+		  if (__wcrtomb (buf, towlower (cset->mbchars[i]), &state)
+		      != (size_t) -1)
+		    re_set_fastmap (fastmap, 0, *(unsigned char *) buf);
 		}
 	    }
 	}
@@ -784,6 +786,8 @@ re_compile_internal (preg, pattern, length, syntax)
   dfa->re_str = re_malloc (char, length + 1);
   strncpy (dfa->re_str, pattern, length + 1);
 #endif
+
+  __libc_lock_init (dfa->lock);
 
   err = re_string_construct (&regexp, pattern, length, preg->translate,
 			     syntax & RE_ICASE, dfa);
@@ -1322,10 +1326,10 @@ lower_subexp (err, preg, node)
 
   if (preg->no_sub
       /* We do not optimize empty subexpressions, because otherwise we may
-         have bad CONCAT nodes with NULL children.  This is obviously not
+	 have bad CONCAT nodes with NULL children.  This is obviously not
 	 very common, so we do not lose much.  An example that triggers
 	 this case is the sed "script" /\(\)/x.  */
-      && node->left
+      && node->left != NULL
       && (node->token.opr.idx >= 8 * sizeof (dfa->used_bkref_map)
 	  || !(dfa->used_bkref_map & (1 << node->token.opr.idx))))
     return node->left;
