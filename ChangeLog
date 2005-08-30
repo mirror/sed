@@ -1,3 +1,13 @@
+2005-08-30  Paolo Bonzini  <bonzini@gnu.org>
+
+	* sed/execute.c (reset_addresses): Never activate ADDR_IS_NUM_MOD
+	addresses.
+	* testsuite/modulo.good, testsuite/modulo.inp, testsuite/modulo.sed:
+	New.
+	* testsuite/Makefile.tests: Add new testcase.
+	* testsuite/Makefile.am: Add new testcase.
+	* testsuite/Makefile.in: Regenerate.
+
 2005-05-18  Maciej W. Rozycki  <macro@linux-mips.org>
 
 	* configure.ac: Use a cache variable for the libcP test.
@@ -15,6 +25,9 @@
 
 2005-02-10  Paolo Bonzini  <bonzini@gnu.org>
 
+	* testsuite/Makefile.tests: Add new testcase.
+	* testsuite/Makefile.am: Add new testcase.
+	* testsuite/Makefile.in: Regenerate.
 	* testsuite/appquit.good, testsuite/appquit.inp,
 	testsuite/appquit.sed: New testcase.
 	* testsuite/readin.sed: Quit after the last r command.

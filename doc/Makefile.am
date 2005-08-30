@@ -26,7 +26,8 @@ dist-hook:
 # This rule is used if --enable-html is passed
 if BUILD_HTML
 docdir = $(datadir)/doc
-doc_DATA = sed.html
+pkgdocdir = $(datadir)/doc/$(PACKAGE)-$(VERSION)
+pkgdoc_DATA = sed.html
 
 all: html
 

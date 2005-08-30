@@ -18,7 +18,7 @@ endif
 
 SEDTESTS += \
         appquit enable sep inclib 8bit newjis xabcx dollar noeol noeolw \
-  	numsub numsub2 numsub3 numsub4 numsub5 0range bkslashes \
+  	modulo numsub numsub2 numsub3 numsub4 numsub5 0range bkslashes \
   	head madding mac-mf empty xbxcx xbxcx3 recall recall2 xemacs \
   	fasts uniq manis khadafy linecnt eval distrib 8to7 \
 	allsub cv-vars classes middle bsd stdin flipcase \
@@ -60,6 +60,7 @@ EXTRA_DIST = \
 	madding.good madding.inp madding.sed \
 	manis.good manis.inp manis.sed \
 	middle.good middle.sed middle.inp \
+	modulo.good modulo.sed modulo.inp \
 	newjis.good newjis.inp  newjis.sed \
 	noeol.good noeol.inp noeol.sed \
 	noeolw.good noeolw.1good noeolw.2good noeolw.sed \

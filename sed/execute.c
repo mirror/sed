@@ -738,8 +738,7 @@ reset_addresses(vec)
 
   for (cur_cmd = vec->v, n = vec->v_length; n--; cur_cmd++)
     if (cur_cmd->a1
-	&& (cur_cmd->a1->addr_type == ADDR_IS_NUM
-	    || cur_cmd->a1->addr_type == ADDR_IS_NUM_MOD)
+	&& cur_cmd->a1->addr_type == ADDR_IS_NUM
 	&& cur_cmd->a1->addr_number == 0)
       cur_cmd->range_state = RANGE_ACTIVE;
     else
