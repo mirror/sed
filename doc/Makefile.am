@@ -18,7 +18,8 @@ $(srcdir)/sed.texi: sed-in.texi $(srcdir)/groupify.sed
 	  < $(srcdir)/sed-in.texi > $(srcdir)/sed.texi
 
 sed.1: $(top_srcdir)/sed/sed.c $(top_srcdir)/configure.ac $(srcdir)/sed.x
-	$(HELP2MAN) -p sed --include $(srcdir)/sed.x $(SED) > $(srcdir)/sed.1
+	$(HELP2MAN) --name "stream editor for filtering and transforming text" \
+	  -p sed --include $(srcdir)/sed.x $(SED) > $(srcdir)/sed.1
 
 dist-hook:
 	touch $(distdir)/sed.1
