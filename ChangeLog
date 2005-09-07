@@ -1,3 +1,12 @@
+2005-09-07  Paolo Bonzini  <bonzini@gnu.org>
+
+	* lib/regcomp.c: Update from upstream.
+	* lib/regex.c: Update from upstream.
+	* lib/regex_.h: Update from upstream.
+	* lib/regex_internal.c: Update from upstream.
+	* lib/regex_internal.h: Update from upstream.
+	* lib/regexec.c: Update from upstream.
+
 2005-08-30  Paolo Bonzini  <bonzini@gnu.org>
 
 	* sed/execute.c (reset_addresses): Never activate ADDR_IS_NUM_MOD
