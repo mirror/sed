@@ -1,7 +1,6 @@
 # -*- mode:po; coding:iso-latin-2;-*- Slovenian message catalogue for GNU sed.
 # Copyright (C) 2000, 2001, 2002, 2003 Free Software Foundation, Inc.
 # Primo¾ Peterlin <primoz.peterlin@biofiz.mf.uni-lj.si>, 2000, 2001, 2002, 2003.
-# $Id: sed-4.0.6.sl.po,v 1.2 2003/04/02 15:20:33 peterlin Exp $
 #
 msgid ""
 msgstr ""
