@@ -51,5 +51,5 @@ if TEXI2HTML_HTML
 sed.html: sed.texi sed.info
 	cp $(srcdir)/*.texi . && \
 	  $(TEXI2HTML) sed.texi && \
-	  rn *.texi
+	  rm *.texi
 endif
