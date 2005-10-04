@@ -391,7 +391,7 @@ msgstr "Nincsen elõzõ reguláris kifejezés"
 msgid "cannot specify modifiers on empty regexp"
 msgstr "Nem lehet módosítót megadni üres reguláris kifejezéshez"
 
-#: sed/regexp.c:134
+#: sed/regexp.c:115
 #, fuzzy, c-format
 msgid "invalid reference \\%d on `s' command's RHS"
 msgstr "Hibás hivatkozás (\\%d) a(z) `s' parancs RHS-ére"

@@ -391,7 +391,7 @@ msgstr "Kein vorheriger regulärer Ausdruck"
 msgid "cannot specify modifiers on empty regexp"
 msgstr "Auf leere reguläre Ausdrücke können keine `modifier' angewandt werden"
 
-#: sed/regexp.c:134
+#: sed/regexp.c:115
 #, fuzzy, c-format
 msgid "invalid reference \\%d on `s' command's RHS"
 msgstr "Ungültiger Verweis \\%d in den Haltepuffer des `s'-Befehls"

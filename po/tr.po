@@ -393,7 +393,7 @@ msgstr "Daha önce düzenli ifade yok"
 msgid "cannot specify modifiers on empty regexp"
 msgstr "Boş düzenli ifadeye değiştirici atanamaz"
 
-#: sed/regexp.c:134
+#: sed/regexp.c:115
 #, fuzzy, c-format
 msgid "invalid reference \\%d on `s' command's RHS"
 msgstr "`s' komutunun RHS'sinde geçersiz \\%d referansı"

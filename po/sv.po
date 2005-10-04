@@ -333,37 +333,41 @@ msgstr "%s: -e uttryck #%lu, tecken %lu: %s\n"
 msgid "can't find label for jump to `%s'"
 msgstr "kan inte hitta etiketten för hopp till \"%s\""
 
-#: sed/execute.c:649
+#: sed/execute.c:651
 #, c-format
 msgid "%s: can't read %s: %s\n"
 msgstr "%s: kan inte läsa %s: %s\n"
 
-#: sed/execute.c:672
+#: sed/execute.c:674
 #, c-format
 msgid "couldn't edit %s: is a terminal"
 msgstr "kunde inte redigera %s: är en terminal"
 
-#: sed/execute.c:676
+#: sed/execute.c:678
 #, c-format
 msgid "couldn't edit %s: not a regular file"
 msgstr "kunde inte redigera %s: inte en vanlig fil"
 
-#: lib/utils.c:196 sed/execute.c:683
+#: sed/execute.c:685 lib/utils.c:196
 #, c-format
 msgid "couldn't open temporary file %s: %s"
 msgstr "kunde inte öppna temporära filen %s: %s"
 
-#: sed/execute.c:1207 sed/execute.c:1388
+#: sed/execute.c:1208 sed/execute.c:1389
 msgid "error in subprocess"
 msgstr "fel i underprocess"
 
-#: sed/execute.c:1209
+#: sed/execute.c:1210
 msgid "option `e' not supported"
 msgstr "flaggan \"e\" stöds inte"
 
-#: sed/execute.c:1390
+#: sed/execute.c:1391
 msgid "`e' command not supported"
 msgstr "kommandot \"e\" stöds inte"
+
+#: sed/execute.c:1716
+msgid "no input files"
+msgstr ""
 
 #: sed/regexp.c:39
 msgid "no previous regular expression"
@@ -377,7 +381,7 @@ msgstr "kan inte ange modifierare på tomt reguljärt uttryck"
 # Jag antar RHS står för "right hand side".  Man kan då säga
 # "... kommandots högersida"
 #
-#: sed/regexp.c:134
+#: sed/regexp.c:115
 #, c-format
 msgid "invalid reference \\%d on `s' command's RHS"
 msgstr "ogiltig referens \\%d på \"s\"-kommandots högersida"

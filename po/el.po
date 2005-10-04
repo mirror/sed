@@ -390,7 +390,7 @@ msgstr "Δεν βρέθηκε προηγούμενη κανονική έκφραση"
 msgid "cannot specify modifiers on empty regexp"
 msgstr "δεν επιτρέπεται ο ορισμός διαμορφωτών σε κενή κανονική έκφραση"
 
-#: sed/regexp.c:134
+#: sed/regexp.c:115
 #, fuzzy, c-format
 msgid "invalid reference \\%d on `s' command's RHS"
 msgstr "Μη έγκυρη αναφορά \\%d στο δεξί τμήμα της εντολής `s'"

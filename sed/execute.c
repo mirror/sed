@@ -738,8 +738,7 @@ reset_addresses(vec)
 
   for (cur_cmd = vec->v, n = vec->v_length; n--; cur_cmd++)
     if (cur_cmd->a1
-	&& (cur_cmd->a1->addr_type == ADDR_IS_NUM
-	    || cur_cmd->a1->addr_type == ADDR_IS_NUM_MOD)
+	&& cur_cmd->a1->addr_type == ADDR_IS_NUM
 	&& cur_cmd->a1->addr_number == 0)
       cur_cmd->range_state = RANGE_ACTIVE;
     else
@@ -1709,10 +1708,14 @@ process_files(the_program, argv)
 #ifdef EXPERIMENTAL_DASH_N_OPTIMIZATION
   branches = count_branches(the_program);
 #endif /*EXPERIMENTAL_DASH_N_OPTIMIZATION*/
-  input.file_list = stdin_argv;
   input.reset_at_next_file = true;
   if (argv && *argv)
     input.file_list = argv;
+  else if (in_place_extension)
+    panic(_("no input files"));
+  else
+    input.file_list = stdin_argv;
+
   input.bad_count = 0;
   input.line_number = 0;
   input.read_fn = read_always_fail;

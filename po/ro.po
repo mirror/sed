@@ -393,7 +393,7 @@ msgstr "Nici o expresie regularã anterioarã"
 msgid "cannot specify modifiers on empty regexp"
 msgstr "Nu se pot specifica modificatori pentru regexp vidã"
 
-#: sed/regexp.c:134
+#: sed/regexp.c:115
 #, fuzzy, c-format
 msgid "invalid reference \\%d on `s' command's RHS"
 msgstr "Referinþã invalidã \\%d pentru RHS-ul comanzii `s'"

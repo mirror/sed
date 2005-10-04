@@ -263,39 +263,32 @@ msgid ": doesn't want any addresses"
 msgstr ": wil geen adressen"
 
 #: sed/compile.c:171
-#, fuzzy
 msgid "comments don't accept any addresses"
-msgstr "Opmerkingen accepteren geen adres"
+msgstr "opmerkingen accepteren geen adres"
 
 #: sed/compile.c:172
-#, fuzzy
 msgid "missing command"
-msgstr "Ontbrekende opdracht"
+msgstr "ontbrekende opdracht"
 
 #: sed/compile.c:173
-#, fuzzy
 msgid "command only uses one address"
-msgstr "Opdracht gebruikt slechts één adres"
+msgstr "opdracht gebruikt slechts één adres"
 
 #: sed/compile.c:174
-#, fuzzy
 msgid "unterminated address regex"
-msgstr "Niet-afgemaakt adres reguliere uitdrukking"
+msgstr "onafgemaakte reguliere expressie voor adres"
 
 #: sed/compile.c:175
-#, fuzzy
 msgid "unterminated `s' command"
-msgstr "Niet-afgemaakte `s'-opdracht"
+msgstr "onafgemaakte `s'-opdracht"
 
 #: sed/compile.c:176
-#, fuzzy
 msgid "unterminated `y' command"
-msgstr "Niet-afgemaakte `y'-opdracht"
+msgstr "onafgemaakte `y'-opdracht"
 
 #: sed/compile.c:177
-#, fuzzy
 msgid "unknown option to `s'"
-msgstr "Onbekende optie voor `s'"
+msgstr "onbekende optie voor `s'"
 
 #: sed/compile.c:178
 msgid "multiple `p' options to `s' command"
@@ -314,27 +307,25 @@ msgid "number option to `s' command may not be zero"
 msgstr "getaloptie voor `s'-opdracht mag niet nul zijn"
 
 #: sed/compile.c:182
-#, fuzzy
 msgid "strings for `y' command are different lengths"
 msgstr "tekenreeksen voor `y'-opdracht zijn van verschillende lengte"
 
 #: sed/compile.c:183
 msgid "delimiter character is not a single-byte character"
-msgstr ""
+msgstr "scheidingsteken is geen enkel-byte-teken"
 
 #: sed/compile.c:184
 msgid "expected newer version of sed"
 msgstr "verwachtte een nieuwere versie van sed"
 
 #: sed/compile.c:185
-#, fuzzy
 msgid "invalid usage of line address 0"
-msgstr "Opdracht gebruikt slechts één adres"
+msgstr "ongeldig gebruik van regel-adres 0"
 
 #: sed/compile.c:186
-#, fuzzy, c-format
+#, c-format
 msgid "unknown command: `%c'"
-msgstr "Onbekende opdracht:"
+msgstr "onbekende opdracht: `%c'"
 
 #: sed/compile.c:209
 #, c-format
@@ -393,7 +384,7 @@ msgstr "Geen eerdere reguliere uitdrukking"
 msgid "cannot specify modifiers on empty regexp"
 msgstr "Kan geen veranderaars opgeven op lege reguliere uitdrukking"
 
-#: sed/regexp.c:134
+#: sed/regexp.c:115
 #, fuzzy, c-format
 msgid "invalid reference \\%d on `s' command's RHS"
 msgstr "Ongeldige verwijzing \\%d op rechterhandzijde van `s'-opdracht"
@@ -505,8 +496,14 @@ msgid ""
 "specified, then the standard input is read.\n"
 "\n"
 msgstr ""
+"\n"
+"Als geen -e, --expression, -f of --file optie gegeven is, wordt het\n"
+"eerste niet-optie argument genomen als het te interpreteren sed-script.\n"
+"Alle overblijvende argumenten zijn namen van invoerbestanden; als geen\n"
+"invoerbestanden opgegeven zijn, wordt standaardinvoer gelezen.\n"
+"\n"
 
-#: sed/sed.c:131
+#: sed/sed.c:134
 #, c-format
 msgid ""
 "E-mail bug reports to: %s .\n"
@@ -514,28 +511,28 @@ msgid ""
 msgstr ""
 "Stuur foutrapporten naar: %s .\n"
 "Zorg ervoor dat het woord ``%s'' ergens in het ``Onderwerp:''-veld staat.\n"
-"Rapporteer fouten in de vertalingen bij <vertaling@nl.linux.org>.\n"
+"Rapporteer fouten in de vertalingen bij <vertaling@vrijschrift.org>.\n"
 
-#: sed/sed.c:268
+#: sed/sed.c:271
 #, c-format
 msgid "super-sed version %s\n"
 msgstr "super-sed versie %s\n"
 
-#: sed/sed.c:269
-#, fuzzy, c-format
+#: sed/sed.c:272
+#, c-format
 msgid ""
 "based on GNU sed version %s\n"
 "\n"
 msgstr ""
-"gebaseerd op GNU sed versie 3.02.80\n"
+"gebaseerd op GNU sed versie %s\n"
 "\n"
 
-#: sed/sed.c:271
+#: sed/sed.c:274
 #, c-format
 msgid "GNU sed version %s\n"
 msgstr "GNU sed versie %s\n"
 
-#: sed/sed.c:273
+#: sed/sed.c:276
 #, c-format
 msgid ""
 "%s\n"
@@ -549,21 +546,21 @@ msgstr ""
 "EEN BEPAALD DOEL, tot het uiterste dat door de wet wordt toegestaan.\n"
 
 #: lib/utils.c:98 lib/utils.c:336
-#, fuzzy, c-format
+#, c-format
 msgid "cannot remove %s: %s"
-msgstr "%s: kan %s niet lezen: %s\n"
+msgstr "kan %s niet verwijderen: %s"
 
 #: lib/utils.c:143
-#, fuzzy, c-format
+#, c-format
 msgid "couldn't open file %s: %s"
-msgstr "Kon bestand %s niet openen: %s"
+msgstr "kon bestand %s niet openen: %s"
 
 #: lib/utils.c:220
 #, c-format
 msgid "couldn't write %d item to %s: %s"
 msgid_plural "couldn't write %d items to %s: %s"
 msgstr[0] "kon niet %d item naar %s schrijven: %s"
-msgstr[1] "kon niet %d item naar %s schrijven: %s"
+msgstr[1] "kon niet %d items naar %s schrijven: %s"
 
 #: lib/utils.c:235 lib/utils.c:251
 #, c-format

@@ -334,39 +334,43 @@ msgstr "%s: -e slonn #%lu, char %lu: %s\n"
 msgid "can't find label for jump to `%s'"
 msgstr "níl aon fháil ar an lipéad `%s' don léim"
 
-#: sed/execute.c:649
+#: sed/execute.c:651
 #, c-format
 msgid "%s: can't read %s: %s\n"
 msgstr "%s: ní féidir %s a léamh: %s\n"
 
 # Irish is nice this way, no initial mutation on 'rud'! -- KPS
 # Include all three b/c I'm using template version of "Plural-Forms"
-#: sed/execute.c:672
+#: sed/execute.c:674
 #, c-format
 msgid "couldn't edit %s: is a terminal"
 msgstr "níorbh fhéidir %s a chur in eagar; is teirminéal é"
 
-#: sed/execute.c:676
+#: sed/execute.c:678
 #, c-format
 msgid "couldn't edit %s: not a regular file"
 msgstr "níorbh fhéidir %s a chur in eagar: ní gnáthcomhad é"
 
-#: lib/utils.c:196 sed/execute.c:683
+#: sed/execute.c:685 lib/utils.c:196
 #, c-format
 msgid "couldn't open temporary file %s: %s"
 msgstr "níorbh fhéidir an comhad sealadach %s a oscailt: %s"
 
-#: sed/execute.c:1207 sed/execute.c:1388
+#: sed/execute.c:1208 sed/execute.c:1389
 msgid "error in subprocess"
 msgstr "earráid i bhfo-phróiseas"
 
-#: sed/execute.c:1209
+#: sed/execute.c:1210
 msgid "option `e' not supported"
 msgstr "níl an rogha `e' ar fáil"
 
-#: sed/execute.c:1390
+#: sed/execute.c:1391
 msgid "`e' command not supported"
 msgstr "níl an t-ordú `e' ar fáil"
+
+#: sed/execute.c:1716
+msgid "no input files"
+msgstr ""
 
 #: sed/regexp.c:39
 msgid "no previous regular expression"
@@ -377,7 +381,7 @@ msgstr "níl aon slonn ionadaíochta roimh seo"
 msgid "cannot specify modifiers on empty regexp"
 msgstr "ní féidir bunathraitheoirí a shonrú le slonn bán"
 
-#: sed/regexp.c:134
+#: sed/regexp.c:115
 #, c-format
 msgid "invalid reference \\%d on `s' command's RHS"
 msgstr "tagairt neamhbhailí \\%d ar dheis ordú `s'"

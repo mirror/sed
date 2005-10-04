@@ -392,7 +392,7 @@ msgstr "Без претходног регуларног израза"
 msgid "cannot specify modifiers on empty regexp"
 msgstr "Не може се навести измењивач празном рег. изразу"
 
-#: sed/regexp.c:134
+#: sed/regexp.c:115
 #, fuzzy, c-format
 msgid "invalid reference \\%d on `s' command's RHS"
 msgstr "Неисправна референца \\%d на десној страни наредбе „s“"

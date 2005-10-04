@@ -11,6 +11,9 @@ Sed 3.62 (aligned with GNU sed CVS at 2005-02-10)
   include a single character, and that will be the only matched character
   independent of the locale.
 
+* fix parsing of a negative character class not including a closed bracket,
+  like [^]] or [^]a-z].
+
 * output the result of commands a, r, R when a q command is found.
 
 -----------------------------------------------------------------------

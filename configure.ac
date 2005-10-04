@@ -20,7 +20,7 @@ AC_ISC_POSIX
 AC_SYS_LARGEFILE
 AC_SYS_LONG_FILE_NAMES
 
-AC_MSG_CHECKING([whether -lcP is needed])
+AC_CACHE_CHECK([whether -lcP is needed], [sed_cv_libcp_needed], [
 AC_TRY_RUN([
 #include <stdio.h>
 #include <errno.h>
@@ -35,11 +35,13 @@ int main()
   result = fflush (fp) == EOF && errno == 0;
   fclose (fp);
   return result;
-}], [AC_MSG_RESULT(no)],
-    [AC_MSG_RESULT(yes)
-     LIBS="-lcP $LIBS"],
-    [AC_MSG_RESULT([assuming no])
+}], [sed_cv_libcp_needed=no],
+    [sed_cv_libcp_needed=yes],
+    [sed_cv_libcp_needed="assuming no"])
 ])
+if test "$sed_cv_libcp_needed" = yes; then
+  LIBS="-lcP $LIBS"
+fi
 
 AC_HEADER_DIRENT
 AC_CHECK_HEADERS(io.h limits.h locale.h stdarg.h alloca.h stddef.h errno.h \

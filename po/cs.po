@@ -383,7 +383,7 @@ msgstr ""
 msgid "cannot specify modifiers on empty regexp"
 msgstr ""
 
-#: sed/regexp.c:134
+#: sed/regexp.c:115
 #, c-format
 msgid "invalid reference \\%d on `s' command's RHS"
 msgstr ""

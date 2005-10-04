@@ -18,7 +18,8 @@ $(srcdir)/sed.texi: sed-in.texi $(srcdir)/groupify.sed
 	  < $(srcdir)/sed-in.texi > $(srcdir)/sed.texi
 
 sed.1: $(top_srcdir)/sed/sed.c $(top_srcdir)/configure.ac $(srcdir)/sed.x
-	$(HELP2MAN) -p sed --include $(srcdir)/sed.x $(SED) > $(srcdir)/sed.1
+	$(HELP2MAN) --name "stream editor for filtering and transforming text" \
+	  -p sed --include $(srcdir)/sed.x $(SED) > $(srcdir)/sed.1
 
 dist-hook:
 	touch $(distdir)/sed.1
@@ -26,7 +27,8 @@ dist-hook:
 # This rule is used if --enable-html is passed
 if BUILD_HTML
 docdir = $(datadir)/doc
-doc_DATA = sed.html
+pkgdocdir = $(datadir)/doc/$(PACKAGE)-$(VERSION)
+pkgdoc_DATA = sed.html
 
 all: html
 
@@ -49,5 +51,5 @@ if TEXI2HTML_HTML
 sed.html: sed.texi sed.info
 	cp $(srcdir)/*.texi . && \
 	  $(TEXI2HTML) sed.texi && \
-	  rn *.texi
+	  rm *.texi
 endif

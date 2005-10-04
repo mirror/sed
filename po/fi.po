@@ -391,7 +391,7 @@ msgstr "Ei aikaisempaa säännöllistä lausetta"
 msgid "cannot specify modifiers on empty regexp"
 msgstr "Muuttajia ei voida määritellä tyhjään säännöliseen lausekkeeseen"
 
-#: sed/regexp.c:134
+#: sed/regexp.c:115
 #, fuzzy, c-format
 msgid "invalid reference \\%d on `s' command's RHS"
 msgstr "Virheellinen viittaus \\%d komennon `s' oikealla puolella"

@@ -391,7 +391,7 @@ msgstr "Mankas antaŭa regula esprimo"
 msgid "cannot specify modifiers on empty regexp"
 msgstr "Ne eblas specifi modifilojn ĉe malplena regula esprimo"
 
-#: sed/regexp.c:134
+#: sed/regexp.c:115
 #, fuzzy, c-format
 msgid "invalid reference \\%d on `s' command's RHS"
 msgstr "Nevalida referenco \\%d ĉe dekstra flanko de komando 's'"

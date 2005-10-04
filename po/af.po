@@ -392,7 +392,7 @@ msgstr "Geen vorige regex nie"
 msgid "cannot specify modifiers on empty regexp"
 msgstr "Kan nie veranderaars vir leë regex spesifiseer nie"
 
-#: sed/regexp.c:134
+#: sed/regexp.c:115
 #, fuzzy, c-format
 msgid "invalid reference \\%d on `s' command's RHS"
 msgstr "Ongeldige regterhandsverwysing \\%d vir `s' instruksie"

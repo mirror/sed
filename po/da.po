@@ -391,7 +391,7 @@ msgstr "Intet forudgående regulært udtryk"
 msgid "cannot specify modifiers on empty regexp"
 msgstr "Der kan ikke angives ændrere til tomt regulært udtryk"
 
-#: sed/regexp.c:134
+#: sed/regexp.c:115
 #, fuzzy, c-format
 msgid "invalid reference \\%d on `s' command's RHS"
 msgstr "Ugyldig reference \\%d på 's'-kommandos højreside"

@@ -394,7 +394,7 @@ msgstr "Não há expressão regular anterior"
 msgid "cannot specify modifiers on empty regexp"
 msgstr "Não é permitido especificar modificadores numa expressão regular vazia"
 
-#: sed/regexp.c:134
+#: sed/regexp.c:115
 #, fuzzy, c-format
 msgid "invalid reference \\%d on `s' command's RHS"
 msgstr "Referência inválida \\%d na segunda parte do comando `s'"

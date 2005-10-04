@@ -301,7 +301,7 @@ and other sequences.
 sed.info,
 any of various books on \*(sd,
 .na
-the \*(sd FAQ (http://sed.sf.net/grabbag/tutorials/sedfaq.html),
+the \*(sd FAQ (http://sed.sf.net/grabbag/tutorials/sedfaq.txt),
 http://sed.sf.net/grabbag/.
 
 [BUGS]

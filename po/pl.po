@@ -335,37 +335,41 @@ msgstr "%s: -e wyra¿enie #%lu, znak %lu: %s\n"
 msgid "can't find label for jump to `%s'"
 msgstr "nie mo¿na znale¼æ etykiety dla skoku do `%s'"
 
-#: sed/execute.c:649
+#: sed/execute.c:651
 #, c-format
 msgid "%s: can't read %s: %s\n"
 msgstr "%s: nie mo¿na odczytaæ %s: %s\n"
 
-#: sed/execute.c:672
+#: sed/execute.c:674
 #, c-format
 msgid "couldn't edit %s: is a terminal"
 msgstr "nie mo¿na edytowaæ %s: plik jest terminalem"
 
-#: sed/execute.c:676
+#: sed/execute.c:678
 #, c-format
 msgid "couldn't edit %s: not a regular file"
 msgstr "nie mo¿na edytowaæ %s: to nie jest regularny plik"
 
-#: lib/utils.c:196 sed/execute.c:683
+#: sed/execute.c:685 lib/utils.c:196
 #, c-format
 msgid "couldn't open temporary file %s: %s"
 msgstr "nie mo¿na otworzyæ tymczasowego pliku %s: %s"
 
-#: sed/execute.c:1207 sed/execute.c:1388
+#: sed/execute.c:1208 sed/execute.c:1389
 msgid "error in subprocess"
 msgstr "b³±d w podprocesie"
 
-#: sed/execute.c:1209
+#: sed/execute.c:1210
 msgid "option `e' not supported"
 msgstr "opcja `e' nie jest wspierana"
 
-#: sed/execute.c:1390
+#: sed/execute.c:1391
 msgid "`e' command not supported"
 msgstr "polecenie `e' nie jest wspierane"
+
+#: sed/execute.c:1716
+msgid "no input files"
+msgstr ""
 
 #: sed/regexp.c:39
 msgid "no previous regular expression"
@@ -375,7 +379,7 @@ msgstr "brak poprzedniego wyra¿enia regularnego"
 msgid "cannot specify modifiers on empty regexp"
 msgstr "nie mo¿na wyszczególniæ modyfikatorów w pustym wyra¿eniu regularnym"
 
-#: sed/regexp.c:134
+#: sed/regexp.c:115
 #, c-format
 msgid "invalid reference \\%d on `s' command's RHS"
 msgstr "nieprawid³owe odwo³anie \\%d po prawej stronie polecenia `s'"
