@@ -1805,7 +1805,7 @@ G
 
 # now, transform path/fromfile\n, into
 # mv path/fromfile path/tofile and print it
-s/^\(.*\/\)\(.*\)\n\(.*\)$/mv \1\2 \1\3/p
+s/^\(.*\/\)\(.*\)\n\(.*\)$/mv "\1\2" "\1\3"/p
 
 ' | $apply_cmd
 @end example
@@ -2055,9 +2055,9 @@ even more complicated to contrive than this script).
 
 The approach is to map numbers to letters, kind of an abacus
 implemented with @command{sed}.  @samp{a}s are units, @samp{b}s are
-tenths and so on: we simply add the number of characters
+tens and so on: we simply add the number of characters
 on the current line as units, and then propagate the carry
-to tenths, hundredths, and so on.
+to tens, hundreds, and so on.
 
 As usual, running totals are kept in hold space.
 
@@ -2066,7 +2066,7 @@ For the sake of variety, this is done with a loop rather than
 with some 80 @code{s} commands@footnote{Some implementations
 have a limit of 199 commands per script}: first we
 convert units, removing @samp{a}s from the number; then we
-rotate letters so that tenths become @samp{a}s, and so on
+rotate letters so that tens become @samp{a}s, and so on
 until no more letters remain.
 
 @c start-------------------------------------------
@@ -2258,6 +2258,10 @@ D
 @end example
 @c end---------------------------------------------
 
+Note how the first, second and fourth line are inactive after
+the first ten lines of input.  After that, all the script does
+is: exiting on the last line of input, appending the next input
+line to pattern space, and removing the first line.
 
 @node uniq
 @section Make Duplicate Lines Unique
@@ -2420,8 +2424,8 @@ tx
 
 This removes leading and trailing blank lines.  It is also the
 fastest.  Note that loops are completely done with @code{n} and
-@code{b}, without exploting the fact that @command{sed} cycles back
-to the top of the script automatically at the end of a line.
+@code{b}, without relying on @command{sed} to restart the
+the script automatically at the end of a line.
 
 @c start-------------------------------------------
 @example
