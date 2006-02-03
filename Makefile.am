@@ -17,3 +17,12 @@ EXTRA_DIST = BUGS THANKS COPYING.DOC README.boot bootstrap.sh 	      \
 
 html:
 	cd doc && make html
+
+DISTCHECK_CONFIGURE_FLAGS = XGETTEXT='$(SHELL) -c : dummy' $(EXTRA_DC_FLAGS)
+EXTRA_DC_FLAGS =
+
+full-distcheck:
+        make distcheck EXTRA_DC_FLAGS='--enable-html'
+        make distcheck EXTRA_DC_FLAGS='--disable-i18n'
+        make distcheck EXTRA_DC_FLAGS='--disable-nls'
+        make distcheck EXTRA_DC_FLAGS='--without-included-gettext'

@@ -1,5 +1,5 @@
 /*  GNU SED, a batch stream editor.
-    Copyright (C) 1989,90,91,92,93,94,95,98,99,2002,2003
+    Copyright (C) 1989,90,91,92,93,94,95,98,99,2002,2003,2004,2005,2006
     Free Software Foundation, Inc.
 
     This program is free software; you can redistribute it and/or modify
@@ -1274,12 +1274,12 @@ compile_program(vector)
             char *src_buf, *dest_buf;
   
 	    slash = inchar();
-	    if ( !(b = match_slash(slash, true)) )
+	    if ( !(b = match_slash(slash, false)) )
 	      bad_prog(_(UNTERM_Y_CMD));
             src_buf = get_buffer(b);
 	    len = normalize_text(src_buf, size_buffer (b), TEXT_BUFFER);
 
-            if ( !(b2 = match_slash(slash, true)) )
+            if ( !(b2 = match_slash(slash, false)) )
  	      bad_prog(_(UNTERM_Y_CMD));
             dest_buf = get_buffer(b2);
 	    dest_len = normalize_text(dest_buf, size_buffer (b2), TEXT_BUFFER);

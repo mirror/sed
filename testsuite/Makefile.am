@@ -12,8 +12,8 @@ SEDTESTS = \
         space appquit enable sep inclib 8bit newjis xabcx dollar noeol noeolw \
   	modulo numsub numsub2 numsub3 numsub4 numsub5 0range bkslashes \
   	head madding mac-mf empty xbxcx xbxcx3 recall recall2 xemacs \
-  	fasts uniq manis khadafy linecnt eval distrib 8to7 \
-	allsub cv-vars classes middle bsd stdin flipcase \
+  	fasts uniq manis khadafy linecnt eval distrib 8to7 y-bracket \
+	y-newline allsub cv-vars classes middle bsd stdin flipcase \
 	insens subwrite writeout readin \
 	help version file quiet \
 	factor binary3 binary2 binary dc
@@ -73,7 +73,9 @@ EXTRA_DIST = runtest Makefile.tests \
 	xabcx.good xabcx.inp xabcx.sed \
 	xbxcx.good xbxcx.inp xbxcx.sed \
 	xbxcx3.good xbxcx3.inp xbxcx3.sed \
-	xemacs.good xemacs.inp xemacs.sed
+	xemacs.good xemacs.inp xemacs.sed \
+	y-bracket.good y-bracket.sed y-bracket.inp \
+	y-newline.good y-newline.sed y-newline.inp
 
 clean-local:
 	test x$(srcdir) = x. || rm -f readin.in2 eval.in2
