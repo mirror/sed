@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GNU sed 3.02.80\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-04-11 15:53+0200\n"
+"POT-Creation-Date: 2006-02-03 10:19+0100\n"
 "PO-Revision-Date: 2002-03-08 12:57+0000\n"
 "Last-Translator: Simos Xenitellis <simos@hellug.gr>\n"
 "Language-Team: Greek <nls@tux.hellug.gr>\n"
@@ -146,39 +146,39 @@ msgstr "%s: -e έκφραση #%lu, χαρακτήρας %lu: %s\n"
 msgid "can't find label for jump to `%s'"
 msgstr "Δεν ήταν δυνατή η εύρεση ετικέττας για μετάβαση στο `%s'"
 
-#: sed/execute.c:651
+#: sed/execute.c:650
 #, c-format
 msgid "%s: can't read %s: %s\n"
 msgstr "%s: αδυναμία στην ανάγνωση %s: %s\n"
 
-#: sed/execute.c:674
+#: sed/execute.c:673
 #, fuzzy, c-format
 msgid "couldn't edit %s: is a terminal"
 msgstr "Δεν μπόρεσα να ανοίξω το αρχείο %s"
 
-#: sed/execute.c:678
+#: sed/execute.c:677
 #, fuzzy, c-format
 msgid "couldn't edit %s: not a regular file"
 msgstr "Δεν μπόρεσα να ανοίξω το αρχείο %s"
 
-#: sed/execute.c:685 lib/utils.c:196
+#: sed/execute.c:684 lib/utils.c:196
 #, fuzzy, c-format
 msgid "couldn't open temporary file %s: %s"
 msgstr "Δεν μπόρεσα να ανοίξω το αρχείο %s"
 
-#: sed/execute.c:1208 sed/execute.c:1389
+#: sed/execute.c:1206 sed/execute.c:1387
 msgid "error in subprocess"
 msgstr "σφάλμα στη υποδιαδικασία"
 
-#: sed/execute.c:1210
+#: sed/execute.c:1208
 msgid "option `e' not supported"
 msgstr "δεν υποστηρίζεται η επιλογή `e'"
 
-#: sed/execute.c:1391
+#: sed/execute.c:1389
 msgid "`e' command not supported"
 msgstr "δεν υποστηρίζεται η εντολή `e'"
 
-#: sed/execute.c:1716
+#: sed/execute.c:1714
 msgid "no input files"
 msgstr ""
 
@@ -367,85 +367,85 @@ msgstr "σφάλμα ανάγνωσης στο %s: %s"
 msgid "cannot rename %s: %s"
 msgstr "%s: αδυναμία στην ανάγνωση %s: %s\n"
 
-#: lib/regcomp.c:160
+#: lib/regcomp.c:132
 msgid "Success"
 msgstr ""
 
-#: lib/regcomp.c:163
+#: lib/regcomp.c:135
 msgid "No match"
 msgstr ""
 
-#: lib/regcomp.c:166
+#: lib/regcomp.c:138
 #, fuzzy
 msgid "Invalid regular expression"
 msgstr "Δεν βρέθηκε προηγούμενη κανονική έκφραση"
 
-#: lib/regcomp.c:169
+#: lib/regcomp.c:141
 #, fuzzy
 msgid "Invalid collation character"
 msgstr "μη έγκυρο ακολουθία διαφυγής σε κλάση χαρακτήρων"
 
-#: lib/regcomp.c:172
+#: lib/regcomp.c:144
 #, fuzzy
 msgid "Invalid character class name"
 msgstr "μη έγκυρο ακολουθία διαφυγής σε κλάση χαρακτήρων"
 
-#: lib/regcomp.c:175
+#: lib/regcomp.c:147
 msgid "Trailing backslash"
 msgstr ""
 
-#: lib/regcomp.c:178
+#: lib/regcomp.c:150
 msgid "Invalid back reference"
 msgstr ""
 
-#: lib/regcomp.c:181
+#: lib/regcomp.c:153
 #, fuzzy
 msgid "Unmatched [ or [^"
 msgstr "Αταίριαστο `{'"
 
-#: lib/regcomp.c:184
+#: lib/regcomp.c:156
 #, fuzzy
 msgid "Unmatched ( or \\("
 msgstr "Αταίριαστο `{'"
 
-#: lib/regcomp.c:187
+#: lib/regcomp.c:159
 #, fuzzy
 msgid "Unmatched \\{"
 msgstr "Αταίριαστο `{'"
 
-#: lib/regcomp.c:190
+#: lib/regcomp.c:162
 #, fuzzy
 msgid "Invalid content of \\{\\}"
 msgstr "μη έγκυρο περιεχόμενο δεικτών επανάληψης {}"
 
-#: lib/regcomp.c:193
+#: lib/regcomp.c:165
 msgid "Invalid range end"
 msgstr ""
 
-#: lib/regcomp.c:196
+#: lib/regcomp.c:168
 msgid "Memory exhausted"
 msgstr ""
 
-#: lib/regcomp.c:199
+#: lib/regcomp.c:171
 #, fuzzy
 msgid "Invalid preceding regular expression"
 msgstr "Δεν βρέθηκε προηγούμενη κανονική έκφραση"
 
-#: lib/regcomp.c:202
+#: lib/regcomp.c:174
 #, fuzzy
 msgid "Premature end of regular expression"
 msgstr "Δεν βρέθηκε προηγούμενη κανονική έκφραση"
 
-#: lib/regcomp.c:205
+#: lib/regcomp.c:177
 #, fuzzy
 msgid "Regular expression too big"
 msgstr "πολύ μεγάλη κανονική έκφραση"
 
-#: lib/regcomp.c:208
+#: lib/regcomp.c:180
 #, fuzzy
 msgid "Unmatched ) or \\)"
 msgstr "Αταίριαστο `{'"
 
-#: lib/regcomp.c:690
+#: lib/regcomp.c:660
 msgid "No previous regular expression"
 msgstr "Δεν βρέθηκε προηγούμενη κανονική έκφραση"

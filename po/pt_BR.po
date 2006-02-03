@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: sed 4.0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-04-11 15:53+0200\n"
+"POT-Creation-Date: 2006-02-03 10:19+0100\n"
 "PO-Revision-Date: 2002-11-08 17:44-0300\n"
 "Last-Translator: Aurélio Marinho Jargas <aurelio@verde666.org>\n"
 "Language-Team: Brazilian Portuguese <ldp-br@bazar.conectiva.com.br>\n"
@@ -150,39 +150,39 @@ msgstr "%s: -e expressão #%lu, caractere %lu: %s\n"
 msgid "can't find label for jump to `%s'"
 msgstr "Não foi possível encontrar a marcação `%s'"
 
-#: sed/execute.c:651
+#: sed/execute.c:650
 #, c-format
 msgid "%s: can't read %s: %s\n"
 msgstr "%s: não foi possível ler %s: %s\n"
 
-#: sed/execute.c:674
+#: sed/execute.c:673
 #, fuzzy, c-format
 msgid "couldn't edit %s: is a terminal"
 msgstr "Não foi possível abrir o arquivo %s: %s"
 
-#: sed/execute.c:678
+#: sed/execute.c:677
 #, fuzzy, c-format
 msgid "couldn't edit %s: not a regular file"
 msgstr "Não foi possível abrir o arquivo %s: %s"
 
-#: sed/execute.c:685 lib/utils.c:196
+#: sed/execute.c:684 lib/utils.c:196
 #, fuzzy, c-format
 msgid "couldn't open temporary file %s: %s"
 msgstr "Não foi possível abrir o arquivo %s: %s"
 
-#: sed/execute.c:1208 sed/execute.c:1389
+#: sed/execute.c:1206 sed/execute.c:1387
 msgid "error in subprocess"
 msgstr "erro no subprocesso"
 
-#: sed/execute.c:1210
+#: sed/execute.c:1208
 msgid "option `e' not supported"
 msgstr "opção `e' não suportada"
 
-#: sed/execute.c:1391
+#: sed/execute.c:1389
 msgid "`e' command not supported"
 msgstr "comando `e' não suportado"
 
-#: sed/execute.c:1716
+#: sed/execute.c:1714
 msgid "no input files"
 msgstr ""
 
@@ -375,74 +375,74 @@ msgstr "erro de leitura em %s: %s"
 msgid "cannot rename %s: %s"
 msgstr "%s: não foi possível ler %s: %s\n"
 
-#: lib/regcomp.c:160
+#: lib/regcomp.c:132
 msgid "Success"
 msgstr "Sucesso"
 
-#: lib/regcomp.c:163
+#: lib/regcomp.c:135
 msgid "No match"
 msgstr "Nada encontrado"
 
-#: lib/regcomp.c:166
+#: lib/regcomp.c:138
 msgid "Invalid regular expression"
 msgstr "Expressão regular inválida"
 
-#: lib/regcomp.c:169
+#: lib/regcomp.c:141
 msgid "Invalid collation character"
 msgstr "Caractere de ordenação inválido"
 
-#: lib/regcomp.c:172
+#: lib/regcomp.c:144
 msgid "Invalid character class name"
 msgstr "Nome inválido de classe de caracteres"
 
-#: lib/regcomp.c:175
+#: lib/regcomp.c:147
 msgid "Trailing backslash"
 msgstr "Escape \\ no final"
 
-#: lib/regcomp.c:178
+#: lib/regcomp.c:150
 msgid "Invalid back reference"
 msgstr "Retrovisor \\n inválido"
 
-#: lib/regcomp.c:181
+#: lib/regcomp.c:153
 msgid "Unmatched [ or [^"
 msgstr "[ ou [^ não terminado"
 
-#: lib/regcomp.c:184
+#: lib/regcomp.c:156
 msgid "Unmatched ( or \\("
 msgstr "( ou \\( não terminado"
 
-#: lib/regcomp.c:187
+#: lib/regcomp.c:159
 msgid "Unmatched \\{"
 msgstr "\\{ não terminado"
 
-#: lib/regcomp.c:190
+#: lib/regcomp.c:162
 msgid "Invalid content of \\{\\}"
 msgstr "Conteúdo inválido no \\{\\} (permitidos números e vírgula)"
 
-#: lib/regcomp.c:193
+#: lib/regcomp.c:165
 msgid "Invalid range end"
 msgstr "Fim de intervalo (range) inválido"
 
-#: lib/regcomp.c:196
+#: lib/regcomp.c:168
 msgid "Memory exhausted"
 msgstr "Falta de memória"
 
-#: lib/regcomp.c:199
+#: lib/regcomp.c:171
 msgid "Invalid preceding regular expression"
 msgstr "Expressão regular anterior inválida"
 
-#: lib/regcomp.c:202
+#: lib/regcomp.c:174
 msgid "Premature end of regular expression"
 msgstr "Fim prematuro da expressão regular"
 
-#: lib/regcomp.c:205
+#: lib/regcomp.c:177
 msgid "Regular expression too big"
 msgstr "Expressão regular grande demais"
 
-#: lib/regcomp.c:208
+#: lib/regcomp.c:180
 msgid "Unmatched ) or \\)"
 msgstr ") or \\) inesperado"
 
-#: lib/regcomp.c:690
+#: lib/regcomp.c:660
 msgid "No previous regular expression"
 msgstr "Não há expressão regular anterior"

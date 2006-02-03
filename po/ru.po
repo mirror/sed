@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: sed-4.1.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-04-11 15:53+0200\n"
+"POT-Creation-Date: 2006-02-03 10:19+0100\n"
 "PO-Revision-Date: 2004-07-07 17:54+0300\n"
 "Last-Translator: Pavel Maryanov <acid_jack@ukr.net>\n"
 "Language-Team: Russian <ru@li.org>\n"
@@ -133,39 +133,39 @@ msgstr "%s: -e выражение #%lu, символ %lu: %s\n"
 msgid "can't find label for jump to `%s'"
 msgstr "невозможно найти метку для перехода к `%s'"
 
-#: sed/execute.c:651
+#: sed/execute.c:650
 #, c-format
 msgid "%s: can't read %s: %s\n"
 msgstr "%s: невозможно прочитать %s: %s\n"
 
-#: sed/execute.c:674
+#: sed/execute.c:673
 #, c-format
 msgid "couldn't edit %s: is a terminal"
 msgstr "невозможно редактировать %s: это терминал"
 
-#: sed/execute.c:678
+#: sed/execute.c:677
 #, c-format
 msgid "couldn't edit %s: not a regular file"
 msgstr "невозможно редактировать %s: это не обычный файл"
 
-#: sed/execute.c:685 lib/utils.c:196
+#: sed/execute.c:684 lib/utils.c:196
 #, c-format
 msgid "couldn't open temporary file %s: %s"
 msgstr "невозможно открыть временный файл %s: %s"
 
-#: sed/execute.c:1208 sed/execute.c:1389
+#: sed/execute.c:1206 sed/execute.c:1387
 msgid "error in subprocess"
 msgstr "ошибка в подпроцессе"
 
-#: sed/execute.c:1210
+#: sed/execute.c:1208
 msgid "option `e' not supported"
 msgstr "опция `e' не поддерживается"
 
-#: sed/execute.c:1391
+#: sed/execute.c:1389
 msgid "`e' command not supported"
 msgstr "команда `e' не поддерживается"
 
-#: sed/execute.c:1716
+#: sed/execute.c:1714
 msgid "no input files"
 msgstr ""
 
@@ -386,74 +386,74 @@ msgstr "ошибка чтения %s: %s"
 msgid "cannot rename %s: %s"
 msgstr "невозможно переименовать %s: %s"
 
-#: lib/regcomp.c:160
+#: lib/regcomp.c:132
 msgid "Success"
 msgstr "Успешно"
 
-#: lib/regcomp.c:163
+#: lib/regcomp.c:135
 msgid "No match"
 msgstr "Нет соотвествия"
 
-#: lib/regcomp.c:166
+#: lib/regcomp.c:138
 msgid "Invalid regular expression"
 msgstr "Недопустимое регулярное выражение"
 
-#: lib/regcomp.c:169
+#: lib/regcomp.c:141
 msgid "Invalid collation character"
 msgstr "Недопустимый символ сравнения"
 
-#: lib/regcomp.c:172
+#: lib/regcomp.c:144
 msgid "Invalid character class name"
 msgstr "Недопустимое имя для класса символа"
 
-#: lib/regcomp.c:175
+#: lib/regcomp.c:147
 msgid "Trailing backslash"
 msgstr "Завершающая обратная косая черта"
 
-#: lib/regcomp.c:178
+#: lib/regcomp.c:150
 msgid "Invalid back reference"
 msgstr "Недопустимая обратная ссылка"
 
-#: lib/regcomp.c:181
+#: lib/regcomp.c:153
 msgid "Unmatched [ or [^"
 msgstr "Непарный символ [ или [^"
 
-#: lib/regcomp.c:184
+#: lib/regcomp.c:156
 msgid "Unmatched ( or \\("
 msgstr "Непарный символ ( or \\("
 
-#: lib/regcomp.c:187
+#: lib/regcomp.c:159
 msgid "Unmatched \\{"
 msgstr "Непарный символ \\{"
 
-#: lib/regcomp.c:190
+#: lib/regcomp.c:162
 msgid "Invalid content of \\{\\}"
 msgstr "Недопустимое содержимое в \\{\\}"
 
-#: lib/regcomp.c:193
+#: lib/regcomp.c:165
 msgid "Invalid range end"
 msgstr "Недопустимое окончание диапазона"
 
-#: lib/regcomp.c:196
+#: lib/regcomp.c:168
 msgid "Memory exhausted"
 msgstr "Память исчерпана"
 
-#: lib/regcomp.c:199
+#: lib/regcomp.c:171
 msgid "Invalid preceding regular expression"
 msgstr "Недопустимое предшествующее регулярное выражение"
 
-#: lib/regcomp.c:202
+#: lib/regcomp.c:174
 msgid "Premature end of regular expression"
 msgstr "Преждевременное окончание регулярного выражения"
 
-#: lib/regcomp.c:205
+#: lib/regcomp.c:177
 msgid "Regular expression too big"
 msgstr "Регулярное выражение слишком большое"
 
-#: lib/regcomp.c:208
+#: lib/regcomp.c:180
 msgid "Unmatched ) or \\)"
 msgstr "Непарный символ ) или \\)"
 
-#: lib/regcomp.c:690
+#: lib/regcomp.c:660
 msgid "No previous regular expression"
 msgstr "Нет предыдущего регулярного выражения"
