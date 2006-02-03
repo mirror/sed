@@ -1,3 +1,7 @@
+2006-02-03  Paolo Bonzini  <bonzini@gnu.org>
+
+	* sed/compile.c (compile_program) <case 'y'>: Pass false to match_slash.
+
 2005-09-07  Paolo Bonzini  <bonzini@gnu.org>
 
 	* lib/regcomp.c: Update from upstream.

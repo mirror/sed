@@ -3,6 +3,8 @@ Sed 4.1.5
 * fix parsing of a negative character class not including a closed bracket,
   like [^]] or [^]a-z].
 
+* fix parsing of [ inside an y command, like y/[/A/.
+
 * output the result of commands a, r, R when a q command is found.
 
 ----------------------------------------------------------------------------
