@@ -87,8 +87,8 @@ regex syntax clashes (problems with backslashes)
   modifying the contents of the directory, so the operation depends on
   the permissions of the directory, not of the file).  For this same
   reason, sed will not let one use `-i' on a writeable file in a
-  read-only directory (but unbelievably nobody reports that as a
-  bug...).
+  read-only directory, and will break hard or symbolic links when
+  `-i' is used on such a file.
 
 
 `0a' does not work (gives an error)

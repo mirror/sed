@@ -2706,8 +2706,8 @@ to the original name: if you rename or delete files, you're actually
 modifying the contents of the directory, so the operation depends on
 the permissions of the directory, not of the file.  For this same
 reason, @command{sed} does not let you use @option{-i} on a writeable file
-in a read-only directory (but unbelievably nobody reports that as a
-bug@dots{}).
+in a read-only directory, and will break hard or symbolic links when
+@option{-i} is used on such a file.
 
 @item @code{0a} does not work (gives an error)
 There is no line 0.  0 is a special address that is only used to treat
