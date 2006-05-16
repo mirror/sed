@@ -3,7 +3,6 @@
 # Automake requirements
 AUTOMAKE_OPTIONS = gnits 1.8
 ACLOCAL_AMFLAGS = -I config
-DISTCHECK_CONFIGURE_FLAGS = XGETTEXT='$(SHELL) -c : dummy'
 
 PACKAGE = sed
 

@@ -112,13 +112,13 @@ AC_DEFUN([AM_MKINSTALLDIRS], [MKINSTALLDIRS="$mkdir_p" AC_SUBST(MKINSTALLDIRS)])
 AM_GNU_GETTEXT_VERSION(0.14)
 AM_GNU_GETTEXT(no-libtool, need-ngettext, ../intl)
 AC_CONFIG_COMMANDS([gettext-fix], [
-  sed -e '/^mkinstalldirs *=/a\' \
-      -e "install_sh=$install_sh" \
+  sed -e "/^mkinstalldirs *=/a\\
+install_sh=$install_sh" \
       -e 's/^mkinstalldirs *=.*/mkinstalldirs=$(MKINSTALLDIRS)/' \
       intl/Makefile > intl/Makefile.tmp
   mv intl/Makefile.tmp intl/Makefile
-  sed -e '/^mkinstalldirs *=/a\' \
-      -e "install_sh=$install_sh" \
+  sed -e "/^mkinstalldirs *=/a\\
+install_sh=$install_sh" \
       -e 's/^mkinstalldirs *=.*/mkinstalldirs=$(MKINSTALLDIRS)/' \
       po/Makefile > po/Makefile.tmp
   mv po/Makefile.tmp po/Makefile], [

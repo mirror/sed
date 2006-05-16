@@ -6,15 +6,14 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: sed 4.1.1\n"
-"POT-Creation-Date: 2004-11-11 16:32+0100\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2006-05-16 07:37+0200\n"
 "PO-Revision-Date: 2004-07-08 19:58+0200\n"
 "Last-Translator: Wojciech Polak <polak@gnu.org>\n"
 "Language-Team: Polish <translation-team-pl@lists.sourceforge.net>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=ISO-8859-2\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Report-Msgid-Bugs-To: \n"
-"Report-Msgid-Bugs-To: \n"
 "Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 "
 "|| n%100>=20) ? 1 : 2);\n"
 
@@ -335,39 +334,39 @@ msgstr "%s: -e wyra¿enie #%lu, znak %lu: %s\n"
 msgid "can't find label for jump to `%s'"
 msgstr "nie mo¿na znale¼æ etykiety dla skoku do `%s'"
 
-#: sed/execute.c:651
+#: sed/execute.c:650
 #, c-format
 msgid "%s: can't read %s: %s\n"
 msgstr "%s: nie mo¿na odczytaæ %s: %s\n"
 
-#: sed/execute.c:674
+#: sed/execute.c:673
 #, c-format
 msgid "couldn't edit %s: is a terminal"
 msgstr "nie mo¿na edytowaæ %s: plik jest terminalem"
 
-#: sed/execute.c:678
+#: sed/execute.c:677
 #, c-format
 msgid "couldn't edit %s: not a regular file"
 msgstr "nie mo¿na edytowaæ %s: to nie jest regularny plik"
 
-#: sed/execute.c:685 lib/utils.c:196
+#: sed/execute.c:684 lib/utils.c:196
 #, c-format
 msgid "couldn't open temporary file %s: %s"
 msgstr "nie mo¿na otworzyæ tymczasowego pliku %s: %s"
 
-#: sed/execute.c:1208 sed/execute.c:1389
+#: sed/execute.c:1206 sed/execute.c:1387
 msgid "error in subprocess"
 msgstr "b³±d w podprocesie"
 
-#: sed/execute.c:1210
+#: sed/execute.c:1208
 msgid "option `e' not supported"
 msgstr "opcja `e' nie jest wspierana"
 
-#: sed/execute.c:1391
+#: sed/execute.c:1389
 msgid "`e' command not supported"
 msgstr "polecenie `e' nie jest wspierane"
 
-#: sed/execute.c:1716
+#: sed/execute.c:1714
 msgid "no input files"
 msgstr ""
 

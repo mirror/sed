@@ -5,15 +5,14 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: sed 4.1.1\n"
-"POT-Creation-Date: 2004-11-11 16:32+0100\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2006-05-16 07:37+0200\n"
 "PO-Revision-Date: 2004-07-09 16:33+0300\n"
 "Last-Translator: Toomas Soome <Toomas.Soome@microlink.ee>\n"
 "Language-Team: Estonian <et@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=iso-8859-15\n"
 "Content-Transfer-Encoding: 8-bit\n"
-"Report-Msgid-Bugs-To: \n"
-"Report-Msgid-Bugs-To: \n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: pcre/pcregrep.c:130
@@ -333,39 +332,39 @@ msgstr "%s: -e avaldis #%lu, sümbol %lu: %s\n"
 msgid "can't find label for jump to `%s'"
 msgstr "ei leia märgendit, et hüpata kohale `%s'"
 
-#: sed/execute.c:651
+#: sed/execute.c:650
 #, c-format
 msgid "%s: can't read %s: %s\n"
 msgstr "%s: ei saa lugeda %s: %s\n"
 
-#: sed/execute.c:674
+#: sed/execute.c:673
 #, c-format
 msgid "couldn't edit %s: is a terminal"
 msgstr "%s ei saa toimetada: see on terminal"
 
-#: sed/execute.c:678
+#: sed/execute.c:677
 #, c-format
 msgid "couldn't edit %s: not a regular file"
 msgstr "%s ei saa toimetada: see ei ole tavaline fail"
 
-#: sed/execute.c:685 lib/utils.c:196
+#: sed/execute.c:684 lib/utils.c:196
 #, c-format
 msgid "couldn't open temporary file %s: %s"
 msgstr "ajutist faili %s ei saa avada: %s"
 
-#: sed/execute.c:1208 sed/execute.c:1389
+#: sed/execute.c:1206 sed/execute.c:1387
 msgid "error in subprocess"
 msgstr "viga alamprotsessis"
 
-#: sed/execute.c:1210
+#: sed/execute.c:1208
 msgid "option `e' not supported"
 msgstr "võtit `e' ei toetata"
 
-#: sed/execute.c:1391
+#: sed/execute.c:1389
 msgid "`e' command not supported"
 msgstr "käsku `e' ei toetata"
 
-#: sed/execute.c:1716
+#: sed/execute.c:1714
 msgid "no input files"
 msgstr ""
 

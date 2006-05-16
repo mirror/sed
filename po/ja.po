@@ -9,14 +9,14 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: GNU sed 4.1.1\n"
-"POT-Creation-Date: 2004-11-11 16:32+0100\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2006-05-16 07:37+0200\n"
 "PO-Revision-Date: 2005-02-01 21:02+0900\n"
 "Last-Translator: IIDA Yosiaki <iida@gnu.org>\n"
 "Language-Team: Japanese <translation-team-ja@lists.sourceforge.net>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=EUC-JP\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Report-Msgid-Bugs-To: \n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
 #: pcre/pcregrep.c:130
@@ -335,37 +335,41 @@ msgstr "%s: -e 表現 #%lu, 文字数 %lu: %s\n"
 msgid "can't find label for jump to `%s'"
 msgstr "「%s」へのジャンプのラベルが見つかりません"
 
-#: sed/execute.c:649
+#: sed/execute.c:650
 #, c-format
 msgid "%s: can't read %s: %s\n"
 msgstr "%s: %sを読み込めません: %s\n"
 
-#: sed/execute.c:672
+#: sed/execute.c:673
 #, c-format
 msgid "couldn't edit %s: is a terminal"
 msgstr "%sは、編集できませんでした: 端末です"
 
-#: sed/execute.c:676
+#: sed/execute.c:677
 #, c-format
 msgid "couldn't edit %s: not a regular file"
 msgstr "%sは、編集できませんでした: 通常ファイルでありません"
 
-#: lib/utils.c:196 sed/execute.c:683
+#: sed/execute.c:684 lib/utils.c:196
 #, c-format
 msgid "couldn't open temporary file %s: %s"
 msgstr "一時ファイルを開けませんでした: %s: %s"
 
-#: sed/execute.c:1207 sed/execute.c:1388
+#: sed/execute.c:1206 sed/execute.c:1387
 msgid "error in subprocess"
 msgstr "子プロセスのエラー"
 
-#: sed/execute.c:1209
+#: sed/execute.c:1208
 msgid "option `e' not supported"
 msgstr "「e」オプションは、サポートされていません"
 
-#: sed/execute.c:1390
+#: sed/execute.c:1389
 msgid "`e' command not supported"
 msgstr "「e」コマンドは、サポートされていません"
+
+#: sed/execute.c:1714
+msgid "no input files"
+msgstr ""
 
 #: sed/regexp.c:39
 msgid "no previous regular expression"
@@ -375,7 +379,7 @@ msgstr "直前の正規表現が、ありません"
 msgid "cannot specify modifiers on empty regexp"
 msgstr "修飾子は、空の正規表現に指定できません"
 
-#: sed/regexp.c:134
+#: sed/regexp.c:115
 #, c-format
 msgid "invalid reference \\%d on `s' command's RHS"
 msgstr "「s」コマンドの右側に無効な\\%dの参照"

@@ -5,15 +5,14 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: sed 3.02.80\n"
-"POT-Creation-Date: 2004-11-11 16:32+0100\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2006-05-16 07:37+0200\n"
 "PO-Revision-Date: 2001-08-04 20:37+0300\n"
 "Last-Translator: Eli Zaretskii <eliz@gnu.org>\n"
 "Language-Team: Hebrew <eliz@gnu.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=ISO-8859-8\n"
 "Content-Transfer-Encoding: 8-bit\n"
-"Report-Msgid-Bugs-To: \n"
-"Report-Msgid-Bugs-To: \n"
 
 #: pcre/pcregrep.c:130
 #, c-format
@@ -343,36 +342,40 @@ msgstr "%s תינכתב (%lu 'סמ -e יוטיב לש %lu 'סמ ות) %s האיגש\n"
 msgid "can't find label for jump to `%s'"
 msgstr "האצמנ אל `%s' הציפק תיוות"
 
-#: sed/execute.c:649
+#: sed/execute.c:650
 #, c-format
 msgid "%s: can't read %s: %s\n"
 msgstr "%s תינכתב %s תאירקב (%s) האיגש\n"
 
-#: sed/execute.c:672
+#: sed/execute.c:673
 #, fuzzy, c-format
 msgid "couldn't edit %s: is a terminal"
 msgstr "%s ץבוק תחיתפב הלקת"
 
-#: sed/execute.c:676
+#: sed/execute.c:677
 #, c-format
 msgid "couldn't edit %s: not a regular file"
 msgstr ""
 
-#: lib/utils.c:196 sed/execute.c:683
+#: sed/execute.c:684 lib/utils.c:196
 #, fuzzy, c-format
 msgid "couldn't open temporary file %s: %s"
 msgstr "%s ץבוק תחיתפב הלקת"
 
-#: sed/execute.c:1207 sed/execute.c:1388
+#: sed/execute.c:1206 sed/execute.c:1387
 msgid "error in subprocess"
 msgstr ""
 
-#: sed/execute.c:1209
+#: sed/execute.c:1208
 msgid "option `e' not supported"
 msgstr ""
 
-#: sed/execute.c:1390
+#: sed/execute.c:1389
 msgid "`e' command not supported"
+msgstr ""
+
+#: sed/execute.c:1714
+msgid "no input files"
 msgstr ""
 
 #: sed/regexp.c:39

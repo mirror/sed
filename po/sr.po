@@ -5,15 +5,14 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: sed 4.0.9\n"
-"POT-Creation-Date: 2004-11-11 16:32+0100\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2006-05-16 07:37+0200\n"
 "PO-Revision-Date: 2004-01-13 22:51-0500\n"
 "Last-Translator: Aleksandar Jelenak <jelenak@netlinkplus.net>\n"
 "Language-Team: Serbian <sr@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Report-Msgid-Bugs-To: \n"
-"Report-Msgid-Bugs-To: \n"
 "Plural-Forms: nplurals=3;    plural=n%10==1 && n%100!=11 ? 0 :  (n%10>=2 && n"
 "%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 
@@ -350,37 +349,41 @@ msgstr "%s: -e израз #%lu, знак %lu: %s\n"
 msgid "can't find label for jump to `%s'"
 msgstr "Не могу да нађем ознаку за скок на „%s“"
 
-#: sed/execute.c:649
+#: sed/execute.c:650
 #, c-format
 msgid "%s: can't read %s: %s\n"
 msgstr "%s: не може читати  %s: %s\n"
 
-#: sed/execute.c:672
+#: sed/execute.c:673
 #, fuzzy, c-format
 msgid "couldn't edit %s: is a terminal"
 msgstr "Не може се отворити датотека %s: %s"
 
-#: sed/execute.c:676
+#: sed/execute.c:677
 #, c-format
 msgid "couldn't edit %s: not a regular file"
 msgstr ""
 
-#: lib/utils.c:196 sed/execute.c:683
+#: sed/execute.c:684 lib/utils.c:196
 #, fuzzy, c-format
 msgid "couldn't open temporary file %s: %s"
 msgstr "Не могу отворити привремену датотеку %s: %s"
 
-#: sed/execute.c:1207 sed/execute.c:1388
+#: sed/execute.c:1206 sed/execute.c:1387
 msgid "error in subprocess"
 msgstr "грешка у потпроцесу"
 
-#: sed/execute.c:1209
+#: sed/execute.c:1208
 msgid "option `e' not supported"
 msgstr "опција „e“ није подржана"
 
-#: sed/execute.c:1390
+#: sed/execute.c:1389
 msgid "`e' command not supported"
 msgstr "наредба „e“ није подржана"
+
+#: sed/execute.c:1714
+msgid "no input files"
+msgstr ""
 
 #: sed/regexp.c:39
 #, fuzzy
