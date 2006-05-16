@@ -1,3 +1,7 @@
+2006-05-15  Hans-Bernhard Bröker <broeker@physik.rwth-aachen.de>
+
+	* sed/basicdefs.h (OB_MALLOC): Turn VCAST into void * cast.
+
 2006-02-03  Paolo Bonzini  <bonzini@gnu.org>
 
 	* sed/compile.c (compile_program) <case 'y'>: Pass false to match_slash.

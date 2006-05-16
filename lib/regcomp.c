@@ -557,8 +557,13 @@ weak_alias (__regerror, regerror)
    a worthwhile optimization.  */
 static const bitset_t utf8_sb_map =
 {
-  /* Set the first 128 bits.  */
-  [0 ... 0x80 / BITSET_WORD_BITS - 1] = BITSET_WORD_MAX
+#if BITSET_WORD_MAX == 0xFFFFFFFFL
+  BITSET_WORD_MAX, BITSET_WORD_MAX, BITSET_WORD_MAX, BITSET_WORD_MAX
+#elif BITSET_WORD_MAX == 0xFFFFFFFFFFFFFFFFL
+  BITSET_WORD_MAX, BITSET_WORD_MAX
+#else
+#error invalid BITSET_WORD_BITS setting
+#endif
 };
 #endif
 

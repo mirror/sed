@@ -113,7 +113,7 @@ regex syntax clashes (problems with backslashes)
   only happens if you are on the GNU system, using GNU libc's regular
   expression matcher instead of compiling the one supplied with GNU sed.
   In a Danish locale, for example, the regular expression `^[a-z]$'
-  matches the string `aa', because aa is a single collating symbol that
+  matches the string `aa', because `aa' is a single collating symbol that
   comes after `a' and before `b'; `ll' behaves similarly in Spanish
   locales, or `ij' in Dutch locales.
 

@@ -124,7 +124,7 @@ typedef unsigned long countT;
 #define FREE(x)		 (ck_free(VCAST(VOID *)x))
 #define MEMCPY(d,s,l)	 (memcpy(VCAST(VOID *)(d),VCAST(const VOID *)(s),l))
 #define MEMMOVE(d,s,l)	 (memmove(VCAST(VOID *)(d),VCAST(const VOID *)(s),l))
-#define OB_MALLOC(o,n,t) (VCAST(t *)obstack_alloc(o,(n)*sizeof(t)))
+#define OB_MALLOC(o,n,t) ((t *)(void *)obstack_alloc(o,(n)*sizeof(t)))
 
 #define obstack_chunk_alloc  ck_malloc
 #define obstack_chunk_free   ck_free

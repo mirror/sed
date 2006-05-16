@@ -57,6 +57,10 @@
    #undefs RE_DUP_MAX and sets it to the right value.  */
 #include <limits.h>
 
+#ifndef HAVE__BOOL
+#include "stdbool.h"
+#endif /* not defined HAVE__BOOL */
+
 #include <regex.h>
 #include "regex_internal.h"
 
