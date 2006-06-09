@@ -107,7 +107,7 @@ regex syntax clashes (problems with backslashes)
   You are encountering problems with locales.  POSIX mandates that `[a-z]'
   uses the current locale's collation order -- in C parlance, that means
   strcoll(3) instead of strcmp(3).  Some locales have a case insensitive
-  strcoll, others don't: one of those that have problems is Estonian.
+  strcoll, others don't.
 
   Another problem is that [a-z] tries to use collation symbols.  This
   only happens if you are on the GNU system, using GNU libc's regular

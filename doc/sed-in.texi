@@ -2723,8 +2723,7 @@ is obtained with @code{0,/abc/d}.
 You are encountering problems with locales.  POSIX mandates that @code{[a-z]}
 uses the current locale's collation order -- in C parlance, that means using
 @code{strcoll(3)} instead of @code{strcmp(3)}.  Some locales have a
-case-insensitive collation order, others don't: one of those that have
-problems is Estonian.
+case-insensitive collation order, others don't.
 
 Another problem is that @code{[a-z]} tries to use collation symbols.
 This only happens if you are on the @acronym{GNU} system, using
