@@ -19,7 +19,7 @@ if test -f config.h; then :; else
 */
 
 #define PACKAGE "sed"
-#define VERSION "3.61-boot"
+#define VERSION "3.62-boot"
 #define SED_FEATURE_VERSION "4.1"
 #define BOOTSTRAP 1
 
@@ -35,17 +35,65 @@ if test -f config.h; then :; else
 #undef HAVE_SYS_FILE_H
 #undef HAVE_IO_H
 
-/* Undefine if <stdio.h> or <sys/types.h> has conflicting definition.  */
-#define size_t unsigned
-#define ssize_t int
-
-/* If your antique compiler doesn't grok ``void *'', then #define VOID char */
-#undef VOID
-
-
 /* All other config.h.in options intentionally omitted.  Report as a
    bug if you need extra "#define"s in here. */
 END_OF_CONFIG_H
+
+  cat > conftest.c << \EOF
+#define size_t unsigned
+#include <sys/types.h>
+#include <stdio.h>
+
+size_t s;
+EOF
+  if $CC -c conftest.c -o conftest.o > /dev/null 2>&1 ; then
+    echo '#define size_t unsigned' >> config.h
+    echo checking for size_t... no
+  else
+    echo checking for size_t... yes
+  fi
+
+  cat > conftest.c << \EOF
+#define ssize_t int
+#include <sys/types.h>
+#include <stdio.h>
+
+ssize_t s;
+EOF
+  if $CC -c conftest.c -o conftest.o > /dev/null 2>&1 ; then
+    echo '#define ssize_t int' >> config.h
+    echo checking for ssize_t... no
+  else
+    echo checking for ssize_t... yes
+  fi
+
+  cat > conftest.c << \EOF
+void *foo;
+
+EOF
+  if $CC -c conftest.c -o conftest.o > /dev/null 2>&1 ; then
+    echo checking for void *... yes
+  else
+    echo '#define VOID char' >> config.h
+    echo checking for void *... no
+  fi
+
+  cat > conftest.c << \EOF
+#include <malloc.h>
+int foo;
+
+EOF
+  if $CC -c conftest.c -o conftest.o > /dev/null 2>&1 ; then
+    echo checking for malloc.h... yes
+    echo '#define HAVE_MALLOC_H 1' >> config.h
+    echo '#undef STDC_HEADERS' >> config.h
+  else
+    echo checking for malloc.h... no
+    echo '#undef HAVE_MALLOC_H' >> config.h
+    echo '#define STDC_HEADERS 1' >> config.h
+  fi
+
+  rm -f conftest.*
 fi
 
 # tell the user what we're doing from here on...
@@ -55,8 +103,6 @@ set -x -e
 
 rm -f lib/*.o sed/*.o sed/sed
 cd lib || exit 1
-rm -f regex.h
-cp regex_.h regex.h
 ${CC} -DHAVE_CONFIG_H -I.. -I. -c alloca.c
 ${CC} -DHAVE_CONFIG_H -I.. -I. -c getline.c || exit 1
 ${CC} -DHAVE_CONFIG_H -I.. -I. -c getopt.c || exit 1
@@ -67,12 +113,12 @@ ${CC} -DHAVE_CONFIG_H -I.. -I. -c memmove.c || exit 1
 ${CC} -DHAVE_CONFIG_H -I.. -I. -c mkstemp.c || exit 1
 ${CC} -DHAVE_CONFIG_H -I.. -I. -c strverscmp.c || exit 1
 ${CC} -DHAVE_CONFIG_H -I.. -I. -c obstack.c || exit 1
-${CC} -DHAVE_CONFIG_H -I.. -I. -c regex.c || exit 1
 ${CC} -DHAVE_CONFIG_H -I.. -I. -c strerror.c || exit 1
 ${CC} -DHAVE_CONFIG_H -I.. -I. -c utils.c || exit 1
 
 cd ../pcre || exit 1
 ${CC} -DHAVE_CONFIG_H -I.. -I. -I../lib -c regdebug.c || exit 1
+${CC} -DHAVE_CONFIG_H -I.. -I. -I../lib -c regexec.c || exit 1
 ${CC} -DHAVE_CONFIG_H -I.. -I. -I../lib -c regexp.c || exit 1
 ${CC} -DHAVE_CONFIG_H -I.. -I. -I../lib -c reginfo.c || exit 1
 ${CC} -DHAVE_CONFIG_H -I.. -I. -I../lib -c regperl.c || exit 1
@@ -82,11 +128,11 @@ ${CC} -DHAVE_CONFIG_H -I.. -I. -I../lib -c regsub.c || exit 1
 ${CC} -DHAVE_CONFIG_H -I.. -I. -I../lib -c regtables.c || exit 1
 
 cd ../sed || exit 1
-${CC} -DHAVE_CONFIG_H -I.. -I. -I../lib -c sed.c || exit 1
-${CC} -DHAVE_CONFIG_H -I.. -I. -I../lib -c fmt.c || exit 1
-${CC} -DHAVE_CONFIG_H -I.. -I. -I../lib -c compile.c || exit 1
-${CC} -DHAVE_CONFIG_H -I.. -I. -I../lib -c execute.c || exit 1
-${CC} -DHAVE_CONFIG_H -I.. -I. -I../lib -c mbcs.c || exit 1
-${CC} -DHAVE_CONFIG_H -I.. -I. -I../lib -c regexp.c || exit 1
+${CC} -DHAVE_CONFIG_H -I.. -I. -I../lib -I ../pcre -c sed.c || exit 1
+${CC} -DHAVE_CONFIG_H -I.. -I. -I../lib -I ../pcre -c fmt.c || exit 1
+${CC} -DHAVE_CONFIG_H -I.. -I. -I../lib -I ../pcre -c compile.c || exit 1
+${CC} -DHAVE_CONFIG_H -I.. -I. -I../lib -I ../pcre -c execute.c || exit 1
+${CC} -DHAVE_CONFIG_H -I.. -I. -I../lib -I ../pcre -c mbcs.c || exit 1
+${CC} -DHAVE_CONFIG_H -I.. -I. -I../lib -I ../pcre -c regexp.c || exit 1
 
-${CC} -o sed *.o ../lib/*.o || exit 1
+${CC} -o sed *.o ../lib/*.o ../pcre/*.o || exit 1

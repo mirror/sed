@@ -1,4 +1,9 @@
-2006-05-15  Hans-Bernhard Bröker <broeker@physik.rwth-aachen.de>
+2006-07-13  Paolo Bonzini  <bonzini@gnu.org>
+
+	* bootstrap.sh.in: Add a few autoconfy tests.
+	* Makefile.am: Update distributed bootstrap.sh.
+
+2006-05-15  Hans-Bernhard Broeker <broeker@physik.rwth-aachen.de>
 
 	* sed/basicdefs.h (OB_MALLOC): Turn VCAST into void * cast.
 

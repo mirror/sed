@@ -11,14 +11,18 @@ SUBDIRS = intl lib pcre po sed doc testsuite
 noinst_DATA = bootstrap.sh
 noinst_HEADERS = basicdefs.h
 
-EXTRA_DIST = BUGS THANKS COPYING.DOC README.boot bootstrap.sh 	      \
-	config/texi2dvi    config/help2man
+EXTRA_DIST = BUGS THANKS COPYING.DOC README.boot config/texi2dvi config/help2man
 
 html:
 	cd doc && make html
 
 DISTCHECK_CONFIGURE_FLAGS = XGETTEXT='$(SHELL) -c : dummy' $(EXTRA_DC_FLAGS)
 EXTRA_DC_FLAGS =
+
+dist-hook:
+	cmp bootstrap.sh $(srcdir)/bootstrap.sh > /dev/null 2>&1 || \
+	  cp -p bootstrap.sh $(srcdir)/bootstrap.sh
+	cp -p $(srcdir)/bootstrap.sh $(distdir)/bootstrap.sh
 
 full-distcheck:
         make distcheck EXTRA_DC_FLAGS='--enable-html'
