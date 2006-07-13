@@ -41,6 +41,8 @@
 #endif /* HAVE_WCTYPE_H || _LIBC */
 #if defined HAVE_STDBOOL_H || defined _LIBC
 # include <stdbool.h>
+#else
+# define bool char
 #endif /* HAVE_STDBOOL_H || _LIBC */
 #if defined _LIBC
 # include <bits/libc-lock.h>
@@ -410,7 +412,26 @@ static unsigned int re_string_context_at (const re_string_t *input, int idx,
 #define re_string_skip_bytes(pstr,idx) ((pstr)->cur_idx += (idx))
 #define re_string_set_index(pstr,idx) ((pstr)->cur_idx = (idx))
 
-#include <alloca.h>
+#ifndef alloca           /* predefined by HP cc +Olibcalls */
+# ifdef __GNUC__
+#  define alloca(size) __builtin_alloca(size)
+# else
+#  if HAVE_ALLOCA_H
+#   include <alloca.h>
+#  else
+#   if defined(__hpux)
+void *alloca ();
+#   else
+#    if !defined(__OS2__) && !defined(WIN32)
+char *alloca ();
+#    else
+#     include <malloc.h>       /* OS/2 defines alloca in here */
+#    endif
+#   endif
+#  endif
+# endif
+#endif
+
 
 #ifndef _LIBC
 # if HAVE_ALLOCA

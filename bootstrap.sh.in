@@ -35,17 +35,50 @@ if test -f config.h; then :; else
 #undef HAVE_SYS_FILE_H
 #undef HAVE_IO_H
 
-/* Undefine if <stdio.h> or <sys/types.h> has conflicting definition.  */
-#define size_t unsigned
-#define ssize_t int
-
-/* If your antique compiler doesn't grok ``void *'', then #define VOID char */
-#undef VOID
-
-
 /* All other config.h.in options intentionally omitted.  Report as a
    bug if you need extra "#define"s in here. */
 END_OF_CONFIG_H
+
+  cat > conftest.c << \EOF
+#define size_t unsigned
+#include <sys/types.h>
+#include <stdio.h>
+
+size_t s;
+EOF
+  if $CC -c conftest.c -o conftest.o > /dev/null 2>&1 ; then
+    echo '#define size_t unsigned' >> config.h
+    echo checking for size_t... no
+  else
+    echo checking for size_t... yes
+  fi
+
+  cat > conftest.c << \EOF
+#define ssize_t int
+#include <sys/types.h>
+#include <stdio.h>
+
+ssize_t s;
+EOF
+  if $CC -c conftest.c -o conftest.o > /dev/null 2>&1 ; then
+    echo '#define ssize_t int' >> config.h
+    echo checking for ssize_t... no
+  else
+    echo checking for ssize_t... yes
+  fi
+
+  cat > conftest.c << \EOF
+void *foo;
+
+EOF
+  if $CC -c conftest.c -o conftest.o > /dev/null 2>&1 ; then
+    echo checking for void *... yes
+  else
+    echo '#define VOID char' >> config.h
+    echo checking for void *... no
+  fi
+
+  rm -f conftest.*
 fi
 
 # tell the user what we're doing from here on...
