@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: sed 4.1.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-03-16 08:54+0100\n"
+"POT-Creation-Date: 2006-07-13 09:35+0200\n"
 "PO-Revision-Date: 2004-07-10 05:51+0200\n"
 "Last-Translator: Jordi Mallach <jordi@gnu.org>\n"
 "Language-Team: Catalan <ca@dodds.net>\n"
@@ -132,39 +132,39 @@ msgstr "%s: -e expressió #%lu, caràcter %lu: %s\n"
 msgid "can't find label for jump to `%s'"
 msgstr "no es troba l'etiqueta per al salt a «%s»"
 
-#: sed/execute.c:650
+#: sed/execute.c:698
 #, c-format
 msgid "%s: can't read %s: %s\n"
 msgstr "%s: no es pot llegir %s: %s\n"
 
-#: sed/execute.c:673
+#: sed/execute.c:721
 #, c-format
 msgid "couldn't edit %s: is a terminal"
 msgstr "no s'ha pogut editar %s: és un terminal"
 
-#: sed/execute.c:677
+#: sed/execute.c:725
 #, c-format
 msgid "couldn't edit %s: not a regular file"
 msgstr "no s'ha pogut editar %s: no és un fitxer regular"
 
-#: sed/execute.c:684 lib/utils.c:196
+#: sed/execute.c:732 lib/utils.c:196
 #, c-format
 msgid "couldn't open temporary file %s: %s"
 msgstr "no s'ha pogut obrir el fitxer temporal %s: %s"
 
-#: sed/execute.c:1206 sed/execute.c:1387
+#: sed/execute.c:1255 sed/execute.c:1435
 msgid "error in subprocess"
 msgstr "s'ha produït un error en el subprocés"
 
-#: sed/execute.c:1208
+#: sed/execute.c:1257
 msgid "option `e' not supported"
 msgstr "l'opció «e» no està suportada"
 
-#: sed/execute.c:1389
+#: sed/execute.c:1437
 msgid "`e' command not supported"
 msgstr "l'ordre «e» no està suportada"
 
-#: sed/execute.c:1714
+#: sed/execute.c:1777
 msgid "no input files"
 msgstr ""
 
@@ -458,6 +458,6 @@ msgstr "L'expressió regular és massa gran"
 msgid "Unmatched ) or \\)"
 msgstr ") o \\) no emparellat"
 
-#: lib/regcomp.c:660
+#: lib/regcomp.c:665
 msgid "No previous regular expression"
 msgstr "No hi ha una expressió regular prèvia"

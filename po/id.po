@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: sed 4.0.9\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-03-16 08:54+0100\n"
+"POT-Creation-Date: 2006-07-13 09:35+0200\n"
 "PO-Revision-Date: 2004-04-27 14:56+0700\n"
 "Last-Translator: Tedi Heriyanto <tedi_h@gmx.net>\n"
 "Language-Team: Indonesian <translation-team-id@lists.sourceforge.net>\n"
@@ -149,39 +149,39 @@ msgstr "%s: -e ekspresi #%lu, char %lu: %s\n"
 msgid "can't find label for jump to `%s'"
 msgstr "Tidak dapat menemukan label untuk melompat ke `%s'"
 
-#: sed/execute.c:650
+#: sed/execute.c:698
 #, c-format
 msgid "%s: can't read %s: %s\n"
 msgstr "%s: tidak dapat membaca %s: %s\n"
 
-#: sed/execute.c:673
+#: sed/execute.c:721
 #, fuzzy, c-format
 msgid "couldn't edit %s: is a terminal"
 msgstr "Tidak dapat membuka file %s %s"
 
-#: sed/execute.c:677
+#: sed/execute.c:725
 #, fuzzy, c-format
 msgid "couldn't edit %s: not a regular file"
 msgstr "Tidak dapat membuka file %s %s"
 
-#: sed/execute.c:684 lib/utils.c:196
+#: sed/execute.c:732 lib/utils.c:196
 #, fuzzy, c-format
 msgid "couldn't open temporary file %s: %s"
 msgstr "Tidak dapat membuka file temporer %s %s"
 
-#: sed/execute.c:1206 sed/execute.c:1387
+#: sed/execute.c:1255 sed/execute.c:1435
 msgid "error in subprocess"
 msgstr "kesalahan dalam subproses"
 
-#: sed/execute.c:1208
+#: sed/execute.c:1257
 msgid "option `e' not supported"
 msgstr "option `e' tidak didukung"
 
-#: sed/execute.c:1389
+#: sed/execute.c:1437
 msgid "`e' command not supported"
 msgstr "perintah `e' tidak didukung"
 
-#: sed/execute.c:1714
+#: sed/execute.c:1777
 msgid "no input files"
 msgstr ""
 
@@ -442,6 +442,6 @@ msgstr "Reguler ekspresi terlalu besar"
 msgid "Unmatched ) or \\)"
 msgstr ") atau \\) tidak sesuai"
 
-#: lib/regcomp.c:660
+#: lib/regcomp.c:665
 msgid "No previous regular expression"
 msgstr "Tidak ada reguler ekspresi sebelumnya"

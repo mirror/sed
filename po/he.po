@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: sed 3.02.80\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-03-16 08:54+0100\n"
+"POT-Creation-Date: 2006-07-13 09:35+0200\n"
 "PO-Revision-Date: 2001-08-04 20:37+0300\n"
 "Last-Translator: Eli Zaretskii <eliz@gnu.org>\n"
 "Language-Team: Hebrew <eliz@gnu.org>\n"
@@ -145,39 +145,39 @@ msgstr "%s תינכתב (%lu 'סמ -e יוטיב לש %lu 'סמ ות) %s האיגש\n"
 msgid "can't find label for jump to `%s'"
 msgstr "האצמנ אל `%s' הציפק תיוות"
 
-#: sed/execute.c:650
+#: sed/execute.c:698
 #, c-format
 msgid "%s: can't read %s: %s\n"
 msgstr "%s תינכתב %s תאירקב (%s) האיגש\n"
 
-#: sed/execute.c:673
+#: sed/execute.c:721
 #, fuzzy, c-format
 msgid "couldn't edit %s: is a terminal"
 msgstr "%s ץבוק תחיתפב הלקת"
 
-#: sed/execute.c:677
+#: sed/execute.c:725
 #, fuzzy, c-format
 msgid "couldn't edit %s: not a regular file"
 msgstr "%s ץבוק תחיתפב הלקת"
 
-#: sed/execute.c:684 lib/utils.c:196
+#: sed/execute.c:732 lib/utils.c:196
 #, fuzzy, c-format
 msgid "couldn't open temporary file %s: %s"
 msgstr "%s ץבוק תחיתפב הלקת"
 
-#: sed/execute.c:1206 sed/execute.c:1387
+#: sed/execute.c:1255 sed/execute.c:1435
 msgid "error in subprocess"
 msgstr ""
 
-#: sed/execute.c:1208
+#: sed/execute.c:1257
 msgid "option `e' not supported"
 msgstr ""
 
-#: sed/execute.c:1389
+#: sed/execute.c:1437
 msgid "`e' command not supported"
 msgstr ""
 
-#: sed/execute.c:1714
+#: sed/execute.c:1777
 msgid "no input files"
 msgstr ""
 
@@ -434,6 +434,6 @@ msgstr ""
 msgid "Unmatched ) or \\)"
 msgstr "גוז-ןב ול ןיאש `{'"
 
-#: lib/regcomp.c:660
+#: lib/regcomp.c:665
 msgid "No previous regular expression"
 msgstr ""

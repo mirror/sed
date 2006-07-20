@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: sed 3.02.80\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-03-16 08:54+0100\n"
+"POT-Creation-Date: 2006-07-13 09:35+0200\n"
 "PO-Revision-Date: 2002-08-18 11:11+0800\n"
 "Last-Translator: Wang Li <charles@linux.net.cn>\n"
 "Language-Team: Chinese (simplified) <i18n-translation@lists.linux.net.cn>\n"
@@ -145,39 +145,39 @@ msgstr "%s：-e 表达式 #%lu，字符 %lu：%s\n"
 msgid "can't find label for jump to `%s'"
 msgstr "无法为目的为“%s”的跳转找到标签"
 
-#: sed/execute.c:650
+#: sed/execute.c:698
 #, c-format
 msgid "%s: can't read %s: %s\n"
 msgstr "%s：无法读取 %s：%s\n"
 
-#: sed/execute.c:673
+#: sed/execute.c:721
 #, fuzzy, c-format
 msgid "couldn't edit %s: is a terminal"
 msgstr "无法打开文件 %s"
 
-#: sed/execute.c:677
+#: sed/execute.c:725
 #, fuzzy, c-format
 msgid "couldn't edit %s: not a regular file"
 msgstr "无法打开文件 %s"
 
-#: sed/execute.c:684 lib/utils.c:196
+#: sed/execute.c:732 lib/utils.c:196
 #, fuzzy, c-format
 msgid "couldn't open temporary file %s: %s"
 msgstr "无法打开文件 %s"
 
-#: sed/execute.c:1206 sed/execute.c:1387
+#: sed/execute.c:1255 sed/execute.c:1435
 msgid "error in subprocess"
 msgstr ""
 
-#: sed/execute.c:1208
+#: sed/execute.c:1257
 msgid "option `e' not supported"
 msgstr ""
 
-#: sed/execute.c:1389
+#: sed/execute.c:1437
 msgid "`e' command not supported"
 msgstr ""
 
-#: sed/execute.c:1714
+#: sed/execute.c:1777
 msgid "no input files"
 msgstr ""
 
@@ -430,6 +430,6 @@ msgstr ""
 msgid "Unmatched ) or \\)"
 msgstr "未匹配的“{”"
 
-#: lib/regcomp.c:660
+#: lib/regcomp.c:665
 msgid "No previous regular expression"
 msgstr ""

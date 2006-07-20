@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: sed 4.0.8\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-03-16 08:54+0100\n"
+"POT-Creation-Date: 2006-07-13 09:35+0200\n"
 "PO-Revision-Date: 2003-10-26 09:28+0100\n"
 "Last-Translator: Mihály Gyulai <gyulai@fbi.hu>\n"
 "Language-Team: Hungarian <translation-team-hu@lists.sourceforge.net>\n"
@@ -147,39 +147,39 @@ msgstr "%s: -e kifejezés #%lu, karakter %lu: %s\n"
 msgid "can't find label for jump to `%s'"
 msgstr "Az ugráshoz (`%s') nem találom a címkét"
 
-#: sed/execute.c:650
+#: sed/execute.c:698
 #, c-format
 msgid "%s: can't read %s: %s\n"
 msgstr "%s: nem lehet olvasni %s: %s\n"
 
-#: sed/execute.c:673
+#: sed/execute.c:721
 #, fuzzy, c-format
 msgid "couldn't edit %s: is a terminal"
 msgstr "Nem lehet megnyitni a(z) %s fájlt: %s"
 
-#: sed/execute.c:677
+#: sed/execute.c:725
 #, fuzzy, c-format
 msgid "couldn't edit %s: not a regular file"
 msgstr "Nem lehet megnyitni a(z) %s fájlt: %s"
 
-#: sed/execute.c:684 lib/utils.c:196
+#: sed/execute.c:732 lib/utils.c:196
 #, fuzzy, c-format
 msgid "couldn't open temporary file %s: %s"
 msgstr "Nem lehet megnyitni az átmeneti fájlt: %s: %s"
 
-#: sed/execute.c:1206 sed/execute.c:1387
+#: sed/execute.c:1255 sed/execute.c:1435
 msgid "error in subprocess"
 msgstr "hiba az alfolyamatban"
 
-#: sed/execute.c:1208
+#: sed/execute.c:1257
 msgid "option `e' not supported"
 msgstr "az `e' opció nincs támogatva"
 
-#: sed/execute.c:1389
+#: sed/execute.c:1437
 msgid "`e' command not supported"
 msgstr "az `e' parancs nincs támogatva"
 
-#: sed/execute.c:1714
+#: sed/execute.c:1777
 msgid "no input files"
 msgstr ""
 
@@ -441,6 +441,6 @@ msgstr "Túl nagy reguláris kifejezés"
 msgid "Unmatched ) or \\)"
 msgstr "Nincs párban ) vagy \\)"
 
-#: lib/regcomp.c:660
+#: lib/regcomp.c:665
 msgid "No previous regular expression"
 msgstr "Nincsen elõzõ reguláris kifejezés"

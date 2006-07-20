@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: sed 4.1.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-03-16 08:54+0100\n"
+"POT-Creation-Date: 2006-07-13 09:35+0200\n"
 "PO-Revision-Date: 2004-07-12 00:09+0200\n"
 "Last-Translator: Gaël Quéri <gael@lautre.net>\n"
 "Language-Team: French <traduc@traduc.org>\n"
@@ -135,39 +135,39 @@ msgstr "%s: -e expression n°%lu, caractère %lu: %s\n"
 msgid "can't find label for jump to `%s'"
 msgstr "impossible de trouver l'étiquette pour sauter à `%s'"
 
-#: sed/execute.c:650
+#: sed/execute.c:698
 #, c-format
 msgid "%s: can't read %s: %s\n"
 msgstr "%s: impossible de lire %s: %s\n"
 
-#: sed/execute.c:673
+#: sed/execute.c:721
 #, c-format
 msgid "couldn't edit %s: is a terminal"
 msgstr "impossible d'éditer %s: est un terminal"
 
-#: sed/execute.c:677
+#: sed/execute.c:725
 #, c-format
 msgid "couldn't edit %s: not a regular file"
 msgstr "impossible d'éditer %s: ce n'est pas un fichier régulier"
 
-#: sed/execute.c:684 lib/utils.c:196
+#: sed/execute.c:732 lib/utils.c:196
 #, c-format
 msgid "couldn't open temporary file %s: %s"
 msgstr "impossible d'ouvrir le fichier temporaire %s: %s"
 
-#: sed/execute.c:1206 sed/execute.c:1387
+#: sed/execute.c:1255 sed/execute.c:1435
 msgid "error in subprocess"
 msgstr "erreur dans le sous-processus"
 
-#: sed/execute.c:1208
+#: sed/execute.c:1257
 msgid "option `e' not supported"
 msgstr "l'option `e' n'est pas supportée"
 
-#: sed/execute.c:1389
+#: sed/execute.c:1437
 msgid "`e' command not supported"
 msgstr "la commande `e' n'est pas supportée"
 
-#: sed/execute.c:1714
+#: sed/execute.c:1777
 msgid "no input files"
 msgstr ""
 
@@ -464,6 +464,6 @@ msgstr "Expression régulière trop grande"
 msgid "Unmatched ) or \\)"
 msgstr ") ou \\) non refermé"
 
-#: lib/regcomp.c:660
+#: lib/regcomp.c:665
 msgid "No previous regular expression"
 msgstr "Pas d'expression régulière précédente"

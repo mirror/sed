@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GNU sed 3.02.80\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-03-16 08:54+0100\n"
+"POT-Creation-Date: 2006-07-13 09:35+0200\n"
 "PO-Revision-Date: 2002-03-08 12:57+0000\n"
 "Last-Translator: Simos Xenitellis <simos@hellug.gr>\n"
 "Language-Team: Greek <nls@tux.hellug.gr>\n"
@@ -146,39 +146,39 @@ msgstr "%s: -e έκφραση #%lu, χαρακτήρας %lu: %s\n"
 msgid "can't find label for jump to `%s'"
 msgstr "Δεν ήταν δυνατή η εύρεση ετικέττας για μετάβαση στο `%s'"
 
-#: sed/execute.c:650
+#: sed/execute.c:698
 #, c-format
 msgid "%s: can't read %s: %s\n"
 msgstr "%s: αδυναμία στην ανάγνωση %s: %s\n"
 
-#: sed/execute.c:673
+#: sed/execute.c:721
 #, fuzzy, c-format
 msgid "couldn't edit %s: is a terminal"
 msgstr "Δεν μπόρεσα να ανοίξω το αρχείο %s"
 
-#: sed/execute.c:677
+#: sed/execute.c:725
 #, fuzzy, c-format
 msgid "couldn't edit %s: not a regular file"
 msgstr "Δεν μπόρεσα να ανοίξω το αρχείο %s"
 
-#: sed/execute.c:684 lib/utils.c:196
+#: sed/execute.c:732 lib/utils.c:196
 #, fuzzy, c-format
 msgid "couldn't open temporary file %s: %s"
 msgstr "Δεν μπόρεσα να ανοίξω το αρχείο %s"
 
-#: sed/execute.c:1206 sed/execute.c:1387
+#: sed/execute.c:1255 sed/execute.c:1435
 msgid "error in subprocess"
 msgstr "σφάλμα στη υποδιαδικασία"
 
-#: sed/execute.c:1208
+#: sed/execute.c:1257
 msgid "option `e' not supported"
 msgstr "δεν υποστηρίζεται η επιλογή `e'"
 
-#: sed/execute.c:1389
+#: sed/execute.c:1437
 msgid "`e' command not supported"
 msgstr "δεν υποστηρίζεται η εντολή `e'"
 
-#: sed/execute.c:1714
+#: sed/execute.c:1777
 msgid "no input files"
 msgstr ""
 
@@ -446,6 +446,6 @@ msgstr "πολύ μεγάλη κανονική έκφραση"
 msgid "Unmatched ) or \\)"
 msgstr "Αταίριαστο `{'"
 
-#: lib/regcomp.c:660
+#: lib/regcomp.c:665
 msgid "No previous regular expression"
 msgstr "Δεν βρέθηκε προηγούμενη κανονική έκφραση"

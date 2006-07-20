@@ -446,8 +446,8 @@ char *alloca ();
 # endif
 #endif
 
-#define re_malloc(t,n) ((t *) malloc ((n) * sizeof (t)))
-#define re_realloc(p,t,n) ((t *) realloc (p, (n) * sizeof (t)))
+#define re_malloc(t,n) ((t *) malloc (((n) ? (n) : 1) * sizeof (t)))
+#define re_realloc(p,t,n) ((t *) realloc (p, ((n) ? (n) : 1) * sizeof (t)))
 #define re_free(p) free (p)
 
 struct bin_tree_t

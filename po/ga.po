@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: sed 4.1.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-03-16 08:54+0100\n"
+"POT-Creation-Date: 2006-07-13 09:35+0200\n"
 "PO-Revision-Date: 2004-07-07 11:04-0500\n"
 "Last-Translator: Kevin Patrick Scannell <scannell@SLU.EDU>\n"
 "Language-Team: Irish <ga@li.org>\n"
@@ -132,41 +132,41 @@ msgstr "%s: -e slonn #%lu, char %lu: %s\n"
 msgid "can't find label for jump to `%s'"
 msgstr "níl aon fháil ar an lipéad `%s' don léim"
 
-#: sed/execute.c:650
+#: sed/execute.c:698
 #, c-format
 msgid "%s: can't read %s: %s\n"
 msgstr "%s: ní féidir %s a léamh: %s\n"
 
 # Irish is nice this way, no initial mutation on 'rud'! -- KPS
 # Include all three b/c I'm using template version of "Plural-Forms"
-#: sed/execute.c:673
+#: sed/execute.c:721
 #, c-format
 msgid "couldn't edit %s: is a terminal"
 msgstr "níorbh fhéidir %s a chur in eagar; is teirminéal é"
 
-#: sed/execute.c:677
+#: sed/execute.c:725
 #, c-format
 msgid "couldn't edit %s: not a regular file"
 msgstr "níorbh fhéidir %s a chur in eagar: ní gnáthcomhad é"
 
-#: sed/execute.c:684 lib/utils.c:196
+#: sed/execute.c:732 lib/utils.c:196
 #, c-format
 msgid "couldn't open temporary file %s: %s"
 msgstr "níorbh fhéidir an comhad sealadach %s a oscailt: %s"
 
-#: sed/execute.c:1206 sed/execute.c:1387
+#: sed/execute.c:1255 sed/execute.c:1435
 msgid "error in subprocess"
 msgstr "earráid i bhfo-phróiseas"
 
-#: sed/execute.c:1208
+#: sed/execute.c:1257
 msgid "option `e' not supported"
 msgstr "níl an rogha `e' ar fáil"
 
-#: sed/execute.c:1389
+#: sed/execute.c:1437
 msgid "`e' command not supported"
 msgstr "níl an t-ordú `e' ar fáil"
 
-#: sed/execute.c:1714
+#: sed/execute.c:1777
 msgid "no input files"
 msgstr ""
 
@@ -458,6 +458,6 @@ msgstr "Slonn ionadaíochta rómhór"
 msgid "Unmatched ) or \\)"
 msgstr ") nó \\) corr"
 
-#: lib/regcomp.c:660
+#: lib/regcomp.c:665
 msgid "No previous regular expression"
 msgstr "Níl aon slonn ionadaíochta roimh seo"
