@@ -1,3 +1,10 @@
+2006-08-03  Paolo Bonzini  <bonzini@gnu.org>
+
+	* sed/execute.c (str_append): Use is_utf8 to skip useless work.
+	* sed/mbcs.c (initialize_mbcs): Look for a UTF-8 locale.
+	(is_utf8): New.
+	* sed/sed.h (is_utf8): New.
+
 2006-07-13  Paolo Bonzini  <bonzini@gnu.org>
 
 	* bootstrap.sh.in: Add a few autoconfy tests.

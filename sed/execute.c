@@ -235,25 +235,26 @@ str_append(to, string, length)
   to->length = new_length;
 
 #ifdef HAVE_MBRTOWC
-  if (mb_cur_max == 1)
-    return;
+  if (mb_cur_max > 1 && !is_utf8)
+    while (length)
+      {
+        size_t n = MBRLEN (string, length, &to->mbstate);
 
-  while (length)
-    {
-      int n = MBRLEN (string, length, &to->mbstate);
+        /* An invalid sequence is treated like a singlebyte character. */
+        if (n == (size_t) -1)
+	  {
+	    memset (&to->mbstate, 0, sizeof (to->mbstate));
+	    n = 1;
+	  }
 
-      /* An invalid sequence is treated like a singlebyte character. */
-      if (n == -1)
-	{
-	  memset (&to->mbstate, 0, sizeof (to->mbstate));
-	  n = 1;
-	}
-
-      if (n > 0)
-	length -= n;
-      else
-	break;
-    }
+        if (n > 0)
+	  {
+	    string += n;
+	    length -= n;
+	  }
+        else
+	  break;
+      }
 #endif
 }
 
