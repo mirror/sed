@@ -18,7 +18,12 @@
 #include "sed.h"
 #include <stdlib.h>
 
+#ifdef HAVE_LANGINFO_CODESET
+#include <langinfo.h>
+#endif
+
 int mb_cur_max;
+bool is_utf8;
 
 #ifdef HAVE_MBRTOWC
 /* Add a byte to the multibyte character represented by the state
@@ -47,6 +52,26 @@ int brlen (ch, cur_stat)
 void
 initialize_mbcs ()
 {
+  /* For UTF-8, we know that the encoding is stateless.  */
+  const char *codeset_name;
+
+#ifdef HAVE_LANGINFO_CODESET
+  codeset_name = nl_langinfo (CODESET);
+#else
+  codeset_name = getenv ("LC_ALL");
+  if (codeset_name == NULL || codeset_name[0] == '\0')
+    codeset_name = getenv ("LC_CTYPE");
+  if (codeset_name == NULL || codeset_name[0] == '\0')
+    codeset_name = getenv ("LANG");
+  if (codeset_name == NULL)
+    codeset_name = "";
+  else if (strchr (codeset_name, '.') !=  NULL)
+    codeset_name = strchr (codeset_name, '.') + 1;
+#endif
+
+  is_utf8 = (strcasecmp (codeset_name, "UTF-8") == 0
+	     || strcasecmp (codeset_name, "UTF8") == 0);
+
 #ifdef HAVE_MBRTOWC
   mb_cur_max = MB_CUR_MAX;
 #else

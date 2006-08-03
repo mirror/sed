@@ -233,6 +233,7 @@ extern bool use_extended_syntax_p;
 
 /* Declarations for multibyte character sets.  */
 extern int mb_cur_max;
+extern bool is_utf8;
 
 #ifdef HAVE_MBRTOWC
 #ifdef HAVE_BTOWC
