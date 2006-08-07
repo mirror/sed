@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GNU sed 4.0.8\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-07-13 09:35+0200\n"
+"POT-Creation-Date: 2006-08-07 12:06+0200\n"
 "PO-Revision-Date: 2003-10-25 17:22+0200\n"
 "Last-Translator: Marcel Telka <marcel@telka.sk>\n"
 "Language-Team: Slovak <sk-i18n@lists.linux.sk>\n"
@@ -143,44 +143,44 @@ msgstr "%s: súbor %s, riadok %lu: %s\n"
 msgid "%s: -e expression #%lu, char %lu: %s\n"
 msgstr "%s: -e výraz #%lu, znak %lu: %s\n"
 
-#: sed/compile.c:1644
+#: sed/compile.c:1649
 #, fuzzy, c-format
 msgid "can't find label for jump to `%s'"
 msgstr "Návestie pre skok na `%s' nie je možné nájsť?"
 
-#: sed/execute.c:698
+#: sed/execute.c:699
 #, c-format
 msgid "%s: can't read %s: %s\n"
 msgstr "%s: %s nie je možné čítať: %s\n"
 
-#: sed/execute.c:721
+#: sed/execute.c:722
 #, fuzzy, c-format
 msgid "couldn't edit %s: is a terminal"
 msgstr "Nebolo možné otvoriť súbor %s: %s"
 
-#: sed/execute.c:725
+#: sed/execute.c:726
 #, fuzzy, c-format
 msgid "couldn't edit %s: not a regular file"
 msgstr "Nebolo možné otvoriť súbor %s: %s"
 
-#: sed/execute.c:732 lib/utils.c:196
+#: sed/execute.c:733 lib/utils.c:229
 #, fuzzy, c-format
 msgid "couldn't open temporary file %s: %s"
 msgstr "Nebolo možné otvoriť dočasný súbor %s: %s"
 
-#: sed/execute.c:1255 sed/execute.c:1435
+#: sed/execute.c:1256 sed/execute.c:1436
 msgid "error in subprocess"
 msgstr "chyba v podprocese"
 
-#: sed/execute.c:1257
+#: sed/execute.c:1258
 msgid "option `e' not supported"
 msgstr "voľba `e' nie je podporovaná"
 
-#: sed/execute.c:1437
+#: sed/execute.c:1438
 msgid "`e' command not supported"
 msgstr "príkaz `e' nie je podporovaný"
 
-#: sed/execute.c:1777
+#: sed/execute.c:1778
 msgid "no input files"
 msgstr ""
 
@@ -199,7 +199,7 @@ msgstr "Nie je možné zadať modifikátory pre prázdny regulárny výraz"
 msgid "invalid reference \\%d on `s' command's RHS"
 msgstr "Neplatný odkaz \\%d na `s' príkazu RHS"
 
-#: sed/sed.c:93
+#: sed/sed.c:96
 msgid ""
 "  -R, --regexp-perl\n"
 "                 use Perl 5's regular expressions syntax in the script.\n"
@@ -207,28 +207,28 @@ msgstr ""
 "  -R, --regexp-perl\n"
 "                 použiť syntax regulárnych výrazov z Perlu 5 v skripte.\n"
 
-#: sed/sed.c:98
+#: sed/sed.c:101
 #, c-format
 msgid ""
 "Usage: %s [OPTION]... {script-only-if-no-other-script} [input-file]...\n"
 "\n"
 msgstr ""
 
-#: sed/sed.c:102
+#: sed/sed.c:105
 #, c-format
 msgid ""
 "  -n, --quiet, --silent\n"
 "                 suppress automatic printing of pattern space\n"
 msgstr ""
 
-#: sed/sed.c:104
+#: sed/sed.c:107
 #, c-format
 msgid ""
 "  -e script, --expression=script\n"
 "                 add the script to the commands to be executed\n"
 msgstr ""
 
-#: sed/sed.c:106
+#: sed/sed.c:109
 #, c-format
 msgid ""
 "  -f script-file, --file=script-file\n"
@@ -236,28 +236,36 @@ msgid ""
 "executed\n"
 msgstr ""
 
-#: sed/sed.c:108
+#: sed/sed.c:111
 #, c-format
 msgid ""
 "  -i[SUFFIX], --in-place[=SUFFIX]\n"
 "                 edit files in place (makes backup if extension supplied)\n"
 msgstr ""
 
-#: sed/sed.c:110
+#: sed/sed.c:114
+#, c-format
+msgid ""
+"  -b, --binary\n"
+"                 open files in binary mode (CR+LFs are not processed "
+"specially)\n"
+msgstr ""
+
+#: sed/sed.c:117
 #, c-format
 msgid ""
 "  -l N, --line-length=N\n"
 "                 specify the desired line-wrap length for the `l' command\n"
 msgstr ""
 
-#: sed/sed.c:112
+#: sed/sed.c:119
 #, c-format
 msgid ""
 "  --posix\n"
 "                 disable all GNU extensions.\n"
 msgstr ""
 
-#: sed/sed.c:114
+#: sed/sed.c:121
 #, fuzzy, c-format
 msgid ""
 "  -r, --regexp-extended\n"
@@ -266,7 +274,7 @@ msgstr ""
 "  -R, --regexp-perl\n"
 "                 použiť syntax regulárnych výrazov z Perlu 5 v skripte.\n"
 
-#: sed/sed.c:117
+#: sed/sed.c:124
 #, c-format
 msgid ""
 "  -s, --separate\n"
@@ -275,7 +283,7 @@ msgid ""
 "                 long stream.\n"
 msgstr ""
 
-#: sed/sed.c:120
+#: sed/sed.c:127
 #, c-format
 msgid ""
 "  -u, --unbuffered\n"
@@ -284,17 +292,17 @@ msgid ""
 "                 the output buffers more often\n"
 msgstr ""
 
-#: sed/sed.c:123
+#: sed/sed.c:130
 #, c-format
 msgid "      --help     display this help and exit\n"
 msgstr ""
 
-#: sed/sed.c:124
+#: sed/sed.c:131
 #, c-format
 msgid "      --version  output version information and exit\n"
 msgstr ""
 
-#: sed/sed.c:125
+#: sed/sed.c:132
 #, c-format
 msgid ""
 "\n"
@@ -305,7 +313,7 @@ msgid ""
 "\n"
 msgstr ""
 
-#: sed/sed.c:131
+#: sed/sed.c:138
 #, c-format
 msgid ""
 "E-mail bug reports to: %s .\n"
@@ -316,12 +324,12 @@ msgstr ""
 "Komentáre k slovenskému prekladu zasielajte na adresu <sk-i18n@lists.linux."
 "sk>.\n"
 
-#: sed/sed.c:268
+#: sed/sed.c:282
 #, c-format
 msgid "super-sed version %s\n"
 msgstr "super-sed verzia %s\n"
 
-#: sed/sed.c:269
+#: sed/sed.c:283
 #, fuzzy, c-format
 msgid ""
 "based on GNU sed version %s\n"
@@ -330,12 +338,12 @@ msgstr ""
 "založené na GNU sed verzia 3.02.80\n"
 "\n"
 
-#: sed/sed.c:271
+#: sed/sed.c:285
 #, c-format
 msgid "GNU sed version %s\n"
 msgstr "GNU sed verzia %s\n"
 
-#: sed/sed.c:273
+#: sed/sed.c:287
 #, c-format
 msgid ""
 "%s\n"
@@ -349,17 +357,22 @@ msgstr ""
 "nájdete v zdrojových textoch. Toto programové vybavenie je BEZ záruky,\n"
 "a to aj bez záruky PREDAJNOSTI alebo VHODNOSTI PRE NEJAKÝ KONKRÉTNY ÚČEL.\n"
 
-#: lib/utils.c:98 lib/utils.c:336
+#: lib/utils.c:98 lib/utils.c:363
 #, fuzzy, c-format
 msgid "cannot remove %s: %s"
 msgstr "%s: %s nie je možné čítať: %s\n"
 
-#: lib/utils.c:143
+#: lib/utils.c:168
 #, fuzzy, c-format
 msgid "couldn't open file %s: %s"
 msgstr "Nebolo možné otvoriť súbor %s: %s"
 
-#: lib/utils.c:220
+#: lib/utils.c:192
+#, fuzzy, c-format
+msgid "couldn't attach to %s: %s"
+msgstr "nebolo možné zapísať %d položiek do %s: %s"
+
+#: lib/utils.c:247
 #, c-format
 msgid "couldn't write %d item to %s: %s"
 msgid_plural "couldn't write %d items to %s: %s"
@@ -367,12 +380,12 @@ msgstr[0] "nebolo možné zapísať %d položiek do %s: %s"
 msgstr[1] "nebolo možné zapísať %d položku do %s: %s"
 msgstr[2] "nebolo možné zapísať %d položky do %s: %s"
 
-#: lib/utils.c:235 lib/utils.c:251
+#: lib/utils.c:262 lib/utils.c:278
 #, c-format
 msgid "read error on %s: %s"
 msgstr "chyba pri čítaní z %s: %s"
 
-#: lib/utils.c:341
+#: lib/utils.c:368
 #, fuzzy, c-format
 msgid "cannot rename %s: %s"
 msgstr "%s: %s nie je možné čítať: %s\n"

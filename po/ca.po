@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: sed 4.1.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-07-13 09:35+0200\n"
+"POT-Creation-Date: 2006-08-07 12:06+0200\n"
 "PO-Revision-Date: 2004-07-10 05:51+0200\n"
 "Last-Translator: Jordi Mallach <jordi@gnu.org>\n"
 "Language-Team: Catalan <ca@dodds.net>\n"
@@ -127,44 +127,44 @@ msgstr "%s: fitxer %s línia %lu: %s\n"
 msgid "%s: -e expression #%lu, char %lu: %s\n"
 msgstr "%s: -e expressió #%lu, caràcter %lu: %s\n"
 
-#: sed/compile.c:1644
+#: sed/compile.c:1649
 #, c-format
 msgid "can't find label for jump to `%s'"
 msgstr "no es troba l'etiqueta per al salt a «%s»"
 
-#: sed/execute.c:698
+#: sed/execute.c:699
 #, c-format
 msgid "%s: can't read %s: %s\n"
 msgstr "%s: no es pot llegir %s: %s\n"
 
-#: sed/execute.c:721
+#: sed/execute.c:722
 #, c-format
 msgid "couldn't edit %s: is a terminal"
 msgstr "no s'ha pogut editar %s: és un terminal"
 
-#: sed/execute.c:725
+#: sed/execute.c:726
 #, c-format
 msgid "couldn't edit %s: not a regular file"
 msgstr "no s'ha pogut editar %s: no és un fitxer regular"
 
-#: sed/execute.c:732 lib/utils.c:196
+#: sed/execute.c:733 lib/utils.c:229
 #, c-format
 msgid "couldn't open temporary file %s: %s"
 msgstr "no s'ha pogut obrir el fitxer temporal %s: %s"
 
-#: sed/execute.c:1255 sed/execute.c:1435
+#: sed/execute.c:1256 sed/execute.c:1436
 msgid "error in subprocess"
 msgstr "s'ha produït un error en el subprocés"
 
-#: sed/execute.c:1257
+#: sed/execute.c:1258
 msgid "option `e' not supported"
 msgstr "l'opció «e» no està suportada"
 
-#: sed/execute.c:1437
+#: sed/execute.c:1438
 msgid "`e' command not supported"
 msgstr "l'ordre «e» no està suportada"
 
-#: sed/execute.c:1777
+#: sed/execute.c:1778
 msgid "no input files"
 msgstr ""
 
@@ -181,7 +181,7 @@ msgstr "no es poden especificar modificadors en expregs buides"
 msgid "invalid reference \\%d on `s' command's RHS"
 msgstr "referència \\%d no vàlida en el costat dret de l'ordre «s»"
 
-#: sed/sed.c:93
+#: sed/sed.c:96
 msgid ""
 "  -R, --regexp-perl\n"
 "                 use Perl 5's regular expressions syntax in the script.\n"
@@ -190,7 +190,7 @@ msgstr ""
 "                 usa la sintaxi d'expressions regulars de Perl 5 en aquesta\n"
 "                 sequència.\n"
 
-#: sed/sed.c:98
+#: sed/sed.c:101
 #, c-format
 msgid ""
 "Usage: %s [OPTION]... {script-only-if-no-other-script} [input-file]...\n"
@@ -200,7 +200,7 @@ msgstr ""
 "               [fitxer-entrada]...\n"
 "\n"
 
-#: sed/sed.c:102
+#: sed/sed.c:105
 #, c-format
 msgid ""
 "  -n, --quiet, --silent\n"
@@ -209,7 +209,7 @@ msgstr ""
 "  -n, --quiet, --silent\n"
 "                 suprimeix la impressió automàtica de l'espai de patrons\n"
 
-#: sed/sed.c:104
+#: sed/sed.c:107
 #, c-format
 msgid ""
 "  -e script, --expression=script\n"
@@ -218,7 +218,7 @@ msgstr ""
 "  -e script, --expression=script\n"
 "                 afegeix el script a les ordres a executar\n"
 
-#: sed/sed.c:106
+#: sed/sed.c:109
 #, c-format
 msgid ""
 "  -f script-file, --file=script-file\n"
@@ -229,7 +229,7 @@ msgstr ""
 "                 afegeix els continguts de fitxer-script a les ordres a "
 "executar\n"
 
-#: sed/sed.c:108
+#: sed/sed.c:111
 #, c-format
 msgid ""
 "  -i[SUFFIX], --in-place[=SUFFIX]\n"
@@ -239,7 +239,18 @@ msgstr ""
 "                 edita els mateixos fitxers (fa còpia de seguretat si es\n"
 "                 proveeix una extensió)\n"
 
-#: sed/sed.c:110
+#: sed/sed.c:114
+#, fuzzy, c-format
+msgid ""
+"  -b, --binary\n"
+"                 open files in binary mode (CR+LFs are not processed "
+"specially)\n"
+msgstr ""
+"  -i[SUFIX], --in-place[=SUFIX]\n"
+"                 edita els mateixos fitxers (fa còpia de seguretat si es\n"
+"                 proveeix una extensió)\n"
+
+#: sed/sed.c:117
 #, c-format
 msgid ""
 "  -l N, --line-length=N\n"
@@ -249,7 +260,7 @@ msgstr ""
 "                 especifica la longitud desitjada per a l'ajust de final de\n"
 "                 línia per a l'ordre «l»\n"
 
-#: sed/sed.c:112
+#: sed/sed.c:119
 #, c-format
 msgid ""
 "  --posix\n"
@@ -258,7 +269,7 @@ msgstr ""
 "  --posix\n"
 "                 inhabilita totes les extensions GNU.\n"
 
-#: sed/sed.c:114
+#: sed/sed.c:121
 #, c-format
 msgid ""
 "  -r, --regexp-extended\n"
@@ -267,7 +278,7 @@ msgstr ""
 "  -r, --regexp-extended\n"
 "                 usa expressions regulars exteses en el script.\n"
 
-#: sed/sed.c:117
+#: sed/sed.c:124
 #, c-format
 msgid ""
 "  -s, --separate\n"
@@ -279,7 +290,7 @@ msgstr ""
 "                 considera els fitxers com independents, en compte d'un\n"
 "                 llarg flux continu.\n"
 
-#: sed/sed.c:120
+#: sed/sed.c:127
 #, c-format
 msgid ""
 "  -u, --unbuffered\n"
@@ -292,17 +303,17 @@ msgstr ""
 "d'entrada\n"
 "                 i buida els búfers d'eixida més sovint\n"
 
-#: sed/sed.c:123
+#: sed/sed.c:130
 #, c-format
 msgid "      --help     display this help and exit\n"
 msgstr "      --help     mostra aquest missatge d'ajuda i surt\n"
 
-#: sed/sed.c:124
+#: sed/sed.c:131
 #, c-format
 msgid "      --version  output version information and exit\n"
 msgstr "      --version  mostra la informació de la versió i surt\n"
 
-#: sed/sed.c:125
+#: sed/sed.c:132
 #, c-format
 msgid ""
 "\n"
@@ -321,7 +332,7 @@ msgstr ""
 "es llegeix l'entrada estàndard.\n"
 "\n"
 
-#: sed/sed.c:131
+#: sed/sed.c:138
 #, c-format
 msgid ""
 "E-mail bug reports to: %s .\n"
@@ -331,12 +342,12 @@ msgstr ""
 "Assegureu-vos d'incloure la paraula «%s» en alguna part del camp "
 "«Assumpte:».\n"
 
-#: sed/sed.c:268
+#: sed/sed.c:282
 #, c-format
 msgid "super-sed version %s\n"
 msgstr "super-sed versió %s\n"
 
-#: sed/sed.c:269
+#: sed/sed.c:283
 #, c-format
 msgid ""
 "based on GNU sed version %s\n"
@@ -345,12 +356,12 @@ msgstr ""
 "basat en GNU sed versió %s\n"
 "\n"
 
-#: sed/sed.c:271
+#: sed/sed.c:285
 #, c-format
 msgid "GNU sed version %s\n"
 msgstr "GNU sed versió %s\n"
 
-#: sed/sed.c:273
+#: sed/sed.c:287
 #, c-format
 msgid ""
 "%s\n"
@@ -363,29 +374,34 @@ msgstr ""
 "de còpia.  No hi ha CAP garantia; ni tan sols de COMERCIABILITAT o\n"
 "ADEQUACIÓ A UN PROPÒSIT PARTICULAR, fins on ho permeta la llei.\n"
 
-#: lib/utils.c:98 lib/utils.c:336
+#: lib/utils.c:98 lib/utils.c:363
 #, c-format
 msgid "cannot remove %s: %s"
 msgstr "no es pot eliminar %s: %s"
 
-#: lib/utils.c:143
+#: lib/utils.c:168
 #, c-format
 msgid "couldn't open file %s: %s"
 msgstr "no s'ha pogut obrir el fitxer %s: %s"
 
-#: lib/utils.c:220
+#: lib/utils.c:192
+#, fuzzy, c-format
+msgid "couldn't attach to %s: %s"
+msgstr "no s'ha pogut escriure %d element a %s: %s"
+
+#: lib/utils.c:247
 #, c-format
 msgid "couldn't write %d item to %s: %s"
 msgid_plural "couldn't write %d items to %s: %s"
 msgstr[0] "no s'ha pogut escriure %d element a %s: %s"
 msgstr[1] "no s'han pogut escriure %d elements a %s: %s"
 
-#: lib/utils.c:235 lib/utils.c:251
+#: lib/utils.c:262 lib/utils.c:278
 #, c-format
 msgid "read error on %s: %s"
 msgstr "error de lectura en %s: %s"
 
-#: lib/utils.c:341
+#: lib/utils.c:368
 #, c-format
 msgid "cannot rename %s: %s"
 msgstr "no es pot reanomenar %s: %s"

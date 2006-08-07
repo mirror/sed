@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: sed 4.1.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-07-13 09:35+0200\n"
+"POT-Creation-Date: 2006-08-07 12:06+0200\n"
 "PO-Revision-Date: 2004-07-07 11:04-0500\n"
 "Last-Translator: Kevin Patrick Scannell <scannell@SLU.EDU>\n"
 "Language-Team: Irish <ga@li.org>\n"
@@ -127,46 +127,46 @@ msgstr "%s: comhad %s líne %lu: %s\n"
 msgid "%s: -e expression #%lu, char %lu: %s\n"
 msgstr "%s: -e slonn #%lu, char %lu: %s\n"
 
-#: sed/compile.c:1644
+#: sed/compile.c:1649
 #, c-format
 msgid "can't find label for jump to `%s'"
 msgstr "níl aon fháil ar an lipéad `%s' don léim"
 
-#: sed/execute.c:698
+#: sed/execute.c:699
 #, c-format
 msgid "%s: can't read %s: %s\n"
 msgstr "%s: ní féidir %s a léamh: %s\n"
 
 # Irish is nice this way, no initial mutation on 'rud'! -- KPS
 # Include all three b/c I'm using template version of "Plural-Forms"
-#: sed/execute.c:721
+#: sed/execute.c:722
 #, c-format
 msgid "couldn't edit %s: is a terminal"
 msgstr "níorbh fhéidir %s a chur in eagar; is teirminéal é"
 
-#: sed/execute.c:725
+#: sed/execute.c:726
 #, c-format
 msgid "couldn't edit %s: not a regular file"
 msgstr "níorbh fhéidir %s a chur in eagar: ní gnáthcomhad é"
 
-#: sed/execute.c:732 lib/utils.c:196
+#: sed/execute.c:733 lib/utils.c:229
 #, c-format
 msgid "couldn't open temporary file %s: %s"
 msgstr "níorbh fhéidir an comhad sealadach %s a oscailt: %s"
 
-#: sed/execute.c:1255 sed/execute.c:1435
+#: sed/execute.c:1256 sed/execute.c:1436
 msgid "error in subprocess"
 msgstr "earráid i bhfo-phróiseas"
 
-#: sed/execute.c:1257
+#: sed/execute.c:1258
 msgid "option `e' not supported"
 msgstr "níl an rogha `e' ar fáil"
 
-#: sed/execute.c:1437
+#: sed/execute.c:1438
 msgid "`e' command not supported"
 msgstr "níl an t-ordú `e' ar fáil"
 
-#: sed/execute.c:1777
+#: sed/execute.c:1778
 msgid "no input files"
 msgstr ""
 
@@ -184,7 +184,7 @@ msgstr "ní féidir bunathraitheoirí a shonrú le slonn bán"
 msgid "invalid reference \\%d on `s' command's RHS"
 msgstr "tagairt neamhbhailí \\%d ar dheis ordú `s'"
 
-#: sed/sed.c:93
+#: sed/sed.c:96
 msgid ""
 "  -R, --regexp-perl\n"
 "                 use Perl 5's regular expressions syntax in the script.\n"
@@ -192,7 +192,7 @@ msgstr ""
 "  -R, --regexp-perl\n"
 "                 bain úsáid as sloinn ionadaíochta atá ag Perl 5.\n"
 
-#: sed/sed.c:98
+#: sed/sed.c:101
 #, c-format
 msgid ""
 "Usage: %s [OPTION]... {script-only-if-no-other-script} [input-file]...\n"
@@ -201,7 +201,7 @@ msgstr ""
 "Úsáid: %s [ROGHA]... {script-mura-bhfuil-script-eile} [inchomhad]...\n"
 "\n"
 
-#: sed/sed.c:102
+#: sed/sed.c:105
 #, c-format
 msgid ""
 "  -n, --quiet, --silent\n"
@@ -210,7 +210,7 @@ msgstr ""
 "  -n, --quiet, --silent\n"
 "                 stop priontáil uathoibríoch den spás patrúin\n"
 
-#: sed/sed.c:104
+#: sed/sed.c:107
 #, c-format
 msgid ""
 "  -e script, --expression=script\n"
@@ -219,7 +219,7 @@ msgstr ""
 "  -e script, --expression=script\n"
 "                 cuir an script leis na horduithe le rith\n"
 
-#: sed/sed.c:106
+#: sed/sed.c:109
 #, c-format
 msgid ""
 "  -f script-file, --file=script-file\n"
@@ -229,7 +229,7 @@ msgstr ""
 "  -f comhad-script, --file=comhad-script\n"
 "                 cuir na línte i `comhad-script' leis na horduithe le rith\n"
 
-#: sed/sed.c:108
+#: sed/sed.c:111
 #, c-format
 msgid ""
 "  -i[SUFFIX], --in-place[=SUFFIX]\n"
@@ -239,7 +239,18 @@ msgstr ""
 "                 cuir eagar ar comhaid san áit a bhfuil siad (agus déan\n"
 "                 cúltaca má tá IARMHÍR tugtha\n"
 
-#: sed/sed.c:110
+#: sed/sed.c:114
+#, fuzzy, c-format
+msgid ""
+"  -b, --binary\n"
+"                 open files in binary mode (CR+LFs are not processed "
+"specially)\n"
+msgstr ""
+"  -i[IARMHÍR], --in-place[=IARMHÍR]\n"
+"                 cuir eagar ar comhaid san áit a bhfuil siad (agus déan\n"
+"                 cúltaca má tá IARMHÍR tugtha\n"
+
+#: sed/sed.c:117
 #, c-format
 msgid ""
 "  -l N, --line-length=N\n"
@@ -248,7 +259,7 @@ msgstr ""
 "  -l N, --line-length=N\n"
 "                 ceap an fad timfhillte le haghaidh an ordaithe `l'\n"
 
-#: sed/sed.c:112
+#: sed/sed.c:119
 #, c-format
 msgid ""
 "  --posix\n"
@@ -257,7 +268,7 @@ msgstr ""
 "  --posix\n"
 "                 díchumasaigh gach feabhsúchán GNU.\n"
 
-#: sed/sed.c:114
+#: sed/sed.c:121
 #, c-format
 msgid ""
 "  -r, --regexp-extended\n"
@@ -266,7 +277,7 @@ msgstr ""
 "  -r, --regexp-extended\n"
 "                 úsáid sloinn ionadaíochta feabhsaithe sa script.\n"
 
-#: sed/sed.c:117
+#: sed/sed.c:124
 #, c-format
 msgid ""
 "  -s, --separate\n"
@@ -277,7 +288,7 @@ msgstr ""
 "  -s, --separate\n"
 "                 féach ar comhaid ina leith seachas mar sruth leanúnach.\n"
 
-#: sed/sed.c:120
+#: sed/sed.c:127
 #, c-format
 msgid ""
 "  -u, --unbuffered\n"
@@ -289,17 +300,17 @@ msgstr ""
 "                 lódáil cantaí beaga ó na comhaid ionchur agus sruthlaigh\n"
 "                 na maoláin aschur níos minice\n"
 
-#: sed/sed.c:123
+#: sed/sed.c:130
 #, c-format
 msgid "      --help     display this help and exit\n"
 msgstr "      --help     taispeáin an chabhair seo agus éirigh as\n"
 
-#: sed/sed.c:124
+#: sed/sed.c:131
 #, c-format
 msgid "      --version  output version information and exit\n"
 msgstr "      --version  taispeáin eolas faoin leagan agus éirigh as\n"
 
-#: sed/sed.c:125
+#: sed/sed.c:132
 #, c-format
 msgid ""
 "\n"
@@ -316,7 +327,7 @@ msgstr ""
 "léigh ón ionchur caighdeánach.\n"
 "\n"
 
-#: sed/sed.c:131
+#: sed/sed.c:138
 #, c-format
 msgid ""
 "E-mail bug reports to: %s .\n"
@@ -325,12 +336,12 @@ msgstr ""
 "Seol tuairiscí fabhtanna chuig: %s .\n"
 "Cuir an focal ``%s'' áit éigin sa líne ``Subject:'' le do thoil.\n"
 
-#: sed/sed.c:268
+#: sed/sed.c:282
 #, c-format
 msgid "super-sed version %s\n"
 msgstr "super-sed, leagan %s\n"
 
-#: sed/sed.c:269
+#: sed/sed.c:283
 #, c-format
 msgid ""
 "based on GNU sed version %s\n"
@@ -339,12 +350,12 @@ msgstr ""
 "bunaithe ar GNU sed, leagan %s\n"
 "\n"
 
-#: sed/sed.c:271
+#: sed/sed.c:285
 #, c-format
 msgid "GNU sed version %s\n"
 msgstr "GNU sed, leagan %s\n"
 
-#: sed/sed.c:273
+#: sed/sed.c:287
 #, c-format
 msgid ""
 "%s\n"
@@ -358,19 +369,26 @@ msgstr ""
 "d'INDÍOLTACHT nó FEILIÚNACHT DO FHEIDHM AR LEITH, an oiread atá ceadaithe\n"
 "de réir dlí.\n"
 
-#: lib/utils.c:98 lib/utils.c:336
+#: lib/utils.c:98 lib/utils.c:363
 #, c-format
 msgid "cannot remove %s: %s"
 msgstr "ní féidir %s a scriosadh: %s"
 
-#: lib/utils.c:143
+#: lib/utils.c:168
 #, c-format
 msgid "couldn't open file %s: %s"
 msgstr "níorbh fhéidir an comhad %s a oscailt: %s"
 
 # Irish is nice this way, no initial mutation on 'rud'! -- KPS
 # Include all three b/c I'm using template version of "Plural-Forms"
-#: lib/utils.c:220
+#: lib/utils.c:192
+#, fuzzy, c-format
+msgid "couldn't attach to %s: %s"
+msgstr "níorbh fhéidir %d rud a scríobh i %s: %s"
+
+# Irish is nice this way, no initial mutation on 'rud'! -- KPS
+# Include all three b/c I'm using template version of "Plural-Forms"
+#: lib/utils.c:247
 #, c-format
 msgid "couldn't write %d item to %s: %s"
 msgid_plural "couldn't write %d items to %s: %s"
@@ -379,12 +397,12 @@ msgstr[1] "níorbh fhéidir %d rud a scríobh i %s: %s"
 msgstr[2] "níorbh fhéidir %d rud a scríobh i %s: %s"
 msgstr[3] "níorbh fhéidir %d rud a scríobh i %s: %s"
 
-#: lib/utils.c:235 lib/utils.c:251
+#: lib/utils.c:262 lib/utils.c:278
 #, c-format
 msgid "read error on %s: %s"
 msgstr "earráid ag léamh %s: %s"
 
-#: lib/utils.c:341
+#: lib/utils.c:368
 #, c-format
 msgid "cannot rename %s: %s"
 msgstr "ní féidir %s a athainmniú: %s"

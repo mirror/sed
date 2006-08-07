@@ -73,6 +73,9 @@ bool separate_files = false;
 /* How do we edit files in-place? (we don't if NULL) */
 char *in_place_extension = NULL;
 
+/* The mode to use to read files, either "rt" or "rb".  */
+char *read_mode = "rt";
+
 /* Do we need to be pedantically POSIX compliant? */
 enum posixicity_types posixicity;
 
@@ -107,6 +110,10 @@ Usage: %s [OPTION]... {script-only-if-no-other-script} [input-file]...\n\
                  add the contents of script-file to the commands to be executed\n"));
   fprintf(out, _("  -i[SUFFIX], --in-place[=SUFFIX]\n\
                  edit files in place (makes backup if extension supplied)\n"));
+#if defined(WIN32) || defined(_WIN32) || defined(__CYGWIN__) || defined(MSDOS) || defined(__EMX__)
+  fprintf(out, _("  -b, --binary\n\
+                 open files in binary mode (CR+LFs are not processed specially)\n"));
+#endif
   fprintf(out, _("  -l N, --line-length=N\n\
                  specify the desired line-wrap length for the `l' command\n"));
   fprintf(out, _("  --posix\n\
@@ -142,12 +149,13 @@ main(argc, argv)
   char **argv;
 {
 #ifdef REG_PERL
-#define SHORTOPTS "snrRue:f:l:i::V:"
+#define SHORTOPTS "bsnrRuEe:f:l:i::V:"
 #else
-#define SHORTOPTS "snrue:f:l:i::V:"
+#define SHORTOPTS "bsnruEe:f:l:i::V:"
 #endif
 
   static struct option longopts[] = {
+    {"binary", 0, NULL, 'b'},
     {"regexp-extended", 0, NULL, 'r'},
 #ifdef REG_PERL
     {"regexp-perl", 0, NULL, 'R'},
@@ -241,6 +249,12 @@ main(argc, argv)
 	  posixicity = POSIXLY_BASIC;
 	  break;
 
+        case 'b':
+	  read_mode = "rb";
+	  break;
+
+	/* Undocumented, for compatibility with BSD sed.  */
+	case 'E':
 	case 'r':
 	  if (extended_regexp_flags)
 	    usage(4);

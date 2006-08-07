@@ -277,6 +277,19 @@ standard.  If you want to disable only the latter kind of
 extension, you can set the @code{POSIXLY_CORRECT} variable
 to a non-empty value.
 
+@item -b
+@itemx --binary
+@opindex -b
+@opindex --binary
+This option is available on any platforms, but is only effective where the
+operating system makes a distinction between text files and binary files.
+When such a distinction is made---as is the case for MS-DOS, Windows,
+Cygwin---text files are composed of lines separated by a carriage return
+@emph{and} a line feed character, and @command{sed} does not see the
+ending CR.  When this option is specified, @command{sed} will open
+input files in binary mode, thus not requesting this special processing
+and considering lines to end at a line feed.
+
 @item -r
 @itemx --regexp-extended
 @opindex -r

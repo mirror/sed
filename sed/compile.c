@@ -374,15 +374,16 @@ read_filename()
   return b;
 }
 
-static struct output *get_openfile P_((struct output **file_ptrs, char *mode, bool fail));
+static struct output *get_openfile P_((struct output **file_ptrs, char mode, bool fail));
 static struct output *
 get_openfile(file_ptrs, mode, fail)
      struct output **file_ptrs;
-     char *mode;
+     char mode;
      bool fail;
 {
   struct buffer *b;
   char *file_name;
+  char file_mode[3];
   struct output *p;
   int is_stderr;
 
@@ -411,9 +412,13 @@ get_openfile(file_ptrs, mode, fail)
 
   if (!p)
     {
+      file_mode[0] = mode;
+      file_mode[1] = read_mode[1];
+      file_mode[2] = '\0';
+
       p = OB_MALLOC(&obs, 1, struct output);
       p->name = ck_strdup(file_name);
-      p->fp = ck_fopen(p->name, mode, fail);
+      p->fp = ck_fopen(p->name, file_mode, fail);
       p->missing_newline = false;
       p->link = *file_ptrs;
       *file_ptrs = p;
@@ -646,7 +651,7 @@ mark_subst_opts(cmd)
 	break;
 
       case 'w':
-	cmd->outf = get_openfile(&file_write, "w", true);
+	cmd->outf = get_openfile(&file_write, 'w', true);
 	return flags;
 
       case '0': case '1': case '2': case '3': case '4':
@@ -1234,12 +1239,12 @@ compile_program(vector)
 	  break;
 
         case 'R':
-	  cur_cmd->x.fp = get_openfile(&file_read, "r", false)->fp;
+	  cur_cmd->x.fp = get_openfile(&file_read, 'r', false)->fp;
 	  break;
 
         case 'W':
 	case 'w':
-	  cur_cmd->x.outf = get_openfile(&file_write, "w", true);
+	  cur_cmd->x.outf = get_openfile(&file_write, 'w', true);
 	  break;
 
 	case 's':

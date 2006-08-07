@@ -631,7 +631,7 @@ dump_append_queue()
 	     be treated as if it were an empty file, causing no error
 	     condition."  IEEE Std 1003.2-1992
 	     So, don't fail. */
-	  fp = ck_fopen(p->fname, "r", false);
+	  fp = ck_fopen(p->fname, read_mode, false);
 	  if (fp)
 	    {
 	      while ((cnt = ck_fread(buf, 1, sizeof buf, fp)) > 0)
@@ -691,9 +691,9 @@ open_next_file(name, input)
   if (name[0] == '-' && name[1] == '\0' && !in_place_extension)
     {
       clearerr(stdin);	/* clear any stale EOF indication */
-      input->fp = stdin;
+      input->fp = ck_fdopen (fileno (stdin), "stdin", read_mode, false);
     }
-  else if ( ! (input->fp = ck_fopen(name, "r", false)) )
+  else if ( ! (input->fp = ck_fopen(name, read_mode, false)) )
     {
       const char *ptr = strerror(errno);
       fprintf(stderr, _("%s: can't read %s: %s\n"), myname, name, ptr);

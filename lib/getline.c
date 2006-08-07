@@ -101,10 +101,6 @@ getline (lineptr, n, stream)
 
   /* Return a partial line since we got an error in the middle.  */
  win:
-#if defined(WIN32) || defined(_WIN32) || defined(__CYGWIN__) || defined(MSDOS) || defined(__EMX__)
-  if (p - 2 >= *lineptr && p[-2] == '\r')
-    p[-2] = p[-1], --p;
-#endif
   *p = '\0';
   return p - *lineptr;
 }

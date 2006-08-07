@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: sed 4.1.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-07-13 09:35+0200\n"
+"POT-Creation-Date: 2006-08-07 12:06+0200\n"
 "PO-Revision-Date: 2004-07-08 19:58+0200\n"
 "Last-Translator: Wojciech Polak <polak@gnu.org>\n"
 "Language-Team: Polish <translation-team-pl@lists.sourceforge.net>\n"
@@ -128,44 +128,44 @@ msgstr "%s: plik %s linia %lu: %s\n"
 msgid "%s: -e expression #%lu, char %lu: %s\n"
 msgstr "%s: -e wyra¿enie #%lu, znak %lu: %s\n"
 
-#: sed/compile.c:1644
+#: sed/compile.c:1649
 #, c-format
 msgid "can't find label for jump to `%s'"
 msgstr "nie mo¿na znale¼æ etykiety dla skoku do `%s'"
 
-#: sed/execute.c:698
+#: sed/execute.c:699
 #, c-format
 msgid "%s: can't read %s: %s\n"
 msgstr "%s: nie mo¿na odczytaæ %s: %s\n"
 
-#: sed/execute.c:721
+#: sed/execute.c:722
 #, c-format
 msgid "couldn't edit %s: is a terminal"
 msgstr "nie mo¿na edytowaæ %s: plik jest terminalem"
 
-#: sed/execute.c:725
+#: sed/execute.c:726
 #, c-format
 msgid "couldn't edit %s: not a regular file"
 msgstr "nie mo¿na edytowaæ %s: to nie jest regularny plik"
 
-#: sed/execute.c:732 lib/utils.c:196
+#: sed/execute.c:733 lib/utils.c:229
 #, c-format
 msgid "couldn't open temporary file %s: %s"
 msgstr "nie mo¿na otworzyæ tymczasowego pliku %s: %s"
 
-#: sed/execute.c:1255 sed/execute.c:1435
+#: sed/execute.c:1256 sed/execute.c:1436
 msgid "error in subprocess"
 msgstr "b³±d w podprocesie"
 
-#: sed/execute.c:1257
+#: sed/execute.c:1258
 msgid "option `e' not supported"
 msgstr "opcja `e' nie jest wspierana"
 
-#: sed/execute.c:1437
+#: sed/execute.c:1438
 msgid "`e' command not supported"
 msgstr "polecenie `e' nie jest wspierane"
 
-#: sed/execute.c:1777
+#: sed/execute.c:1778
 msgid "no input files"
 msgstr ""
 
@@ -182,7 +182,7 @@ msgstr "nie mo¿na wyszczególniæ modyfikatorów w pustym wyra¿eniu regularnym"
 msgid "invalid reference \\%d on `s' command's RHS"
 msgstr "nieprawid³owe odwo³anie \\%d po prawej stronie polecenia `s'"
 
-#: sed/sed.c:93
+#: sed/sed.c:96
 msgid ""
 "  -R, --regexp-perl\n"
 "                 use Perl 5's regular expressions syntax in the script.\n"
@@ -191,7 +191,7 @@ msgstr ""
 "                 u¿ywa w skrypcie wyra¿enia regularne zgodne ze sk³adni± "
 "Perl 5.\n"
 
-#: sed/sed.c:98
+#: sed/sed.c:101
 #, c-format
 msgid ""
 "Usage: %s [OPTION]... {script-only-if-no-other-script} [input-file]...\n"
@@ -201,7 +201,7 @@ msgstr ""
 "wej¶ciowy]...\n"
 "\n"
 
-#: sed/sed.c:102
+#: sed/sed.c:105
 #, c-format
 msgid ""
 "  -n, --quiet, --silent\n"
@@ -210,7 +210,7 @@ msgstr ""
 "  -n, --quiet, --silent\n"
 "                 powstrzymuje automatyczne drukowanie przetwarzanych linii.\n"
 
-#: sed/sed.c:104
+#: sed/sed.c:107
 #, c-format
 msgid ""
 "  -e script, --expression=script\n"
@@ -219,7 +219,7 @@ msgstr ""
 "  -e skrypt, --expression=skrypt\n"
 "                 dodaje skrypt do poleceñ, które maj± byæ wykonane.\n"
 
-#: sed/sed.c:106
+#: sed/sed.c:109
 #, c-format
 msgid ""
 "  -f script-file, --file=script-file\n"
@@ -230,7 +230,7 @@ msgstr ""
 "                 dodaje zawarto¶æ pliku skryptowego do poleceñ,\n"
 "                 które maj± byæ wykonane.\n"
 
-#: sed/sed.c:108
+#: sed/sed.c:111
 #, c-format
 msgid ""
 "  -i[SUFFIX], --in-place[=SUFFIX]\n"
@@ -240,7 +240,18 @@ msgstr ""
 "                 edytuje pliki \"w miejscu\" (tworzy kopie zapasowe\n"
 "                 je¿eli zosta³o podane rozszerzenie).\n"
 
-#: sed/sed.c:110
+#: sed/sed.c:114
+#, fuzzy, c-format
+msgid ""
+"  -b, --binary\n"
+"                 open files in binary mode (CR+LFs are not processed "
+"specially)\n"
+msgstr ""
+"  -i[rozszerzenie], --in-place[=rozszerzenie]\n"
+"                 edytuje pliki \"w miejscu\" (tworzy kopie zapasowe\n"
+"                 je¿eli zosta³o podane rozszerzenie).\n"
+
+#: sed/sed.c:117
 #, c-format
 msgid ""
 "  -l N, --line-length=N\n"
@@ -249,7 +260,7 @@ msgstr ""
 "  -l N, --line-length=N\n"
 "                 ustala po¿±dan± d³ugo¶æ ³amanych linii dla polecenia `l'.\n"
 
-#: sed/sed.c:112
+#: sed/sed.c:119
 #, c-format
 msgid ""
 "  --posix\n"
@@ -258,7 +269,7 @@ msgstr ""
 "      --posix\n"
 "                 wy³±cza wszystkie rozszerzenia GNU.\n"
 
-#: sed/sed.c:114
+#: sed/sed.c:121
 #, c-format
 msgid ""
 "  -r, --regexp-extended\n"
@@ -267,7 +278,7 @@ msgstr ""
 "  -r, --regexp-extended\n"
 "                 u¿ywa w skrypcie rozszerzonych wyra¿eñ regularnych.\n"
 
-#: sed/sed.c:117
+#: sed/sed.c:124
 #, c-format
 msgid ""
 "  -s, --separate\n"
@@ -279,7 +290,7 @@ msgstr ""
 "                 traktuje pliki jako oddzielne, a nie jako pojedynczy,\n"
 "                 d³ugi i ci±g³y strumieñ.\n"
 
-#: sed/sed.c:120
+#: sed/sed.c:127
 #, c-format
 msgid ""
 "  -u, --unbuffered\n"
@@ -291,17 +302,17 @@ msgstr ""
 "                 ³aduje minimaln± ilo¶æ danych z plików wej¶ciowych\n"
 "                 i czê¶ciej oczyszcza bufor wyj¶ciowy.\n"
 
-#: sed/sed.c:123
+#: sed/sed.c:130
 #, c-format
 msgid "      --help     display this help and exit\n"
 msgstr "      --help     wy¶wietla tê oto pomoc i koñczy pracê.\n"
 
-#: sed/sed.c:124
+#: sed/sed.c:131
 #, c-format
 msgid "      --version  output version information and exit\n"
 msgstr "      --version  wy¶wietla numer wersji i koñczy pracê.\n"
 
-#: sed/sed.c:125
+#: sed/sed.c:132
 #, c-format
 msgid ""
 "\n"
@@ -319,7 +330,7 @@ msgstr ""
 "¿adne pliki wej¶ciowe, to wtedy odczytane zostanie standardowe wej¶cie.\n"
 "\n"
 
-#: sed/sed.c:131
+#: sed/sed.c:138
 #, c-format
 msgid ""
 "E-mail bug reports to: %s .\n"
@@ -328,12 +339,12 @@ msgstr ""
 "Ewentualne b³êdy prosimy zg³aszaæ na adres: %s\n"
 "W tym celu proszê dodaæ s³owo ``%s'' do tematu listu.\n"
 
-#: sed/sed.c:268
+#: sed/sed.c:282
 #, c-format
 msgid "super-sed version %s\n"
 msgstr "super-sed wersja %s\n"
 
-#: sed/sed.c:269
+#: sed/sed.c:283
 #, c-format
 msgid ""
 "based on GNU sed version %s\n"
@@ -342,12 +353,12 @@ msgstr ""
 "na podstawie wersji GNU sed %s\n"
 "\n"
 
-#: sed/sed.c:271
+#: sed/sed.c:285
 #, c-format
 msgid "GNU sed version %s\n"
 msgstr "GNU sed wersja %s\n"
 
-#: sed/sed.c:273
+#: sed/sed.c:287
 #, c-format
 msgid ""
 "%s\n"
@@ -361,17 +372,22 @@ msgstr ""
 "w ¼ród³ach. Autorzy nie daj± ¯ADNYCH gwarancji, w tym równie¿ gwarancji\n"
 "PRZYDATNO¦CI DO SPRZEDA¯Y LUB DO KONKRETNYCH CELÓW.\n"
 
-#: lib/utils.c:98 lib/utils.c:336
+#: lib/utils.c:98 lib/utils.c:363
 #, c-format
 msgid "cannot remove %s: %s"
 msgstr "nie mo¿na usun±æ %s: %s"
 
-#: lib/utils.c:143
+#: lib/utils.c:168
 #, c-format
 msgid "couldn't open file %s: %s"
 msgstr "nie mo¿na otworzyæ pliku %s: %s"
 
-#: lib/utils.c:220
+#: lib/utils.c:192
+#, fuzzy, c-format
+msgid "couldn't attach to %s: %s"
+msgstr "nie mo¿na zapisaæ %d elementu do %s: %s"
+
+#: lib/utils.c:247
 #, c-format
 msgid "couldn't write %d item to %s: %s"
 msgid_plural "couldn't write %d items to %s: %s"
@@ -379,12 +395,12 @@ msgstr[0] "nie mo¿na zapisaæ %d elementu do %s: %s"
 msgstr[1] "nie mo¿na zapisaæ %d elementów do %s: %s"
 msgstr[2] "nie mo¿na zapisaæ %d elementów do %s: %s"
 
-#: lib/utils.c:235 lib/utils.c:251
+#: lib/utils.c:262 lib/utils.c:278
 #, c-format
 msgid "read error on %s: %s"
 msgstr "b³±d odczytu w %s: %s"
 
-#: lib/utils.c:341
+#: lib/utils.c:368
 #, c-format
 msgid "cannot rename %s: %s"
 msgstr "nie mo¿na zmieniæ nazwy %s: %s"

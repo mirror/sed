@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: sed 4.1.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-07-13 09:35+0200\n"
+"POT-Creation-Date: 2006-08-07 12:06+0200\n"
 "PO-Revision-Date: 2004-07-11 11:45+0200\n"
 "Last-Translator: Christian Rose <menthos@menthos.com>\n"
 "Language-Team: Swedish <sv@li.org>\n"
@@ -126,44 +126,44 @@ msgstr "%s: fil %s rad %lu: %s\n"
 msgid "%s: -e expression #%lu, char %lu: %s\n"
 msgstr "%s: -e uttryck #%lu, tecken %lu: %s\n"
 
-#: sed/compile.c:1644
+#: sed/compile.c:1649
 #, c-format
 msgid "can't find label for jump to `%s'"
 msgstr "kan inte hitta etiketten för hopp till \"%s\""
 
-#: sed/execute.c:698
+#: sed/execute.c:699
 #, c-format
 msgid "%s: can't read %s: %s\n"
 msgstr "%s: kan inte läsa %s: %s\n"
 
-#: sed/execute.c:721
+#: sed/execute.c:722
 #, c-format
 msgid "couldn't edit %s: is a terminal"
 msgstr "kunde inte redigera %s: är en terminal"
 
-#: sed/execute.c:725
+#: sed/execute.c:726
 #, c-format
 msgid "couldn't edit %s: not a regular file"
 msgstr "kunde inte redigera %s: inte en vanlig fil"
 
-#: sed/execute.c:732 lib/utils.c:196
+#: sed/execute.c:733 lib/utils.c:229
 #, c-format
 msgid "couldn't open temporary file %s: %s"
 msgstr "kunde inte öppna temporära filen %s: %s"
 
-#: sed/execute.c:1255 sed/execute.c:1435
+#: sed/execute.c:1256 sed/execute.c:1436
 msgid "error in subprocess"
 msgstr "fel i underprocess"
 
-#: sed/execute.c:1257
+#: sed/execute.c:1258
 msgid "option `e' not supported"
 msgstr "flaggan \"e\" stöds inte"
 
-#: sed/execute.c:1437
+#: sed/execute.c:1438
 msgid "`e' command not supported"
 msgstr "kommandot \"e\" stöds inte"
 
-#: sed/execute.c:1777
+#: sed/execute.c:1778
 msgid "no input files"
 msgstr ""
 
@@ -184,7 +184,7 @@ msgstr "kan inte ange modifierare på tomt reguljärt uttryck"
 msgid "invalid reference \\%d on `s' command's RHS"
 msgstr "ogiltig referens \\%d på \"s\"-kommandots högersida"
 
-#: sed/sed.c:93
+#: sed/sed.c:96
 msgid ""
 "  -R, --regexp-perl\n"
 "                 use Perl 5's regular expressions syntax in the script.\n"
@@ -192,7 +192,7 @@ msgstr ""
 "  -R, --regexp-perl\n"
 "                 använd Perl 5:s syntax för reguljära uttryck i skriptet.\n"
 
-#: sed/sed.c:98
+#: sed/sed.c:101
 #, c-format
 msgid ""
 "Usage: %s [OPTION]... {script-only-if-no-other-script} [input-file]...\n"
@@ -201,7 +201,7 @@ msgstr ""
 "Användning: %s [FLAGGA]... {skript-endast-om-inga-andra} [indatafil]...\n"
 "\n"
 
-#: sed/sed.c:102
+#: sed/sed.c:105
 #, c-format
 msgid ""
 "  -n, --quiet, --silent\n"
@@ -210,7 +210,7 @@ msgstr ""
 "  -n, --quiet, --silent\n"
 "                 förhindrar automatisk utskrift av mönsterutrymme\n"
 
-#: sed/sed.c:104
+#: sed/sed.c:107
 #, c-format
 msgid ""
 "  -e script, --expression=script\n"
@@ -219,7 +219,7 @@ msgstr ""
 "  -e skript, --expression=skript\n"
 "                 lägg till skript till de kommandon som ska utföras\n"
 
-#: sed/sed.c:106
+#: sed/sed.c:109
 #, c-format
 msgid ""
 "  -f script-file, --file=script-file\n"
@@ -230,7 +230,7 @@ msgstr ""
 "                 lägg till innehållet i skriptfil till de kommandon som ska\n"
 "                 utföras\n"
 
-#: sed/sed.c:108
+#: sed/sed.c:111
 #, c-format
 msgid ""
 "  -i[SUFFIX], --in-place[=SUFFIX]\n"
@@ -240,7 +240,18 @@ msgstr ""
 "                 redigera filer på plats (skapar säkerhetskopia om ändelse\n"
 "                 tillhandahålls)\n"
 
-#: sed/sed.c:110
+#: sed/sed.c:114
+#, fuzzy, c-format
+msgid ""
+"  -b, --binary\n"
+"                 open files in binary mode (CR+LFs are not processed "
+"specially)\n"
+msgstr ""
+"  -i[ÄNDELSE], --in-place[=ÄNDELSE]\n"
+"                 redigera filer på plats (skapar säkerhetskopia om ändelse\n"
+"                 tillhandahålls)\n"
+
+#: sed/sed.c:117
 #, c-format
 msgid ""
 "  -l N, --line-length=N\n"
@@ -249,7 +260,7 @@ msgstr ""
 "  -l N, --line-length=N\n"
 "                 ange önskad radbrytningslängd för \"l\"-kommandot\n"
 
-#: sed/sed.c:112
+#: sed/sed.c:119
 #, c-format
 msgid ""
 "  --posix\n"
@@ -258,7 +269,7 @@ msgstr ""
 "  --posix\n"
 "                 inaktivera alla GNU-utökningar.\n"
 
-#: sed/sed.c:114
+#: sed/sed.c:121
 #, c-format
 msgid ""
 "  -r, --regexp-extended\n"
@@ -267,7 +278,7 @@ msgstr ""
 "  -r, --regexp-extended\n"
 "                 använd utökade reguljära uttryck i skriptet.\n"
 
-#: sed/sed.c:117
+#: sed/sed.c:124
 #, c-format
 msgid ""
 "  -s, --separate\n"
@@ -279,7 +290,7 @@ msgstr ""
 "                 betrakta filer som separata istället för som en\n"
 "                 kontinuerlig lång dataström.\n"
 
-#: sed/sed.c:120
+#: sed/sed.c:127
 #, c-format
 msgid ""
 "  -u, --unbuffered\n"
@@ -291,17 +302,17 @@ msgstr ""
 "                 läs in minimala mängder data från indatafilerna och töm\n"
 "                 utdatabufferterna oftare\n"
 
-#: sed/sed.c:123
+#: sed/sed.c:130
 #, c-format
 msgid "      --help     display this help and exit\n"
 msgstr "      --help     visa denna hjälptext och avsluta\n"
 
-#: sed/sed.c:124
+#: sed/sed.c:131
 #, c-format
 msgid "      --version  output version information and exit\n"
 msgstr "      --version  visa versionsinformation och avsluta\n"
 
-#: sed/sed.c:125
+#: sed/sed.c:132
 #, c-format
 msgid ""
 "\n"
@@ -318,7 +329,7 @@ msgstr ""
 "läses standard in.\n"
 "\n"
 
-#: sed/sed.c:131
+#: sed/sed.c:138
 #, c-format
 msgid ""
 "E-mail bug reports to: %s .\n"
@@ -328,12 +339,12 @@ msgstr ""
 "Ange ordet \"%s\" på något ställe i \"Ärende:\"-fältet.\n"
 "Skicka anmärkningar på översättningen till <sv@li.org>.\n"
 
-#: sed/sed.c:268
+#: sed/sed.c:282
 #, c-format
 msgid "super-sed version %s\n"
 msgstr "super-sed version %s\n"
 
-#: sed/sed.c:269
+#: sed/sed.c:283
 #, c-format
 msgid ""
 "based on GNU sed version %s\n"
@@ -342,12 +353,12 @@ msgstr ""
 "baserad på GNU sed version %s\n"
 "\n"
 
-#: sed/sed.c:271
+#: sed/sed.c:285
 #, c-format
 msgid "GNU sed version %s\n"
 msgstr "GNU sed version %s\n"
 
-#: sed/sed.c:273
+#: sed/sed.c:287
 #, c-format
 msgid ""
 "%s\n"
@@ -363,29 +374,34 @@ msgstr ""
 "Det finns INGEN garanti; inte ens för SÄLJBARHET eller LÄMPLIGHET FÖR NÅGOT\n"
 "SPECIELLT ÄNDAMÅL, i den omfattning som medges av gällande lag.\n"
 
-#: lib/utils.c:98 lib/utils.c:336
+#: lib/utils.c:98 lib/utils.c:363
 #, c-format
 msgid "cannot remove %s: %s"
 msgstr "kan inte ta bort %s: %s"
 
-#: lib/utils.c:143
+#: lib/utils.c:168
 #, c-format
 msgid "couldn't open file %s: %s"
 msgstr "kunde inte öppna filen %s: %s"
 
-#: lib/utils.c:220
+#: lib/utils.c:192
+#, fuzzy, c-format
+msgid "couldn't attach to %s: %s"
+msgstr "kunde inte skriva %d objekt till %s: %s"
+
+#: lib/utils.c:247
 #, c-format
 msgid "couldn't write %d item to %s: %s"
 msgid_plural "couldn't write %d items to %s: %s"
 msgstr[0] "kunde inte skriva %d objekt till %s: %s"
 msgstr[1] "kunde inte skriva %d objekt till %s: %s"
 
-#: lib/utils.c:235 lib/utils.c:251
+#: lib/utils.c:262 lib/utils.c:278
 #, c-format
 msgid "read error on %s: %s"
 msgstr "läsfel vid %s: %s"
 
-#: lib/utils.c:341
+#: lib/utils.c:368
 #, c-format
 msgid "cannot rename %s: %s"
 msgstr "kan inte byta namn på %s: %s"
