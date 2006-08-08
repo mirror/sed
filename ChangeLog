@@ -1,4 +1,13 @@
 2006-08-03  Paolo Bonzini  <bonzini@gnu.org>
+
+	Revert this part of the previous change:
+
+	2006-08-03  Paolo Bonzini  <bonzini@gnu.org>
+
+	* sed/compile.c (get_openfile): Change second argument to char
+	and turn it into a string within the function.  Adjust callers.
+
+2006-08-03  Paolo Bonzini  <bonzini@gnu.org>
 	    Corinna Vinschen  <vinschen@redhat.com>
 
 	* lib/getline.c (getline): Remove Windows special casing.
