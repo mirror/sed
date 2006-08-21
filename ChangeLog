@@ -1,3 +1,8 @@
+2006-08-21  Paolo Bonzini  <bonzini@gnu.org>
+
+	* sed/regexp.c: Accept NUL bytes for `.'.  Accept 'a\(b' in
+	POSIXLY_CORRECT/POSIXLY_BASIC posixicity.
+
 2006-08-03  Paolo Bonzini  <bonzini@gnu.org>
 
 	Revert this part of the previous change:
