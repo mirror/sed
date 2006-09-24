@@ -5,7 +5,7 @@ SEDTESTS =
 
 LDADD = ../lib/libsed.a
 noinst_HEADERS = testcases.h ptestcases.h
-AM_CPPFLAGS = -I../lib
+AM_CPPFLAGS = -I$(top_srcdir)/lib -I$(top_builddir)/lib
 
 if TEST_REGEX
 check_PROGRAMS = bug-regex7 \
@@ -18,9 +18,9 @@ endif
 
 SEDTESTS += \
         appquit enable sep inclib 8bit newjis xabcx dollar noeol noeolw \
-  	modulo numsub numsub2 numsub3 numsub4 numsub5 0range bkslashes \
-  	head madding mac-mf empty xbxcx xbxcx3 recall recall2 xemacs \
-  	fasts uniq manis khadafy linecnt eval distrib 8to7 y-bracket \
+	modulo numsub numsub2 numsub3 numsub4 numsub5 0range bkslashes \
+	head madding mac-mf empty xbxcx xbxcx3 recall recall2 xemacs \
+	fasts uniq manis khadafy linecnt eval distrib 8to7 y-bracket \
 	y-newline allsub cv-vars classes middle bsd stdin flipcase \
 	insens subwrite writeout readin \
 	help version file quiet \

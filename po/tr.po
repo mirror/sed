@@ -375,7 +375,6 @@ msgstr "%d sayıda öğe %s'e yazılamadı: %s"
 msgid "couldn't write %d item to %s: %s"
 msgid_plural "couldn't write %d items to %s: %s"
 msgstr[0] "%d sayıda öğe %s'e yazılamadı: %s"
-msgstr[1] "%d sayıda öğe %s'e yazılamadı: %s"
 
 #: lib/utils.c:262 lib/utils.c:278
 #, c-format

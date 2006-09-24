@@ -2,6 +2,7 @@ Sed 4.1.6
 
 * sed can be much faster in UTF-8 locales
 
+* sed will correctly replace ACLs when using -i.
 * sed will now accept NUL bytes for `.'
 
 ----------------------------------------------------------------------------

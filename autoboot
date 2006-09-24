@@ -1,0 +1,257 @@
+#! /bin/sh
+
+# Bootstrap this package from CVS.
+
+# Copyright (C) 2003, 2004, 2005, 2006 Free Software Foundation, Inc.
+
+# This program is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; either version 2, or (at your option)
+# any later version.
+
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+
+# You should have received a copy of the GNU General Public License
+# along with this program; if not, write to the Free Software
+# Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
+# 02110-1301, USA.
+
+# Written by Paul Eggert.
+
+package=sed
+
+# Translation Project URL, for the registry of all projects.
+TP_URL='http://www.iro.umontreal.ca/translation/registry.cgi?domain='
+
+# Ensure file names are sorted consistently across platforms.
+# Also, ensure diagnostics are in English, e.g., "wget --help" below.
+LC_ALL=C
+export LC_ALL
+
+# Parse options.
+
+for option
+do
+  case $option in
+  --help)
+    echo "$0: usage: $0 [--gnulib-srcdir=DIR] [--cvs-user=USERNAME] [--skip-po]"
+    exit;;
+  --gnulib-srcdir=*)
+    GNULIB_SRCDIR=`expr "$option" : '--gnulib-srcdir=\(.*\)'`;;
+  --cvs-user=*)
+    CVS_USER=`expr "$option" : '--cvs-user=\(.*\)'`;;
+  --skip-po)
+    SKIP_PO=t;;
+  *)
+    echo >&2 "$0: $option: unknown option"
+    exit 1;;
+  esac
+done
+
+echo "$0: Bootstrapping CVS $package..."
+
+cleanup_gnulib() {
+  status=$?
+  rm -fr gnulib
+  exit $status
+}
+
+# Get gnulib files.
+
+case ${GNULIB_SRCDIR--} in
+-)
+  if [ ! -d gnulib ]; then
+    echo "$0: getting gnulib files..."
+
+    case ${CVS_AUTH-pserver} in
+    pserver)
+      CVS_PREFIX=':pserver:anonymous@';;
+    ssh)
+      CVS_PREFIX="$CVS_USER${CVS_USER+@}";;
+    *)
+      echo "$0: $CVS_AUTH: Unknown CVS access method" >&2
+      exit 1;;
+    esac
+
+    case $CVS_RSH in
+    '') export CVS_RSH=ssh;;
+    esac
+
+    trap cleanup_gnulib 1 2 13 15
+
+    cvs -z3 -q -d ${CVS_PREFIX}cvs.savannah.gnu.org:/cvsroot/gnulib co gnulib ||
+      cleanup_gnulib
+
+    trap - 1 2 13 15
+  fi
+  GNULIB_SRCDIR=gnulib
+esac
+
+gnulib_tool=$GNULIB_SRCDIR/gnulib-tool
+<$gnulib_tool || exit
+
+gnulib_modules='
+acl
+alloca
+getline
+getopt
+gettext
+memchr
+memcmp
+memmove
+mkstemp
+obstack
+regex
+stdbool
+strerror
+strverscmp
+unlocked-io
+verify
+'
+
+new_gnulib_modules="$gnulib_modules"
+while [ -n "$new_gnulib_modules" ]; do
+  previous_gnulib_modules=`echo $gnulib_modules | tr '\n' ' ' `
+  gnulib_modules=`
+    (echo "$gnulib_modules"
+     for gnulib_module in $new_gnulib_modules; do
+       $gnulib_tool --extract-dependencies $gnulib_module
+     done) | sort -u
+  `
+  new_gnulib_modules=""
+  for gnulib_module in $gnulib_modules; do
+    case " $previous_gnulib_modules " in
+      *" $gnulib_module "*) ;;
+      *) new_gnulib_modules="$new_gnulib_modules $gnulib_module" ;;
+    esac
+  done
+done
+
+gnulib_files=`
+  (echo m4/warning.m4
+   for gnulib_module in $gnulib_modules; do
+     $gnulib_tool --extract-filelist $gnulib_module
+   done) | sort -u
+`
+
+gnulib_dirs=`echo "$gnulib_files" | sed 's,/[^/]*$,,' | sed 's,^m4$,build-aux,' | sort -u`
+mkdir -p $gnulib_dirs || exit
+
+for gnulib_file in $gnulib_files; do
+  dest=`echo $gnulib_file | sed 's,m4/,build-aux/,' `
+  rm -f $dest &&
+  echo "$0: Copying file $GNULIB_SRCDIR/$gnulib_file" &&
+  cp -p $GNULIB_SRCDIR/$gnulib_file $dest || exit
+done
+
+# # This suppresses a bogus diagnostic
+# # "warning: macro `AM_LANGINFO_CODESET' not found in library".
+# echo "$0: patching build-aux/gettext.m4 to remove need for intl/* ..."
+# sed '
+#   /^AC_DEFUN(\[AM_INTL_SUBDIR],/,/^]/c\
+#     AC_DEFUN([AM_INTL_SUBDIR], [])
+#   /^AC_DEFUN(\[gt_INTL_SUBDIR_CORE],/,/^]/c\
+#     AC_DEFUN([gt_INTL_SUBDIR_CORE], [])
+# ' build-aux/gettext.m4 >build-aux/gettext_gl.m4 || exit
+
+
+# Get translations.
+
+get_translations() {
+  subdir=$1
+  domain=$2
+
+  echo "$0: getting translations into $subdir for $domain..."
+  (cd $subdir && rm -f dummy `ls | sed -n '/\.gmo$/p; /\.po/p'`) &&
+
+  $WGET_COMMAND -O "$subdir/$domain.html" "$TP_URL$domain" &&
+
+  sed -n 's|.*"http://[^"]*/translation/teams/PO/\([^/"]*\)/'"$domain"'-\([^/"]*\)\.[^."]*\.po".*|\1.\2|p' <"$subdir/$domain.html" |
+  sort -k 1,1 -k 2,2n -k2,2 -k3,3n -k3,3 -k4,4n -k4,4 -k5,5n -k5.5 |
+  awk -F. '
+    { if (lang && $1 != lang) print lang, ver }
+    { lang = $1; ver = substr($0, index($0, ".") + 1) }
+    END { if (lang) print lang, ver }
+  ' | awk -v domain="$domain" -v subdir="$subdir" '
+    {
+      lang = $1
+
+      # Same maintainer as sed, so this one is more up to date.
+      if (lang == "it") next
+
+      ver = $2
+      urlfmt = ""
+      printf "$WGET_COMMAND -O %s/%s.po 'http://www.iro.umontreal.ca/translation/teams/PO/%s/%s-%s.%s.po' &&\n", subdir, lang, lang, domain, ver, lang
+    }
+    END { print ":" }
+  ' | sh &&
+  ls "$subdir"/*.po | sed 's|.*/||; s|\.po$||' >"$subdir/LINGUAS" &&
+  rm "$subdir/$domain.html"
+}
+
+case $SKIP_PO in
+'')
+  case `wget --help` in
+  *'--no-cache'*)
+    no_cache='--no-cache';;
+  *'--cache=on/off'*)
+    no_cache='--cache=off';;
+  *)
+    no_cache='';;
+  esac
+
+  WGET_COMMAND="wget -nv $no_cache"
+  export WGET_COMMAND
+
+  get_translations po $package || exit
+esac
+
+
+# Generate autoconf and automake snippets.
+
+(echo '# This file is generated automatically by "autoboot".' &&
+ echo 'AC_DEFUN([GNULIB_AUTOCONF_SNIPPET],[' &&
+ $gnulib_tool --extract-autoconf-snippet $gnulib_modules |
+   sed '/^AM_GNU_GETTEXT(/ s/\[external]/[no-libtool], [need-ngettext]/' &&
+ echo '])'
+) >build-aux/gnulib.m4 || exit
+
+(echo '# This file is generated automatically by "autoboot".' &&
+ $gnulib_tool --extract-automake-snippet $gnulib_modules |
+ sed 's/^[	 ]*AM_CPPFLAGS[	 ]*+=/# (commented out by autoboot) &/'
+) >lib/gnulib.mk || exit
+
+
+# Reconfigure, getting other files.
+
+echo "$0: autopoint --force ..."
+autopoint --force || exit
+
+# Undo changes to gnulib files that autoreconf made.
+for gnulib_file in $gnulib_files; do
+  dest=`echo $gnulib_file | sed 's,m4/,build-aux/,' `
+  test ! -f $dest || cmp -s $dest $GNULIB_SRCDIR/$gnulib_file || {
+    rm -f $dest &&
+    echo "$0: Copying file $GNULIB_SRCDIR/$gnulib_file again" &&
+    cp -p $GNULIB_SRCDIR/$gnulib_file $dest || exit
+  }
+done
+
+# Make sure aclocal.m4 is not older than input files.
+sleep 1
+
+for command in \
+  'aclocal --force -I build-aux' \
+  'autoconf --force' \
+  'autoheader --force' \
+  'automake --add-missing --copy --force-missing';
+do
+  echo "$0: $command ..."
+  $command || exit
+done
+
+
+echo "$0: done.  Now you can run './configure'."

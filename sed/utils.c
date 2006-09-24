@@ -382,14 +382,6 @@ ck_malloc(size)
   return ret;
 }
 
-/* Panic on failing malloc */
-VOID *
-xmalloc(size)
-  size_t size;
-{
-  return ck_malloc(size);
-}
-
 /* Panic on failing realloc */
 VOID *
 ck_realloc(ptr, size)

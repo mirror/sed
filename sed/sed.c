@@ -59,6 +59,8 @@
 # define ATOI(x)	strtoul(x, NULL, 0)
 #endif
 
+char *program_name;
+
 int extended_regexp_flags = 0;
 
 /* If set, fflush(stdout) on every line output. */
@@ -178,6 +180,7 @@ main(argc, argv)
   int return_code;
   const char *cols = getenv("COLS");
 
+  program_name = argv[0];
   initialize_main (&argc, &argv);
 #if HAVE_SETLOCALE
   /* Set locale according to user's wishes.  */

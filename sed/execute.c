@@ -70,6 +70,7 @@ extern int errno;
 #endif
 
 #include <sys/stat.h>
+#include "stat-macros.h"
 
 
 /* Sed operates a line at a time. */
@@ -706,7 +707,7 @@ open_next_file(name, input)
 
   if (in_place_extension)
     {
-      int output_fd;
+      int input_fd, output_fd;
       char *tmpdir = ck_strdup(name), *p;
       struct stat st;
 
@@ -721,7 +722,8 @@ open_next_file(name, input)
       if (isatty (fileno (input->fp)))
         panic(_("couldn't edit %s: is a terminal"), input->in_file_name);
 
-      fstat (fileno (input->fp), &st);
+      input_fd = fileno (input->fp);
+      fstat (input_fd, &st);
       if (!S_ISREG (st.st_mode))
         panic(_("couldn't edit %s: not a regular file"), input->in_file_name);
 
@@ -733,13 +735,13 @@ open_next_file(name, input)
         panic(_("couldn't open temporary file %s: %s"), input->out_file_name, strerror(errno));
 
       output_fd = fileno (output_file.fp);
-#ifdef HAVE_FCHMOD
-      fchmod (output_fd, st.st_mode);
-#endif
 #ifdef HAVE_FCHOWN
       if (fchown (output_fd, st.st_uid, st.st_gid) == -1)
         fchown (output_fd, -1, st.st_gid);
 #endif
+      copy_acl (input->in_file_name, input_fd,
+		input->out_file_name, output_fd,
+		st.st_mode);
     }
   else
     output_file.fp = stdout;

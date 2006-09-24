@@ -1,5 +1,9 @@
 /* Test re_compile_pattern error messages.  */
 
+#ifdef HAVE_CONFIG_H
+#include "config.h"
+#endif
+
 #include <stdio.h>
 #include <string.h>
 #include <regex.h>

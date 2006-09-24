@@ -1,3 +1,9 @@
+2006-09-24  Paolo Bonzini  <bonzini@gnu.org>
+
+	* sed/execute.c: Support ACLs.
+	* lib/utils.c: Move...
+	* sed/utils.c: ... here, and remove xmalloc.
+
 2006-08-21  Paolo Bonzini  <bonzini@gnu.org>
 
 	* sed/regexp.c: Accept NUL bytes for `.'.  Accept 'a\(b' in

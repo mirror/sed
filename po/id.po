@@ -375,7 +375,6 @@ msgstr "tidak dapat menulis %d item ke %s: %s"
 msgid "couldn't write %d item to %s: %s"
 msgid_plural "couldn't write %d items to %s: %s"
 msgstr[0] "tidak dapat menulis %d item ke %s: %s"
-msgstr[1] "tidak dapat menulis %d item ke %s: %s"
 
 #: lib/utils.c:262 lib/utils.c:278
 #, c-format
