@@ -6,8 +6,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: sed-4.1.1\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-05-16 07:37+0200\n"
+"Report-Msgid-Bugs-To: bonzini@gnu.org\n"
+"POT-Creation-Date: 2006-09-26 00:06+0200\n"
 "PO-Revision-Date: 2004-07-07 17:54+0300\n"
 "Last-Translator: Pavel Maryanov <acid_jack@ukr.net>\n"
 "Language-Team: Russian <ru@li.org>\n"
@@ -334,56 +334,56 @@ msgstr "%s: -e выражение #%lu, символ %lu: %s\n"
 msgid "can't find label for jump to `%s'"
 msgstr "невозможно найти метку для перехода к `%s'"
 
-#: sed/execute.c:650
+#: sed/execute.c:706
 #, c-format
 msgid "%s: can't read %s: %s\n"
 msgstr "%s: невозможно прочитать %s: %s\n"
 
-#: sed/execute.c:673
+#: sed/execute.c:729
 #, c-format
 msgid "couldn't edit %s: is a terminal"
 msgstr "невозможно редактировать %s: это терминал"
 
-#: sed/execute.c:677
+#: sed/execute.c:734
 #, c-format
 msgid "couldn't edit %s: not a regular file"
 msgstr "невозможно редактировать %s: это не обычный файл"
 
-#: sed/execute.c:684 lib/utils.c:196
+#: sed/execute.c:741 sed/utils.c:229
 #, c-format
 msgid "couldn't open temporary file %s: %s"
 msgstr "невозможно открыть временный файл %s: %s"
 
-#: sed/execute.c:1206 sed/execute.c:1387
+#: sed/execute.c:1264 sed/execute.c:1444
 msgid "error in subprocess"
 msgstr "ошибка в подпроцессе"
 
-#: sed/execute.c:1208
+#: sed/execute.c:1266
 msgid "option `e' not supported"
 msgstr "опция `e' не поддерживается"
 
-#: sed/execute.c:1389
+#: sed/execute.c:1446
 msgid "`e' command not supported"
 msgstr "команда `e' не поддерживается"
 
-#: sed/execute.c:1714
+#: sed/execute.c:1786
 msgid "no input files"
 msgstr ""
 
-#: sed/regexp.c:39
+#: sed/regexp.c:40
 msgid "no previous regular expression"
 msgstr "нет предыдущего регулярного выражения"
 
-#: sed/regexp.c:40
+#: sed/regexp.c:41
 msgid "cannot specify modifiers on empty regexp"
 msgstr "невозможно указать модификаторы в пустом регулярном выражении"
 
-#: sed/regexp.c:115
+#: sed/regexp.c:121
 #, c-format
 msgid "invalid reference \\%d on `s' command's RHS"
 msgstr "недопустимая ссылка \\%d на RHS команды `s'"
 
-#: sed/sed.c:93
+#: sed/sed.c:98
 msgid ""
 "  -R, --regexp-perl\n"
 "                 use Perl 5's regular expressions syntax in the script.\n"
@@ -392,7 +392,7 @@ msgstr ""
 "                 использование в скрипте синтаксиса регулярных выражений "
 "Perl 5.\n"
 
-#: sed/sed.c:98
+#: sed/sed.c:103
 #, c-format
 msgid ""
 "Usage: %s [OPTION]... {script-only-if-no-other-script} [input-file]...\n"
@@ -402,7 +402,7 @@ msgstr ""
 "[входной-файл]...\n"
 "\n"
 
-#: sed/sed.c:102
+#: sed/sed.c:107
 #, c-format
 msgid ""
 "  -n, --quiet, --silent\n"
@@ -411,7 +411,7 @@ msgstr ""
 "  -n, --quiet, --silent\n"
 "                 подавление автоматического вывода промежутков\n"
 
-#: sed/sed.c:104
+#: sed/sed.c:109
 #, c-format
 msgid ""
 "  -e script, --expression=script\n"
@@ -420,7 +420,7 @@ msgstr ""
 "  -e script, --expression=script\n"
 "                 добавление скрипта в исполняемые команды\n"
 
-#: sed/sed.c:106
+#: sed/sed.c:111
 #, c-format
 msgid ""
 "  -f script-file, --file=script-file\n"
@@ -430,7 +430,7 @@ msgstr ""
 "  -f script-file, --file=script-file\n"
 "                 добавление содержимого файла-скрипта в исполняемые команды\n"
 
-#: sed/sed.c:108
+#: sed/sed.c:113
 #, c-format
 msgid ""
 "  -i[SUFFIX], --in-place[=SUFFIX]\n"
@@ -440,7 +440,18 @@ msgstr ""
 "                 редактирование файлов на месте (создает копию, если указано "
 "расширение)\n"
 
-#: sed/sed.c:110
+#: sed/sed.c:116
+#, fuzzy, c-format
+msgid ""
+"  -b, --binary\n"
+"                 open files in binary mode (CR+LFs are not processed "
+"specially)\n"
+msgstr ""
+"  -i[СУФФИКС], --in-place[=СУФФИКС]\n"
+"                 редактирование файлов на месте (создает копию, если указано "
+"расширение)\n"
+
+#: sed/sed.c:119
 #, c-format
 msgid ""
 "  -l N, --line-length=N\n"
@@ -449,7 +460,7 @@ msgstr ""
 "  -l N, --line-length=N\n"
 "                 указание желаемой длины переносимой строки для команды `l'\n"
 
-#: sed/sed.c:112
+#: sed/sed.c:121
 #, c-format
 msgid ""
 "  --posix\n"
@@ -458,7 +469,7 @@ msgstr ""
 "  --posix\n"
 "                 отключение всех расширений GNU.\n"
 
-#: sed/sed.c:114
+#: sed/sed.c:123
 #, c-format
 msgid ""
 "  -r, --regexp-extended\n"
@@ -467,7 +478,7 @@ msgstr ""
 "  -r, --regexp-extended\n"
 "                 использование в скрипте расширенных регулярных выражений.\n"
 
-#: sed/sed.c:117
+#: sed/sed.c:126
 #, c-format
 msgid ""
 "  -s, --separate\n"
@@ -479,7 +490,7 @@ msgstr ""
 "                 допущение, что файлы разделены, а не в виде одного\n"
 "                 длинного непрерывного потока.\n"
 
-#: sed/sed.c:120
+#: sed/sed.c:129
 #, c-format
 msgid ""
 "  -u, --unbuffered\n"
@@ -491,17 +502,17 @@ msgstr ""
 "                 загрузка минимального объема данных из входных файлов\n"
 "                 и более частый сброс на диск выходных буферов\n"
 
-#: sed/sed.c:123
+#: sed/sed.c:132
 #, c-format
 msgid "      --help     display this help and exit\n"
 msgstr "      --help     вывод этой справки и выход\n"
 
-#: sed/sed.c:124
+#: sed/sed.c:133
 #, c-format
 msgid "      --version  output version information and exit\n"
 msgstr "      --version  вывод информации о версии и выход\n"
 
-#: sed/sed.c:125
+#: sed/sed.c:134
 #, c-format
 msgid ""
 "\n"
@@ -518,7 +529,7 @@ msgstr ""
 "файлы не указаны, тогда читается стантартный ввод.\n"
 "\n"
 
-#: sed/sed.c:131
+#: sed/sed.c:140
 #, c-format
 msgid ""
 "E-mail bug reports to: %s .\n"
@@ -527,12 +538,12 @@ msgstr ""
 "Отчеты об ошибках отправляйте по адресу: %s .\n"
 "Убедитесь, что включили где-либо в поле ``Тема:'' слово ``%s''.\n"
 
-#: sed/sed.c:268
+#: sed/sed.c:285
 #, c-format
 msgid "super-sed version %s\n"
 msgstr "super-sed версия %s\n"
 
-#: sed/sed.c:269
+#: sed/sed.c:286
 #, c-format
 msgid ""
 "based on GNU sed version %s\n"
@@ -541,12 +552,12 @@ msgstr ""
 "основан на GNU sed версии %s\n"
 "\n"
 
-#: sed/sed.c:271
+#: sed/sed.c:288
 #, c-format
 msgid "GNU sed version %s\n"
 msgstr "GNU sed версия %s\n"
 
-#: sed/sed.c:273
+#: sed/sed.c:290
 #, c-format
 msgid ""
 "%s\n"
@@ -560,74 +571,34 @@ msgstr ""
 "ПРИГОДНОСТИ ДЛЯ ПРОДАЖИ или ПРИМЕНИМОСТИ ДЛЯ КОНКРЕТНОЙ ЦЕЛИ, в той мере,\n"
 "в которой это может быть допущено законодательством.\n"
 
-#: lib/utils.c:98 lib/utils.c:336
+#: sed/utils.c:98 sed/utils.c:363
 #, c-format
 msgid "cannot remove %s: %s"
 msgstr "невозможно удалить %s: %s"
 
-#: lib/utils.c:143
+#: sed/utils.c:168
 #, c-format
 msgid "couldn't open file %s: %s"
 msgstr "невозможно открыть файл %s: %s"
 
-#: lib/utils.c:220
+#: sed/utils.c:192
+#, fuzzy, c-format
+msgid "couldn't attach to %s: %s"
+msgstr "невозможно записать %d элемент в %s: %s"
+
+#: sed/utils.c:247
 #, c-format
 msgid "couldn't write %d item to %s: %s"
 msgid_plural "couldn't write %d items to %s: %s"
 msgstr[0] "невозможно записать %d элемент в %s: %s"
 msgstr[1] "невозможно записать %d элементов в %s: %s"
 
-#: lib/utils.c:235 lib/utils.c:251
+#: sed/utils.c:262 sed/utils.c:278
 #, c-format
 msgid "read error on %s: %s"
 msgstr "ошибка чтения %s: %s"
 
-#: lib/utils.c:341
+#: sed/utils.c:368
 #, c-format
 msgid "cannot rename %s: %s"
 msgstr "невозможно переименовать %s: %s"
-
-#~ msgid "Success"
-#~ msgstr "Успешно"
-
-#~ msgid "No match"
-#~ msgstr "Нет соотвествия"
-
-#~ msgid "Invalid regular expression"
-#~ msgstr "Недопустимое регулярное выражение"
-
-#~ msgid "Invalid collation character"
-#~ msgstr "Недопустимый символ сравнения"
-
-#~ msgid "Trailing backslash"
-#~ msgstr "Завершающая обратная косая черта"
-
-#~ msgid "Invalid back reference"
-#~ msgstr "Недопустимая обратная ссылка"
-
-#~ msgid "Unmatched [ or [^"
-#~ msgstr "Непарный символ [ или [^"
-
-#~ msgid "Unmatched ( or \\("
-#~ msgstr "Непарный символ ( or \\("
-
-#~ msgid "Unmatched \\{"
-#~ msgstr "Непарный символ \\{"
-
-#~ msgid "Invalid range end"
-#~ msgstr "Недопустимое окончание диапазона"
-
-#~ msgid "Memory exhausted"
-#~ msgstr "Память исчерпана"
-
-#~ msgid "Invalid preceding regular expression"
-#~ msgstr "Недопустимое предшествующее регулярное выражение"
-
-#~ msgid "Premature end of regular expression"
-#~ msgstr "Преждевременное окончание регулярного выражения"
-
-#~ msgid "Unmatched ) or \\)"
-#~ msgstr "Непарный символ ) или \\)"
-
-#~ msgid "No previous regular expression"
-#~ msgstr "Нет предыдущего регулярного выражения"

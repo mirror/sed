@@ -70,6 +70,7 @@ extern int errno;
 #endif
 
 #include <sys/stat.h>
+#include "stat-macros.h"
 
 
 /* Sed operates a line at a time. */
@@ -83,6 +84,12 @@ struct line {
   mbstate_t mbstate;
 #endif
 };
+
+#ifdef HAVE_MBRTOWC
+#define SIZEOF_LINE	(sizeof (struct line) - sizeof (mbstate_t))
+#else
+#define SIZEOF_LINE	(sizeof (struct line))
+#endif
 
 /* A queue of text to write out at the end of a cycle
    (filled by the "a", "r" and "R" commands.) */
@@ -367,11 +374,13 @@ str_append_modified(to, string, length, type)
 #endif
 }
 
-/* initialize a "struct line" buffer */
-static void line_init P_((struct line *, size_t initial_size));
+/* Initialize a "struct line" buffer.  Copy multibyte state from `state'
+   if not null.  */
+static void line_init P_((struct line *, struct line *, size_t initial_size));
 static void
-line_init(buf, initial_size)
+line_init(buf, state, initial_size)
   struct line *buf;
+  struct line *state;
   size_t initial_size;
 {
   buf->text = MALLOC(initial_size, char);
@@ -381,18 +390,43 @@ line_init(buf, initial_size)
   buf->chomped = true;
 
 #ifdef HAVE_MBRTOWC
-  memset (&buf->mbstate, 0, sizeof (buf->mbstate));
+  if (state)
+    memcpy (&buf->mbstate, &state->mbstate, sizeof (buf->mbstate));
+  else
+    memset (&buf->mbstate, 0, sizeof (buf->mbstate));
 #endif
+}
 
+/* Reset a "struct line" buffer to length zero.  Copy multibyte state from
+   `state' if not null.  */
+static void line_reset P_((struct line *, struct line *));
+static void
+line_reset(buf, state)
+  struct line *buf, *state;
+{
+  if (buf->alloc == 0)
+    line_init(buf, state, INITIAL_BUFFER_SIZE);
+  else
+    {
+      buf->length = 0;
+#ifdef HAVE_MBRTOWC
+      if (state)
+        memcpy (&buf->mbstate, &state->mbstate, sizeof (buf->mbstate));
+      else
+        memset (&buf->mbstate, 0, sizeof (buf->mbstate));
+#endif
+    }
 }
 
 /* Copy the contents of the line `from' into the line `to'.
-   This destroys the old contents of `to'. */
-static void line_copy P_((struct line *from, struct line *to));
+   This destroys the old contents of `to'.
+   Copy the multibyte state if `state' is true. */
+static void line_copy P_((struct line *from, struct line *to, bool state));
 static void
-line_copy(from, to)
+line_copy(from, to, state)
   struct line *from;
   struct line *to;
+  bool state;
 {
   /* Remove the inactive portion in the destination buffer. */
   to->alloc += to->active - to->text;
@@ -416,38 +450,53 @@ line_copy(from, to)
   MEMCPY(to->active, from->active, from->length);
 
 #ifdef HAVE_MBRTOWC
-  MEMCPY(&to->mbstate, &from->mbstate, sizeof (from->mbstate));
+  if (state)
+    MEMCPY(&to->mbstate, &from->mbstate, sizeof (from->mbstate));
 #endif
 }
 
-/* Append the contents of the line `from' to the line `to'. */
-static void line_append P_((struct line *from, struct line *to));
+/* Append the contents of the line `from' to the line `to'.
+   Copy the multibyte state if `state' is true. */
+static void line_append P_((struct line *from, struct line *to, bool state));
 static void
-line_append(from, to)
+line_append(from, to, state)
   struct line *from;
   struct line *to;
+  bool state;
 {
   str_append(to, "\n", 1);
   str_append(to, from->active, from->length);
   to->chomped = from->chomped;
 
 #ifdef HAVE_MBRTOWC
-  MEMCPY (&to->mbstate, &from->mbstate, sizeof (from->mbstate));
+  if (state)
+    MEMCPY (&to->mbstate, &from->mbstate, sizeof (from->mbstate));
 #endif
 }
 
-/* Exchange the contents of two "struct line" buffers. */
-static void line_exchange P_((struct line *, struct line *));
+/* Exchange two "struct line" buffers.
+   Copy the multibyte state if `state' is true. */
+static void line_exchange P_((struct line *a, struct line *b, bool state));
 static void
-line_exchange(a, b)
+line_exchange(a, b, state)
   struct line *a;
   struct line *b;
+  bool state;
 {
   struct line t;
 
-  MEMCPY(&t,  a, sizeof(struct line));
-  MEMCPY( a,  b, sizeof(struct line));
-  MEMCPY( b, &t, sizeof(struct line));
+  if (state)
+    {
+      MEMCPY(&t,  a, sizeof (struct line));
+      MEMCPY( a,  b, sizeof (struct line));
+      MEMCPY( b, &t, sizeof (struct line));
+    }
+  else
+    {
+      MEMCPY(&t,  a, SIZEOF_LINE);
+      MEMCPY( a,  b, SIZEOF_LINE);
+      MEMCPY( b, &t, SIZEOF_LINE);
+    }
 }
 
 
@@ -583,7 +632,7 @@ dump_append_queue()
 	     be treated as if it were an empty file, causing no error
 	     condition."  IEEE Std 1003.2-1992
 	     So, don't fail. */
-	  fp = ck_fopen(p->fname, "r", false);
+	  fp = ck_fopen(p->fname, read_mode, false);
 	  if (fp)
 	    {
 	      while ((cnt = ck_fread(buf, 1, sizeof buf, fp)) > 0)
@@ -643,9 +692,9 @@ open_next_file(name, input)
   if (name[0] == '-' && name[1] == '\0' && !in_place_extension)
     {
       clearerr(stdin);	/* clear any stale EOF indication */
-      input->fp = stdin;
+      input->fp = ck_fdopen (fileno (stdin), "stdin", read_mode, false);
     }
-  else if ( ! (input->fp = ck_fopen(name, "r", false)) )
+  else if ( ! (input->fp = ck_fopen(name, read_mode, false)) )
     {
       const char *ptr = strerror(errno);
       fprintf(stderr, _("%s: can't read %s: %s\n"), myname, name, ptr);
@@ -658,7 +707,7 @@ open_next_file(name, input)
 
   if (in_place_extension)
     {
-      int output_fd;
+      int input_fd, output_fd;
       char *tmpdir = ck_strdup(name), *p;
       struct stat st;
 
@@ -673,7 +722,8 @@ open_next_file(name, input)
       if (isatty (fileno (input->fp)))
         panic(_("couldn't edit %s: is a terminal"), input->in_file_name);
 
-      fstat (fileno (input->fp), &st);
+      input_fd = fileno (input->fp);
+      fstat (input_fd, &st);
       if (!S_ISREG (st.st_mode))
         panic(_("couldn't edit %s: not a regular file"), input->in_file_name);
 
@@ -685,13 +735,13 @@ open_next_file(name, input)
         panic(_("couldn't open temporary file %s: %s"), input->out_file_name, strerror(errno));
 
       output_fd = fileno (output_file.fp);
-#ifdef HAVE_FCHMOD
-      fchmod (output_fd, st.st_mode);
-#endif
 #ifdef HAVE_FCHOWN
       if (fchown (output_fd, st.st_uid, st.st_gid) == -1)
         fchown (output_fd, -1, st.st_gid);
 #endif
+      copy_acl (input->in_file_name, input_fd,
+		input->out_file_name, output_fd,
+		st.st_mode);
     }
   else
     output_file.fp = stdout;
@@ -1073,9 +1123,7 @@ do_subst(sub)
 
   static struct re_registers regs;
 
-  if (s_accum.alloc == 0)
-    line_init(&s_accum, INITIAL_BUFFER_SIZE);
-  s_accum.length = 0;
+  line_reset(&s_accum, &line);
 
   /* The first part of the loop optimizes s/xxx// when xxx is at the
      start, and s/xxx$// */
@@ -1167,8 +1215,8 @@ do_subst(sub)
 
   /* Exchange line and s_accum.  This can be much cheaper
      than copying s_accum.active into line.text (for huge lines). */
-  line_exchange(&line, &s_accum);
-  
+  line_exchange(&line, &s_accum, false);
+
   /* Finish up. */
   if (count < sub->numb)
     return;
@@ -1181,7 +1229,7 @@ do_subst(sub)
     {
 #ifdef HAVE_POPEN
       FILE *pipe;
-      s_accum.length = 0;
+      line_reset(&s_accum, NULL);
       
       str_append (&line, "", 1);
       pipe = popen(line.active, "r");
@@ -1198,7 +1246,10 @@ do_subst(sub)
 	  
 	  pclose (pipe);
 
-	  line_exchange(&line, &s_accum);
+	  /* Exchange line and s_accum.  This can be much cheaper than copying
+	     s_accum.active into line.text (for huge lines).  See comment above
+	     for 'g' as to while the third argument is incorrect anyway.  */
+	  line_exchange(&line, &s_accum, true);
 	  if (line.length &&
 	      line.active[line.length - 1] == '\n')
 	    line.length--;
@@ -1338,9 +1389,7 @@ execute_program(vec, input)
 #ifdef HAVE_POPEN
 	      FILE *pipe;
 	      int cmd_length = cur_cmd->x.cmd_txt.text_length;
-	      if (s_accum.alloc == 0)
-		line_init(&s_accum, INITIAL_BUFFER_SIZE);
-	      s_accum.length = 0;
+	      line_reset(&s_accum, NULL);
 
 	      if (!cmd_length)
 		{
@@ -1377,8 +1426,9 @@ execute_program(vec, input)
 
 		      /* Exchange line and s_accum.  This can be much
 			 cheaper than copying s_accum.active into line.text
-			 (for huge lines). */
-		      line_exchange(&line, &s_accum);
+			 (for huge lines).  See comment above for 'g' as
+			 to while the third argument is incorrect anyway.  */
+		      line_exchange(&line, &s_accum, true);
 		    }
                   else
                     flush_output(output_file.fp);
@@ -1393,19 +1443,33 @@ execute_program(vec, input)
 	    }
 
 	    case 'g':
-	      line_copy(&hold, &line);
+	      /* We do not have a really good choice for the third parameter.
+		 The problem is that hold space and the input file might as
+		 well have different states; copying it from hold space means
+		 that subsequent input might be read incorrectly, while
+		 keeping it as in pattern space means that commands operating
+		 on the moved buffer might consider a wrong character set.
+		 We keep it true because it's what sed <= 4.1.5 did.  */
+	      line_copy(&hold, &line, true);
 	      break;
 
 	    case 'G':
-	      line_append(&hold, &line);
+	      /* We do not have a really good choice for the third parameter.
+		 The problem is that hold space and pattern space might as
+		 well have different states.  So, true is as wrong as false.
+		 We keep it true because it's what sed <= 4.1.5 did, but
+		 we could consider having line_ap.  */
+	      line_append(&hold, &line, true);
 	      break;
 
 	    case 'h':
-	      line_copy(&line, &hold);
+	      /* Here, it is ok to have true.  */
+	      line_copy(&line, &hold, true);
 	      break;
 
 	    case 'H':
-	      line_append(&line, &hold);
+	      /* See comment above for 'G' regarding the third parameter.  */
+	      line_append(&line, &hold, true);
 	      break;
 
 	    case 'i':
@@ -1536,7 +1600,8 @@ execute_program(vec, input)
 	      break;
 
 	    case 'x':
-	      line_exchange(&line, &hold);
+	      /* See comment above for 'g' regarding the third parameter.  */
+	      line_exchange(&line, &hold, false);
 	      break;
 
 	    case 'y':
@@ -1701,9 +1766,9 @@ process_files(the_program, argv)
   struct input input;
   int status;
 
-  line_init(&line, INITIAL_BUFFER_SIZE);
-  line_init(&hold, 0);
-  line_init(&buffer, 0);
+  line_init(&line, NULL, INITIAL_BUFFER_SIZE);
+  line_init(&hold, NULL, 0);
+  line_init(&buffer, NULL, 0);
 
 #ifdef EXPERIMENTAL_DASH_N_OPTIMIZATION
   branches = count_branches(the_program);

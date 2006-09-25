@@ -5,8 +5,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: GNU sed 3.02.80\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-05-16 07:37+0200\n"
+"Report-Msgid-Bugs-To: bonzini@gnu.org\n"
+"POT-Creation-Date: 2006-09-26 00:06+0200\n"
 "PO-Revision-Date: 2001-10-12 17:26+0900\n"
 "Last-Translator: Jong-Hoon Ryu <redhat4u@netian.com>\n"
 "Language-Team: Korean <ko@li.org>\n"
@@ -342,83 +342,83 @@ msgstr "%s: -e expression #%lu, char %lu: %s\n"
 msgid "can't find label for jump to `%s'"
 msgstr "`%s' (으)로 점프할 레이블을 찾을 수 없습니다"
 
-#: sed/execute.c:650
+#: sed/execute.c:706
 #, c-format
 msgid "%s: can't read %s: %s\n"
 msgstr "%s: %s (을)를 읽을 수 없음: %s\n"
 
-#: sed/execute.c:673
+#: sed/execute.c:729
 #, fuzzy, c-format
 msgid "couldn't edit %s: is a terminal"
 msgstr "%s 파일을 열 수 없습니다"
 
-#: sed/execute.c:677
+#: sed/execute.c:734
 #, c-format
 msgid "couldn't edit %s: not a regular file"
 msgstr ""
 
-#: sed/execute.c:684 lib/utils.c:196
+#: sed/execute.c:741 sed/utils.c:229
 #, fuzzy, c-format
 msgid "couldn't open temporary file %s: %s"
 msgstr "%s 파일을 열 수 없습니다"
 
-#: sed/execute.c:1206 sed/execute.c:1387
+#: sed/execute.c:1264 sed/execute.c:1444
 msgid "error in subprocess"
 msgstr ""
 
-#: sed/execute.c:1208
+#: sed/execute.c:1266
 msgid "option `e' not supported"
 msgstr ""
 
-#: sed/execute.c:1389
+#: sed/execute.c:1446
 msgid "`e' command not supported"
 msgstr ""
 
-#: sed/execute.c:1714
+#: sed/execute.c:1786
 msgid "no input files"
 msgstr ""
 
-#: sed/regexp.c:39
+#: sed/regexp.c:40
 msgid "no previous regular expression"
 msgstr ""
 
-#: sed/regexp.c:40
+#: sed/regexp.c:41
 msgid "cannot specify modifiers on empty regexp"
 msgstr ""
 
-#: sed/regexp.c:115
+#: sed/regexp.c:121
 #, c-format
 msgid "invalid reference \\%d on `s' command's RHS"
 msgstr ""
 
-#: sed/sed.c:93
+#: sed/sed.c:98
 msgid ""
 "  -R, --regexp-perl\n"
 "                 use Perl 5's regular expressions syntax in the script.\n"
 msgstr ""
 
-#: sed/sed.c:98
+#: sed/sed.c:103
 #, c-format
 msgid ""
 "Usage: %s [OPTION]... {script-only-if-no-other-script} [input-file]...\n"
 "\n"
 msgstr ""
 
-#: sed/sed.c:102
+#: sed/sed.c:107
 #, c-format
 msgid ""
 "  -n, --quiet, --silent\n"
 "                 suppress automatic printing of pattern space\n"
 msgstr ""
 
-#: sed/sed.c:104
+#: sed/sed.c:109
 #, c-format
 msgid ""
 "  -e script, --expression=script\n"
 "                 add the script to the commands to be executed\n"
 msgstr ""
 
-#: sed/sed.c:106
+#: sed/sed.c:111
 #, c-format
 msgid ""
 "  -f script-file, --file=script-file\n"
@@ -426,35 +426,43 @@ msgid ""
 "executed\n"
 msgstr ""
 
-#: sed/sed.c:108
+#: sed/sed.c:113
 #, c-format
 msgid ""
 "  -i[SUFFIX], --in-place[=SUFFIX]\n"
 "                 edit files in place (makes backup if extension supplied)\n"
 msgstr ""
 
-#: sed/sed.c:110
+#: sed/sed.c:116
+#, c-format
+msgid ""
+"  -b, --binary\n"
+"                 open files in binary mode (CR+LFs are not processed "
+"specially)\n"
+msgstr ""
+
+#: sed/sed.c:119
 #, c-format
 msgid ""
 "  -l N, --line-length=N\n"
 "                 specify the desired line-wrap length for the `l' command\n"
 msgstr ""
 
-#: sed/sed.c:112
+#: sed/sed.c:121
 #, c-format
 msgid ""
 "  --posix\n"
 "                 disable all GNU extensions.\n"
 msgstr ""
 
-#: sed/sed.c:114
+#: sed/sed.c:123
 #, c-format
 msgid ""
 "  -r, --regexp-extended\n"
 "                 use extended regular expressions in the script.\n"
 msgstr ""
 
-#: sed/sed.c:117
+#: sed/sed.c:126
 #, c-format
 msgid ""
 "  -s, --separate\n"
@@ -463,7 +471,7 @@ msgid ""
 "                 long stream.\n"
 msgstr ""
 
-#: sed/sed.c:120
+#: sed/sed.c:129
 #, c-format
 msgid ""
 "  -u, --unbuffered\n"
@@ -472,17 +480,17 @@ msgid ""
 "                 the output buffers more often\n"
 msgstr ""
 
-#: sed/sed.c:123
+#: sed/sed.c:132
 #, c-format
 msgid "      --help     display this help and exit\n"
 msgstr ""
 
-#: sed/sed.c:124
+#: sed/sed.c:133
 #, c-format
 msgid "      --version  output version information and exit\n"
 msgstr ""
 
-#: sed/sed.c:125
+#: sed/sed.c:134
 #, c-format
 msgid ""
 "\n"
@@ -493,7 +501,7 @@ msgid ""
 "\n"
 msgstr ""
 
-#: sed/sed.c:131
+#: sed/sed.c:140
 #, c-format
 msgid ""
 "E-mail bug reports to: %s .\n"
@@ -502,24 +510,24 @@ msgstr ""
 "버그를 보고할 E-mail 주소: %s .\n"
 "``Subject:'' 항목에 반드시 ``%s'' 단어를 포함해 주시기 바랍니다.\n"
 
-#: sed/sed.c:268
+#: sed/sed.c:285
 #, c-format
 msgid "super-sed version %s\n"
 msgstr ""
 
-#: sed/sed.c:269
+#: sed/sed.c:286
 #, c-format
 msgid ""
 "based on GNU sed version %s\n"
 "\n"
 msgstr ""
 
-#: sed/sed.c:271
+#: sed/sed.c:288
 #, c-format
 msgid "GNU sed version %s\n"
 msgstr ""
 
-#: sed/sed.c:273
+#: sed/sed.c:290
 #, c-format
 msgid ""
 "%s\n"
@@ -532,45 +540,34 @@ msgstr ""
 "참고하시기 바랍니다.  이 프로그램은 법에 저촉되지 않는 범위에서 상업적이나\n"
 "특수 목적으로 사용될 경우를 포함한 어떠한 경우에도 보증하지 않습니다.\n"
 
-#: lib/utils.c:98 lib/utils.c:336
+#: sed/utils.c:98 sed/utils.c:363
 #, fuzzy, c-format
 msgid "cannot remove %s: %s"
 msgstr "%s: %s (을)를 읽을 수 없음: %s\n"
 
-#: lib/utils.c:143
+#: sed/utils.c:168
 #, fuzzy, c-format
 msgid "couldn't open file %s: %s"
 msgstr "%s 파일을 열 수 없습니다"
 
-#: lib/utils.c:220
+#: sed/utils.c:192
+#, fuzzy, c-format
+msgid "couldn't attach to %s: %s"
+msgstr "%2$s 에 %1$d 항목(item)을 기록할 수 없습니다: %3$s"
+
+#: sed/utils.c:247
 #, fuzzy, c-format
 msgid "couldn't write %d item to %s: %s"
 msgid_plural "couldn't write %d items to %s: %s"
 msgstr[0] "%2$s 에 %1$d 항목(item)을 기록할 수 없습니다: %3$s"
 msgstr[1] "%2$s 에 %1$d 항목(item)을 기록할 수 없습니다: %3$s"
 
-#: lib/utils.c:235 lib/utils.c:251
+#: sed/utils.c:262 sed/utils.c:278
 #, c-format
 msgid "read error on %s: %s"
 msgstr "%s 의 내용 읽기 오류: %s"
 
-#: lib/utils.c:341
+#: sed/utils.c:368
 #, fuzzy, c-format
 msgid "cannot rename %s: %s"
 msgstr "%s: %s (을)를 읽을 수 없음: %s\n"
-
-#, fuzzy
-#~ msgid "Unmatched [ or [^"
-#~ msgstr "`{' 가 일치하지 않습니다"
-
-#, fuzzy
-#~ msgid "Unmatched ( or \\("
-#~ msgstr "`{' 가 일치하지 않습니다"
-
-#, fuzzy
-#~ msgid "Unmatched \\{"
-#~ msgstr "`{' 가 일치하지 않습니다"
-
-#, fuzzy
-#~ msgid "Unmatched ) or \\)"
-#~ msgstr "`{' 가 일치하지 않습니다"

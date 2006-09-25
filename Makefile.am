@@ -2,7 +2,7 @@
 
 # Automake requirements
 AUTOMAKE_OPTIONS = gnits 1.8
-ACLOCAL_AMFLAGS = -I config
+ACLOCAL_AMFLAGS = -I build-aux
 
 PACKAGE = sed
 

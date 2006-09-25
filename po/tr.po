@@ -5,8 +5,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: sed 4.0.9\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-05-16 07:37+0200\n"
+"Report-Msgid-Bugs-To: bonzini@gnu.org\n"
+"POT-Creation-Date: 2006-09-26 00:06+0200\n"
 "PO-Revision-Date: 2004-05-19 18:06+0300\n"
 "Last-Translator: Deniz Akkus Kanca <deniz@arayan.com>\n"
 "Language-Team: Turkish <gnu-tr-u12a@lists.sourceforge.net>\n"
@@ -350,58 +350,58 @@ msgstr "%s: -e ifade #%lu, harf %lu: %s\n"
 msgid "can't find label for jump to `%s'"
 msgstr "`%s'e atlamak için etiket bulunamıyor"
 
-#: sed/execute.c:650
+#: sed/execute.c:706
 #, c-format
 msgid "%s: can't read %s: %s\n"
 msgstr "%s: %s okunamıyor: %s\n"
 
-#: sed/execute.c:673
+#: sed/execute.c:729
 #, fuzzy, c-format
 msgid "couldn't edit %s: is a terminal"
 msgstr "%d sayıda öğe %s'e yazılamadı: %s"
 
-#: sed/execute.c:677
+#: sed/execute.c:734
 #, c-format
 msgid "couldn't edit %s: not a regular file"
 msgstr ""
 
-#: sed/execute.c:684 lib/utils.c:196
+#: sed/execute.c:741 sed/utils.c:229
 #, fuzzy, c-format
 msgid "couldn't open temporary file %s: %s"
 msgstr "Geçici dosya %s açılamadı: %s"
 
-#: sed/execute.c:1206 sed/execute.c:1387
+#: sed/execute.c:1264 sed/execute.c:1444
 msgid "error in subprocess"
 msgstr "altsüreçte hata"
 
-#: sed/execute.c:1208
+#: sed/execute.c:1266
 msgid "option `e' not supported"
 msgstr " e' seçeneği desteklenmiyor"
 
-#: sed/execute.c:1389
+#: sed/execute.c:1446
 msgid "`e' command not supported"
 msgstr "`e' komutu desteklenmiyor"
 
-#: sed/execute.c:1714
+#: sed/execute.c:1786
 msgid "no input files"
 msgstr ""
 
-#: sed/regexp.c:39
+#: sed/regexp.c:40
 #, fuzzy
 msgid "no previous regular expression"
 msgstr "Daha önce düzenli ifade yok"
 
-#: sed/regexp.c:40
+#: sed/regexp.c:41
 #, fuzzy
 msgid "cannot specify modifiers on empty regexp"
 msgstr "Boş düzenli ifadeye değiştirici atanamaz"
 
-#: sed/regexp.c:115
+#: sed/regexp.c:121
 #, fuzzy, c-format
 msgid "invalid reference \\%d on `s' command's RHS"
 msgstr "`s' komutunun RHS'sinde geçersiz \\%d referansı"
 
-#: sed/sed.c:93
+#: sed/sed.c:98
 msgid ""
 "  -R, --regexp-perl\n"
 "                 use Perl 5's regular expressions syntax in the script.\n"
@@ -409,28 +409,28 @@ msgstr ""
 "  -R, --regexp-perl\n"
 "                 betikte Perl 5'in düzenli ifade sözdizimini kullanır.\n"
 
-#: sed/sed.c:98
+#: sed/sed.c:103
 #, c-format
 msgid ""
 "Usage: %s [OPTION]... {script-only-if-no-other-script} [input-file]...\n"
 "\n"
 msgstr ""
 
-#: sed/sed.c:102
+#: sed/sed.c:107
 #, c-format
 msgid ""
 "  -n, --quiet, --silent\n"
 "                 suppress automatic printing of pattern space\n"
 msgstr ""
 
-#: sed/sed.c:104
+#: sed/sed.c:109
 #, c-format
 msgid ""
 "  -e script, --expression=script\n"
 "                 add the script to the commands to be executed\n"
 msgstr ""
 
-#: sed/sed.c:106
+#: sed/sed.c:111
 #, c-format
 msgid ""
 "  -f script-file, --file=script-file\n"
@@ -438,28 +438,36 @@ msgid ""
 "executed\n"
 msgstr ""
 
-#: sed/sed.c:108
+#: sed/sed.c:113
 #, c-format
 msgid ""
 "  -i[SUFFIX], --in-place[=SUFFIX]\n"
 "                 edit files in place (makes backup if extension supplied)\n"
 msgstr ""
 
-#: sed/sed.c:110
+#: sed/sed.c:116
+#, c-format
+msgid ""
+"  -b, --binary\n"
+"                 open files in binary mode (CR+LFs are not processed "
+"specially)\n"
+msgstr ""
+
+#: sed/sed.c:119
 #, c-format
 msgid ""
 "  -l N, --line-length=N\n"
 "                 specify the desired line-wrap length for the `l' command\n"
 msgstr ""
 
-#: sed/sed.c:112
+#: sed/sed.c:121
 #, c-format
 msgid ""
 "  --posix\n"
 "                 disable all GNU extensions.\n"
 msgstr ""
 
-#: sed/sed.c:114
+#: sed/sed.c:123
 #, fuzzy, c-format
 msgid ""
 "  -r, --regexp-extended\n"
@@ -468,7 +476,7 @@ msgstr ""
 "  -R, --regexp-perl\n"
 "                 betikte Perl 5'in düzenli ifade sözdizimini kullanır.\n"
 
-#: sed/sed.c:117
+#: sed/sed.c:126
 #, c-format
 msgid ""
 "  -s, --separate\n"
@@ -477,7 +485,7 @@ msgid ""
 "                 long stream.\n"
 msgstr ""
 
-#: sed/sed.c:120
+#: sed/sed.c:129
 #, c-format
 msgid ""
 "  -u, --unbuffered\n"
@@ -486,17 +494,17 @@ msgid ""
 "                 the output buffers more often\n"
 msgstr ""
 
-#: sed/sed.c:123
+#: sed/sed.c:132
 #, c-format
 msgid "      --help     display this help and exit\n"
 msgstr ""
 
-#: sed/sed.c:124
+#: sed/sed.c:133
 #, c-format
 msgid "      --version  output version information and exit\n"
 msgstr ""
 
-#: sed/sed.c:125
+#: sed/sed.c:134
 #, c-format
 msgid ""
 "\n"
@@ -507,7 +515,7 @@ msgid ""
 "\n"
 msgstr ""
 
-#: sed/sed.c:131
+#: sed/sed.c:140
 #, c-format
 msgid ""
 "E-mail bug reports to: %s .\n"
@@ -517,12 +525,12 @@ msgstr ""
 "<gnu-tr-u12a@lists.sourceforge.net> adresine bildirin. \n"
 "``%s'' sözcüğünün Konu başlığında yer almasına dikkat edin. \n"
 
-#: sed/sed.c:268
+#: sed/sed.c:285
 #, c-format
 msgid "super-sed version %s\n"
 msgstr "super-sed sürüm %s\n"
 
-#: sed/sed.c:269
+#: sed/sed.c:286
 #, fuzzy, c-format
 msgid ""
 "based on GNU sed version %s\n"
@@ -531,12 +539,12 @@ msgstr ""
 "GNU sed sürümü 3.02.80 temel alınmıştır\n"
 "\n"
 
-#: sed/sed.c:271
+#: sed/sed.c:288
 #, c-format
 msgid "GNU sed version %s\n"
 msgstr "GNU sed sürümü %s\n"
 
-#: sed/sed.c:273
+#: sed/sed.c:290
 #, c-format
 msgid ""
 "%s\n"
@@ -549,81 +557,33 @@ msgstr ""
 "Hiçbir garantisi yoktur; hatta SATILABİLİRLİĞİ veya HERHANGİ BİR AMACA\n"
 "UYGUNLUĞU için bile garanti verilmez.\n"
 
-#: lib/utils.c:98 lib/utils.c:336
+#: sed/utils.c:98 sed/utils.c:363
 #, fuzzy, c-format
 msgid "cannot remove %s: %s"
 msgstr "%s: %s okunamıyor: %s\n"
 
-#: lib/utils.c:143
+#: sed/utils.c:168
 #, fuzzy, c-format
 msgid "couldn't open file %s: %s"
 msgstr "%s dosyası açılamadı: %s"
 
-#: lib/utils.c:220
+#: sed/utils.c:192
+#, fuzzy, c-format
+msgid "couldn't attach to %s: %s"
+msgstr "%d sayıda öğe %s'e yazılamadı: %s"
+
+#: sed/utils.c:247
 #, c-format
 msgid "couldn't write %d item to %s: %s"
 msgid_plural "couldn't write %d items to %s: %s"
 msgstr[0] "%d sayıda öğe %s'e yazılamadı: %s"
-msgstr[1] "%d sayıda öğe %s'e yazılamadı: %s"
 
-#: lib/utils.c:235 lib/utils.c:251
+#: sed/utils.c:262 sed/utils.c:278
 #, c-format
 msgid "read error on %s: %s"
 msgstr "%s'de okuma hatası: %s"
 
-#: lib/utils.c:341
+#: sed/utils.c:368
 #, fuzzy, c-format
 msgid "cannot rename %s: %s"
 msgstr "%s: %s okunamıyor: %s\n"
-
-#~ msgid "Success"
-#~ msgstr "Başarılı"
-
-#~ msgid "No match"
-#~ msgstr "Eşleşme bulunamadı"
-
-#
-#~ msgid "Invalid regular expression"
-#~ msgstr "Hatalı düzenli ifade"
-
-#~ msgid "Invalid collation character"
-#~ msgstr "Hatalı birleştirme karakteri"
-
-#~ msgid "Trailing backslash"
-#~ msgstr "Sonda fazla gerikesme var"
-
-#~ msgid "Invalid back reference"
-#~ msgstr "Hatalı geri referans"
-
-#
-#~ msgid "Unmatched [ or [^"
-#~ msgstr "Eşleşmeyen [ veya [^"
-
-#
-#~ msgid "Unmatched ( or \\("
-#~ msgstr "Eşleşmeyen ( veya \\("
-
-#
-#~ msgid "Unmatched \\{"
-#~ msgstr "Eşleşmeyen \\{"
-
-#~ msgid "Invalid range end"
-#~ msgstr "Geçersiz kapsam sonu"
-
-#~ msgid "Memory exhausted"
-#~ msgstr "Bellek tükendi"
-
-#
-#~ msgid "Invalid preceding regular expression"
-#~ msgstr "Bir önceki düzenli ifade hatalı"
-
-#
-#~ msgid "Premature end of regular expression"
-#~ msgstr "Düzenli ifade erken sonlandı"
-
-#
-#~ msgid "Unmatched ) or \\)"
-#~ msgstr "Eşleşmeyen ) or \\)"
-
-#~ msgid "No previous regular expression"
-#~ msgstr "Daha önce düzenli ifade yok"

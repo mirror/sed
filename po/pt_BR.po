@@ -8,8 +8,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: sed 4.0.1\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-05-16 07:37+0200\n"
+"Report-Msgid-Bugs-To: bonzini@gnu.org\n"
+"POT-Creation-Date: 2006-09-26 00:06+0200\n"
 "PO-Revision-Date: 2002-11-08 17:44-0300\n"
 "Last-Translator: Aurélio Marinho Jargas <aurelio@verde666.org>\n"
 "Language-Team: Brazilian Portuguese <ldp-br@bazar.conectiva.com.br>\n"
@@ -351,58 +351,58 @@ msgstr "%s: -e expressão #%lu, caractere %lu: %s\n"
 msgid "can't find label for jump to `%s'"
 msgstr "Não foi possível encontrar a marcação `%s'"
 
-#: sed/execute.c:650
+#: sed/execute.c:706
 #, c-format
 msgid "%s: can't read %s: %s\n"
 msgstr "%s: não foi possível ler %s: %s\n"
 
-#: sed/execute.c:673
+#: sed/execute.c:729
 #, fuzzy, c-format
 msgid "couldn't edit %s: is a terminal"
 msgstr "Não foi possível abrir o arquivo %s: %s"
 
-#: sed/execute.c:677
+#: sed/execute.c:734
 #, c-format
 msgid "couldn't edit %s: not a regular file"
 msgstr ""
 
-#: sed/execute.c:684 lib/utils.c:196
+#: sed/execute.c:741 sed/utils.c:229
 #, fuzzy, c-format
 msgid "couldn't open temporary file %s: %s"
 msgstr "Não foi possível abrir o arquivo %s: %s"
 
-#: sed/execute.c:1206 sed/execute.c:1387
+#: sed/execute.c:1264 sed/execute.c:1444
 msgid "error in subprocess"
 msgstr "erro no subprocesso"
 
-#: sed/execute.c:1208
+#: sed/execute.c:1266
 msgid "option `e' not supported"
 msgstr "opção `e' não suportada"
 
-#: sed/execute.c:1389
+#: sed/execute.c:1446
 msgid "`e' command not supported"
 msgstr "comando `e' não suportado"
 
-#: sed/execute.c:1714
+#: sed/execute.c:1786
 msgid "no input files"
 msgstr ""
 
-#: sed/regexp.c:39
+#: sed/regexp.c:40
 #, fuzzy
 msgid "no previous regular expression"
 msgstr "Não há expressão regular anterior"
 
-#: sed/regexp.c:40
+#: sed/regexp.c:41
 #, fuzzy
 msgid "cannot specify modifiers on empty regexp"
 msgstr "Não é permitido especificar modificadores numa expressão regular vazia"
 
-#: sed/regexp.c:115
+#: sed/regexp.c:121
 #, fuzzy, c-format
 msgid "invalid reference \\%d on `s' command's RHS"
 msgstr "Referência inválida \\%d na segunda parte do comando `s'"
 
-#: sed/sed.c:93
+#: sed/sed.c:98
 msgid ""
 "  -R, --regexp-perl\n"
 "                 use Perl 5's regular expressions syntax in the script.\n"
@@ -410,28 +410,28 @@ msgstr ""
 "  -R, --regexp-perl\n"
 "                 usar sintaxe de expressões regulares do Perl 5 no script.\n"
 
-#: sed/sed.c:98
+#: sed/sed.c:103
 #, c-format
 msgid ""
 "Usage: %s [OPTION]... {script-only-if-no-other-script} [input-file]...\n"
 "\n"
 msgstr ""
 
-#: sed/sed.c:102
+#: sed/sed.c:107
 #, c-format
 msgid ""
 "  -n, --quiet, --silent\n"
 "                 suppress automatic printing of pattern space\n"
 msgstr ""
 
-#: sed/sed.c:104
+#: sed/sed.c:109
 #, c-format
 msgid ""
 "  -e script, --expression=script\n"
 "                 add the script to the commands to be executed\n"
 msgstr ""
 
-#: sed/sed.c:106
+#: sed/sed.c:111
 #, c-format
 msgid ""
 "  -f script-file, --file=script-file\n"
@@ -439,28 +439,36 @@ msgid ""
 "executed\n"
 msgstr ""
 
-#: sed/sed.c:108
+#: sed/sed.c:113
 #, c-format
 msgid ""
 "  -i[SUFFIX], --in-place[=SUFFIX]\n"
 "                 edit files in place (makes backup if extension supplied)\n"
 msgstr ""
 
-#: sed/sed.c:110
+#: sed/sed.c:116
+#, c-format
+msgid ""
+"  -b, --binary\n"
+"                 open files in binary mode (CR+LFs are not processed "
+"specially)\n"
+msgstr ""
+
+#: sed/sed.c:119
 #, c-format
 msgid ""
 "  -l N, --line-length=N\n"
 "                 specify the desired line-wrap length for the `l' command\n"
 msgstr ""
 
-#: sed/sed.c:112
+#: sed/sed.c:121
 #, c-format
 msgid ""
 "  --posix\n"
 "                 disable all GNU extensions.\n"
 msgstr ""
 
-#: sed/sed.c:114
+#: sed/sed.c:123
 #, fuzzy, c-format
 msgid ""
 "  -r, --regexp-extended\n"
@@ -469,7 +477,7 @@ msgstr ""
 "  -R, --regexp-perl\n"
 "                 usar sintaxe de expressões regulares do Perl 5 no script.\n"
 
-#: sed/sed.c:117
+#: sed/sed.c:126
 #, c-format
 msgid ""
 "  -s, --separate\n"
@@ -478,7 +486,7 @@ msgid ""
 "                 long stream.\n"
 msgstr ""
 
-#: sed/sed.c:120
+#: sed/sed.c:129
 #, c-format
 msgid ""
 "  -u, --unbuffered\n"
@@ -487,17 +495,17 @@ msgid ""
 "                 the output buffers more often\n"
 msgstr ""
 
-#: sed/sed.c:123
+#: sed/sed.c:132
 #, c-format
 msgid "      --help     display this help and exit\n"
 msgstr ""
 
-#: sed/sed.c:124
+#: sed/sed.c:133
 #, c-format
 msgid "      --version  output version information and exit\n"
 msgstr ""
 
-#: sed/sed.c:125
+#: sed/sed.c:134
 #, c-format
 msgid ""
 "\n"
@@ -508,7 +516,7 @@ msgid ""
 "\n"
 msgstr ""
 
-#: sed/sed.c:131
+#: sed/sed.c:140
 #, c-format
 msgid ""
 "E-mail bug reports to: %s .\n"
@@ -517,12 +525,12 @@ msgstr ""
 "Envie relatórios de erros (em inglês) para: %s .\n"
 "Inclua a palavra ``%s'' no campo ``Assunto:'' ou ``Subject:''.\n"
 
-#: sed/sed.c:268
+#: sed/sed.c:285
 #, c-format
 msgid "super-sed version %s\n"
 msgstr "super-sed versão %s\n"
 
-#: sed/sed.c:269
+#: sed/sed.c:286
 #, fuzzy, c-format
 msgid ""
 "based on GNU sed version %s\n"
@@ -531,12 +539,12 @@ msgstr ""
 "baseado no GNU sed versão 3.02.80\n"
 "\n"
 
-#: sed/sed.c:271
+#: sed/sed.c:288
 #, c-format
 msgid "GNU sed version %s\n"
 msgstr "GNU sed versão %s\n"
 
-#: sed/sed.c:273
+#: sed/sed.c:290
 #, c-format
 msgid ""
 "%s\n"
@@ -549,74 +557,34 @@ msgstr ""
 "de cópia.  NÃO há garantias, nem mesmo para os aspectos mercantis ou de\n"
 "atendimento a finalidades específicas, tanto quanto a lei permita.\n"
 
-#: lib/utils.c:98 lib/utils.c:336
+#: sed/utils.c:98 sed/utils.c:363
 #, fuzzy, c-format
 msgid "cannot remove %s: %s"
 msgstr "%s: não foi possível ler %s: %s\n"
 
-#: lib/utils.c:143
+#: sed/utils.c:168
 #, fuzzy, c-format
 msgid "couldn't open file %s: %s"
 msgstr "Não foi possível abrir o arquivo %s: %s"
 
-#: lib/utils.c:220
+#: sed/utils.c:192
+#, fuzzy, c-format
+msgid "couldn't attach to %s: %s"
+msgstr "não foi possível escrever %d item para %s: %s"
+
+#: sed/utils.c:247
 #, c-format
 msgid "couldn't write %d item to %s: %s"
 msgid_plural "couldn't write %d items to %s: %s"
 msgstr[0] "não foi possível escrever %d item para %s: %s"
 msgstr[1] "não foi possível escrever %d items para %s: %s"
 
-#: lib/utils.c:235 lib/utils.c:251
+#: sed/utils.c:262 sed/utils.c:278
 #, c-format
 msgid "read error on %s: %s"
 msgstr "erro de leitura em %s: %s"
 
-#: lib/utils.c:341
+#: sed/utils.c:368
 #, fuzzy, c-format
 msgid "cannot rename %s: %s"
 msgstr "%s: não foi possível ler %s: %s\n"
-
-#~ msgid "Success"
-#~ msgstr "Sucesso"
-
-#~ msgid "No match"
-#~ msgstr "Nada encontrado"
-
-#~ msgid "Invalid regular expression"
-#~ msgstr "Expressão regular inválida"
-
-#~ msgid "Invalid collation character"
-#~ msgstr "Caractere de ordenação inválido"
-
-#~ msgid "Trailing backslash"
-#~ msgstr "Escape \\ no final"
-
-#~ msgid "Invalid back reference"
-#~ msgstr "Retrovisor \\n inválido"
-
-#~ msgid "Unmatched [ or [^"
-#~ msgstr "[ ou [^ não terminado"
-
-#~ msgid "Unmatched ( or \\("
-#~ msgstr "( ou \\( não terminado"
-
-#~ msgid "Unmatched \\{"
-#~ msgstr "\\{ não terminado"
-
-#~ msgid "Invalid range end"
-#~ msgstr "Fim de intervalo (range) inválido"
-
-#~ msgid "Memory exhausted"
-#~ msgstr "Falta de memória"
-
-#~ msgid "Invalid preceding regular expression"
-#~ msgstr "Expressão regular anterior inválida"
-
-#~ msgid "Premature end of regular expression"
-#~ msgstr "Fim prematuro da expressão regular"
-
-#~ msgid "Unmatched ) or \\)"
-#~ msgstr ") or \\) inesperado"
-
-#~ msgid "No previous regular expression"
-#~ msgstr "Não há expressão regular anterior"

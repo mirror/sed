@@ -1,5 +1,6 @@
 /*  GNU SED, a batch stream editor.
-    Copyright (C) 1999, 2002, 2003, 2004, 2005 Free Software Foundation, Inc.
+    Copyright (C) 1999, 2002, 2003, 2004, 2005, 2006
+    Free Software Foundation, Inc.
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -64,7 +65,12 @@ compile_regex_1 (new_regex, needed_sub)
   int syntax = ((extended_regexp_flags & REG_EXTENDED)
 		 ? RE_SYNTAX_POSIX_EXTENDED
                  : RE_SYNTAX_POSIX_BASIC)
-		 & ~RE_UNMATCHED_RIGHT_PAREN_ORD;
+		 & ~RE_DOT_NOT_NULL;
+
+  if (posixicity == POSIXLY_EXTENDED)
+    syntax &= ~RE_UNMATCHED_RIGHT_PAREN_ORD;
+  else
+    syntax |= RE_UNMATCHED_RIGHT_PAREN_ORD;
 
   syntax |= RE_NO_POSIX_BACKTRACKING;
 #ifdef RE_ICASE

@@ -23,6 +23,7 @@
 void panic P_((const char *str, ...));
 
 FILE *ck_fopen P_((const char *name, const char *mode, bool fail));
+FILE *ck_fdopen P_((int fd, const char *name, const char *mode, bool fail));
 void ck_fwrite P_((const VOID *ptr, size_t size, size_t nmemb, FILE *stream));
 size_t ck_fread P_((VOID *ptr, size_t size, size_t nmemb, FILE *stream));
 void ck_fflush P_((FILE *stream));

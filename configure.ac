@@ -1,6 +1,6 @@
 dnl Process this file with -*- autoconf -*- to produce a configure script.
 AC_INIT(sed, 3.62, bonzini@gnu.org, ssed)
-AC_CONFIG_AUX_DIR(config)
+AC_CONFIG_AUX_DIR(build-aux)
 AC_CONFIG_SRCDIR([sed/sed.c])
 AM_CONFIG_HEADER(config.h:config_h.in)
 AC_PREREQ(2.59)
@@ -12,10 +12,7 @@ AC_DEFINE_UNQUOTED(SED_FEATURE_VERSION, "$SED_FEATURE_VERSION",
 AC_SUBST(SED_FEATURE_VERSION)
 
 AC_PROG_CC
-AC_PROG_RANLIB
-AC_GNU_SOURCE
-AC_AIX
-AC_MINIX
+gl_EARLY
 AC_ISC_POSIX
 AC_SYS_LARGEFILE
 AC_SYS_LONG_FILE_NAMES
@@ -44,33 +41,19 @@ if test "$sed_cv_libcp_needed" = yes; then
 fi
 
 AC_HEADER_DIRENT
-AC_CHECK_HEADERS(io.h limits.h locale.h stdarg.h alloca.h stddef.h errno.h \
-		 wchar.h wctype.h sys/file.h, [], [], [AC_INCLUDES_DEFAULT])
+AC_CHECK_HEADERS_ONCE(io.h limits.h locale.h stdarg.h alloca.h stddef.h errno.h \
+		      wchar.h wctype.h sys/file.h, [], [], [AC_INCLUDES_DEFAULT])
 AC_C_CONST
 AC_TYPE_SIZE_T
 AC_CHECK_TYPE(ssize_t, int)
 
-AC_HEADER_STDBOOL
-if test "$ac_cv_type__Bool" = no; then
-  HAVE__BOOL=0
-else
-  HAVE__BOOL=1
-fi
-AC_SUBST(HAVE__BOOL)
-if test "$ac_cv_header_stdbool_h" = no; then
-  AC_CONFIG_FILES(lib/stdbool.h:lib/stdbool_.h)
-fi
-
-AC_FUNC_ALLOCA
 AC_FUNC_VPRINTF
-AM_FUNC_GETLINE
-AC_FUNC_OBSTACK
-AC_FUNC_MBRTOWC
-AC_TYPE_MBSTATE_T
-gl_FUNC_STRVERSCMP
-AC_REPLACE_FUNCS(memchr memcmp memmove strerror snprintf mkstemp)
-AC_CHECK_FUNCS(isatty bcopy bzero isascii memcpy memset strchr strtoul popen \
-		pathconf isblank fchown fchmod setlocale wcrtomb wcscoll btowc)
+AM_GNU_GETTEXT_VERSION(0.15)
+AM_GNU_GETTEXT(no-libtool, need-ngettext, ../intl)
+
+gl_INIT
+AC_CHECK_FUNCS_ONCE(isatty bcopy bzero isascii memcpy memset strchr strtoul popen \
+		    pathconf isblank fchown fchmod setlocale wcrtomb wcscoll btowc)
 
 AC_ARG_ENABLE(pcregrep,
 [  --enable-pcregrep       build the pcregrep test program],
@@ -107,22 +90,6 @@ fi
 AM_CONDITIONAL(MAKEINFO_HTML, test "x$enable_html" = xmakeinfo)
 AM_CONDITIONAL(TEXI2HTML_HTML, test "x$enable_html" = xtexi2html)
 
-
-AC_DEFUN([AM_MKINSTALLDIRS], [MKINSTALLDIRS="$mkdir_p" AC_SUBST(MKINSTALLDIRS)])
-AM_GNU_GETTEXT_VERSION(0.14)
-AM_GNU_GETTEXT(no-libtool, need-ngettext, ../intl)
-AC_CONFIG_COMMANDS([gettext-fix], [
-  sed -e "/^mkinstalldirs *=/a\\
-install_sh=$install_sh" \
-      -e 's/^mkinstalldirs *=.*/mkinstalldirs=$(MKINSTALLDIRS)/' \
-      intl/Makefile > intl/Makefile.tmp
-  mv intl/Makefile.tmp intl/Makefile
-  sed -e "/^mkinstalldirs *=/a\\
-install_sh=$install_sh" \
-      -e 's/^mkinstalldirs *=.*/mkinstalldirs=$(MKINSTALLDIRS)/' \
-      po/Makefile > po/Makefile.tmp
-  mv po/Makefile.tmp po/Makefile], [
-  install_sh="$install_sh"])
 
 AC_CONFIG_FILES([bootstrap.sh], chmod +x bootstrap.sh)
 AC_CONFIG_FILES([Makefile doc/Makefile \

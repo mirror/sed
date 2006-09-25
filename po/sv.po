@@ -5,8 +5,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: sed 4.1.1\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-05-16 07:37+0200\n"
+"Report-Msgid-Bugs-To: bonzini@gnu.org\n"
+"POT-Creation-Date: 2006-09-26 00:06+0200\n"
 "PO-Revision-Date: 2004-07-11 11:45+0200\n"
 "Last-Translator: Christian Rose <menthos@menthos.com>\n"
 "Language-Team: Swedish <sv@li.org>\n"
@@ -332,47 +332,47 @@ msgstr "%s: -e uttryck #%lu, tecken %lu: %s\n"
 msgid "can't find label for jump to `%s'"
 msgstr "kan inte hitta etiketten för hopp till \"%s\""
 
-#: sed/execute.c:650
+#: sed/execute.c:706
 #, c-format
 msgid "%s: can't read %s: %s\n"
 msgstr "%s: kan inte läsa %s: %s\n"
 
-#: sed/execute.c:673
+#: sed/execute.c:729
 #, c-format
 msgid "couldn't edit %s: is a terminal"
 msgstr "kunde inte redigera %s: är en terminal"
 
-#: sed/execute.c:677
+#: sed/execute.c:734
 #, c-format
 msgid "couldn't edit %s: not a regular file"
 msgstr "kunde inte redigera %s: inte en vanlig fil"
 
-#: sed/execute.c:684 lib/utils.c:196
+#: sed/execute.c:741 sed/utils.c:229
 #, c-format
 msgid "couldn't open temporary file %s: %s"
 msgstr "kunde inte öppna temporära filen %s: %s"
 
-#: sed/execute.c:1206 sed/execute.c:1387
+#: sed/execute.c:1264 sed/execute.c:1444
 msgid "error in subprocess"
 msgstr "fel i underprocess"
 
-#: sed/execute.c:1208
+#: sed/execute.c:1266
 msgid "option `e' not supported"
 msgstr "flaggan \"e\" stöds inte"
 
-#: sed/execute.c:1389
+#: sed/execute.c:1446
 msgid "`e' command not supported"
 msgstr "kommandot \"e\" stöds inte"
 
-#: sed/execute.c:1714
+#: sed/execute.c:1786
 msgid "no input files"
 msgstr ""
 
-#: sed/regexp.c:39
+#: sed/regexp.c:40
 msgid "no previous regular expression"
 msgstr "inget tidigare reguljärt uttryck"
 
-#: sed/regexp.c:40
+#: sed/regexp.c:41
 msgid "cannot specify modifiers on empty regexp"
 msgstr "kan inte ange modifierare på tomt reguljärt uttryck"
 
@@ -380,12 +380,12 @@ msgstr "kan inte ange modifierare på tomt reguljärt uttryck"
 # Jag antar RHS står för "right hand side".  Man kan då säga
 # "... kommandots högersida"
 #
-#: sed/regexp.c:115
+#: sed/regexp.c:121
 #, c-format
 msgid "invalid reference \\%d on `s' command's RHS"
 msgstr "ogiltig referens \\%d på \"s\"-kommandots högersida"
 
-#: sed/sed.c:93
+#: sed/sed.c:98
 msgid ""
 "  -R, --regexp-perl\n"
 "                 use Perl 5's regular expressions syntax in the script.\n"
@@ -393,7 +393,7 @@ msgstr ""
 "  -R, --regexp-perl\n"
 "                 använd Perl 5:s syntax för reguljära uttryck i skriptet.\n"
 
-#: sed/sed.c:98
+#: sed/sed.c:103
 #, c-format
 msgid ""
 "Usage: %s [OPTION]... {script-only-if-no-other-script} [input-file]...\n"
@@ -402,7 +402,7 @@ msgstr ""
 "Användning: %s [FLAGGA]... {skript-endast-om-inga-andra} [indatafil]...\n"
 "\n"
 
-#: sed/sed.c:102
+#: sed/sed.c:107
 #, c-format
 msgid ""
 "  -n, --quiet, --silent\n"
@@ -411,7 +411,7 @@ msgstr ""
 "  -n, --quiet, --silent\n"
 "                 förhindrar automatisk utskrift av mönsterutrymme\n"
 
-#: sed/sed.c:104
+#: sed/sed.c:109
 #, c-format
 msgid ""
 "  -e script, --expression=script\n"
@@ -420,7 +420,7 @@ msgstr ""
 "  -e skript, --expression=skript\n"
 "                 lägg till skript till de kommandon som ska utföras\n"
 
-#: sed/sed.c:106
+#: sed/sed.c:111
 #, c-format
 msgid ""
 "  -f script-file, --file=script-file\n"
@@ -431,7 +431,7 @@ msgstr ""
 "                 lägg till innehållet i skriptfil till de kommandon som ska\n"
 "                 utföras\n"
 
-#: sed/sed.c:108
+#: sed/sed.c:113
 #, c-format
 msgid ""
 "  -i[SUFFIX], --in-place[=SUFFIX]\n"
@@ -441,7 +441,18 @@ msgstr ""
 "                 redigera filer på plats (skapar säkerhetskopia om ändelse\n"
 "                 tillhandahålls)\n"
 
-#: sed/sed.c:110
+#: sed/sed.c:116
+#, fuzzy, c-format
+msgid ""
+"  -b, --binary\n"
+"                 open files in binary mode (CR+LFs are not processed "
+"specially)\n"
+msgstr ""
+"  -i[ÄNDELSE], --in-place[=ÄNDELSE]\n"
+"                 redigera filer på plats (skapar säkerhetskopia om ändelse\n"
+"                 tillhandahålls)\n"
+
+#: sed/sed.c:119
 #, c-format
 msgid ""
 "  -l N, --line-length=N\n"
@@ -450,7 +461,7 @@ msgstr ""
 "  -l N, --line-length=N\n"
 "                 ange önskad radbrytningslängd för \"l\"-kommandot\n"
 
-#: sed/sed.c:112
+#: sed/sed.c:121
 #, c-format
 msgid ""
 "  --posix\n"
@@ -459,7 +470,7 @@ msgstr ""
 "  --posix\n"
 "                 inaktivera alla GNU-utökningar.\n"
 
-#: sed/sed.c:114
+#: sed/sed.c:123
 #, c-format
 msgid ""
 "  -r, --regexp-extended\n"
@@ -468,7 +479,7 @@ msgstr ""
 "  -r, --regexp-extended\n"
 "                 använd utökade reguljära uttryck i skriptet.\n"
 
-#: sed/sed.c:117
+#: sed/sed.c:126
 #, c-format
 msgid ""
 "  -s, --separate\n"
@@ -480,7 +491,7 @@ msgstr ""
 "                 betrakta filer som separata istället för som en\n"
 "                 kontinuerlig lång dataström.\n"
 
-#: sed/sed.c:120
+#: sed/sed.c:129
 #, c-format
 msgid ""
 "  -u, --unbuffered\n"
@@ -492,17 +503,17 @@ msgstr ""
 "                 läs in minimala mängder data från indatafilerna och töm\n"
 "                 utdatabufferterna oftare\n"
 
-#: sed/sed.c:123
+#: sed/sed.c:132
 #, c-format
 msgid "      --help     display this help and exit\n"
 msgstr "      --help     visa denna hjälptext och avsluta\n"
 
-#: sed/sed.c:124
+#: sed/sed.c:133
 #, c-format
 msgid "      --version  output version information and exit\n"
 msgstr "      --version  visa versionsinformation och avsluta\n"
 
-#: sed/sed.c:125
+#: sed/sed.c:134
 #, c-format
 msgid ""
 "\n"
@@ -519,7 +530,7 @@ msgstr ""
 "läses standard in.\n"
 "\n"
 
-#: sed/sed.c:131
+#: sed/sed.c:140
 #, c-format
 msgid ""
 "E-mail bug reports to: %s .\n"
@@ -529,12 +540,12 @@ msgstr ""
 "Ange ordet \"%s\" på något ställe i \"Ärende:\"-fältet.\n"
 "Skicka anmärkningar på översättningen till <sv@li.org>.\n"
 
-#: sed/sed.c:268
+#: sed/sed.c:285
 #, c-format
 msgid "super-sed version %s\n"
 msgstr "super-sed version %s\n"
 
-#: sed/sed.c:269
+#: sed/sed.c:286
 #, c-format
 msgid ""
 "based on GNU sed version %s\n"
@@ -543,12 +554,12 @@ msgstr ""
 "baserad på GNU sed version %s\n"
 "\n"
 
-#: sed/sed.c:271
+#: sed/sed.c:288
 #, c-format
 msgid "GNU sed version %s\n"
 msgstr "GNU sed version %s\n"
 
-#: sed/sed.c:273
+#: sed/sed.c:290
 #, c-format
 msgid ""
 "%s\n"
@@ -564,74 +575,34 @@ msgstr ""
 "Det finns INGEN garanti; inte ens för SÄLJBARHET eller LÄMPLIGHET FÖR NÅGOT\n"
 "SPECIELLT ÄNDAMÅL, i den omfattning som medges av gällande lag.\n"
 
-#: lib/utils.c:98 lib/utils.c:336
+#: sed/utils.c:98 sed/utils.c:363
 #, c-format
 msgid "cannot remove %s: %s"
 msgstr "kan inte ta bort %s: %s"
 
-#: lib/utils.c:143
+#: sed/utils.c:168
 #, c-format
 msgid "couldn't open file %s: %s"
 msgstr "kunde inte öppna filen %s: %s"
 
-#: lib/utils.c:220
+#: sed/utils.c:192
+#, fuzzy, c-format
+msgid "couldn't attach to %s: %s"
+msgstr "kunde inte skriva %d objekt till %s: %s"
+
+#: sed/utils.c:247
 #, c-format
 msgid "couldn't write %d item to %s: %s"
 msgid_plural "couldn't write %d items to %s: %s"
 msgstr[0] "kunde inte skriva %d objekt till %s: %s"
 msgstr[1] "kunde inte skriva %d objekt till %s: %s"
 
-#: lib/utils.c:235 lib/utils.c:251
+#: sed/utils.c:262 sed/utils.c:278
 #, c-format
 msgid "read error on %s: %s"
 msgstr "läsfel vid %s: %s"
 
-#: lib/utils.c:341
+#: sed/utils.c:368
 #, c-format
 msgid "cannot rename %s: %s"
 msgstr "kan inte byta namn på %s: %s"
-
-#~ msgid "Success"
-#~ msgstr "Lyckades"
-
-#~ msgid "No match"
-#~ msgstr "Ingen träff"
-
-#~ msgid "Invalid regular expression"
-#~ msgstr "Ogiltigt reguljärt uttryck"
-
-#~ msgid "Invalid collation character"
-#~ msgstr "Ogiltigt sorteringstecken"
-
-#~ msgid "Trailing backslash"
-#~ msgstr "Eftersläpande omvänt snedstreck"
-
-#~ msgid "Invalid back reference"
-#~ msgstr "Ogiltig bakåtreferens"
-
-#~ msgid "Unmatched [ or [^"
-#~ msgstr "Obalanserad [ eller [^"
-
-#~ msgid "Unmatched ( or \\("
-#~ msgstr "Obalanserad ( eller \\("
-
-#~ msgid "Unmatched \\{"
-#~ msgstr "Obalanserad \\{"
-
-#~ msgid "Invalid range end"
-#~ msgstr "Ogiltigt intervallslut"
-
-#~ msgid "Memory exhausted"
-#~ msgstr "Minnet slut"
-
-#~ msgid "Invalid preceding regular expression"
-#~ msgstr "Ogiltigt föregående reguljärt uttryck"
-
-#~ msgid "Premature end of regular expression"
-#~ msgstr "För tidigt slut på reguljärt uttryck"
-
-#~ msgid "Unmatched ) or \\)"
-#~ msgstr "Obalanserad ) eller \\)"
-
-#~ msgid "No previous regular expression"
-#~ msgstr "Inget tidigare reguljärt uttryck"

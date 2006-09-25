@@ -374,11 +374,11 @@ read_filename()
   return b;
 }
 
-static struct output *get_openfile P_((struct output **file_ptrs, char *mode, bool fail));
+static struct output *get_openfile P_((struct output **file_ptrs, const char *mode, bool fail));
 static struct output *
 get_openfile(file_ptrs, mode, fail)
      struct output **file_ptrs;
-     char *mode;
+     const char *mode;
      bool fail;
 {
   struct buffer *b;
@@ -1234,7 +1234,7 @@ compile_program(vector)
 	  break;
 
         case 'R':
-	  cur_cmd->x.fp = get_openfile(&file_read, "r", false)->fp;
+	  cur_cmd->x.fp = get_openfile(&file_read, read_mode, false)->fp;
 	  break;
 
         case 'W':

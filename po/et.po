@@ -5,8 +5,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: sed 4.1.1\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-05-16 07:37+0200\n"
+"Report-Msgid-Bugs-To: bonzini@gnu.org\n"
+"POT-Creation-Date: 2006-09-26 00:06+0200\n"
 "PO-Revision-Date: 2004-07-09 16:33+0300\n"
 "Last-Translator: Toomas Soome <Toomas.Soome@microlink.ee>\n"
 "Language-Team: Estonian <et@li.org>\n"
@@ -332,56 +332,56 @@ msgstr "%s: -e avaldis #%lu, sümbol %lu: %s\n"
 msgid "can't find label for jump to `%s'"
 msgstr "ei leia märgendit, et hüpata kohale `%s'"
 
-#: sed/execute.c:650
+#: sed/execute.c:706
 #, c-format
 msgid "%s: can't read %s: %s\n"
 msgstr "%s: ei saa lugeda %s: %s\n"
 
-#: sed/execute.c:673
+#: sed/execute.c:729
 #, c-format
 msgid "couldn't edit %s: is a terminal"
 msgstr "%s ei saa toimetada: see on terminal"
 
-#: sed/execute.c:677
+#: sed/execute.c:734
 #, c-format
 msgid "couldn't edit %s: not a regular file"
 msgstr "%s ei saa toimetada: see ei ole tavaline fail"
 
-#: sed/execute.c:684 lib/utils.c:196
+#: sed/execute.c:741 sed/utils.c:229
 #, c-format
 msgid "couldn't open temporary file %s: %s"
 msgstr "ajutist faili %s ei saa avada: %s"
 
-#: sed/execute.c:1206 sed/execute.c:1387
+#: sed/execute.c:1264 sed/execute.c:1444
 msgid "error in subprocess"
 msgstr "viga alamprotsessis"
 
-#: sed/execute.c:1208
+#: sed/execute.c:1266
 msgid "option `e' not supported"
 msgstr "võtit `e' ei toetata"
 
-#: sed/execute.c:1389
+#: sed/execute.c:1446
 msgid "`e' command not supported"
 msgstr "käsku `e' ei toetata"
 
-#: sed/execute.c:1714
+#: sed/execute.c:1786
 msgid "no input files"
 msgstr ""
 
-#: sed/regexp.c:39
+#: sed/regexp.c:40
 msgid "no previous regular expression"
 msgstr "eelmist regulaaravaldist pole"
 
-#: sed/regexp.c:40
+#: sed/regexp.c:41
 msgid "cannot specify modifiers on empty regexp"
 msgstr "muudatusi tühjale regulaaravaldisele ei saa määrata"
 
-#: sed/regexp.c:115
+#: sed/regexp.c:121
 #, c-format
 msgid "invalid reference \\%d on `s' command's RHS"
 msgstr "vigane viide \\%d käsu `s' paremas pooles"
 
-#: sed/sed.c:93
+#: sed/sed.c:98
 msgid ""
 "  -R, --regexp-perl\n"
 "                 use Perl 5's regular expressions syntax in the script.\n"
@@ -389,7 +389,7 @@ msgstr ""
 "  -R, --regexp-perl\n"
 "                 kasuta skriptis Perl 5 regulaaravaldiste süntaksit.\n"
 
-#: sed/sed.c:98
+#: sed/sed.c:103
 #, c-format
 msgid ""
 "Usage: %s [OPTION]... {script-only-if-no-other-script} [input-file]...\n"
@@ -399,7 +399,7 @@ msgstr ""
 "fail]...\n"
 "\n"
 
-#: sed/sed.c:102
+#: sed/sed.c:107
 #, c-format
 msgid ""
 "  -n, --quiet, --silent\n"
@@ -408,7 +408,7 @@ msgstr ""
 "  -n, --quiet, --silent\n"
 "                 keela mustriruumi automaatne väljastamine\n"
 
-#: sed/sed.c:104
+#: sed/sed.c:109
 #, c-format
 msgid ""
 "  -e script, --expression=script\n"
@@ -417,7 +417,7 @@ msgstr ""
 "  -e skript, --expression=skript\n"
 "                 lisa täidetavate käskluste skript\n"
 
-#: sed/sed.c:106
+#: sed/sed.c:111
 #, c-format
 msgid ""
 "  -f script-file, --file=script-file\n"
@@ -427,7 +427,7 @@ msgstr ""
 "  -f skripti-fail, --file=skripti-fail\n"
 "                 lisa skripti-faili sisu täidetavate käskluste hulka\n"
 
-#: sed/sed.c:108
+#: sed/sed.c:113
 #, c-format
 msgid ""
 "  -i[SUFFIX], --in-place[=SUFFIX]\n"
@@ -436,7 +436,17 @@ msgstr ""
 "  -i[SUFIKS], --in-place[=SUFIKS]\n"
 "                 toimeta faile (kui kasutati sifiksit, loob ka varukoopia)\n"
 
-#: sed/sed.c:110
+#: sed/sed.c:116
+#, fuzzy, c-format
+msgid ""
+"  -b, --binary\n"
+"                 open files in binary mode (CR+LFs are not processed "
+"specially)\n"
+msgstr ""
+"  -i[SUFIKS], --in-place[=SUFIKS]\n"
+"                 toimeta faile (kui kasutati sifiksit, loob ka varukoopia)\n"
+
+#: sed/sed.c:119
 #, c-format
 msgid ""
 "  -l N, --line-length=N\n"
@@ -445,7 +455,7 @@ msgstr ""
 "  -l N, --line-length=N\n"
 "                 määra `l' käsule soovitatav rea pikkus\n"
 
-#: sed/sed.c:112
+#: sed/sed.c:121
 #, c-format
 msgid ""
 "  --posix\n"
@@ -454,7 +464,7 @@ msgstr ""
 "  --posix\n"
 "                 blokeeri kõik GNU laiendused.\n"
 
-#: sed/sed.c:114
+#: sed/sed.c:123
 #, c-format
 msgid ""
 "  -r, --regexp-extended\n"
@@ -463,7 +473,7 @@ msgstr ""
 "  -r, --regexp-extended\n"
 "                 kasuta skriptis laiendatud regulaaravaldiste süntaksit.\n"
 
-#: sed/sed.c:117
+#: sed/sed.c:126
 #, c-format
 msgid ""
 "  -s, --separate\n"
@@ -474,7 +484,7 @@ msgstr ""
 "  -s, --separate\n"
 "                 käsitle faile ükshaaval, mitte ühe jätkuva voona.\n"
 
-#: sed/sed.c:120
+#: sed/sed.c:129
 #, c-format
 msgid ""
 "  -u, --unbuffered\n"
@@ -486,17 +496,17 @@ msgstr ""
 "                 loe sisendfailist minimaalne kogus andmeid ja tühjenda\n"
 "                 väljundpuhvreid sagedamini\n"
 
-#: sed/sed.c:123
+#: sed/sed.c:132
 #, c-format
 msgid "      --help     display this help and exit\n"
 msgstr "      --help     väljast see abiinfo ja lõpeta töö\n"
 
-#: sed/sed.c:124
+#: sed/sed.c:133
 #, c-format
 msgid "      --version  output version information and exit\n"
 msgstr "      --version  väljasta versiooniinfo ja lõpeta töö\n"
 
-#: sed/sed.c:125
+#: sed/sed.c:134
 #, c-format
 msgid ""
 "\n"
@@ -513,7 +523,7 @@ msgstr ""
 "sisendfailide nimed; kui sisendfaile ei antud, loetakse standardsisendit.\n"
 "\n"
 
-#: sed/sed.c:131
+#: sed/sed.c:140
 #, c-format
 msgid ""
 "E-mail bug reports to: %s .\n"
@@ -522,12 +532,12 @@ msgstr ""
 "Postitage teated vigadest: %s .\n"
 "Lisage kindlasti sõna ``%s'' ``Subject:'' reale.\n"
 
-#: sed/sed.c:268
+#: sed/sed.c:285
 #, c-format
 msgid "super-sed version %s\n"
 msgstr "super-sed versioon %s\n"
 
-#: sed/sed.c:269
+#: sed/sed.c:286
 #, c-format
 msgid ""
 "based on GNU sed version %s\n"
@@ -536,12 +546,12 @@ msgstr ""
 "põhineb GNU sed versioonil %s\n"
 "\n"
 
-#: sed/sed.c:271
+#: sed/sed.c:288
 #, c-format
 msgid "GNU sed version %s\n"
 msgstr "GNU sed versioon %s\n"
 
-#: sed/sed.c:273
+#: sed/sed.c:290
 #, c-format
 msgid ""
 "%s\n"
@@ -554,74 +564,34 @@ msgstr ""
 "PUUDUB; ka müügiks või mingil eesmärgil kasutamiseks, vastavalt seadustega\n"
 "lubatud piiridele.\n"
 
-#: lib/utils.c:98 lib/utils.c:336
+#: sed/utils.c:98 sed/utils.c:363
 #, c-format
 msgid "cannot remove %s: %s"
 msgstr "%s ei saa eemaldada: %s"
 
-#: lib/utils.c:143
+#: sed/utils.c:168
 #, c-format
 msgid "couldn't open file %s: %s"
 msgstr "faili %s ei saa avada: %s"
 
-#: lib/utils.c:220
+#: sed/utils.c:192
+#, fuzzy, c-format
+msgid "couldn't attach to %s: %s"
+msgstr "%d elemendi faili %s kirjutamine ebaõnnestus: %s"
+
+#: sed/utils.c:247
 #, c-format
 msgid "couldn't write %d item to %s: %s"
 msgid_plural "couldn't write %d items to %s: %s"
 msgstr[0] "%d elemendi faili %s kirjutamine ebaõnnestus: %s"
 msgstr[1] "%d elemendi faili %s kirjutamine ebaõnnestus: %s"
 
-#: lib/utils.c:235 lib/utils.c:251
+#: sed/utils.c:262 sed/utils.c:278
 #, c-format
 msgid "read error on %s: %s"
 msgstr "lugemisviga %s: %s"
 
-#: lib/utils.c:341
+#: sed/utils.c:368
 #, c-format
 msgid "cannot rename %s: %s"
 msgstr "%s ei saa ümber nimetada: %s"
-
-#~ msgid "Success"
-#~ msgstr "Edukas"
-
-#~ msgid "No match"
-#~ msgstr "Ei leia"
-
-#~ msgid "Invalid regular expression"
-#~ msgstr "Vigane regulaaravaldis"
-
-#~ msgid "Invalid collation character"
-#~ msgstr "Vigane sortimise sümbol"
-
-#~ msgid "Trailing backslash"
-#~ msgstr "Lõpetav langkriips"
-
-#~ msgid "Invalid back reference"
-#~ msgstr "Vigane tagasi viide"
-
-#~ msgid "Unmatched [ or [^"
-#~ msgstr "Puudub [ või [^"
-
-#~ msgid "Unmatched ( or \\("
-#~ msgstr "Puudub ( või \\("
-
-#~ msgid "Unmatched \\{"
-#~ msgstr "Puudub \\{"
-
-#~ msgid "Invalid range end"
-#~ msgstr "Vigane vahemiku lõpp"
-
-#~ msgid "Memory exhausted"
-#~ msgstr "Mälu on otsas"
-
-#~ msgid "Invalid preceding regular expression"
-#~ msgstr "Vigane eelnev regulaaravaldis"
-
-#~ msgid "Premature end of regular expression"
-#~ msgstr "Ootamatu regulaaravaldise lõpp"
-
-#~ msgid "Unmatched ) or \\)"
-#~ msgstr "Puudub ) või \\)"
-
-#~ msgid "No previous regular expression"
-#~ msgstr "Eelmist regulaaravaldist pole"

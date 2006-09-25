@@ -126,25 +126,13 @@ utils_fp_name(fp)
   return "<unknown>";
 }
 
-/* Panic on failing fopen */
-FILE *
-ck_fopen(name, mode, fail)
-  const char *name;
-  const char *mode;
-  bool fail;
-{
+static void
+register_open_file (fp, name, temp)
   FILE *fp;
+  const char *name;
+  bool temp;
+{
   struct open_file *p;
-
-  fp = fopen (name, mode);
-  if (!fp)
-    {
-      if (fail)
-        panic(_("couldn't open file %s: %s"), name, strerror(errno));
-
-      return NULL;
-    }
-
   for (p=open_files; p; p=p->link)
     {
       if (fp == p->fp)
@@ -162,6 +150,51 @@ ck_fopen(name, mode, fail)
   p->name = ck_strdup(name);
   p->fp = fp;
   p->temp = false;
+}
+
+/* Panic on failing fopen */
+FILE *
+ck_fopen(name, mode, fail)
+  const char *name;
+  const char *mode;
+  bool fail;
+{
+  FILE *fp;
+
+  fp = fopen (name, mode);
+  if (!fp)
+    {
+      if (fail)
+        panic(_("couldn't open file %s: %s"), name, strerror(errno));
+
+      return NULL;
+    }
+
+  register_open_file (fp, name, false);
+  return fp;
+}
+
+/* Panic on failing fdopen */
+FILE *
+ck_fdopen(fd, name, mode, fail)
+  int fd;
+  const char *name;
+  const char *mode;
+  bool fail;
+{
+  FILE *fp;
+  struct open_file *p;
+
+  fp = fdopen (fd, mode);
+  if (!fp)
+    {
+      if (fail)
+        panic(_("couldn't attach to %s: %s"), name, strerror(errno));
+
+      return NULL;
+    }
+
+  register_open_file (fp, name, false);
   return fp;
 }
 
@@ -197,13 +230,7 @@ ck_mkstemp (p_filename, tmpdir, base)
 
   *p_filename = template;
   fp = fdopen (fd, "w");
-
-  p = MALLOC(1, struct open_file);
-  p->name = ck_strdup (template);
-  p->fp = fp;
-  p->temp = true;
-  p->link = open_files;
-  open_files = p;
+  register_open_file (fp, template, true);
   return fp;
 }
 
@@ -353,14 +380,6 @@ ck_malloc(size)
   if (!ret)
     panic("couldn't allocate memory");
   return ret;
-}
-
-/* Panic on failing malloc */
-VOID *
-xmalloc(size)
-  size_t size;
-{
-  return ck_malloc(size);
 }
 
 /* Panic on failing realloc */

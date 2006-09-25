@@ -9,8 +9,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: GNU sed 4.1.1\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-05-16 07:37+0200\n"
+"Report-Msgid-Bugs-To: bonzini@gnu.org\n"
+"POT-Creation-Date: 2006-09-26 00:06+0200\n"
 "PO-Revision-Date: 2005-02-01 21:02+0900\n"
 "Last-Translator: IIDA Yosiaki <iida@gnu.org>\n"
 "Language-Team: Japanese <translation-team-ja@lists.sourceforge.net>\n"
@@ -335,56 +335,56 @@ msgstr "%s: -e 表現 #%lu, 文字数 %lu: %s\n"
 msgid "can't find label for jump to `%s'"
 msgstr "「%s」へのジャンプのラベルが見つかりません"
 
-#: sed/execute.c:650
+#: sed/execute.c:706
 #, c-format
 msgid "%s: can't read %s: %s\n"
 msgstr "%s: %sを読み込めません: %s\n"
 
-#: sed/execute.c:673
+#: sed/execute.c:729
 #, c-format
 msgid "couldn't edit %s: is a terminal"
 msgstr "%sは、編集できませんでした: 端末です"
 
-#: sed/execute.c:677
+#: sed/execute.c:734
 #, c-format
 msgid "couldn't edit %s: not a regular file"
 msgstr "%sは、編集できませんでした: 通常ファイルでありません"
 
-#: sed/execute.c:684 lib/utils.c:196
+#: sed/execute.c:741 sed/utils.c:229
 #, c-format
 msgid "couldn't open temporary file %s: %s"
 msgstr "一時ファイルを開けませんでした: %s: %s"
 
-#: sed/execute.c:1206 sed/execute.c:1387
+#: sed/execute.c:1264 sed/execute.c:1444
 msgid "error in subprocess"
 msgstr "子プロセスのエラー"
 
-#: sed/execute.c:1208
+#: sed/execute.c:1266
 msgid "option `e' not supported"
 msgstr "「e」オプションは、サポートされていません"
 
-#: sed/execute.c:1389
+#: sed/execute.c:1446
 msgid "`e' command not supported"
 msgstr "「e」コマンドは、サポートされていません"
 
-#: sed/execute.c:1714
+#: sed/execute.c:1786
 msgid "no input files"
 msgstr ""
 
-#: sed/regexp.c:39
+#: sed/regexp.c:40
 msgid "no previous regular expression"
 msgstr "直前の正規表現が、ありません"
 
-#: sed/regexp.c:40
+#: sed/regexp.c:41
 msgid "cannot specify modifiers on empty regexp"
 msgstr "修飾子は、空の正規表現に指定できません"
 
-#: sed/regexp.c:115
+#: sed/regexp.c:121
 #, c-format
 msgid "invalid reference \\%d on `s' command's RHS"
 msgstr "「s」コマンドの右側に無効な\\%dの参照"
 
-#: sed/sed.c:93
+#: sed/sed.c:98
 msgid ""
 "  -R, --regexp-perl\n"
 "                 use Perl 5's regular expressions syntax in the script.\n"
@@ -392,7 +392,7 @@ msgstr ""
 "  -R, --regexp-perl\n"
 "                 スクリプトでPerl 5の正規表現構文を使う。\n"
 
-#: sed/sed.c:98
+#: sed/sed.c:103
 #, c-format
 msgid ""
 "Usage: %s [OPTION]... {script-only-if-no-other-script} [input-file]...\n"
@@ -401,7 +401,7 @@ msgstr ""
 "使用法: %s [オプション]... {スクリプト(他になければ)} [入力ファイル]...\n"
 "\n"
 
-#: sed/sed.c:102
+#: sed/sed.c:107
 #, fuzzy, c-format
 msgid ""
 "  -n, --quiet, --silent\n"
@@ -410,7 +410,7 @@ msgstr ""
 "-n, --quiet, --silent\n"
 "                 パターン・スペースの自動出力を抑制\n"
 
-#: sed/sed.c:104
+#: sed/sed.c:109
 #, c-format
 msgid ""
 "  -e script, --expression=script\n"
@@ -419,7 +419,7 @@ msgstr ""
 "  -e スクリプト, --expression=スクリプト\n"
 "                 実行するコマンドとしてスクリプトを追加\n"
 
-#: sed/sed.c:106
+#: sed/sed.c:111
 #, c-format
 msgid ""
 "  -f script-file, --file=script-file\n"
@@ -429,7 +429,7 @@ msgstr ""
 "  -f スクリプト・ファイル, --file=スクリプト・ファイル\n"
 "                 実行するコマンドとしてスクリプト・ファイルの内容を追加\n"
 
-#: sed/sed.c:108
+#: sed/sed.c:113
 #, c-format
 msgid ""
 "  -i[SUFFIX], --in-place[=SUFFIX]\n"
@@ -439,7 +439,18 @@ msgstr ""
 "                 ファイルをその場で編集 (拡張子があれば、バックアップを作"
 "成)\n"
 
-#: sed/sed.c:110
+#: sed/sed.c:116
+#, fuzzy, c-format
+msgid ""
+"  -b, --binary\n"
+"                 open files in binary mode (CR+LFs are not processed "
+"specially)\n"
+msgstr ""
+"  -i[接尾辞], --in-place[=接尾辞]\n"
+"                 ファイルをその場で編集 (拡張子があれば、バックアップを作"
+"成)\n"
+
+#: sed/sed.c:119
 #, c-format
 msgid ""
 "  -l N, --line-length=N\n"
@@ -448,7 +459,7 @@ msgstr ""
 "  -l N, --line-length=N\n"
 "                 「l」コマンド用の行折返し長を指定\n"
 
-#: sed/sed.c:112
+#: sed/sed.c:121
 #, c-format
 msgid ""
 "  --posix\n"
@@ -457,7 +468,7 @@ msgstr ""
 "  --posix\n"
 "                 GNU拡張を全部禁止。\n"
 
-#: sed/sed.c:114
+#: sed/sed.c:123
 #, c-format
 msgid ""
 "  -r, --regexp-extended\n"
@@ -466,7 +477,7 @@ msgstr ""
 "  -r, --regexp-extended\n"
 "                 スクリプトで拡張正規表現を使用。\n"
 
-#: sed/sed.c:117
+#: sed/sed.c:126
 #, c-format
 msgid ""
 "  -s, --separate\n"
@@ -477,7 +488,7 @@ msgstr ""
 "  -s, --separate\n"
 "                 ファイルを一連の入力にせず、別々に処理。\n"
 
-#: sed/sed.c:120
+#: sed/sed.c:129
 #, c-format
 msgid ""
 "  -u, --unbuffered\n"
@@ -489,17 +500,17 @@ msgstr ""
 "                 入力ファイルから極小のデータを取り込み、\n"
 "                 ちょくちょく出力バッファーに掃出し\n"
 
-#: sed/sed.c:123
+#: sed/sed.c:132
 #, c-format
 msgid "      --help     display this help and exit\n"
 msgstr "      --help     この説明を表示して終了\n"
 
-#: sed/sed.c:124
+#: sed/sed.c:133
 #, c-format
 msgid "      --version  output version information and exit\n"
 msgstr "      --version  バージョン情報を表示して終了\n"
 
-#: sed/sed.c:125
+#: sed/sed.c:134
 #, c-format
 msgid ""
 "\n"
@@ -515,7 +526,7 @@ msgstr ""
 "イル名となります。入力ファイルの指定がないと、標準入力を読み込みます。\n"
 "\n"
 
-#: sed/sed.c:131
+#: sed/sed.c:140
 #, c-format
 msgid ""
 "E-mail bug reports to: %s .\n"
@@ -524,12 +535,12 @@ msgstr ""
 "電子メールによるバグ報告の宛先: %s\n"
 "報告の際、“Subject:”フィールドのどこかに“%s”を入れてください。\n"
 
-#: sed/sed.c:268
+#: sed/sed.c:285
 #, c-format
 msgid "super-sed version %s\n"
 msgstr "super-sed %s版\n"
 
-#: sed/sed.c:269
+#: sed/sed.c:286
 #, c-format
 msgid ""
 "based on GNU sed version %s\n"
@@ -538,14 +549,14 @@ msgstr ""
 "原作GNU sed %s版\n"
 "\n"
 
-#: sed/sed.c:271
+#: sed/sed.c:288
 #, c-format
 msgid "GNU sed version %s\n"
 msgstr ""
 "GNU sed %s版\n"
 "\n"
 
-#: sed/sed.c:273
+#: sed/sed.c:290
 #, c-format
 msgid ""
 "%s\n"
@@ -564,77 +575,33 @@ msgstr ""
 "い。保証は一切ありません。営利目的や法で定められた範囲での特定目的のため\n"
 "の適合性もありません。\n"
 
-#: lib/utils.c:98 lib/utils.c:336
+#: sed/utils.c:98 sed/utils.c:363
 #, c-format
 msgid "cannot remove %s: %s"
 msgstr "%sを削除できません: %s"
 
-#: lib/utils.c:143
+#: sed/utils.c:168
 #, c-format
 msgid "couldn't open file %s: %s"
 msgstr "ファイル%sを開けませんでした: %s"
 
-#: lib/utils.c:220
+#: sed/utils.c:192
+#, fuzzy, c-format
+msgid "couldn't attach to %s: %s"
+msgstr "%d個のアイテムを%sへ書き込めませんでした: %s"
+
+#: sed/utils.c:247
 #, c-format
 msgid "couldn't write %d item to %s: %s"
 msgid_plural "couldn't write %d items to %s: %s"
 msgstr[0] "%d個のアイテムを%sへ書き込めませんでした: %s"
-msgstr[1] "%d個のアイテムを%sへ書き込めませんでした: %s"
 
-#: lib/utils.c:235 lib/utils.c:251
+#: sed/utils.c:262 sed/utils.c:278
 #, c-format
 msgid "read error on %s: %s"
 msgstr "%sの読込みエラー: %s"
 
-#: lib/utils.c:341
+#: sed/utils.c:368
 #, c-format
 msgid "cannot rename %s: %s"
 msgstr "%sの名前を変更できません: %s"
-
-#~ msgid "Success"
-#~ msgstr "成功"
-
-#~ msgid "No match"
-#~ msgstr "照合しません"
-
-#~ msgid "Invalid regular expression"
-#~ msgstr "無効な正規表現"
-
-#~ msgid "Invalid collation character"
-#~ msgstr "無効な校合文字"
-
-#~ msgid "Trailing backslash"
-#~ msgstr "後続の逆スラッシュ"
-
-#~ msgid "Invalid back reference"
-#~ msgstr "無効な逆参照"
-
-#~ msgid "Unmatched [ or [^"
-#~ msgstr "[や[^が釣合いません"
-
-#~ msgid "Unmatched ( or \\("
-#~ msgstr "(や\\(が釣合いません"
-
-#~ msgid "Unmatched \\{"
-#~ msgstr "\\{が釣合いません"
-
-#~ msgid "Invalid content of \\{\\}"
-#~ msgstr "無効な\\{\\}の内容\""
-
-#~ msgid "Invalid range end"
-#~ msgstr "無効な範囲の終端"
-
-#~ msgid "Memory exhausted"
-#~ msgstr "メモリーが足りません"
-
-#~ msgid "Invalid preceding regular expression"
-#~ msgstr "無効な先行正規表現"
-
-#~ msgid "Premature end of regular expression"
-#~ msgstr "早過ぎる正規表現終端"
-
-#~ msgid "Unmatched ) or \\)"
-#~ msgstr "釣り合わない)や\\)"
-
-#~ msgid "No previous regular expression"
-#~ msgstr "直前の正規表現が、ありません"

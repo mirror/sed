@@ -6,4 +6,4 @@ sed/compile.c
 sed/execute.c
 sed/regexp.c
 sed/sed.c
-lib/utils.c
+sed/utils.c

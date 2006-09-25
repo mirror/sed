@@ -1,3 +1,40 @@
+2006-09-24  Paolo Bonzini  <bonzini@gnu.org>
+
+	* sed/execute.c: Support ACLs.
+	* lib/utils.c: Move...
+	* sed/utils.c: ... here, and remove xmalloc.
+
+2006-08-21  Paolo Bonzini  <bonzini@gnu.org>
+
+	* sed/regexp.c: Accept NUL bytes for `.'.  Accept 'a\(b' in
+	POSIXLY_CORRECT/POSIXLY_BASIC posixicity.
+
+2006-08-03  Paolo Bonzini  <bonzini@gnu.org>
+
+	Revert this part of the previous change:
+
+	2006-08-03  Paolo Bonzini  <bonzini@gnu.org>
+
+	* sed/compile.c (get_openfile): Change second argument to char
+	and turn it into a string within the function.  Adjust callers.
+
+2006-08-03  Paolo Bonzini  <bonzini@gnu.org>
+	    Corinna Vinschen  <vinschen@redhat.com>
+
+	* lib/getline.c (getline): Remove Windows special casing.
+	* lib/utils.c (register_open_file, ck_fdopen): New.
+	(ck_fopen, ck_mkstemp): Use register_open_file.
+	* lib/utils.h (ck_fdopen): New.
+	* sed/execute.c (open_next_file): Reopen stdin.
+	* sed/sed.h (read_mode): New.
+	* sed/sed.c (read_mode): New.
+	(main): Set it on --binary.
+	(usage): Document --binary.
+	* sed/compile.c (get_openfile): Change second argument to char
+	and turn it into a string within the function.  Adjust callers.
+	* sed/execute.c (dump_append_queue, open_next_file): Use it
+	as mode for ck_fopen.
+
 2006-08-03  Paolo Bonzini  <bonzini@gnu.org>
 
 	* sed/execute.c (str_append): Use is_utf8 to skip useless work.

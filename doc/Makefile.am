@@ -5,8 +5,8 @@ dist_man_MANS = sed.1
 dist_noinst_DATA = sed.x sed-in.texi pcre.html
 dist_noinst_SCRIPTS = groupify.sed
 CLEANFILES = sed.html
-TEXI2DVI = $(top_srcdir)/config/texi2dvi --expand
-HELP2MAN = $(top_srcdir)/config/help2man
+TEXI2DVI = $(top_srcdir)/build-aux/texi2dvi --expand
+HELP2MAN = $(top_srcdir)/build-aux/help2man
 SED = $(top_builddir)/sed/sed
 
 # To produce better quality output, in the example sed
@@ -26,9 +26,7 @@ dist-hook:
 
 # This rule is used if --enable-html is passed
 if BUILD_HTML
-docdir = $(datadir)/doc
-pkgdocdir = $(datadir)/doc/$(PACKAGE)-$(VERSION)
-pkgdoc_DATA = sed.html
+doc_DATA = sed.html
 
 all: html
 
