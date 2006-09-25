@@ -103,54 +103,55 @@ get_translations() {
   subdir=$1
   domain=$2
 
-  echo "$0: getting translations into $subdir for $domain..."
-  (cd $subdir && rm -f dummy `ls | sed -n '/\.gmo$/p; /\.po/p'`) &&
+  case $SKIP_PO in
+  '')
+    echo "$0: getting translations into $subdir for $domain..."
+    (cd $subdir && rm -f dummy `ls | sed -n '/\.gmo$/p; /\.po/p'`) &&
 
-  $WGET_COMMAND -O "$subdir/$domain.html" "$TP_URL$domain" &&
+    $WGET_COMMAND -O "$subdir/$domain.html" "$TP_URL$domain" &&
 
-  sed -n 's|.*"http://[^"]*/translation/teams/PO/\([^/"]*\)/'"$domain"'-\([^/"]*\)\.[^."]*\.po".*|\1.\2|p' <"$subdir/$domain.html" |
-  sort -k 1,1 -k 2,2n -k2,2 -k3,3n -k3,3 -k4,4n -k4,4 -k5,5n -k5.5 |
-  awk -F. '
-    { if (lang && $1 != lang) print lang, ver }
-    { lang = $1; ver = substr($0, index($0, ".") + 1) }
-    END { if (lang) print lang, ver }
-  ' | awk -v domain="$domain" -v subdir="$subdir" '
-    {
-      lang = $1
+    sed -n 's|.*"http://[^"]*/translation/teams/PO/\([^/"]*\)/'"$domain"'-\([^/"]*\)\.[^."]*\.po".*|\1.\2|p' <"$subdir/$domain.html" |
+    sort -k 1,1 -k 2,2n -k2,2 -k3,3n -k3,3 -k4,4n -k4,4 -k5,5n -k5.5 |
+    awk -F. '
+      { if (lang && $1 != lang) print lang, ver }
+      { lang = $1; ver = substr($0, index($0, ".") + 1) }
+      END { if (lang) print lang, ver }
+    ' | awk -v domain="$domain" -v subdir="$subdir" '
+      {
+        lang = $1
+  
+        # Same maintainer as sed, so this one is more up to date.
+        if (lang == "it") next
 
-      # Same maintainer as sed, so this one is more up to date.
-      if (lang == "it") next
-
-      ver = $2
-      urlfmt = ""
-      printf "$WGET_COMMAND -O %s/%s.po 'http://www.iro.umontreal.ca/translation/teams/PO/%s/%s-%s.%s.po' &&\n", subdir, lang, lang, domain, ver, lang
-    }
-    END { print ":" }
-  ' | sh &&
-  rm "$subdir/$domain.html"
-}
-
-case $SKIP_PO in
-'')
-  case `wget --help` in
-  *'--no-cache'*)
-    no_cache='--no-cache';;
-  *'--cache=on/off'*)
-    no_cache='--cache=off';;
-  *)
-    no_cache='';;
+        ver = $2
+        urlfmt = ""
+        printf "$WGET_COMMAND -O %s/%s.po 'http://www.iro.umontreal.ca/translation/teams/PO/%s/%s-%s.%s.po' &&\n", subdir, lang, lang, domain, ver, lang
+      }
+      END { print ":" }
+    ' | sh &&
+    rm "$subdir/$domain.html"
+    ;;
   esac
 
-  WGET_COMMAND="wget -nv $no_cache"
-  export WGET_COMMAND
+  set "$subdir"/*.po 
+  if test "$1" != "$subdir/*.po"; then
+    ls "$subdir"/*.po | sed 's|.*/||; s|\.po$||' >"$subdir/LINGUAS"
+  fi
+}
 
-  get_translations po $package || exit
+case `wget --help` in
+*'--no-cache'*)
+  no_cache='--no-cache';;
+*'--cache=on/off'*)
+  no_cache='--cache=off';;
+*)
+  no_cache='';;
 esac
 
-set "$subdir"/*.po 
-if test "$1" != "$subdir/*.po"; then
-  ls "$subdir"/*.po | sed 's|.*/||; s|\.po$||' >"$subdir/LINGUAS"
-fi
+WGET_COMMAND="wget -nv $no_cache"
+export WGET_COMMAND
+
+get_translations po $package || exit
 
 # Reconfigure, getting other files.
 
