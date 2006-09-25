@@ -12,8 +12,7 @@ AC_DEFINE_UNQUOTED(SED_FEATURE_VERSION, "$SED_FEATURE_VERSION",
 AC_SUBST(SED_FEATURE_VERSION)
 
 AC_PROG_CC
-AC_PROG_RANLIB
-gl_USE_SYSTEM_EXTENSIONS
+gl_EARLY
 AC_ISC_POSIX
 AC_SYS_LARGEFILE
 AC_SYS_LONG_FILE_NAMES
@@ -55,7 +54,7 @@ AC_DEFUN([AM_MKINSTALLDIRS], [MKINSTALLDIRS="$mkdir_p" AC_SUBST(MKINSTALLDIRS)])
 AM_GNU_GETTEXT_VERSION(0.15)
 AM_GNU_GETTEXT(no-libtool, need-ngettext, ../intl)
 
-GNULIB_AUTOCONF_SNIPPET
+gl_INIT
 AC_CHECK_FUNCS_ONCE(isatty bcopy bzero isascii memcpy memset strchr strtoul
 		    popen pathconf isblank fchown fchmod setlocale wcrtomb
 		    wcscoll btowc)

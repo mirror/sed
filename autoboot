@@ -93,70 +93,9 @@ esac
 gnulib_tool=$GNULIB_SRCDIR/gnulib-tool
 <$gnulib_tool || exit
 
-gnulib_modules='
-acl
-alloca
-getline
-getopt
-gettext
-memchr
-memcmp
-memmove
-mkstemp
-obstack
-regex
-stdbool
-strerror
-strverscmp
-unlocked-io
-verify
-'
-
-new_gnulib_modules="$gnulib_modules"
-while [ -n "$new_gnulib_modules" ]; do
-  previous_gnulib_modules=`echo $gnulib_modules | tr '\n' ' ' `
-  gnulib_modules=`
-    (echo "$gnulib_modules"
-     for gnulib_module in $new_gnulib_modules; do
-       $gnulib_tool --extract-dependencies $gnulib_module
-     done) | sort -u
-  `
-  new_gnulib_modules=""
-  for gnulib_module in $gnulib_modules; do
-    case " $previous_gnulib_modules " in
-      *" $gnulib_module "*) ;;
-      *) new_gnulib_modules="$new_gnulib_modules $gnulib_module" ;;
-    esac
-  done
-done
-
-gnulib_files=`
-  (echo m4/warning.m4
-   for gnulib_module in $gnulib_modules; do
-     $gnulib_tool --extract-filelist $gnulib_module
-   done) | sort -u
-`
-
-gnulib_dirs=`echo "$gnulib_files" | sed 's,/[^/]*$,,' | sed 's,^m4$,build-aux,' | sort -u`
-mkdir -p $gnulib_dirs || exit
-
-for gnulib_file in $gnulib_files; do
-  dest=`echo $gnulib_file | sed 's,m4/,build-aux/,' `
-  rm -f $dest &&
-  echo "$0: Copying file $GNULIB_SRCDIR/$gnulib_file" &&
-  cp -p $GNULIB_SRCDIR/$gnulib_file $dest || exit
-done
-
-# # This suppresses a bogus diagnostic
-# # "warning: macro `AM_LANGINFO_CODESET' not found in library".
-# echo "$0: patching build-aux/gettext.m4 to remove need for intl/* ..."
-# sed '
-#   /^AC_DEFUN(\[AM_INTL_SUBDIR],/,/^]/c\
-#     AC_DEFUN([AM_INTL_SUBDIR], [])
-#   /^AC_DEFUN(\[gt_INTL_SUBDIR_CORE],/,/^]/c\
-#     AC_DEFUN([gt_INTL_SUBDIR_CORE], [])
-# ' build-aux/gettext.m4 >build-aux/gettext_gl.m4 || exit
-
+# $gnulib_tool --import --m4-base=build-aux --lib=libsed --no-changelog --makefile-name=gnulib.mk \
+#    acl alloca getline getopt gettext memchr memcmp memmove \
+#    mkstemp obstack regex stdbool strerror strverscmp unlocked-io verify
 
 # Get translations.
 
@@ -188,7 +127,6 @@ get_translations() {
     }
     END { print ":" }
   ' | sh &&
-  ls "$subdir"/*.po | sed 's|.*/||; s|\.po$||' >"$subdir/LINGUAS" &&
   rm "$subdir/$domain.html"
 }
 
@@ -209,36 +147,18 @@ case $SKIP_PO in
   get_translations po $package || exit
 esac
 
-
-# Generate autoconf and automake snippets.
-
-(echo '# This file is generated automatically by "autoboot".' &&
- echo 'AC_DEFUN([GNULIB_AUTOCONF_SNIPPET],[' &&
- $gnulib_tool --extract-autoconf-snippet $gnulib_modules |
-   sed '/^AM_GNU_GETTEXT(/ s/\[external]/[no-libtool], [need-ngettext]/' &&
- echo '])'
-) >build-aux/gnulib.m4 || exit
-
-(echo '# This file is generated automatically by "autoboot".' &&
- $gnulib_tool --extract-automake-snippet $gnulib_modules |
- sed 's/^[	 ]*AM_CPPFLAGS[	 ]*+=/# (commented out by autoboot) &/'
-) >lib/gnulib.mk || exit
-
+set "$subdir"/*.po 
+if test "$1" != "$subdir/*.po"; then
+  ls "$subdir"/*.po | sed 's|.*/||; s|\.po$||' >"$subdir/LINGUAS"
+fi
 
 # Reconfigure, getting other files.
 
 echo "$0: autopoint --force ..."
 autopoint --force || exit
 
-# Undo changes to gnulib files that autoreconf made.
-for gnulib_file in $gnulib_files; do
-  dest=`echo $gnulib_file | sed 's,m4/,build-aux/,' `
-  test ! -f $dest || cmp -s $dest $GNULIB_SRCDIR/$gnulib_file || {
-    rm -f $dest &&
-    echo "$0: Copying file $GNULIB_SRCDIR/$gnulib_file again" &&
-    cp -p $GNULIB_SRCDIR/$gnulib_file $dest || exit
-  }
-done
+echo "$0: $gnulib_tool --import ..."
+$gnulib_tool --import
 
 # Make sure aclocal.m4 is not older than input files.
 sleep 1
