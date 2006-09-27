@@ -96,11 +96,10 @@ gnulib_tool=$GNULIB_SRCDIR/gnulib-tool
 
 # Get translations.
 
-  set po/*.po 
-  if test "$1" != "po/*.po"; then
-    ls po/*.po | sed 's|.*/||; s|\.po$||' >po/LINGUAS
-  fi
-}
+set po/*.po 
+if test "$1" != "po/*.po"; then
+  echo "$*" | sed 's|po/||g; s|\.po||g' >po/LINGUAS
+fi
 
 # Reconfigure, getting other files.
 
