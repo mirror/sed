@@ -106,7 +106,7 @@ get_translations() {
   case $SKIP_PO in
   '')
     echo "$0: getting translations into $subdir for $domain..."
-    (cd $subdir && rm -f dummy `ls | sed -n '/\.gmo$/p; /\.po/p'`) &&
+    (cd $subdir && rm -f *.gmo) &&
 
     $WGET_COMMAND -O "$subdir/$domain.html" "$TP_URL$domain" &&
 
@@ -135,7 +135,7 @@ get_translations() {
 
   set "$subdir"/*.po 
   if test "$1" != "$subdir/*.po"; then
-    ls "$subdir"/*.po | sed 's|.*/||; s|\.po$||' >"$subdir/LINGUAS"
+    echo "$*" | sed 's|po/||g; s|\.po||g' >"$subdir/LINGUAS"
   fi
 }
 
