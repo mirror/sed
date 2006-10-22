@@ -388,7 +388,7 @@ msgstr ""
 "file]...\n"
 "\n"
 
-#: sed/sed.c:107
+#: sed/sed.c:109
 #, c-format
 msgid ""
 "  -n, --quiet, --silent\n"
@@ -397,7 +397,7 @@ msgstr ""
 "  -n, --quiet, --silent\n"
 "                 sopprime la stampa automatica del pattern space\n"
 
-#: sed/sed.c:109
+#: sed/sed.c:111
 #, c-format
 msgid ""
 "  -e script, --expression=script\n"
@@ -406,7 +406,7 @@ msgstr ""
 "  -e script, --expression=script\n"
 "                 aggiunge lo script ai comandi da eseguire\n"
 
-#: sed/sed.c:111
+#: sed/sed.c:113
 #, c-format
 msgid ""
 "  -f script-file, --file=script-file\n"
@@ -438,7 +438,7 @@ msgstr ""
 "                 apre i file in modo binario (lasciando le sequenze CR"
 "+LF                 se è immutate)\n"
 
-#: sed/sed.c:119
+#: sed/sed.c:121
 #, c-format
 msgid ""
 "  -l N, --line-length=N\n"

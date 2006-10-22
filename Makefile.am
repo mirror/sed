@@ -11,7 +11,8 @@ SUBDIRS = intl lib pcre po sed doc testsuite
 noinst_DATA = bootstrap.sh
 noinst_HEADERS = basicdefs.h
 
-EXTRA_DIST = BUGS THANKS COPYING.DOC README.boot config/texi2dvi config/help2man
+EXTRA_DIST = BUGS THANKS COPYING.DOC README.boot \
+	autoboot build-aux/texi2dvi build-aux/help2man
 
 html:
 	cd doc && make html
