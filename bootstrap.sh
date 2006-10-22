@@ -19,19 +19,26 @@ if test -f config.h; then :; else
 */
 
 #define PACKAGE "sed"
-#define VERSION "4.1.5-boot"
-#define SED_FEATURE_VERSION "4.1"
+#define VERSION "4.1a-boot"
+#define SED_FEATURE_VERSION "4.2"
 #define BOOTSTRAP 1
+
+#ifndef _GNU_SOURCE
+#define _GNU_SOURCE 1
+#endif
 
 /* Define if your compiler/headers don't support const. */
 #undef const
+#define __getopt_argv_const const
 
-/* Undefine if headers have conflicting definition.  */
-#define mbstate_t int
+/* Define if headers have no definition.  */
+/* #define mbstate_t int */
+#define HAVE_WCHAR_H 1
+#define HAVE_MBRTOWC 1
 
 /* Toggle if you encounter errors in lib/mkstemp.c.  */
-#define HAVE_UNISTD_H
-#define HAVE_FCNTL_H
+#define HAVE_UNISTD_H 1
+#define HAVE_FCNTL_H 1
 #undef HAVE_SYS_FILE_H
 #undef HAVE_IO_H
 
@@ -88,21 +95,32 @@ set -x -e
 
 rm -f lib/*.o sed/*.o sed/sed
 cd lib || exit 1
-rm -f regex.h
-cp regex_.h regex.h
-${CC} -DHAVE_CONFIG_H -I.. -I. -c alloca.c
+${CC} -DHAVE_CONFIG_H -I.. -I. -c acl.c || exit 1
+${CC} -DHAVE_CONFIG_H -I.. -I. -c alloca.c || exit 1
+${CC} -DHAVE_CONFIG_H -I.. -I. -c error.c || exit 1
+${CC} -DHAVE_CONFIG_H -I.. -I. -c exitfail.c || exit 1
+${CC} -DHAVE_CONFIG_H -I.. -I. -c getdelim.c || exit 1
 ${CC} -DHAVE_CONFIG_H -I.. -I. -c getline.c || exit 1
 ${CC} -DHAVE_CONFIG_H -I.. -I. -c getopt.c || exit 1
 ${CC} -DHAVE_CONFIG_H -I.. -I. -c getopt1.c || exit 1
+${CC} -DHAVE_CONFIG_H -I.. -I. -c malloc.c || exit 1
+${CC} -DHAVE_CONFIG_H -I.. -I. -c mbchar.c || exit 1
 ${CC} -DHAVE_CONFIG_H -I.. -I. -c memchr.c || exit 1
 ${CC} -DHAVE_CONFIG_H -I.. -I. -c memcmp.c || exit 1
 ${CC} -DHAVE_CONFIG_H -I.. -I. -c memmove.c || exit 1
 ${CC} -DHAVE_CONFIG_H -I.. -I. -c mkstemp.c || exit 1
-${CC} -DHAVE_CONFIG_H -I.. -I. -c strverscmp.c || exit 1
 ${CC} -DHAVE_CONFIG_H -I.. -I. -c obstack.c || exit 1
+${CC} -DHAVE_CONFIG_H -I.. -I. -c quote.c || exit 1
+${CC} -DHAVE_CONFIG_H -I.. -I. -c quotearg.c || exit 1
 ${CC} -DHAVE_CONFIG_H -I.. -I. -c regex.c || exit 1
+${CC} -DHAVE_CONFIG_H -I.. -I. -c strcasecmp.c || exit 1
 ${CC} -DHAVE_CONFIG_H -I.. -I. -c strerror.c || exit 1
-${CC} -DHAVE_CONFIG_H -I.. -I. -c utils.c || exit 1
+${CC} -DHAVE_CONFIG_H -I.. -I. -c strncasecmp.c || exit 1
+${CC} -DHAVE_CONFIG_H -I.. -I. -c strnlen1.c || exit 1
+${CC} -DHAVE_CONFIG_H -I.. -I. -c strverscmp.c || exit 1
+${CC} -DHAVE_CONFIG_H -I.. -I. -c tempname.c || exit 1
+${CC} -DHAVE_CONFIG_H -I.. -I. -c xalloc-die.c || exit 1
+${CC} -DHAVE_CONFIG_H -I.. -I. -c xmalloc.c || exit 1
 
 cd ../sed || exit 1
 ${CC} -DHAVE_CONFIG_H -I.. -I. -I../lib -c sed.c || exit 1
@@ -111,5 +129,6 @@ ${CC} -DHAVE_CONFIG_H -I.. -I. -I../lib -c compile.c || exit 1
 ${CC} -DHAVE_CONFIG_H -I.. -I. -I../lib -c execute.c || exit 1
 ${CC} -DHAVE_CONFIG_H -I.. -I. -I../lib -c mbcs.c || exit 1
 ${CC} -DHAVE_CONFIG_H -I.. -I. -I../lib -c regexp.c || exit 1
+${CC} -DHAVE_CONFIG_H -I.. -I. -I../lib -c utils.c || exit 1
 
 ${CC} -o sed *.o ../lib/*.o || exit 1

@@ -1,8 +1,11 @@
-Sed 4.1.6
+Sed 4.1a (release candidate for sed 4.2)
+
+* much improved portability
 
 * sed can be much faster in UTF-8 locales
 
 * sed will correctly replace ACLs when using -i.
+
 * sed will now accept NUL bytes for `.'
 
 ----------------------------------------------------------------------------

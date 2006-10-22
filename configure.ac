@@ -1,12 +1,12 @@
 dnl Process this file with -*- autoconf -*- to produce a configure script.
-AC_INIT(sed, 4.1.5, bonzini@gnu.org, sed)
+AC_INIT(sed, 4.1a, bonzini@gnu.org, sed)
 AC_CONFIG_AUX_DIR(build-aux)
 AC_CONFIG_SRCDIR([sed/sed.c])
 AM_CONFIG_HEADER(config.h:config_h.in)
-AC_PREREQ(2.59)
+AC_PREREQ(2.60)
 AM_INIT_AUTOMAKE
 
-SED_FEATURE_VERSION=4.1
+SED_FEATURE_VERSION=4.2
 AC_DEFINE_UNQUOTED(SED_FEATURE_VERSION, "$SED_FEATURE_VERSION",
   [Define to the version of GNU sed whose features are supported by this sed.])
 AC_SUBST(SED_FEATURE_VERSION)

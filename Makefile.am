@@ -11,7 +11,8 @@ SUBDIRS = intl lib po sed doc testsuite
 noinst_DATA = bootstrap.sh
 noinst_HEADERS = basicdefs.h
 
-EXTRA_DIST = BUGS THANKS COPYING.DOC README.boot config/texi2dvi config/help2man
+EXTRA_DIST = BUGS THANKS COPYING.DOC README.boot \
+	autoboot build-aux/texi2dvi build-aux/help2man
 
 html:
 	cd doc && make html
@@ -25,11 +26,20 @@ dist-hook:
 	cp -p $(srcdir)/bootstrap.sh $(distdir)/bootstrap.sh
 
 full-distcheck:
+	make distcheck EXTRA_DC_FLAGS='--enable-regex-tests'
 	make distcheck EXTRA_DC_FLAGS='--enable-html'
 	make distcheck EXTRA_DC_FLAGS='--disable-i18n'
 	make distcheck EXTRA_DC_FLAGS='--disable-nls'
-	make distcheck EXTRA_DC_FLAGS='--without-included-regex'
 	make distcheck EXTRA_DC_FLAGS='--without-included-gettext'
+	@case "$(host)" in \
+	  *-linux*|*-gnu*) \
+	    echo make distcheck EXTRA_DC_FLAGS=\'--without-included-regex\'; \
+	    make distcheck EXTRA_DC_FLAGS='--without-included-regex' \
+	    ;; \
+	  *) \
+	    echo Skipping check --without-included-regex \
+	    ;; \
+	esac
 
 ## update-regex:
 ##	HOST=sources.redhat.com && \
