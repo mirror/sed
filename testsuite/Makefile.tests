@@ -97,7 +97,7 @@ help::
 version::
 	$(SEDENV) $(SED) --version > $@.out 2>&1
 	$(CMP) $@.good $@.out 
-	@$(RM) $@.good $@.out
+	@$(RM) $@.out
 
 file::
 	$(SEDENV) $(SED) --file=$(srcdir)/newjis.sed \
