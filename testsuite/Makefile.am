@@ -39,7 +39,7 @@ EXTRA_DIST = runtest Makefile.tests \
 	dollar.good dollar.inp dollar.sed \
 	empty.good empty.inp empty.sed \
 	enable.good enable.inp enable.sed \
-	eval.good eval.inp eval.sed \
+	eval.good eval.in2 eval.inp eval.sed \
 	factor.good factor.inp factor.sed \
 	fasts.good fasts.inp fasts.sed \
 	flipcase.good flipcase.inp flipcase.sed \

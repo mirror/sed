@@ -245,6 +245,7 @@ regncomp (preg, pattern, length, cflags)
   const char *errptr;
   int errofs;
   int options = PCRE_ENGLISH_ERRORS;
+  int count;
 
   options |= (cflags & REG_ICASE) ? PCRE_CASELESS : 0;
   options |= (cflags & REG_EXTENDED) ? PCRE_EXTENDED : 0;
@@ -271,7 +272,8 @@ regncomp (preg, pattern, length, cflags)
   preg->re_study = pcre_study (preg->re_pcre, 0, &errptr);
 
   pcre_info (preg->re_pcre, preg->re_study,
-	     PCRE_INFO_CAPTURECOUNT, &preg->re_nsub);
+	     PCRE_INFO_CAPTURECOUNT, &count);
+  preg->re_nsub = count;
   return 0;
 }
 

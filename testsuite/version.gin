@@ -1,5 +1,5 @@
 super-sed version @VERSION@
-based on GNU sed version 4.1
+based on GNU sed version @SED_FEATURE_VERSION@
 
 Copyright (C) 2003 Free Software Foundation, Inc.
 This is free software; see the source for copying conditions.  There is NO

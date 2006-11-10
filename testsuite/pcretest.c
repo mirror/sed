@@ -129,7 +129,7 @@ main (int argc, char **argv)
 	{NULL, 0, NULL, 0}
       };
 
-      char c = getopt_long (argc, argv, SHORTOPTS,
+      int c = getopt_long (argc, argv, SHORTOPTS,
 			    longopts, NULL);
 
       /* Detect the end of the options. */

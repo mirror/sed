@@ -1739,7 +1739,7 @@ pcre_exec (re, extra, subject, length, start_offset, options, offsets, offsetcou
   const uschar *bmtable = NULL;
   const uschar *start_match;
   const uschar *end_subject;
-  const uschar *req_char_ptr = start_match - 1;
+  const uschar *req_char_ptr;
   BOOL using_temporary_offsets = FALSE;
   BOOL anchored;
   BOOL startline;
@@ -1773,6 +1773,7 @@ pcre_exec (re, extra, subject, length, start_offset, options, offsets, offsetcou
   match_block.ctypes = re->tables + ctypes_offset;
 
   start_match = match_block.first_start;
+  req_char_ptr = start_match - 1;
   end_subject = match_block.end_subject;
 
   /* For matches anchored to the end of the pattern, we can often avoid

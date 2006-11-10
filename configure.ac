@@ -92,6 +92,7 @@ AM_CONDITIONAL(TEXI2HTML_HTML, test "x$enable_html" = xtexi2html)
 
 
 AC_CONFIG_FILES([bootstrap.sh], chmod +x bootstrap.sh)
+AC_CONFIG_FILES([testsuite/version.good:testsuite/version.gin])
 AC_CONFIG_FILES([Makefile doc/Makefile \
 lib/Makefile sed/Makefile testsuite/Makefile \
 po/Makefile.in intl/Makefile pcre/Makefile])

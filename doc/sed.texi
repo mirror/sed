@@ -1421,9 +1421,9 @@ wastes time by reading the whole file without any visible effect:
 
 @example
 :eat
-$d       @i{Quit silently on the last line}
-N        @i{Read another line, silently}
-g        @i{Overwrite pattern space each time to save memory}
+$d       @i{@r{Quit silently on the last line}}
+N        @i{@r{Read another line, silently}}
+g        @i{@r{Overwrite pattern space each time to save memory}}
 b eat
 @end example
 
@@ -2769,7 +2769,7 @@ of your report if at all possible.
 Please do not send a bug report like this:
 
 @example
-@i{while building frobme-1.3.4}
+@i{@i{@r{while building frobme-1.3.4}}}
 $ configure 
 @error{} sed: file sedscr line 1: Unknown option to 's'
 @end example
@@ -3078,24 +3078,25 @@ least significant 8 bits of the value. Any subsequent digits
 stand for themselves.  For example:
 
 @example
-     \040  @i{is another way of writing a space}
-     \40   @i{is the same, provided there are fewer than 40}
-           @i{previous capturing subpatterns}
-     \7    @i{is always a back reference}
-     \011  @i{is always a tab}
-     \11   @i{might be a back reference, or another way of}
-           @i{writing a tab}
-     \0113 @i{is a tab followed by the character @samp{3}}
-     \113  @i{is the character with octal code 113 (since there}
-           @i{can be no more than 99 back references)}
-     \377  @i{is a byte consisting entirely of 1 bits (@sc{ascii} 255)}
-     \81   @i{is either a back reference, or a binary zero}
-           @i{followed by the two characters @samp{81}}
+     \040  @i{@r{is another way of writing a space}}
+     \40   @i{@r{is the same, provided there are fewer than 40}}
+           @i{@r{previous capturing subpatterns}}
+     \7    @i{@r{is always a back reference}}
+     \011  @i{@r{is always a tab}}
+     \11   @i{@r{might be a back reference, or another way of writing a tab}}
+     \0113 @i{@r{is a tab followed by the character @samp{3}}}
+     \113  @i{@r{is the character with octal code 113 (since there}}
+           @i{@r{can be no more than 99 back references)}}
+     \377  @i{@r{is a byte consisting entirely of 1 bits (@sc{ascii} 255)}}
+     \81   @i{@r{is either a back reference, or a binary zero}}
+           @i{@r{followed by the two characters @samp{81}}}
 @end example
 
 Note that octal values of 100 or greater must not be introduced
-duced by a leading zero, because no more than three octal
-digits are ever read.
+by a leading zero, because no more than three octal
+digits are ever read. Note that this applies only to the LHS 
+pattern; it is not possible yet to specify more than 9 backreferences 
+on the RHS of the `s' command.
 
 All the sequences that define a single byte value can be
 used both inside and outside character classes. In addition,
@@ -3751,6 +3752,9 @@ character, some delimiter must be used to terminate the back
 reference.  If the @code{X} modifier option is set, this can be
 whitespace.  Otherwise an empty comment can be used, or the
 following character can be expressed in hexadecimal or octal.
+Note that this applies only to the LHS pattern; it is
+not possible yet to specify more than 9 backreferences on the 
+RHS of the `s' command. 
 
 A back reference that occurs inside the parentheses to which
 it refers fails when the subpattern is first used, so, for
