@@ -95,7 +95,6 @@ help::
 	@$(RM) $@.1out $@.2out
 
 version::
-	$(SED) 's^@'VERSION'@^$(VERSION)^' $(srcdir)/version.gin > $@.good 
 	$(SEDENV) $(SED) --version > $@.out 2>&1
 	$(CMP) $@.good $@.out 
 	@$(RM) $@.good $@.out
