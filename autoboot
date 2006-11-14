@@ -25,6 +25,7 @@ package=sed
 
 # Translation Project URL, for the registry of all projects.
 TP_URL='http://www.iro.umontreal.ca/translation/registry.cgi?domain='
+TP_PO_URL='http://www.iro.umontreal.ca/translation/teams/PO/'
 
 # Ensure file names are sorted consistently across platforms.
 # Also, ensure diagnostics are in English, e.g., "wget --help" below.
@@ -124,8 +125,10 @@ get_translations() {
         if (lang == "it") next
 
         ver = $2
-        urlfmt = ""
-        printf "$WGET_COMMAND -O %s/%s.po 'http://www.iro.umontreal.ca/translation/teams/PO/%s/%s-%s.%s.po' &&\n", subdir, lang, lang, domain, ver, lang
+        printf "{ $WGET_COMMAND -O %s/%s.po '\'"$TP_PO_URL"'/%s/%s-%s.%s.po'\'' &&\n", subdir, lang, lang, domain, ver, lang
+        printf "  msgfmt -c -o /dev/null %s/%s.po || {\n", subdir, lang
+        printf "    echo >&2 '\'"$0"': omitting translation for %s'\''\n", lang
+        printf "    rm -f %s/%s.po; }; } &&\n", subdir, lang
       }
       END { print ":" }
     ' | sh &&
