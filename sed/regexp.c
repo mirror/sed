@@ -64,15 +64,24 @@ compile_regex_1 (new_regex, needed_sub)
   const char *error;
   int syntax = ((extended_regexp_flags & REG_EXTENDED)
 		 ? RE_SYNTAX_POSIX_EXTENDED
-                 : RE_SYNTAX_POSIX_BASIC)
-		 & ~RE_DOT_NOT_NULL;
+                 : RE_SYNTAX_POSIX_BASIC);
 
-  if (posixicity == POSIXLY_EXTENDED)
-    syntax &= ~RE_UNMATCHED_RIGHT_PAREN_ORD;
-  else
-    syntax |= RE_UNMATCHED_RIGHT_PAREN_ORD;
-
+  syntax &= ~RE_DOT_NOT_NULL;
   syntax |= RE_NO_POSIX_BACKTRACKING;
+
+  switch (posixicity)
+    {
+    case POSIXLY_EXTENDED:
+      syntax &= ~RE_UNMATCHED_RIGHT_PAREN_ORD;
+      break;
+    case POSIXLY_CORRECT:
+      syntax |= RE_UNMATCHED_RIGHT_PAREN_ORD;
+      break;
+    case POSIXLY_BASIC:
+      syntax |= RE_UNMATCHED_RIGHT_PAREN_ORD | RE_LIMITED_OPS | RE_NO_GNU_OPS;
+      break;
+    }
+
 #ifdef RE_ICASE
   syntax |= (new_regex->flags & REG_ICASE) ? RE_ICASE : 0;
 #endif

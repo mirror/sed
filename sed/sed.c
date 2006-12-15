@@ -72,6 +72,9 @@ bool no_default_output = false;
 /* If set, reset line counts on every new file. */
 bool separate_files = false;
 
+/* If set, follow symlinks when processing in place */
+bool follow_symlinks = false;
+
 /* How do we edit files in-place? (we don't if NULL) */
 char *in_place_extension = NULL;
 
@@ -110,6 +113,10 @@ Usage: %s [OPTION]... {script-only-if-no-other-script} [input-file]...\n\
                  add the script to the commands to be executed\n"));
   fprintf(out, _("  -f script-file, --file=script-file\n\
                  add the contents of script-file to the commands to be executed\n"));
+#ifdef ENABLE_FOLLOW_SYMLINKS
+  fprintf(out, _("  --follow-symlinks\n\
+                 follow symlinks when processing in place\n"));
+#endif
   fprintf(out, _("  -i[SUFFIX], --in-place[=SUFFIX]\n\
                  edit files in place (makes backup if extension supplied)\n"));
 #if defined(WIN32) || defined(_WIN32) || defined(__CYGWIN__) || defined(MSDOS) || defined(__EMX__)
@@ -173,6 +180,9 @@ main(argc, argv)
     {"unbuffered", 0, NULL, 'u'},
     {"version", 0, NULL, 'v'},
     {"help", 0, NULL, 'h'},
+#ifdef ENABLE_FOLLOW_SYMLINKS
+    {"follow-symlinks", 0, NULL, 'F'},
+#endif
     {NULL, 0, NULL, 0}
   };
 
@@ -224,6 +234,10 @@ main(argc, argv)
 	  break;
 	case 'f':
 	  the_program = compile_file(the_program, optarg);
+	  break;
+
+	case 'F':
+	  follow_symlinks = true;
 	  break;
 
 	case 'i':

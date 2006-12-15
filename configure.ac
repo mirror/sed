@@ -85,6 +85,13 @@ enable_html=no)
 
 AM_CONDITIONAL(BUILD_HTML, test "x$enable_html" != xno)
 
+# Check whether we are able to follow symlinks
+AC_CHECK_FUNC(lstat, have_lstat=yes)
+AC_CHECK_FUNC(readlink, have_readlink=yes)
+if test "x$have_lstat" = xyes -a "x$have_readlink" = xyes; then
+   AC_DEFINE(ENABLE_FOLLOW_SYMLINKS, ,[Follow symlinks when processing in place])
+fi
+
 : ${TEXI2HTML=texi2html -monolithic}
 AC_SUBST(TEXI2HTML)
 

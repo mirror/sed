@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: sed 4.0a\n"
 "Report-Msgid-Bugs-To: bonzini@gnu.org\n"
-"POT-Creation-Date: 2006-09-24 17:42+0200\n"
+"POT-Creation-Date: 2006-11-28 17:57+0100\n"
 "PO-Revision-Date: 2002-11-26 12:44+0100\n"
 "Last-Translator: Paolo Bonzini <bonzini@gnu.org>\n"
 "Language-Team: Italian <tp@lists.linux.it>\n"
@@ -175,27 +175,27 @@ msgid "couldn't edit %s: not a regular file"
 msgstr "impossibile modificare %s: non è un file normale"
 
 # lib/utils.c:131
-#: sed/execute.c:735 sed/utils.c:229
+#: sed/execute.c:735 sed/utils.c:233
 #, c-format
 msgid "couldn't open temporary file %s: %s"
 msgstr "impossibile aprire il file temporaneo %s: %s"
 
 # sed/execute.c:1003 sed/execute.c:1183
-#: sed/execute.c:1258 sed/execute.c:1438
+#: sed/execute.c:1265 sed/execute.c:1445
 msgid "error in subprocess"
 msgstr "errore in un sottoprocesso"
 
 # sed/execute.c:1005
-#: sed/execute.c:1260
+#: sed/execute.c:1267
 msgid "option `e' not supported"
 msgstr "opzione `e' non supportata"
 
 # sed/execute.c:1185
-#: sed/execute.c:1440
+#: sed/execute.c:1447
 msgid "`e' command not supported"
 msgstr "comando `e' non supportato"
 
-#: sed/execute.c:1780
+#: sed/execute.c:1787
 msgid "no input files"
 msgstr "nessun file in ingresso"
 
@@ -216,7 +216,7 @@ msgid "invalid reference \\%d on `s' command's RHS"
 msgstr "riferimento non valido \\%d nel secondo membro del comando `s'"
 
 # sed/sed.c:98
-#: sed/sed.c:98
+#: sed/sed.c:101
 msgid ""
 "  -R, --regexp-perl\n"
 "                 use Perl 5's regular expressions syntax in the script.\n"
@@ -224,7 +224,7 @@ msgstr ""
 "  -R, --regexp-perl\n"
 "                 usa la sintassi Perl 5 per le espressioni regolari\n"
 
-#: sed/sed.c:103
+#: sed/sed.c:106
 #, c-format
 msgid ""
 "Usage: %s [OPTION]... {script-only-if-no-other-script} [input-file]...\n"
@@ -234,7 +234,7 @@ msgstr ""
 "file]...\n"
 "\n"
 
-#: sed/sed.c:107
+#: sed/sed.c:110
 #, c-format
 msgid ""
 "  -n, --quiet, --silent\n"
@@ -243,7 +243,7 @@ msgstr ""
 "  -n, --quiet, --silent\n"
 "                 sopprime la stampa automatica del pattern space\n"
 
-#: sed/sed.c:109
+#: sed/sed.c:112
 #, c-format
 msgid ""
 "  -e script, --expression=script\n"
@@ -252,7 +252,7 @@ msgstr ""
 "  -e script, --expression=script\n"
 "                 aggiunge lo script ai comandi da eseguire\n"
 
-#: sed/sed.c:111
+#: sed/sed.c:114
 #, c-format
 msgid ""
 "  -f script-file, --file=script-file\n"
@@ -263,7 +263,16 @@ msgstr ""
 "                 aggiunge il contenuto di file-script ai comandi da "
 "eseguire\n"
 
-#: sed/sed.c:113
+#: sed/sed.c:117
+#, c-format
+msgid ""
+"  --follow-symlinks\n"
+"                 follow symlinks when processing in place\n"
+msgstr ""
+"  --follow-symlinks\n"
+"                 segue i link simbolici quando viene utilizzato -i\n"
+
+#: sed/sed.c:120
 #, c-format
 msgid ""
 "  -i[SUFFIX], --in-place[=SUFFIX]\n"
@@ -273,7 +282,7 @@ msgstr ""
 "                 scrive il risultato sul file originale (facendo una copia\n"
 "                 se è fornita un'estensione)\n"
 
-#: sed/sed.c:116
+#: sed/sed.c:123
 #, c-format
 msgid ""
 "  -b, --binary\n"
@@ -284,7 +293,7 @@ msgstr ""
 "                 apre i file in modo binario (lasciando le sequenze CR"
 "+LF                 se è immutate)\n"
 
-#: sed/sed.c:119
+#: sed/sed.c:126
 #, c-format
 msgid ""
 "  -l N, --line-length=N\n"
@@ -294,7 +303,7 @@ msgstr ""
 "                 specifica la lunghezza delle linee generate dal comando "
 "`l'\n"
 
-#: sed/sed.c:121
+#: sed/sed.c:128
 #, c-format
 msgid ""
 "  --posix\n"
@@ -304,7 +313,7 @@ msgstr ""
 "                 disabilita tutte le estensioni GNU.\n"
 
 # sed/sed.c:98
-#: sed/sed.c:123
+#: sed/sed.c:130
 #, c-format
 msgid ""
 "  -r, --regexp-extended\n"
@@ -313,7 +322,7 @@ msgstr ""
 "  -r, --regexp-extended\n"
 "                 usa la sintassi di `egrep' per le espressioni regolari\n"
 
-#: sed/sed.c:126
+#: sed/sed.c:133
 #, c-format
 msgid ""
 "  -s, --separate\n"
@@ -325,7 +334,7 @@ msgstr ""
 "                 considera i file di input come separati invece che come un\n"
 "                 unico file lungo.\n"
 
-#: sed/sed.c:129
+#: sed/sed.c:136
 #, c-format
 msgid ""
 "  -u, --unbuffered\n"
@@ -336,17 +345,17 @@ msgstr ""
 "  -u, --unbuffered\n"
 "                 carica e visualizza i dati una a pezzetti piu' piccoli\n"
 
-#: sed/sed.c:132
+#: sed/sed.c:139
 #, c-format
 msgid "      --help     display this help and exit\n"
 msgstr "      --help     mostra questo aiuto ed esce\n"
 
-#: sed/sed.c:133
+#: sed/sed.c:140
 #, c-format
 msgid "      --version  output version information and exit\n"
 msgstr "      --version  stampa le informazioni sulla versione ed esce\n"
 
-#: sed/sed.c:134
+#: sed/sed.c:141
 #, c-format
 msgid ""
 "\n"
@@ -366,7 +375,7 @@ msgstr ""
 "\n"
 
 # sed/sed.c:132
-#: sed/sed.c:140
+#: sed/sed.c:147
 #, c-format
 msgid ""
 "E-mail bug reports to: %s .\n"
@@ -376,13 +385,13 @@ msgstr ""
 "Assicurarsi di includere la parola ``%s'' nell'oggetto del messaggio.\n"
 
 # sed/sed.c:255
-#: sed/sed.c:285
+#: sed/sed.c:299
 #, c-format
 msgid "super-sed version %s\n"
 msgstr "super-sed versione %s\n"
 
 # sed/sed.c:256
-#: sed/sed.c:286
+#: sed/sed.c:300
 #, c-format
 msgid ""
 "based on GNU sed version %s\n"
@@ -392,13 +401,13 @@ msgstr ""
 "\n"
 
 # sed/sed.c:258
-#: sed/sed.c:288
+#: sed/sed.c:302
 #, c-format
 msgid "GNU sed version %s\n"
 msgstr "GNU sed versione %s\n"
 
 # sed/sed.c:260
-#: sed/sed.c:290
+#: sed/sed.c:304
 #, c-format
 msgid ""
 "%s\n"
@@ -413,39 +422,51 @@ msgstr ""
 "SCOPO, nei limiti permessi dalla legge.\n"
 
 # sed/execute.c:516
-#: sed/utils.c:98 sed/utils.c:363
+#: sed/utils.c:102 sed/utils.c:446
 #, c-format
 msgid "cannot remove %s: %s"
 msgstr "impossibile rimuovere %s: %s"
 
 # lib/utils.c:131
-#: sed/utils.c:168
+#: sed/utils.c:172
 #, c-format
 msgid "couldn't open file %s: %s"
 msgstr "impossibile aprire il file %s: %s"
 
 # lib/utils.c:161
-#: sed/utils.c:192
+#: sed/utils.c:196
 #, c-format
 msgid "couldn't attach to %s: %s"
-msgstr "Impossibile accedere a %s: %s"
+msgstr "impossibile accedere a %s: %s"
 
 # lib/utils.c:161
-#: sed/utils.c:247
+#: sed/utils.c:251
 #, c-format
 msgid "couldn't write %d item to %s: %s"
 msgid_plural "couldn't write %d items to %s: %s"
-msgstr[0] "Impossibile scrivere %d elemento su %s: %s"
-msgstr[1] "Impossibile scrivere %d elementi su %s: %s"
+msgstr[0] "impossibile scrivere %d elemento su %s: %s"
+msgstr[1] "impossibile scrivere %d elementi su %s: %s"
 
 # lib/utils.c:176
-#: sed/utils.c:262 sed/utils.c:278
+#: sed/utils.c:266 sed/utils.c:282
 #, c-format
 msgid "read error on %s: %s"
 msgstr "errore di lettura su %s: %s"
 
+# lib/utils.c:131
+#: sed/utils.c:386
+#, c-format
+msgid "couldn't follow symlink %s: %s"
+msgstr "impossibile seguire il link simbolico %s: %s"
+
 # sed/execute.c:516
-#: sed/utils.c:368
+#: sed/utils.c:420
+#, c-format
+msgid "cannot stat %s: %s"
+msgstr "impossibile ottenere informazioni su %s: %s"
+
+# sed/execute.c:516
+#: sed/utils.c:451
 #, c-format
 msgid "cannot rename %s: %s"
 msgstr "impossibile rinominare %s: %s"

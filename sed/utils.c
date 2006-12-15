@@ -35,6 +35,10 @@
 # include <stdlib.h>
 #endif /* HAVE_STDLIB_H */
 
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <unistd.h>
+
 #include "utils.h"
 
 const char *myname;
@@ -341,6 +345,85 @@ do_ck_fclose(fp)
     panic("couldn't close %s: %s", utils_fp_name(fp), strerror(errno));
 }
 
+
+/* Follow symlink and panic if something fails.  Return the ultimate
+   symlink target, stored in a temporary buffer that the caller should
+   not free.  */
+const char *
+follow_symlink(const char *fname)
+{
+#ifdef ENABLE_FOLLOW_SYMLINKS
+  static char *buf1, *buf2;
+  static int buf_size;
+
+  struct stat statbuf;
+  const char *buf = fname, *c;
+  int rc;
+
+  if (buf_size == 0)
+    {
+      buf1 = ck_malloc (PATH_MAX + 1);
+      buf2 = ck_malloc (PATH_MAX + 1);
+      buf_size = PATH_MAX + 1;
+    }
+
+  while ((rc = lstat (buf, &statbuf)) == 0
+         && (statbuf.st_mode & S_IFLNK) == S_IFLNK)
+    {
+      if (buf == buf2)
+        {
+          strcpy (buf1, buf2);
+          buf = buf1;
+        }
+
+      while ((rc = readlink (buf, buf2, buf_size)) == buf_size)
+        {
+          buf_size *= 2;
+          buf1 = ck_realloc (buf1, buf_size);
+          buf2 = ck_realloc (buf2, buf_size);
+        }
+      if (rc < 0)
+	panic (_("couldn't follow symlink %s: %s"), buf, strerror(errno));
+      else
+	buf2 [rc] = '\0';
+
+      if (buf2[0] != '/' && (c = strrchr (buf, '/')) != NULL)
+	{
+	  /* Need to handle relative paths with care.  Reallocate buf1 and
+	     buf2 to be big enough.  */
+	  int len = c - buf + 1;
+	  if (len + rc + 1 > buf_size)
+	    {
+	      buf_size = len + rc + 1;
+	      buf1 = ck_realloc (buf1, buf_size);
+	      buf2 = ck_realloc (buf2, buf_size);
+	    }
+
+	  /* Always store the new path in buf1.  */
+	  if (buf != buf1)
+            memcpy (buf1, buf, len);
+
+          /* Tack the relative symlink at the end of buf1.  */
+          memcpy (buf1 + len, buf2, rc + 1);
+	  buf = buf1;
+	}
+      else
+	{
+	  /* Use buf2 as the buffer, it saves a strcpy if it is not pointing to
+	     another link.  It works for absolute symlinks, and as long as
+	     symlinks do not leave the current directory.  */
+	   buf = buf2;
+	}
+    }
+
+  if (rc < 0)
+    panic (_("cannot stat %s: %s"), buf, strerror(errno));
+
+  return buf;
+#else
+  return fname;
+#endif /* ENABLE_FOLLOW_SYMLINKS */
+}
 
 /* Panic on failing rename */
 void

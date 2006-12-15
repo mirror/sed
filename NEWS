@@ -1,3 +1,15 @@
+Sed 4.1b (release candidate for sed 4.2)
+
+* --posix disables all extensions to regular expressions.
+
+* new option --follow-symlinks, available when editing a file in-place.
+  This option may not be available on some systems (in this case, the
+  option will *not* be a no-op; it will be completely unavailable).
+  In the future, the option may be added as a no-op on systems without
+  symbolic links at all, since in this case a no-op is effectively
+  indistinguishable from a correct implementation.
+
+----------------------------------------------------------------------------
 Sed 4.1a (release candidate for sed 4.2)
 
 * much improved portability
