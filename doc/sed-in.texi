@@ -215,6 +215,22 @@ These options disable this automatic printing,
 and @command{sed} only produces output when explicitly told to
 via the @code{p} command.
 
+@item -e @var{script}
+@itemx --expression=@var{script}
+@opindex -e
+@opindex --expression
+@cindex Script, from command line
+Add the commands in @var{script} to the set of commands to be
+run while processing the input.
+
+@item -f @var{script-file}
+@itemx --file=@var{script-file}
+@opindex -f
+@opindex --file
+@cindex Script, from a file
+Add the commands contained in the file @var{script-file}
+to the set of commands to be run while processing the input.
+
 @item -i[@var{SUFFIX}]
 @itemx --in-place[=@var{SUFFIX}]
 @opindex -i
@@ -281,7 +297,7 @@ to a non-empty value.
 @itemx --binary
 @opindex -b
 @opindex --binary
-This option is available on any platforms, but is only effective where the
+This option is available on every platform, but is only effective where the
 operating system makes a distinction between text files and binary files.
 When such a distinction is made---as is the case for MS-DOS, Windows,
 Cygwin---text files are composed of lines separated by a carriage return
@@ -289,6 +305,16 @@ Cygwin---text files are composed of lines separated by a carriage return
 ending CR.  When this option is specified, @command{sed} will open
 input files in binary mode, thus not requesting this special processing
 and considering lines to end at a line feed.
+
+@item --follow-symlinks
+@opindex --follow-symlinks
+This option is available only on platforms that support
+symbolic links and has an effect only if option @option{-i}
+is specified.  In this case, if the file that is specified
+on the command line is a symbolic link, @command{sed} will
+follow the link and edit the ultimate destination of the
+link.  The default behavior is to break the symbolic link,
+so that the link destination will not be modified.
 
 @item -r
 @itemx --regexp-extended
@@ -338,22 +364,6 @@ Buffer both input and output as minimally as practical.
 (This is particularly useful if the input is coming from
 the likes of @samp{tail -f}, and you wish to see the transformed
 output as soon as possible.)
-
-@item -e @var{script}
-@itemx --expression=@var{script}
-@opindex -e
-@opindex --expression
-@cindex Script, from command line
-Add the commands in @var{script} to the set of commands to be
-run while processing the input.
-
-@item -f @var{script-file}
-@itemx --file=@var{script-file}
-@opindex -f
-@opindex --file
-@cindex Script, from a file
-Add the commands contained in the file @var{script-file}
-to the set of commands to be run while processing the input.
 
 @end table
 
