@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: bonzini@gnu.org\n"
-"POT-Creation-Date: 2006-11-28 17:57+0100\n"
+"POT-Creation-Date: 2006-12-15 13:35+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -177,7 +177,7 @@ msgstr ""
 msgid "cannot specify modifiers on empty regexp"
 msgstr ""
 
-#: sed/regexp.c:121
+#: sed/regexp.c:130
 #, c-format
 msgid "invalid reference \\%d on `s' command's RHS"
 msgstr ""

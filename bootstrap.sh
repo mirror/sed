@@ -19,7 +19,7 @@ if test -f config.h; then :; else
 */
 
 #define PACKAGE "sed"
-#define VERSION "4.1a-boot"
+#define VERSION "4.1b-boot"
 #define SED_FEATURE_VERSION "4.2"
 #define BOOTSTRAP 1
 

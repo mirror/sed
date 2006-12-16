@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: sed 4.0a\n"
 "Report-Msgid-Bugs-To: bonzini@gnu.org\n"
-"POT-Creation-Date: 2006-11-28 17:57+0100\n"
+"POT-Creation-Date: 2006-12-15 13:35+0100\n"
 "PO-Revision-Date: 2002-11-26 12:44+0100\n"
 "Last-Translator: Paolo Bonzini <bonzini@gnu.org>\n"
 "Language-Team: Italian <tp@lists.linux.it>\n"
@@ -210,7 +210,7 @@ msgid "cannot specify modifiers on empty regexp"
 msgstr "non è possibile specificare dei modificatori per l'espressione vuota"
 
 # sed/regex.c:146
-#: sed/regexp.c:121
+#: sed/regexp.c:130
 #, c-format
 msgid "invalid reference \\%d on `s' command's RHS"
 msgstr "riferimento non valido \\%d nel secondo membro del comando `s'"
