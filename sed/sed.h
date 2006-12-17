@@ -220,6 +220,9 @@ extern bool no_default_output;
 /* If set, reset line counts on every new file. */
 extern bool separate_files;
 
+/* If set, follow symlinks when invoked with -i option */
+extern bool follow_symlinks;
+
 /* Do we need to be pedantically POSIX compliant? */
 extern enum posixicity_types posixicity;
 

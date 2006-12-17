@@ -378,7 +378,7 @@ msgstr ""
 "  -R, --regexp-perl\n"
 "                 usa la sintassi Perl 5 per le espressioni regolari\n"
 
-#: sed/sed.c:103
+#: sed/sed.c:106
 #, c-format
 msgid ""
 "Usage: %s [OPTION]... {script-only-if-no-other-script} [input-file]...\n"
@@ -388,7 +388,7 @@ msgstr ""
 "file]...\n"
 "\n"
 
-#: sed/sed.c:109
+#: sed/sed.c:112
 #, c-format
 msgid ""
 "  -n, --quiet, --silent\n"
@@ -397,7 +397,7 @@ msgstr ""
 "  -n, --quiet, --silent\n"
 "                 sopprime la stampa automatica del pattern space\n"
 
-#: sed/sed.c:111
+#: sed/sed.c:114
 #, c-format
 msgid ""
 "  -e script, --expression=script\n"
@@ -417,7 +417,16 @@ msgstr ""
 "                 aggiunge il contenuto di file-script ai comandi da "
 "eseguire\n"
 
-#: sed/sed.c:113
+#: sed/sed.c:117
+#, c-format
+msgid ""
+"  --follow-symlinks\n"
+"                 follow symlinks when processing in place\n"
+msgstr ""
+"  --follow-symlinks\n"
+"                 segue i link simbolici quando viene utilizzato -i\n"
+
+#: sed/sed.c:120
 #, c-format
 msgid ""
 "  -i[SUFFIX], --in-place[=SUFFIX]\n"
@@ -427,7 +436,7 @@ msgstr ""
 "                 scrive il risultato sul file originale (facendo una copia\n"
 "                 se è fornita un'estensione)\n"
 
-#: sed/sed.c:116
+#: sed/sed.c:123
 #, c-format
 msgid ""
 "  -b, --binary\n"
@@ -448,7 +457,7 @@ msgstr ""
 "                 specifica la lunghezza delle linee generate dal comando "
 "`l'\n"
 
-#: sed/sed.c:121
+#: sed/sed.c:128
 #, c-format
 msgid ""
 "  --posix\n"
@@ -466,7 +475,7 @@ msgstr ""
 "  -r, --regexp-extended\n"
 "                 usa la sintassi di `egrep' per le espressioni regolari\n"
 
-#: sed/sed.c:126
+#: sed/sed.c:133
 #, c-format
 msgid ""
 "  -s, --separate\n"
@@ -478,7 +487,7 @@ msgstr ""
 "                 considera i file di input come separati invece che come un\n"
 "                 unico file lungo.\n"
 
-#: sed/sed.c:129
+#: sed/sed.c:136
 #, c-format
 msgid ""
 "  -u, --unbuffered\n"
@@ -489,17 +498,17 @@ msgstr ""
 "  -u, --unbuffered\n"
 "                 carica e visualizza i dati una a pezzetti piu' piccoli\n"
 
-#: sed/sed.c:132
+#: sed/sed.c:139
 #, c-format
 msgid "      --help     display this help and exit\n"
 msgstr "      --help     mostra questo aiuto ed esce\n"
 
-#: sed/sed.c:133
+#: sed/sed.c:140
 #, c-format
 msgid "      --version  output version information and exit\n"
 msgstr "      --version  stampa le informazioni sulla versione ed esce\n"
 
-#: sed/sed.c:134
+#: sed/sed.c:141
 #, c-format
 msgid ""
 "\n"

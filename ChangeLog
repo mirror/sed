@@ -1,3 +1,15 @@
+2006-12-17  Paolo Bonzini  <bonzini@gnu.org>
+
+	* sed/utils.c: Include limits.h.
+
+2006-12-16  Paolo Bonzini  <bonzini@gnu.org>
+
+	* doc/sed-in.texi: Document --follow-symlinks.
+
+2006-12-15  Paolo Bonzini  <bonzini@gnu.org>
+
+	* sed/regexp.c: Disable all extensions on --posix.
+
 2006-09-24  Paolo Bonzini  <bonzini@gnu.org>
 
 	* sed/execute.c: Support ACLs.

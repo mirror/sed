@@ -762,15 +762,22 @@ closedown(input)
 
   if (in_place_extension && output_file.fp != NULL)
     {
+      const char *target_name;
       ck_fclose (output_file.fp);
+
+      if (follow_symlinks)
+	target_name = follow_symlink (input->in_file_name);
+      else
+	target_name = input->in_file_name;
+
       if (strcmp(in_place_extension, "*") != 0)
         {
-          char *backup_file_name = get_backup_file_name(input->in_file_name);
-	  ck_rename (input->in_file_name, backup_file_name, input->out_file_name);
+          char *backup_file_name = get_backup_file_name(target_name);
+	  ck_rename (target_name, backup_file_name, input->out_file_name);
           free (backup_file_name);
 	}
 
-      ck_rename (input->out_file_name, input->in_file_name, input->out_file_name);
+      ck_rename (input->out_file_name, target_name, input->out_file_name);
       free (input->out_file_name);
     }
 
