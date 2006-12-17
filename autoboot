@@ -92,7 +92,7 @@ case ${GNULIB_SRCDIR--} in
 esac
 
 gnulib_tool=$GNULIB_SRCDIR/gnulib-tool
-<$gnulib_tool || exit
+test -x $gnulib_tool || exit
 
 # $gnulib_tool --import --m4-base=build-aux --lib=libsed --no-changelog --makefile-name=gnulib.mk \
 #    acl alloca getline getopt gettext memchr memcmp memmove \
