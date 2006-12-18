@@ -757,8 +757,6 @@ closedown(input)
   input->read_fn = read_always_fail;
   if (!input->fp)
     return;
-  if (input->fp != stdin) /* stdin can be reused on tty and tape devices */
-    ck_fclose(input->fp);
 
   if (in_place_extension && output_file.fp != NULL)
     {
