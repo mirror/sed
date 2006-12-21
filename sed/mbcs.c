@@ -17,6 +17,7 @@
 
 #include "sed.h"
 #include <stdlib.h>
+#include <string.h>
 
 #ifdef HAVE_LANGINFO_CODESET
 #include <langinfo.h>

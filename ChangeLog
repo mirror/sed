@@ -1,3 +1,9 @@
+2006-12-21  Paolo Bonzini  <bonzini@gnu.org>
+
+	* sed/mbcs.c: Include string.h (reported by Henning Nielsen Lund).
+	* sed/fmt.c: Likewise.
+	* sed/regexp.c: Likewise.
+
 2006-12-18  Paolo Bonzini  <bonzini@gnu.org>
 
 	* sed/execute.c (closedown): Remove dead code.
