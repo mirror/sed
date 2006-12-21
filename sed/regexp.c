@@ -19,6 +19,7 @@
 #include "sed.h"
 
 #include <ctype.h>
+#include <string.h>
 #include <stdio.h>
 #ifdef HAVE_STDLIB_H
 # include <stdlib.h>
