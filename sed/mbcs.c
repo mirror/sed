@@ -1,5 +1,5 @@
 /*  GNU SED, a batch stream editor.
-    Copyright (C) 2003 Free Software Foundation, Inc.
+    Copyright (C) 2003, 2006 Free Software Foundation, Inc.
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -19,9 +19,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-#ifdef HAVE_LANGINFO_CODESET
-#include <langinfo.h>
-#endif
+#include "localcharset.h"
 
 int mb_cur_max;
 bool is_utf8;
@@ -56,22 +54,8 @@ initialize_mbcs ()
   /* For UTF-8, we know that the encoding is stateless.  */
   const char *codeset_name;
 
-#ifdef HAVE_LANGINFO_CODESET
-  codeset_name = nl_langinfo (CODESET);
-#else
-  codeset_name = getenv ("LC_ALL");
-  if (codeset_name == NULL || codeset_name[0] == '\0')
-    codeset_name = getenv ("LC_CTYPE");
-  if (codeset_name == NULL || codeset_name[0] == '\0')
-    codeset_name = getenv ("LANG");
-  if (codeset_name == NULL)
-    codeset_name = "";
-  else if (strchr (codeset_name, '.') !=  NULL)
-    codeset_name = strchr (codeset_name, '.') + 1;
-#endif
-
-  is_utf8 = (strcasecmp (codeset_name, "UTF-8") == 0
-	     || strcasecmp (codeset_name, "UTF8") == 0);
+  codeset_name = locale_charset ();
+  is_utf8 = (strcmp (codeset_name, "UTF-8") == 0);
 
 #ifdef HAVE_MBRTOWC
   mb_cur_max = MB_CUR_MAX;
