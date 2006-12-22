@@ -41,6 +41,7 @@
 #include <limits.h>
 
 #include "utils.h"
+#include "pathmax.h"
 
 const char *myname;
 

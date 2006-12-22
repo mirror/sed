@@ -22,6 +22,7 @@
 
 #include "sed.h"
 
+#include <stddef.h>
 #include <stdio.h>
 #include <ctype.h>
 
@@ -86,7 +87,7 @@ struct line {
 };
 
 #ifdef HAVE_MBRTOWC
-#define SIZEOF_LINE	(sizeof (struct line) - sizeof (mbstate_t))
+#define SIZEOF_LINE	offsetof (struct line, mbstate)
 #else
 #define SIZEOF_LINE	(sizeof (struct line))
 #endif
