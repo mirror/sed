@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: sed 4.0a\n"
 "Report-Msgid-Bugs-To: bonzini@gnu.org\n"
-"POT-Creation-Date: 2006-12-15 13:35+0100\n"
+"POT-Creation-Date: 2007-01-13 14:36+0100\n"
 "PO-Revision-Date: 2002-11-26 12:44+0100\n"
 "Last-Translator: Paolo Bonzini <bonzini@gnu.org>\n"
 "Language-Team: Italian <tp@lists.linux.it>\n"
@@ -152,30 +152,30 @@ msgid "%s: -e expression #%lu, char %lu: %s\n"
 msgstr "%s: espressione -e #%lu, carattere %lu: %s\n"
 
 # sed/compile.c:1543
-#: sed/compile.c:1644
+#: sed/compile.c:1642
 #, c-format
 msgid "can't find label for jump to `%s'"
 msgstr "impossibile trovare un'etichetta per il salto a `%s'"
 
 # sed/execute.c:516
-#: sed/execute.c:700
+#: sed/execute.c:698
 #, c-format
 msgid "%s: can't read %s: %s\n"
 msgstr "%s: impossibile leggere %s: %s\n"
 
 # sed/execute.c:675
-#: sed/execute.c:723
+#: sed/execute.c:721
 #, c-format
 msgid "couldn't edit %s: is a terminal"
 msgstr "impossibile modificare %s: è un terminale"
 
-#: sed/execute.c:728
+#: sed/execute.c:726
 #, c-format
 msgid "couldn't edit %s: not a regular file"
 msgstr "impossibile modificare %s: non è un file normale"
 
 # lib/utils.c:131
-#: sed/execute.c:735 sed/utils.c:233
+#: sed/execute.c:733 sed/utils.c:233
 #, c-format
 msgid "couldn't open temporary file %s: %s"
 msgstr "impossibile aprire il file temporaneo %s: %s"
@@ -200,17 +200,17 @@ msgid "no input files"
 msgstr "nessun file in ingresso"
 
 # lib/regcomp.c:658 sed/regex.c:47
-#: sed/regexp.c:40
+#: sed/regexp.c:41
 msgid "no previous regular expression"
 msgstr "occorre un'espressione regolare precedente"
 
 # sed/regex.c:48
-#: sed/regexp.c:41
+#: sed/regexp.c:42
 msgid "cannot specify modifiers on empty regexp"
 msgstr "non è possibile specificare dei modificatori per l'espressione vuota"
 
 # sed/regex.c:146
-#: sed/regexp.c:130
+#: sed/regexp.c:131
 #, c-format
 msgid "invalid reference \\%d on `s' command's RHS"
 msgstr "riferimento non valido \\%d nel secondo membro del comando `s'"
@@ -422,19 +422,19 @@ msgstr ""
 "SCOPO, nei limiti permessi dalla legge.\n"
 
 # sed/execute.c:516
-#: sed/utils.c:102 sed/utils.c:446
+#: sed/utils.c:104 sed/utils.c:444
 #, c-format
 msgid "cannot remove %s: %s"
 msgstr "impossibile rimuovere %s: %s"
 
 # lib/utils.c:131
-#: sed/utils.c:172
+#: sed/utils.c:174
 #, c-format
 msgid "couldn't open file %s: %s"
 msgstr "impossibile aprire il file %s: %s"
 
 # lib/utils.c:161
-#: sed/utils.c:196
+#: sed/utils.c:197
 #, c-format
 msgid "couldn't attach to %s: %s"
 msgstr "impossibile accedere a %s: %s"
@@ -454,19 +454,19 @@ msgid "read error on %s: %s"
 msgstr "errore di lettura su %s: %s"
 
 # lib/utils.c:131
-#: sed/utils.c:386
+#: sed/utils.c:384
 #, c-format
 msgid "couldn't follow symlink %s: %s"
 msgstr "impossibile seguire il link simbolico %s: %s"
 
 # sed/execute.c:516
-#: sed/utils.c:420
+#: sed/utils.c:418
 #, c-format
 msgid "cannot stat %s: %s"
 msgstr "impossibile ottenere informazioni su %s: %s"
 
 # sed/execute.c:516
-#: sed/utils.c:451
+#: sed/utils.c:449
 #, c-format
 msgid "cannot rename %s: %s"
 msgstr "impossibile rinominare %s: %s"

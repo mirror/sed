@@ -189,7 +189,6 @@ ck_fdopen(fd, name, mode, fail)
   bool fail;
 {
   FILE *fp;
-  struct open_file *p;
 
   fp = fdopen (fd, mode);
   if (!fp)
@@ -212,7 +211,6 @@ ck_mkstemp (p_filename, tmpdir, base)
   char *template;
   FILE *fp;
   int fd;
-  struct open_file *p;
 
   if (tmpdir == NULL)
     tmpdir = getenv("TMPDIR");
@@ -338,11 +336,9 @@ void
 do_ck_fclose(fp)
   FILE *fp;
 {
-  int fd;
   ck_fflush(fp);
   clearerr(fp);
 
-  /* We want to execute both arms, so use | not ||.  */
   if (fclose(fp) == EOF)
     panic("couldn't close %s: %s", utils_fp_name(fp), strerror(errno));
 }
