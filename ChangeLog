@@ -1,3 +1,16 @@
+2007-01-26  Paolo Bonzini  <bonzini@gnu.org>
+
+        * sed/compile.c: Fix warnings.
+        * sed/execute.c: Fix warnings.
+
+	* sed/compile.c (check_final_program): Don't set text if the
+	pending_text is initialized but empty.
+	* sed/execute.c (output_line): Don't print text if it is NULL.
+	* tests/Makefile.am (TESTS): Add insert.
+	* tests/Makefile.tests (insert): New.
+	* tests/insert.good, tests/insert.sed, tests/insert.inp: New
+	testcase from Jonas Koelker.
+
 2006-12-22  Bruno Haible  <bruno@clisp.org>
 
 	* sed/utils.c: Include pathmax.

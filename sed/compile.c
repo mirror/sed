@@ -384,7 +384,6 @@ get_openfile(file_ptrs, mode, fail)
   struct buffer *b;
   char *file_name;
   struct output *p;
-  int is_stderr;
 
   b = read_filename();
   file_name = get_buffer(b);
@@ -1581,7 +1580,6 @@ compile_file(cur_program, cmdfile)
   struct vector *cur_program;
   const char *cmdfile;
 {
-  size_t len;
   struct vector *ret;
 
   prog.file = stdin;
@@ -1623,8 +1621,9 @@ check_final_program(program)
   if (pending_text)
     {
       old_text_buf->text_length = size_buffer(pending_text);
-      old_text_buf->text = MEMDUP(get_buffer(pending_text),
-				  old_text_buf->text_length, char);
+      if (old_text_buf->text_length)
+        old_text_buf->text = MEMDUP(get_buffer(pending_text),
+				    old_text_buf->text_length, char);
       free_buffer(pending_text);
       pending_text = NULL;
     }

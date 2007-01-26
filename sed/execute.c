@@ -35,6 +35,8 @@ extern int errno;
 # include <unistd.h>
 #endif
 
+#include "acl.h"
+
 #ifdef __GNUC__
 # if __GNUC__ > 2 || (__GNUC__ == 2 && __GNUC_MINOR__-0 >= 7)
    /* silence warning about unused parameter even for "gcc -W -Wunused" */
@@ -269,81 +271,76 @@ str_append_modified(to, string, length, type)
   size_t length;
   enum replacement_types type;
 {
+#ifdef HAVE_MBRTOWC
+  mbstate_t from_stat;
+
+  if (type == REPL_ASIS)
+    {
+      str_append(to, string, length);
+      return;
+    }
+
+  if (to->alloc - to->length < length * mb_cur_max)
+    resize_line(to, to->length + length * mb_cur_max);
+
+  MEMCPY (&from_stat, &to->mbstate, sizeof(mbstate_t));
+  while (length)
+    {
+      wchar_t wc;
+      int n = MBRTOWC (&wc, string, length, &from_stat);
+
+      /* An invalid sequence is treated like a singlebyte character. */
+      if (n == -1)
+        {
+          memset (&to->mbstate, 0, sizeof (from_stat));
+          n = 1;
+        }
+
+      if (n > 0)
+        string += n, length -= n;
+      else
+	{
+	  /* Incomplete sequence, copy it manually.  */
+	  str_append(to, string, length);
+	  return;
+	}
+
+      /* Convert the first character specially... */
+      if (type & (REPL_UPPERCASE_FIRST | REPL_LOWERCASE_FIRST))
+	{
+          if (type & REPL_UPPERCASE_FIRST)
+            wc = towupper(wc);
+          else
+            wc = towlower(wc);
+
+          type &= ~(REPL_LOWERCASE_FIRST | REPL_UPPERCASE_FIRST);
+	  if (type == REPL_ASIS)
+	    {
+	      n = WCRTOMB (to->active + to->length, wc, &to->mbstate);
+	      to->length += n;
+	      str_append(to, string, length);
+	      return;
+	    }
+        }
+
+      else if (type & REPL_UPPERCASE)
+        wc = towupper(wc);
+      else
+        wc = towlower(wc);
+
+      /* Copy the new wide character to the end of the string. */
+      n = WCRTOMB (to->active + to->length, wc, &to->mbstate);
+      to->length += n;
+      if (n == -1)
+	{
+	  fprintf (stderr, "Case conversion produced an invalid character!");
+	  abort ();
+	}
+    }
+#else
   size_t old_length = to->length;
   char *start, *end;
 
-  if (length == 0)
-    return;
-
-#ifdef HAVE_MBRTOWC
-  {
-    mbstate_t from_stat;
-
-    if (type == REPL_ASIS)
-      {
-	str_append(to, string, length);
-        return;
-      }
-
-    if (to->alloc - to->length < length * mb_cur_max)
-      resize_line(to, to->length + length * mb_cur_max);
-
-    MEMCPY (&from_stat, &to->mbstate, sizeof(mbstate_t));
-    while (length)
-      {
-	wchar_t wc;
-        int n = MBRTOWC (&wc, string, length, &from_stat);
-
-        /* An invalid sequence is treated like a singlebyte character. */
-        if (n == -1)
-          {
-            memset (&to->mbstate, 0, sizeof (from_stat));
-            n = 1;
-          }
-
-        if (n > 0)
-          string += n, length -= n;
-        else
-	  {
-	    /* Incomplete sequence, copy it manually.  */
-	    str_append(to, string, length);
-	    return;
-	  }
-
-	/* Convert the first character specially... */
-        if (type & (REPL_UPPERCASE_FIRST | REPL_LOWERCASE_FIRST))
-	  {
-            if (type & REPL_UPPERCASE_FIRST)
-              wc = towupper(wc);
-            else
-              wc = towlower(wc);
-
-            type &= ~(REPL_LOWERCASE_FIRST | REPL_UPPERCASE_FIRST);
-	    if (type == REPL_ASIS)
-	      {
-		n = WCRTOMB (to->active + to->length, wc, &to->mbstate);
-		to->length += n;
-		str_append(to, string, length);
-	        return;
-	      }
-          }
-
-        else if (type & REPL_UPPERCASE)
-          wc = towupper(wc);
-        else
-          wc = towlower(wc);
-
-	/* Copy the new wide character to the end of the string. */
-	n = WCRTOMB (to->active + to->length, wc, &to->mbstate);
-        to->length += n;
-	if (n == -1)
-	  {
-	    fprintf (stderr, "Case conversion produced an invalid character!");
-	    abort ();
-	  }
-      }
-  }
-#else
   str_append(to, string, length);
   start = to->active + old_length;
   end = start + length;
@@ -562,11 +559,12 @@ output_line(text, length, nl, outf)
   bool nl;
   struct output *outf;
 {
-  output_missing_newline(outf);
+  if (!text)
+    return;
 
+  output_missing_newline(outf);
   if (length)
     ck_fwrite(text, 1, length, outf->fp);
-
   if (nl)
     ck_fwrite("\n", 1, 1, outf->fp);
   else
@@ -1102,16 +1100,18 @@ append_replacement (buf, p, regs, repl_mod)
         }
 
       if (0 <= i)
-        if (regs->end[i] == regs->start[i] && p->repl_type & REPL_MODIFIERS)
-          /* Save this modifier, we shall apply it later.
-	     e.g. in s/()([a-z])/\u\1\2/
-	     the \u modifier is applied to \2, not \1 */
-	  repl_mod = curr_type & REPL_MODIFIERS;
+	{
+          if (regs->end[i] == regs->start[i] && p->repl_type & REPL_MODIFIERS)
+            /* Save this modifier, we shall apply it later.
+	       e.g. in s/()([a-z])/\u\1\2/
+	       the \u modifier is applied to \2, not \1 */
+	    repl_mod = curr_type & REPL_MODIFIERS;
 
-	else
-	  str_append_modified(buf, line.active + regs->start[i],
-			      CAST(size_t)(regs->end[i] - regs->start[i]),
-			      curr_type);
+	  else if (regs->end[i] != regs->start[i])
+	    str_append_modified(buf, line.active + regs->start[i],
+			        CAST(size_t)(regs->end[i] - regs->start[i]),
+			        curr_type);
+	}
     }
 
   return repl_mod;
@@ -1138,24 +1138,26 @@ do_subst(sub)
     return;
   
   if (!sub->replacement && sub->numb <= 1)
-    if (regs.start[0] == 0 && !sub->global)
-      {
-	/* We found a match, set the `replaced' flag. */
-	replaced = true;
+    {
+      if (regs.start[0] == 0 && !sub->global)
+        {
+	  /* We found a match, set the `replaced' flag. */
+	  replaced = true;
 
-	line.active += regs.end[0];
-	line.length -= regs.end[0];
-	line.alloc -= regs.end[0];
-	goto post_subst;
-      }
-    else if (regs.end[0] == line.length)
-      {
-	/* We found a match, set the `replaced' flag. */
-	replaced = true;
+	  line.active += regs.end[0];
+	  line.length -= regs.end[0];
+	  line.alloc -= regs.end[0];
+	  goto post_subst;
+        }
+      else if (regs.end[0] == line.length)
+        {
+	  /* We found a match, set the `replaced' flag. */
+	  replaced = true;
 
-	line.length = regs.start[0];
-	goto post_subst;
-      }
+	  line.length = regs.start[0];
+	  goto post_subst;
+        }
+    }
 
   do
     {
@@ -1411,16 +1413,16 @@ execute_program(vec, input)
 
 	      if (pipe != NULL) 
 		{
+		  char buf[4096];
+		  int n;
 		  while (!feof (pipe)) 
-		    {
-		      char buf[4096];
-		      int n = fread (buf, sizeof(char), 4096, pipe);
-		      if (n > 0)
+		    if ((n = fread (buf, sizeof(char), 4096, pipe)) > 0)
+		      {
 			if (!cmd_length)
 			  str_append(&s_accum, buf, n);
 			else
 			  ck_fwrite(buf, 1, n, output_file.fp);
-		    }
+		      }
 		  
 		  pclose (pipe);
 		  if (!cmd_length)

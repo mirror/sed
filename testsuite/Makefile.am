@@ -14,7 +14,7 @@ SEDTESTS = \
 	head madding mac-mf empty xbxcx xbxcx3 recall recall2 xemacs \
 	fasts uniq manis khadafy linecnt eval distrib 8to7 y-bracket \
 	y-newline allsub cv-vars classes middle bsd stdin flipcase \
-	insens subwrite writeout readin \
+	insens subwrite writeout readin insert \
 	help version file quiet \
 	factor binary3 binary2 binary dc
 
