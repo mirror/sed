@@ -559,11 +559,12 @@ output_line(text, length, nl, outf)
   bool nl;
   struct output *outf;
 {
-  output_missing_newline(outf);
+  if (!text)
+    return;
 
+  output_missing_newline(outf);
   if (length)
     ck_fwrite(text, 1, length, outf->fp);
-
   if (nl)
     ck_fwrite("\n", 1, 1, outf->fp);
   else

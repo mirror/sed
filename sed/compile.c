@@ -1621,8 +1621,9 @@ check_final_program(program)
   if (pending_text)
     {
       old_text_buf->text_length = size_buffer(pending_text);
-      old_text_buf->text = MEMDUP(get_buffer(pending_text),
-				  old_text_buf->text_length, char);
+      if (old_text_buf->text_length)
+        old_text_buf->text = MEMDUP(get_buffer(pending_text),
+				    old_text_buf->text_length, char);
       free_buffer(pending_text);
       pending_text = NULL;
     }
