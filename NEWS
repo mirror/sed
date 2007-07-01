@@ -1,3 +1,12 @@
+Sed 4.1d (final release candidate for sed 4.2)
+
+* fixed bug in 'i\' giving a segmentation violation if given alone.
+
+* 0,/REGEXP/ is rejected in --posix mode.
+
+* GPLv3 adopted
+
+----------------------------------------------------------------------------
 Sed 4.1c (release candidate for sed 4.2)
 
 * portability fixes

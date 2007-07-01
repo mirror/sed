@@ -4,7 +4,7 @@
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
-    the Free Software Foundation; either version 2, or (at your option)
+    the Free Software Foundation; either version 3, or (at your option)
     any later version.
 
     This program is distributed in the hope that it will be useful,
@@ -1061,9 +1061,10 @@ compile_program(vector)
 	      ch = in_nonblank();
 	    }
 
-	  if (cur_cmd->a1->addr_type == ADDR_IS_NUM
-	      && cur_cmd->a1->addr_number == 0
-	      && (!cur_cmd->a2 || cur_cmd->a2->addr_type != ADDR_IS_REGEX))
+	  if ((cur_cmd->a1->addr_type == ADDR_IS_NUM
+	       && cur_cmd->a1->addr_number == 0)
+	      && ((!cur_cmd->a2 || cur_cmd->a2->addr_type != ADDR_IS_REGEX)
+		  || posixicity == POSIXLY_BASIC))
 	    bad_prog(_(INVALID_LINE_0));
 	}
       if (ch == '!')
@@ -1346,7 +1347,8 @@ compile_program(vector)
               }
             else
               {
-	        char *translate = OB_MALLOC(&obs, YMAP_LENGTH, char);
+	        unsigned char *translate =
+		  OB_MALLOC(&obs, YMAP_LENGTH, unsigned char);
                 unsigned char *ustring = CAST(unsigned char *)src_buf;
 
 		if (len != dest_len)
@@ -1356,7 +1358,7 @@ compile_program(vector)
 	          translate[len] = len;
 
                 while (dest_len--)
-                  translate[(unsigned char)*ustring++] = *dest_buf++;
+                  translate[*ustring++] = (unsigned char)*dest_buf++;
 
 	        cur_cmd->x.translate = translate;
 	      }

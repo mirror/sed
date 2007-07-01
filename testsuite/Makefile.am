@@ -54,6 +54,7 @@ EXTRA_DIST = \
 	head.good head.inp head.sed \
 	inclib.good inclib.inp inclib.sed \
 	insens.good insens.inp insens.sed \
+	insert.good insert.inp insert.sed \
 	khadafy.good khadafy.inp khadafy.sed \
 	linecnt.good linecnt.inp linecnt.sed \
 	space.good space.inp space.sed \

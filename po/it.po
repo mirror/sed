@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: sed 4.0a\n"
 "Report-Msgid-Bugs-To: bonzini@gnu.org\n"
-"POT-Creation-Date: 2007-01-13 14:36+0100\n"
+"POT-Creation-Date: 2007-06-29 10:24+0200\n"
 "PO-Revision-Date: 2002-11-26 12:44+0100\n"
 "Last-Translator: Paolo Bonzini <bonzini@gnu.org>\n"
 "Language-Team: Italian <tp@lists.linux.it>\n"
@@ -152,50 +152,50 @@ msgid "%s: -e expression #%lu, char %lu: %s\n"
 msgstr "%s: espressione -e #%lu, carattere %lu: %s\n"
 
 # sed/compile.c:1543
-#: sed/compile.c:1642
+#: sed/compile.c:1645
 #, c-format
 msgid "can't find label for jump to `%s'"
 msgstr "impossibile trovare un'etichetta per il salto a `%s'"
 
 # sed/execute.c:516
-#: sed/execute.c:698
+#: sed/execute.c:699
 #, c-format
 msgid "%s: can't read %s: %s\n"
 msgstr "%s: impossibile leggere %s: %s\n"
 
 # sed/execute.c:675
-#: sed/execute.c:721
+#: sed/execute.c:722
 #, c-format
 msgid "couldn't edit %s: is a terminal"
 msgstr "impossibile modificare %s: è un terminale"
 
-#: sed/execute.c:726
+#: sed/execute.c:727
 #, c-format
 msgid "couldn't edit %s: not a regular file"
 msgstr "impossibile modificare %s: non è un file normale"
 
 # lib/utils.c:131
-#: sed/execute.c:733 sed/utils.c:233
+#: sed/execute.c:734 sed/utils.c:233
 #, c-format
 msgid "couldn't open temporary file %s: %s"
 msgstr "impossibile aprire il file temporaneo %s: %s"
 
 # sed/execute.c:1003 sed/execute.c:1183
-#: sed/execute.c:1265 sed/execute.c:1445
+#: sed/execute.c:1266 sed/execute.c:1446
 msgid "error in subprocess"
 msgstr "errore in un sottoprocesso"
 
 # sed/execute.c:1005
-#: sed/execute.c:1267
+#: sed/execute.c:1268
 msgid "option `e' not supported"
 msgstr "opzione `e' non supportata"
 
 # sed/execute.c:1185
-#: sed/execute.c:1447
+#: sed/execute.c:1448
 msgid "`e' command not supported"
 msgstr "comando `e' non supportato"
 
-#: sed/execute.c:1787
+#: sed/execute.c:1788
 msgid "no input files"
 msgstr "nessun file in ingresso"
 
@@ -557,6 +557,6 @@ msgid "Unmatched ) or \\)"
 msgstr "`)' o `\\)' non bilanciata"
 
 # lib/regcomp.c:658 sed/regex.c:47
-#: lib/regcomp.c:684
+#: lib/regcomp.c:680
 msgid "No previous regular expression"
 msgstr "Occorre un'espressione regolare precedente"
