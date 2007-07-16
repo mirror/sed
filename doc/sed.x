@@ -84,6 +84,8 @@ Append text read from
 .RI R\  filename
 Append a line read from
 .IR filename .
+Each invocation of the command reads a line from the file.
+This is a GNU extension.
 .SS
 Commands which accept address ranges
 .TP
@@ -113,7 +115,8 @@ command, then branch to
 .IR label ;
 if
 .I label
-is omitted, branch to end of script.
+is omitted, branch to end of script.  This is a GNU
+extension.
 .TP
 c \e
 .TP
@@ -142,6 +145,12 @@ Exchange the contents of the hold and pattern spaces.
 .TP
 l
 List out the current line in a ``visually unambiguous'' form.
+.TP
+.RI l\  width
+List out the current line in a ``visually unambiguous'' form,
+breaking it at
+.I width
+characters.  This is a GNU extension.
 .TP
 n N
 Read/append the next line of input into the pattern space.
@@ -175,6 +184,7 @@ Write the current pattern space to
 .RI W\  filename
 Write the first line of the current pattern space to
 .IR filename .
+This is a GNU extension.
 .TP
 .RI y/ source / dest /
 Transliterate the characters in the pattern space which appear in
