@@ -707,16 +707,20 @@ open_next_file(name, input)
   if (in_place_extension)
     {
       int input_fd, output_fd;
-      char *tmpdir = ck_strdup(name), *p;
+      char *tmpdir, *p;
       struct stat st;
 
+      if (follow_symlinks)
+	input->in_file_name = follow_symlink (name);
+      else
+        input->in_file_name = name;
+
       /* get the base name */
+      tmpdir = ck_strdup(input->in_file_name);
       if (p = strrchr(tmpdir, '/'))
 	*(p + 1) = 0;
       else
 	strcpy(tmpdir, ".");
-      
-      input->in_file_name = name;
 
       if (isatty (fileno (input->fp)))
         panic(_("couldn't edit %s: is a terminal"), input->in_file_name);
@@ -762,11 +766,7 @@ closedown(input)
       const char *target_name;
       ck_fclose (output_file.fp);
 
-      if (follow_symlinks)
-	target_name = follow_symlink (input->in_file_name);
-      else
-	target_name = input->in_file_name;
-
+      target_name = input->in_file_name;
       if (strcmp(in_place_extension, "*") != 0)
         {
           char *backup_file_name = get_backup_file_name(target_name);

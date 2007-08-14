@@ -1,3 +1,9 @@
+Sed 4.1e
+
+* fixed --follow-symlinks to avoid attempting the creation of cross-device
+links.
+
+----------------------------------------------------------------------------
 Sed 4.1d (final release candidate for sed 4.2)
 
 * fixed bug in 'i\' giving a segmentation violation if given alone.
