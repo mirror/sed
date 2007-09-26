@@ -67,15 +67,15 @@ Insert
 .IR text ,
 which has each embedded newline preceded by a backslash.
 .TP
-q
+q [\fIexit-code\fR]
 Immediately quit the \*(sd script without processing
-any more input,
-except that if auto-print is not disabled
-the current pattern space will be printed.
+any more input, except that if auto-print is not disabled
+the current pattern space will be printed.  The exit code
+argument is a GNU extension.
 .TP
-Q
+Q [\fIexit-code\fR]
 Immediately quit the \*(sd script without processing
-any more input.
+any more input.  This is a GNU extension.
 .TP
 .RI r\  filename
 Append text read from
@@ -84,6 +84,8 @@ Append text read from
 .RI R\  filename
 Append a line read from
 .IR filename .
+Each invocation of the command reads a line from the file.
+This is a GNU extension.
 .SS
 Commands which accept address ranges
 .TP
@@ -113,7 +115,8 @@ command, then branch to
 .IR label ;
 if
 .I label
-is omitted, branch to end of script.
+is omitted, branch to end of script.  This is a GNU
+extension.
 .TP
 c \e
 .TP
@@ -142,6 +145,12 @@ Exchange the contents of the hold and pattern spaces.
 .TP
 l
 List out the current line in a ``visually unambiguous'' form.
+.TP
+.RI l\  width
+List out the current line in a ``visually unambiguous'' form,
+breaking it at
+.I width
+characters.  This is a GNU extension.
 .TP
 n N
 Read/append the next line of input into the pattern space.
@@ -175,6 +184,7 @@ Write the current pattern space to
 .RI W\  filename
 Write the first line of the current pattern space to
 .IR filename .
+This is a GNU extension.
 .TP
 .RI y/ source / dest /
 Transliterate the characters in the pattern space which appear in
@@ -231,7 +241,11 @@ line starting with line
 .IR first .
 For example, ``sed -n 1~2p'' will print all the odd-numbered lines in
 the input stream, and the address 2~5 will match every fifth line,
-starting with the second. (This is an extension.)
+starting with the second.
+.I first
+can be zero; in this case, \*(sd operates as if it were equal to
+.IR step .
+(This is an extension.)
 .TP
 $
 Match the last line.
@@ -262,6 +276,9 @@ matches the very first line of input the
 form will be at the end of its range, whereas the
 .RI 1, addr2
 form will still be at the beginning of its range.
+This works only when
+.I addr2
+is a regular expression.
 .TP
 .IR addr1 ,+ N
 Will match

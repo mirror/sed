@@ -1,3 +1,32 @@
+2007-10-25  Paolo Bonzini  <bonzini@gnu.org>
+	    Mike Frysinger   <vapier@gentoo.org>
+
+	* doc/sed.x (q, Q): Document argument.
+	* configure.ac: Remove texi2html checks.
+	* doc/Makefile.am: Remove rules for sed.html, always distribute it.
+
+2007-08-14  Paolo Bonzini  <bonzini@gnu.org>
+
+	* sed/execute.c (open_next_file): Follow symlink here...
+	(closedown): ... not here.
+
+2007-06-29  Paolo Bonzini  <bonzini@gnu.org>
+
+	* sed/mbcs.c: Upgrade to GPLv3.
+	* sed/regexp.c: Upgrade to GPLv3.
+	* sed/sed.c: Upgrade to GPLv3.
+	* sed/sed.h: Upgrade to GPLv3.
+	* sed/utils.c: Upgrade to GPLv3.
+	* sed/utils.h: Upgrade to GPLv3.
+	* sed/compile.c: Upgrade to GPLv3.
+	* sed/execute.c: Upgrade to GPLv3.
+	* sed/fmt.c: Upgrade to GPLv3.
+
+2007-03-01  Masatake YAMATO  <jet@gyve.org>  (tiny change)
+
+	* sed/compile.c (compile_program): Accept 0,/REGEXP/ address
+	specification only if --posix is not specified.
+
 2007-01-26  Paolo Bonzini  <bonzini@gnu.org>
 
         * sed/compile.c: Fix warnings.

@@ -4,10 +4,12 @@ sed_TEXINFOS = config.texi version.texi
 dist_man_MANS = sed.1
 dist_noinst_DATA = sed.x sed-in.texi pcre.html
 dist_noinst_SCRIPTS = groupify.sed
-CLEANFILES = sed.html
+dist_doc_DATA = sed.html
 TEXI2DVI = $(top_srcdir)/build-aux/texi2dvi --expand
 HELP2MAN = $(top_srcdir)/build-aux/help2man
 SED = $(top_builddir)/sed/sed
+
+AM_MAKEINFOHTMLFLAGS = --no-split
 
 # To produce better quality output, in the example sed
 # scripts we group comments with lines following them;
@@ -23,31 +25,3 @@ sed.1: $(top_srcdir)/sed/sed.c $(top_srcdir)/configure.ac $(srcdir)/sed.x
 
 dist-hook:
 	touch $(distdir)/sed.1
-
-# This rule is used if --enable-html is passed
-if BUILD_HTML
-doc_DATA = sed.html
-
-all: html
-
-html: sed.html
-
-.PHONY: html
-endif
-
-# Having a dependancy on sed.info automatically makes
-# sed.html dependant on sed.texi and all the included
-# sources
-if MAKEINFO_HTML
-sed.html: sed.texi sed.info
-	builddir=`pwd` && cd $(srcdir) && \
-	  $(MAKEINFO) --html --no-split -o $$builddir/sed.html sed.texi
-endif
-
-# These rules are used together with TEXI2HTML
-if TEXI2HTML_HTML
-sed.html: sed.texi sed.info
-	cp $(srcdir)/*.texi . && \
-	  $(TEXI2HTML) sed.texi && \
-	  rm *.texi
-endif
