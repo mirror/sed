@@ -67,15 +67,15 @@ Insert
 .IR text ,
 which has each embedded newline preceded by a backslash.
 .TP
-q
+q [\fIexit-code\fR]
 Immediately quit the \*(sd script without processing
-any more input,
-except that if auto-print is not disabled
-the current pattern space will be printed.
+any more input, except that if auto-print is not disabled
+the current pattern space will be printed.  The exit code
+argument is a GNU extension.
 .TP
-Q
+Q [\fIexit-code\fR]
 Immediately quit the \*(sd script without processing
-any more input.
+any more input.  This is a GNU extension.
 .TP
 .RI r\  filename
 Append text read from

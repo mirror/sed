@@ -79,42 +79,12 @@ if test "x$enable_regex_tests" = xyes; then
     [Include BSD functions in regex, used by the testsuite])
 fi
 
-AC_ARG_ENABLE(html, 
-[  --enable-html           build HTML manual (default=no)], ,
-enable_html=no)
-
-AM_CONDITIONAL(BUILD_HTML, test "x$enable_html" != xno)
-
 # Check whether we are able to follow symlinks
 AC_CHECK_FUNC(lstat, have_lstat=yes)
 AC_CHECK_FUNC(readlink, have_readlink=yes)
 if test "x$have_lstat" = xyes -a "x$have_readlink" = xyes; then
    AC_DEFINE(ENABLE_FOLLOW_SYMLINKS, ,[Follow symlinks when processing in place])
 fi
-
-: ${TEXI2HTML=texi2html -monolithic}
-AC_SUBST(TEXI2HTML)
-
-AC_MSG_CHECKING(how to build HTML documentation)
-if eval $am_missing_run makeinfo --help 2>&1 | grep .-html > /dev/null; then
-  AC_MSG_RESULT(with makeinfo)
-  enable_html=makeinfo
-else
-  if $TEXI2HTML --help 2>&1 | grep monolithic > /dev/null; then
-    AC_MSG_RESULT(with texi2html)
-    enable_html=texi2html
-  else
-    AC_MSG_RESULT(not built)
-    if test "x$enable_html" != xno; then
-      AC_MSG_ERROR(cannot build HTML documentation, install makeinfo 4.0 or texi2html)
-    fi
-    enable_html=no
-  fi
-fi 
-
-AM_CONDITIONAL(MAKEINFO_HTML, test "x$enable_html" = xmakeinfo)
-AM_CONDITIONAL(TEXI2HTML_HTML, test "x$enable_html" = xtexi2html)
-
 
 AC_CONFIG_FILES([bootstrap.sh], chmod +x bootstrap.sh)
 AC_CONFIG_FILES([testsuite/version.good:testsuite/version.gin])

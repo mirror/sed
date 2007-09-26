@@ -1,3 +1,10 @@
+2007-10-25  Paolo Bonzini  <bonzini@gnu.org>
+	    Mike Frysinger   <vapier@gentoo.org>
+
+	* doc/sed.x (q, Q): Document argument.
+	* configure.ac: Remove texi2html checks.
+	* doc/Makefile.am: Remove rules for sed.html, always distribute it.
+
 2007-08-14  Paolo Bonzini  <bonzini@gnu.org>
 
 	* sed/execute.c (open_next_file): Follow symlink here...
