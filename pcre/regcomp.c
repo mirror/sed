@@ -340,6 +340,7 @@ find_fixedlength (code, options)
 
 	case OP_EXACT:
 	case OP_TYPEEXACT:
+	case OP_TYPENOTEXACT:
 	  branchlength += (cc[1] << 8) + cc[2];
 	  cc += 4;
 	  break;
@@ -348,6 +349,7 @@ find_fixedlength (code, options)
 
 	case OP_TYPE:
 	case OP_TYPENOT:
+	case OP_NOT:
 	  branchlength++;
 	  cc += 2;
 	  break;

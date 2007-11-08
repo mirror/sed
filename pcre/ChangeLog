@@ -1,3 +1,7 @@
+2007-11-08  Paolo Bonzini  <bonzini@gnu.org>
+
+	* regcomp.c (find_fixedlength): Support some more opcodes.
+
 2005-02-10  Paolo Bonzini  <bonzini@gnu.org>
 
 	* regposix.c (compile_branch_posix): Support [[.a.]] and
