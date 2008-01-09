@@ -18,6 +18,10 @@
    Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
    02110-1301 USA.  */
 
+#ifdef HAVE_CONFIG_H
+#include "config.h"
+#endif
+
 #include <sys/types.h>
 #include <regex.h>
 #include <stdio.h>
@@ -117,7 +121,7 @@ main (int argc, char *argv[])
 	regfree (&re);
       }
 
-  printf ("\n%Zu tests, %d errors\n", cnt, errors);
+  printf ("\n%u tests, %d errors\n", (int) cnt, errors);
 
   return errors != 0;
 }

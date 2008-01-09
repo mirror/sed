@@ -3,7 +3,7 @@ CLEANFILES = tmp* core *.core $(EXTRA_PROGRAMS) *.*out *.log
 TESTS = $(check_PROGRAMS) $(SEDTESTS)
 SEDTESTS =
 
-LDADD = ../lib/libsed.a
+LDADD = ../lib/libsed.a @INTLLIBS@
 noinst_HEADERS = testcases.h ptestcases.h
 AM_CPPFLAGS = -I$(top_srcdir)/lib -I$(top_builddir)/lib
 

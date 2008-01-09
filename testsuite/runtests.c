@@ -24,6 +24,10 @@ PERFORMANCE OF THIS SOFTWARE.
 
 
 
+#ifdef HAVE_CONFIG_H
+#include "config.h"
+#endif
+
 #include <sys/types.h>
 #include <regex.h>
 #include <stdio.h>
@@ -87,6 +91,9 @@ run_a_test (int id, const struct a_test * t)
 	}
     }
 
+  for (x = 0; x < 10; ++x)
+    regs[x].rm_so = regs[x].rm_eo = -1;
+
   err = regexec (&r, t->data, 10, regs, 0);
 
   if (err != t->expected)
@@ -95,12 +102,13 @@ run_a_test (int id, const struct a_test * t)
       printf ("pattern \"%s\" data \"%s\" wanted %d got %d\n",
 	      t->pattern, t->data, t->expected, err);
       for (x = 0; x < 10; ++x)
-	printf ("reg %d == (%d, %d) %.*s\n",
-		x,
-		regs[x].rm_so,
-		regs[x].rm_eo,
-		regs[x].rm_eo - regs[x].rm_so,
-		t->data + regs[x].rm_so);
+        if (regs[x].rm_so != -1)
+	  printf ("reg %d == (%d, %d) %.*s\n",
+		  x,
+		  regs[x].rm_so,
+		  regs[x].rm_eo,
+		  regs[x].rm_eo - regs[x].rm_so,
+		  t->data + regs[x].rm_so);
       return 1;
     }
   puts (" OK.");
