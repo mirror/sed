@@ -1,0 +1,16 @@
++*
+ABOUT-NLS
+Makefile.in
+aclocal.m4
+autom4te.cache
+config_h.in
+configure
+config.guess
+config.rpath
+config.sub
+depcomp
+gnulib
+intl
+mdate-sh
+missing
+*~
