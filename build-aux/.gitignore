@@ -82,3 +82,4 @@ wctype.m4
 xalloc.m4
 regex.m4
 ssize_t.m4
+string_h.m4

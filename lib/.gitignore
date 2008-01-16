@@ -74,3 +74,16 @@ regex_internal.c
 regex_internal.h
 regexec.c
 stat-macros.h
+alloca.in.h
+getopt.in.h
+intprops.h
+stdbool.in.h
+stdint.in.h
+stdio.in.h
+stdlib.in.h
+string.in.h
+sys_stat.in.h
+sys_time.in.h
+unistd.in.h
+wchar.in.h
+wctype.in.h
