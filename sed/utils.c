@@ -1,5 +1,5 @@
 /*  Functions from hack's utils library.
-    Copyright (C) 1989, 1990, 1991, 1998, 1999, 2003
+    Copyright (C) 1989, 1990, 1991, 1998, 1999, 2003, 2008
     Free Software Foundation, Inc.
 
     This program is free software; you can redistribute it and/or modify
@@ -96,7 +96,6 @@ panic(const char *str, ...)
     {
       if (open_files->temp)
 	{
-	  int fd = fileno (open_files->fp);
 	  fclose (open_files->fp);
 	  errno = 0;
 	  unlink (open_files->name);

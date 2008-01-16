@@ -1,5 +1,9 @@
 2008-01-16  Jim Meyering  <meyering@redhat.com>
 
+	* sed/utils.c (panic): Remove declaration of unused local, "fd".
+
+2008-01-16  Jim Meyering  <meyering@redhat.com>
+
 	* sed/execute.c (open_next_file, get_backup_file_name): Avoid
 	warnings from gcc.  Avoid shadowing global "pipe".
 
