@@ -1,5 +1,10 @@
 2008-01-16  Jim Meyering  <meyering@redhat.com>
 
+	* sed/compile.c (snarf_char_class): Reverse order of conjuncts
+	so that "delim" is not used uninitialized.
+
+2008-01-16  Jim Meyering  <meyering@redhat.com>
+
 	* sed/utils.c (panic): Remove declaration of unused local, "fd".
 
 2008-01-16  Jim Meyering  <meyering@redhat.com>
