@@ -1,13 +1,13 @@
 #! /bin/sh
 
-# Bootstrap this package from CVS.
+# Bootstrap this package from checked-out sources.
 
-# Copyright (C) 2003, 2004, 2005, 2006 Free Software Foundation, Inc.
+# Copyright (C) 2003, 2004, 2005, 2006, 2007 Free Software Foundation, Inc.
 
-# This program is free software; you can redistribute it and/or modify
+# This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
-# the Free Software Foundation; either version 2, or (at your option)
-# any later version.
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
 
 # This program is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -15,22 +15,138 @@
 # GNU General Public License for more details.
 
 # You should have received a copy of the GNU General Public License
-# along with this program; if not, write to the Free Software
-# Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
-# 02110-1301, USA.
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 # Written by Paul Eggert.
 
-package=sed
-
-# Translation Project URL, for the registry of all projects.
-TP_URL='http://www.iro.umontreal.ca/translation/registry.cgi?domain='
-TP_PO_URL='http://www.iro.umontreal.ca/translation/teams/PO/'
+nl='
+'
 
 # Ensure file names are sorted consistently across platforms.
-# Also, ensure diagnostics are in English, e.g., "wget --help" below.
 LC_ALL=C
 export LC_ALL
+
+local_gl_dir=gl
+
+# Temporary directory names.
+bt='._bootmp'
+bt_regex=`echo "$bt"| sed 's/\./[.]/g'`
+bt2=${bt}2
+
+usage() {
+  echo >&2 "\
+Usage: $0 [OPTION]...
+Bootstrap this package from the checked-out sources.
+
+Options:
+ --gnulib-srcdir=DIRNAME  Specify the local directory where gnulib
+                          sources reside.  Use this if you already
+                          have gnulib sources on your machine, and
+                          do not want to waste your bandwidth downloading
+                          them again.
+ --copy                   Copy files instead of creating symbolic links.
+ --force                  Attempt to bootstrap even if the sources seem
+                          not to have been checked out.
+ --skip-po                Do not download po files.
+
+If the file bootstrap.conf exists in the current working directory, its
+contents are read as shell variables to configure the bootstrap.
+
+Running without arguments will suffice in most cases.
+"
+}
+
+# Configuration.
+
+# Name of the Makefile.am
+gnulib_mk=gnulib.mk
+
+# List of gnulib modules needed.
+gnulib_modules=
+
+# Any gnulib files needed that are not in modules.
+gnulib_files=
+
+# The command to download all .po files for a specified domain into
+# a specified directory.  Fill in the first %s is the domain name, and
+# the second with the destination directory.  Use rsync's -L and -r
+# options because the latest/%s directory and the .po files within are
+# all symlinks.
+po_download_command_format=\
+"rsync -Lrtvz 'translationproject.org::tp/latest/%s/' '%s'"
+
+extract_package_name='
+  /^AC_INIT(/{
+     /.*,.*,.*, */{
+       s///
+       s/[][]//g
+       s/)$//
+       p
+       q
+     }
+     s/AC_INIT(\[*//
+     s/]*,.*//
+     s/^GNU //
+     y/ABCDEFGHIJKLMNOPQRSTUVWXYZ/abcdefghijklmnopqrstuvwxyz/
+     s/[^A-Za-z0-9_]/-/g
+     p
+  }
+'
+package=`sed -n "$extract_package_name" configure.ac` || exit
+gnulib_name=lib$package
+
+build_aux=build-aux
+# Extra files from gnulib, which override files from other sources.
+gnulib_extra_files="
+	$build_aux/install-sh
+	$build_aux/missing
+	$build_aux/mdate-sh
+	$build_aux/texinfo.tex
+	$build_aux/depcomp
+	$build_aux/config.guess
+	$build_aux/config.sub
+	doc/INSTALL
+"
+
+# Additional gnulib-tool options to use.  Use "\newline" to break lines.
+gnulib_tool_option_extras=
+
+# Other locale categories that need message catalogs.
+EXTRA_LOCALE_CATEGORIES=
+
+# Additional xgettext options to use.  Use "\\\newline" to break lines.
+XGETTEXT_OPTIONS='\\\
+ --flag=_:1:pass-c-format\\\
+ --flag=N_:1:pass-c-format\\\
+ --flag=error:3:c-format --flag=error_at_line:5:c-format\\\
+'
+
+# Files we don't want to import.
+excluded_files=
+
+# File that should exist in the top directory of a checked out hierarchy,
+# but not in a distribution tarball.
+checkout_only_file=README-hacking
+
+# Whether to use copies instead of symlinks.
+copy=false
+
+# Set this to '.cvsignore .gitignore' in bootstrap.conf if you want
+# those files to be generated in directories like lib/, m4/, and po/.
+# Or set it to 'auto' to make this script select which to use based
+# on which version control system (if any) is used in the source directory.
+vc_ignore=auto
+
+# Override the default configuration, if necessary.
+test -r autoboot.conf && . ./autoboot.conf
+
+if test "$vc_ignore" = auto; then
+  vc_ignore=
+  test -d .git && vc_ignore=.gitignore
+  test -d CVS && vc_ignore="$vc_ignore .cvsignore"
+fi
+
+# Translate configuration into internal form.
 
 # Parse options.
 
@@ -38,21 +154,61 @@ for option
 do
   case $option in
   --help)
-    echo "$0: usage: $0 [--gnulib-srcdir=DIR] [--cvs-user=USERNAME] [--skip-po]"
+    usage
     exit;;
   --gnulib-srcdir=*)
     GNULIB_SRCDIR=`expr "$option" : '--gnulib-srcdir=\(.*\)'`;;
-  --cvs-user=*)
-    ;;
   --skip-po)
     SKIP_PO=t;;
+  --force)
+    checkout_only_file=;;
+  --copy)
+    copy=true;;
   *)
     echo >&2 "$0: $option: unknown option"
     exit 1;;
   esac
 done
 
-echo "$0: Bootstrapping CVS $package..."
+if test -n "$checkout_only_file" && test ! -r "$checkout_only_file"; then
+  echo "$0: Bootstrapping from a non-checked-out distribution is risky." >&2
+  exit 1
+fi
+
+# If $STR is not already on a line by itself in $FILE, insert it,
+# sorting the new contents of the file and replacing $FILE with the result.
+insert_sorted_if_absent() {
+  file=$1
+  str=$2
+  test -f $file || touch $file
+  echo "$str" | sort -u - $file | cmp -s - $file \
+    || echo "$str" | sort -u - $file -o $file \
+    || exit 1
+}
+
+# Die if there is no AC_CONFIG_AUX_DIR($build_aux) line in configure.ac.
+found_aux_dir=no
+grep '^[	 ]*AC_CONFIG_AUX_DIR(\['"$build_aux"'\])' configure.ac \
+    >/dev/null && found_aux_dir=yes
+grep '^[	 ]*AC_CONFIG_AUX_DIR('"$build_aux"')' configure.ac \
+    >/dev/null && found_aux_dir=yes
+if test $found_aux_dir = no; then
+  echo "$0: expected line not found in configure.ac. Add the following:" >&2
+  echo "  AC_CONFIG_AUX_DIR([$build_aux])" >&2
+  exit 1
+fi
+
+# If $build_aux doesn't exist, create it now, otherwise some bits
+# below will malfunction.  If creating it, also mark it as ignored.
+if test ! -d $build_aux; then
+  mkdir $build_aux
+  for dot_ig in x $vc_ignore; do
+    test $dot_ig = x && continue
+    insert_sorted_if_absent $dot_ig $build_aux
+  done
+fi
+
+echo "$0: Bootstrapping from checked-out $package sources..."
 
 cleanup_gnulib() {
   status=$?
@@ -68,103 +224,379 @@ case ${GNULIB_SRCDIR--} in
     echo "$0: getting gnulib files..."
 
     trap cleanup_gnulib 1 2 13 15
-    cvs -q -d :pserver:anonymous@pserver.git.sv.gnu.org:/gnulib.git \
-      co -d gnulib HEAD || cleanup_gnulib
+
+    git clone --depth 2 git://git.sv.gnu.org/gnulib ||
+      cleanup_gnulib
 
     trap - 1 2 13 15
-  else
-    if [ -d gnulib/CVS ]; then
-      (cd gnulib && cvs up)
-    fi
   fi
   GNULIB_SRCDIR=gnulib
 esac
 
 gnulib_tool=$GNULIB_SRCDIR/gnulib-tool
-test -x $gnulib_tool || exit
-
-# $gnulib_tool --import --m4-base=build-aux --lib=libsed --no-changelog --makefile-name=gnulib.mk \
-#    acl alloca getline getopt gettext memchr memcmp memmove \
-#    mkstemp obstack regex stdbool strerror strverscmp unlocked-io verify
+<$gnulib_tool || exit
 
 # Get translations.
 
-get_translations() {
+download_po_files() {
   subdir=$1
   domain=$2
+  echo "$0: getting translations into $subdir for $domain..."
+  cmd=`printf "$po_download_command_format" "$domain" "$subdir"`
+  eval "$cmd"
+}
 
-  case $SKIP_PO in
-  '')
-    echo "$0: getting translations into $subdir for $domain..."
-    (cd $subdir && rm -f *.gmo) &&
+# Download .po files to $po_dir/.reference and copy only the new
+# or modified ones into $po_dir.  Also update $po_dir/LINGUAS.
+update_po_files() {
+  # Directory containing primary .po files.
+  # Overwrite them only when we're sure a .po file is new.
+  po_dir=$1
+  domain=$2
 
-    $WGET_COMMAND -O "$subdir/$domain.html" "$TP_URL$domain" &&
+  # Download *.po files into this dir.
+  # Usually contains *.s1 checksum files.
+  ref_po_dir="$po_dir/.reference"
 
-    sed -n 's|.*"http://[^"]*/translation/teams/PO/\([^/"]*\)/'"$domain"'-\([^/"]*\)\.[^."]*\.po".*|\1.\2|p' <"$subdir/$domain.html" |
-    sort -k 1,1 -k 2,2n -k2,2 -k3,3n -k3,3 -k4,4n -k4,4 -k5,5n -k5.5 |
-    awk -F. '
-      { if (lang && $1 != lang) print lang, ver }
-      { lang = $1; ver = substr($0, index($0, ".") + 1) }
-      END { if (lang) print lang, ver }
-    ' | awk -v domain="$domain" -v subdir="$subdir" '
+  test -d $ref_po_dir || mkdir $ref_po_dir || return
+  download_po_files $ref_po_dir $domain \
+    && ls "$ref_po_dir"/*.po 2>/dev/null |
+      sed 's|.*/||; s|\.po$||' > "$po_dir/LINGUAS"
+
+  langs=`cd $ref_po_dir && echo *.po|sed 's/\.po//g'`
+  test "$langs" = '*' && langs=x
+  for po in `cd $ref_po_dir && echo *.po|sed 's/\.po//g'`; do
+    case $po in x) continue;; esac
+    new_po="$ref_po_dir/$po.po"
+    cksum_file="$ref_po_dir/$po.s1"
+    if ! test -f "$cksum_file" ||
+	! sha1sum -c --status "$cksum_file" < "$new_po" > /dev/null; then
+      echo "updated $po_dir/$po.po..."
+      cp "$new_po" "$po_dir/$po.po" && sha1sum < "$new_po" > "$cksum_file"
+    fi
+  done
+}
+
+case $SKIP_PO in
+'')
+  if test -d po; then
+    update_po_files po $package || exit
+  fi
+
+  if test -d runtime-po; then
+    update_po_files runtime-po $package-runtime || exit
+  fi;;
+esac
+
+symlink_to_dir()
+{
+  src=$1/$2
+  dst=${3-$2}
+
+  test -f "$src" && {
+
+    # If the destination directory doesn't exist, create it.
+    # This is required at least for "lib/uniwidth/cjk.h".
+    dst_dir=`dirname "$dst"`
+    if ! test -d "$dst_dir"; then
+      mkdir -p "$dst_dir"
+
+      # If we've just created a directory like lib/uniwidth,
+      # tell version control system(s) it's ignorable.
+      # FIXME: for now, this does only one level
+      parent=`dirname "$dst_dir"`
+      for dot_ig in x $vc_ignore; do
+	test $dot_ig = x && continue
+	ig=$parent/$dot_ig
+	insert_sorted_if_absent $ig `echo "$dst_dir"|sed 's,.*/,,'`
+      done
+    fi
+
+    if $copy; then
       {
-        lang = $1
-  
-        # Same maintainer as sed, so this one is more up to date.
-        if (lang == "it") next
-
-        ver = $2
-        printf "{ $WGET_COMMAND -O %s/%s.po '\'"$TP_PO_URL"'/%s/%s-%s.%s.po'\'' &&\n", subdir, lang, lang, domain, ver, lang
-        printf "  msgfmt -c -o /dev/null %s/%s.po || {\n", subdir, lang
-        printf "    echo >&2 '\'"$0"': omitting translation for %s'\''\n", lang
-        printf "    rm -f %s/%s.po; }; } &&\n", subdir, lang
+	test ! -h "$dst" || {
+	  echo "$0: rm -f $dst" &&
+	  rm -f "$dst"
+	}
+      } &&
+      test -f "$dst" &&
+      cmp -s "$src" "$dst" || {
+	echo "$0: cp -fp $src $dst" &&
+	cp -fp "$src" "$dst"
       }
-      END { print ":" }
-    ' | sh &&
-    rm "$subdir/$domain.html"
-    ;;
-  esac
+    else
+      test -h "$dst" &&
+      src_ls=`ls -diL "$src" 2>/dev/null` && set $src_ls && src_i=$1 &&
+      dst_ls=`ls -diL "$dst" 2>/dev/null` && set $dst_ls && dst_i=$1 &&
+      test "$src_i" = "$dst_i" || {
+	dot_dots=
+	case $src in
+	/*) ;;
+	*)
+	  case /$dst/ in
+	  *//* | */../* | */./* | /*/*/*/*/*/)
+	     echo >&2 "$0: invalid symlink calculation: $src -> $dst"
+	     exit 1;;
+	  /*/*/*/*/)	dot_dots=../../../;;
+	  /*/*/*/)	dot_dots=../../;;
+	  /*/*/)	dot_dots=../;;
+	  esac;;
+	esac
 
-  set "$subdir"/*.po 
-  if test "$1" != "$subdir/*.po"; then
-    echo "$*" | sed 's|po/||g; s|\.po||g' >"$subdir/LINGUAS"
+	echo "$0: ln -fs $dot_dots$src $dst" &&
+	ln -fs "$dot_dots$src" "$dst"
+      }
+    fi
+  }
+}
+
+cp_mark_as_generated()
+{
+  cp_src=$1
+  cp_dst=$2
+
+  if cmp -s "$cp_src" "$GNULIB_SRCDIR/$cp_dst"; then
+    symlink_to_dir "$GNULIB_SRCDIR" "$cp_dst"
+  elif cmp -s "$cp_src" "$local_gl_dir/$cp_dst"; then
+    symlink_to_dir $local_gl_dir "$cp_dst"
+  else
+    case $cp_dst in
+      *.[ch])             c1='/* '; c2=' */';;
+      *.texi)             c1='@c '; c2=     ;;
+      *.m4|*/Make*|Make*) c1='# ' ; c2=     ;;
+      *)                  c1=     ; c2=     ;;
+    esac
+
+    # If the destination directory doesn't exist, create it.
+    # This is required at least for "lib/uniwidth/cjk.h".
+    dst_dir=`dirname "$cp_dst"`
+    test -d "$dst_dir" || mkdir -p "$dst_dir"
+
+    if test -z "$c1"; then
+      cmp -s "$cp_src" "$cp_dst" || {
+	echo "$0: cp -f $cp_src $cp_dst" &&
+	rm -f "$cp_dst" &&
+	sed "s!$bt_regex/!!g" "$cp_src" > "$cp_dst"
+      }
+    else
+      # Copy the file first to get proper permissions if it
+      # doesn't already exist.  Then overwrite the copy.
+      cp "$cp_src" "$cp_dst-t" &&
+      (
+	echo "$c1-*- buffer-read-only: t -*- vi: set ro:$c2" &&
+	echo "${c1}DO NOT EDIT! GENERATED AUTOMATICALLY!$c2" &&
+	sed "s!$bt_regex/!!g" "$cp_src"
+      ) > $cp_dst-t &&
+      if cmp -s "$cp_dst-t" "$cp_dst"; then
+	rm -f "$cp_dst-t"
+      else
+	echo "$0: cp $cp_src $cp_dst # with edits" &&
+	mv -f "$cp_dst-t" "$cp_dst"
+      fi
+    fi
   fi
 }
 
-case `wget --help` in
-*'--no-cache'*)
-  no_cache='--no-cache';;
-*'--cache=on/off'*)
-  no_cache='--cache=off';;
-*)
-  no_cache='';;
-esac
+version_controlled_file() {
+  dir=$1
+  file=$2
+  found=no
+  if test -d CVS; then
+    grep -F "/$file/" $dir/CVS/Entries 2>/dev/null |
+	     grep '^/[^/]*/[0-9]' > /dev/null && found=yes
+  elif test -d .git; then
+    git-rm -n "$dir/$file" > /dev/null 2>&1 && found=yes
+  else
+    echo "$0: no version control for $dir/$file?" >&2
+  fi
+  test $found = yes
+}
 
-WGET_COMMAND="wget -nv $no_cache"
-export WGET_COMMAND
+slurp() {
+  for dir in . `(cd $1 && find * -type d -print)`; do
+    copied=
+    sep=
+    for file in `ls -a $1/$dir`; do
+      case $file in
+      .|..) continue;;
+      .*) continue;; # FIXME: should all file names starting with "." be ignored?
+      esac
+      test -d $1/$dir/$file && continue
+      for excluded_file in $excluded_files; do
+	test "$dir/$file" = "$excluded_file" && continue 2
+      done
+      if test $file = Makefile.am; then
+        copied=$copied${sep}$gnulib_mk; sep=$nl
+	remove_intl='/^[^#].*\/intl/s/^/#/;'"s!$bt_regex/!!g"
+        sed "$remove_intl" $1/$dir/$file | cmp -s - $dir/$gnulib_mk || {
+	  echo "$0: Copying $1/$dir/$file to $dir/$gnulib_mk ..." &&
+	  rm -f $dir/$gnulib_mk &&
+	  sed "$remove_intl" $1/$dir/$file >$dir/$gnulib_mk
+	}
+      elif { test "${2+set}" = set && test -r $2/$dir/$file; } ||
+	   version_controlled_file $dir $file; then
+	echo "$0: $dir/$file overrides $1/$dir/$file"
+      else
+	copied=$copied$sep$file; sep=$nl
+	if test $file = gettext.m4; then
+	  echo "$0: patching m4/gettext.m4 to remove need for intl/* ..."
+	  rm -f $dir/$file
+	  sed '
+	    /^AC_DEFUN(\[AM_INTL_SUBDIR],/,/^]/c\
+	      AC_DEFUN([AM_INTL_SUBDIR], [
+	    /^AC_DEFUN(\[gt_INTL_SUBDIR_CORE],/,/^]/c\
+	      AC_DEFUN([gt_INTL_SUBDIR_CORE], [])
+	    $a\
+	      AC_DEFUN([gl_LOCK_EARLY], [])
+	  ' $1/$dir/$file >$dir/$file
+	else
+	  cp_mark_as_generated $1/$dir/$file $dir/$file
+	fi
+      fi || exit
+    done
 
-get_translations po $package || exit
+    for dot_ig in x $vc_ignore; do
+      test $dot_ig = x && continue
+      ig=$dir/$dot_ig
+      if test -n "$copied"; then
+	insert_sorted_if_absent $ig "$copied"
+	# If an ignored file name ends with .in.h, then also add
+	# the name with just ".h".  Many gnulib headers are generated,
+	# e.g., stdint.in.h -> stdint.h, dirent.in.h ->..., etc.
+	# Likewise for .gperf -> .h, .y -> .c, and .sin -> .sed
+	f=`echo "$copied"|sed 's/\.in\.h$/.h/;s/\.sin$/.sed/;s/\.y$/.c/;s/\.gperf$/.h/'`
+	insert_sorted_if_absent $ig "$f"
+
+	# For files like sys_stat.in.h and sys_time.in.h, record as
+	# ignorable the directory we might eventually create: sys/.
+	f=`echo "$copied"|sed 's/sys_.*\.in\.h$/sys/'`
+	insert_sorted_if_absent $ig "$f"
+      fi
+    done
+  done
+}
+
+
+# Create boot temporary directories to import from gnulib and gettext.
+rm -fr $bt $bt2 &&
+mkdir $bt $bt2 || exit
+
+# Import from gnulib.
+
+gnulib_tool_options="\
+ --import\
+ --no-changelog\
+ --aux-dir $bt/$build_aux\
+ --doc-base $bt/doc\
+ --lib $gnulib_name\
+ --m4-base $bt/m4/\
+ --source-base $bt/lib/\
+ --tests-base $bt/tests\
+ --local-dir $local_gl_dir\
+ $gnulib_tool_option_extras\
+"
+echo "$0: $gnulib_tool $gnulib_tool_options --import ..."
+$gnulib_tool $gnulib_tool_options --import $gnulib_modules &&
+slurp $bt || exit
+
+for file in $gnulib_files; do
+  symlink_to_dir "$GNULIB_SRCDIR" $file || exit
+done
+
+
+# Import from gettext.
+with_gettext=yes
+grep '^[	 ]*AM_GNU_GETTEXT_VERSION(' configure.ac >/dev/null || \
+    with_gettext=no
+
+if test $with_gettext = yes; then
+  echo "$0: (cd $bt2; autopoint) ..."
+  cp configure.ac $bt2 &&
+  (cd $bt2 && autopoint && rm configure.ac) &&
+  slurp $bt2 $bt || exit
+
+  rm -fr $bt $bt2 || exit
+fi
+
+# Coreutils is unusual in that it generates some of its test-related
+# Makefile.am files.  That must be done before invoking automake.
+mam_template=tests/Makefile.am.in
+if test -f $mam_template; then
+  PERL=perl
+  for tool in cut head join pr sort tac tail test tr uniq wc; do
+    m=tests/$tool/Makefile.am
+    t=${m}t
+    rm -f $m $t
+    sed -n '1,/^##test-files-begin/p' $mam_template > $t
+    echo "x = $tool" >> $t
+    srcdir=tests/$tool
+    $PERL -I$srcdir -w -- tests/mk-script $srcdir --list >> $t
+    sed -n '/^##test-files-end/,$p' $mam_template >> $t
+    chmod -w $t
+    mv $t $m
+  done
+fi
 
 # Reconfigure, getting other files.
 
-echo "$0: autopoint --force ..."
-autopoint --force || exit
-
-echo "$0: $gnulib_tool --import ..."
-$gnulib_tool --import
-
-# Make sure aclocal.m4 is not older than input files.
-sleep 1
-
 for command in \
-  'aclocal --force -I build-aux' \
+  libtool \
+  'aclocal --force -I m4' \
   'autoconf --force' \
   'autoheader --force' \
   'automake --add-missing --copy --force-missing';
 do
+  if test "$command" = libtool; then
+    grep '^[	 ]*AM_PROG_LIBTOOL\>' configure.ac >/dev/null ||
+      continue
+    command='libtoolize -c -f'
+  fi
   echo "$0: $command ..."
   $command || exit
 done
 
+
+# Get some extra files from gnulib, overriding existing files.
+for file in $gnulib_extra_files; do
+  case $file in
+  */INSTALL) dst=INSTALL;;
+  build-aux/*) dst=$build_aux/`expr "$file" : 'build-aux/\(.*\)'`;;
+  *) dst=$file;;
+  esac
+  symlink_to_dir "$GNULIB_SRCDIR" $file $dst || exit
+done
+
+if test $with_gettext = yes; then
+  # Create gettext configuration.
+  echo "$0: Creating po/Makevars from po/Makevars.template ..."
+  rm -f po/Makevars
+  sed '
+    /^EXTRA_LOCALE_CATEGORIES *=/s/=.*/= '"$EXTRA_LOCALE_CATEGORIES"'/
+    /^MSGID_BUGS_ADDRESS *=/s/=.*/= bug-'"$package"'@gnu.org/
+    /^XGETTEXT_OPTIONS *=/{
+      s/$/ \\/
+      a\
+	  '"$XGETTEXT_OPTIONS"' $${end_of_xgettext_options+}
+    }
+  ' po/Makevars.template >po/Makevars
+
+  if test -d runtime-po; then
+    # Similarly for runtime-po/Makevars, but not quite the same.
+    rm -f runtime-po/Makevars
+    sed '
+      /^DOMAIN *=.*/s/=.*/= '"$package"'-runtime/
+      /^subdir *=.*/s/=.*/= runtime-po/
+      /^MSGID_BUGS_ADDRESS *=/s/=.*/= bug-'"$package"'@gnu.org/
+      /^XGETTEXT_OPTIONS *=/{
+	s/$/ \\/
+	a\
+	    '"$XGETTEXT_OPTIONS_RUNTIME"' $${end_of_xgettext_options+}
+      }
+    ' <po/Makevars.template >runtime-po/Makevars
+
+    # Copy identical files from po to runtime-po.
+    (cd po && cp -p Makefile.in.in *-quot *.header *.sed *.sin ../runtime-po)
+  fi
+fi
 
 echo "$0: done.  Now you can run './configure'."

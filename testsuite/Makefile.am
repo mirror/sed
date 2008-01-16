@@ -27,7 +27,9 @@ SEDTESTS += \
 	help version file quiet \
 	factor binary3 binary2 binary dc
 
-TESTS_ENVIRONMENT = MAKE="$(MAKE)" VERSION="$(VERSION)" $(srcdir)/runtest
+TESTS_ENVIRONMENT = MAKE="$(MAKE)" VERSION="$(VERSION)" \
+	@LOCALCHARSET_TESTS_ENVIRONMENT@ $(srcdir)/runtest
+
 
 EXTRA_DIST = \
 	PCRE.tests BOOST.tests SPENCER.tests \
