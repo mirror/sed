@@ -1,5 +1,5 @@
 /*  GNU SED, a batch stream editor.
-    Copyright (C) 1989,90,91,92,93,94,95,98,99,2002,2003,2004,2005,2006
+    Copyright (C) 1989,90,91,92,93,94,95,98,99,2002,2003,2004,2005,2006,2008
     Free Software Foundation, Inc.
 
     This program is free software; you can redistribute it and/or modify
@@ -492,7 +492,7 @@ snarf_char_class(b, cur_stat)
 	      delim = ch;
 	      state++;
 	    }
-	  else if (ch == delim && state == 2)
+	  else if (state == 2 && ch == delim)
 	    state++;
 	  else
 	    break;
