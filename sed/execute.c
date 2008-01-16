@@ -1,5 +1,5 @@
 /*  GNU SED, a batch stream editor.
-    Copyright (C) 1989,90,91,92,93,94,95,98,99,2002,2003,2004,2005,2006
+    Copyright (C) 1989,90,91,92,93,94,95,98,99,2002,2003,2004,2005,2006,2008
     Free Software Foundation, Inc.
 
     This program is free software; you can redistribute it and/or modify
@@ -657,7 +657,7 @@ get_backup_file_name(name)
 
   /* Compute the length of the backup file */
   for (asterisk = in_place_extension - 1, old_asterisk = asterisk + 1;
-       asterisk = strchr(old_asterisk, '*');
+       (asterisk = strchr(old_asterisk, '*'));
        old_asterisk = asterisk + 1)
     backup_length += name_length - 1;
 
@@ -665,7 +665,7 @@ get_backup_file_name(name)
 
   /* Each iteration gobbles up to an asterisk */
   for (asterisk = in_place_extension - 1, old_asterisk = asterisk + 1;
-       asterisk = strchr(old_asterisk, '*');
+       (asterisk = strchr(old_asterisk, '*'));
        old_asterisk = asterisk + 1)
     {
       MEMCPY (p, old_asterisk, asterisk - old_asterisk);
@@ -717,7 +717,7 @@ open_next_file(name, input)
 
       /* get the base name */
       tmpdir = ck_strdup(input->in_file_name);
-      if (p = strrchr(tmpdir, '/'))
+      if ((p = strrchr(tmpdir, '/')))
 	*(p + 1) = 0;
       else
 	strcpy(tmpdir, ".");
