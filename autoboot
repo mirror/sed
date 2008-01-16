@@ -39,7 +39,7 @@ do
   --gnulib-srcdir=*)
     GNULIB_SRCDIR=`expr "$option" : '--gnulib-srcdir=\(.*\)'`;;
   --cvs-user=*)
-    CVS_USER=`expr "$option" : '--cvs-user=\(.*\)'`;;
+    ;;
   --skip-po)
     ;;
   *)
@@ -63,26 +63,15 @@ case ${GNULIB_SRCDIR--} in
   if [ ! -d gnulib ]; then
     echo "$0: getting gnulib files..."
 
-    case ${CVS_AUTH-pserver} in
-    pserver)
-      CVS_PREFIX=':pserver:anonymous@';;
-    ssh)
-      CVS_PREFIX="$CVS_USER${CVS_USER+@}";;
-    *)
-      echo "$0: $CVS_AUTH: Unknown CVS access method" >&2
-      exit 1;;
-    esac
-
-    case $CVS_RSH in
-    '') export CVS_RSH=ssh;;
-    esac
-
     trap cleanup_gnulib 1 2 13 15
-
-    cvs -z3 -q -d ${CVS_PREFIX}cvs.savannah.gnu.org:/cvsroot/gnulib co gnulib ||
-      cleanup_gnulib
+    cvs -q -d :pserver:anonymous@pserver.git.sv.gnu.org:/gnulib.git \
+      co -d gnulib HEAD || cleanup_gnulib
 
     trap - 1 2 13 15
+  else
+    if [ -d gnulib/CVS ]; then
+      (cd gnulib && cvs up)
+    fi
   fi
   GNULIB_SRCDIR=gnulib
 esac
