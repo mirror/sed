@@ -1236,23 +1236,23 @@ do_subst(sub)
   if (sub->eval) 
     {
 #ifdef HAVE_POPEN
-      FILE *pipe;
+      FILE *pipe_fp;
       line_reset(&s_accum, NULL);
       
       str_append (&line, "", 1);
-      pipe = popen(line.active, "r");
+      pipe_fp = popen(line.active, "r");
       
-      if (pipe != NULL) 
+      if (pipe_fp != NULL) 
 	{
-	  while (!feof (pipe)) 
+	  while (!feof (pipe_fp)) 
 	    {
 	      char buf[4096];
-	      int n = fread (buf, sizeof(char), 4096, pipe);
+	      int n = fread (buf, sizeof(char), 4096, pipe_fp);
 	      if (n > 0)
 		str_append(&s_accum, buf, n);
 	    }
 	  
-	  pclose (pipe);
+	  pclose (pipe_fp);
 
 	  /* Exchange line and s_accum.  This can be much cheaper than copying
 	     s_accum.active into line.text (for huge lines).  See comment above
@@ -1395,28 +1395,28 @@ execute_program(vec, input)
 
 	    case 'e': {
 #ifdef HAVE_POPEN
-	      FILE *pipe;
+	      FILE *pipe_fp;
 	      int cmd_length = cur_cmd->x.cmd_txt.text_length;
 	      line_reset(&s_accum, NULL);
 
 	      if (!cmd_length)
 		{
 		  str_append (&line, "", 1);
-		  pipe = popen(line.active, "r");
+		  pipe_fp = popen(line.active, "r");
 		} 
 	      else
 		{
 		  cur_cmd->x.cmd_txt.text[cmd_length - 1] = 0;
-		  pipe = popen(cur_cmd->x.cmd_txt.text, "r");
+		  pipe_fp = popen(cur_cmd->x.cmd_txt.text, "r");
                   output_missing_newline(&output_file);
 		}
 
-	      if (pipe != NULL) 
+	      if (pipe_fp != NULL) 
 		{
 		  char buf[4096];
 		  int n;
-		  while (!feof (pipe)) 
-		    if ((n = fread (buf, sizeof(char), 4096, pipe)) > 0)
+		  while (!feof (pipe_fp)) 
+		    if ((n = fread (buf, sizeof(char), 4096, pipe_fp)) > 0)
 		      {
 			if (!cmd_length)
 			  str_append(&s_accum, buf, n);
@@ -1424,7 +1424,7 @@ execute_program(vec, input)
 			  ck_fwrite(buf, 1, n, output_file.fp);
 		      }
 		  
-		  pclose (pipe);
+		  pclose (pipe_fp);
 		  if (!cmd_length)
 		    {
 		      /* Store into pattern space for plain `e' commands */
