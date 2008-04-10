@@ -1,3 +1,5 @@
+*.po
+.reference
 LINGUAS
 Makefile.in.in
 Makevars.template
@@ -10,5 +12,3 @@ insert-header.sin
 quot.sed
 remove-potcdate.sed
 remove-potcdate.sin
-.reference
-*.po
