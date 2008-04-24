@@ -1,3 +1,7 @@
+2008-04-24  Paolo Bonzini  <bonzini@gnu.org>
+
+	* sed/compile.c (setup_replacement): Fix bug with \& in POSIX mode.
+
 2008-01-16  Jim Meyering  <meyering@redhat.com>
 
 	* sed/execute.c (open_next_file, get_backup_file_name): Avoid

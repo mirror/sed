@@ -796,7 +796,16 @@ setup_replacement(sub, text, length)
 	  /* Skip the backslash and look for a numeric back-reference,
 	     or a case-munging escape if not in POSIX mode: */
 	  ++p;
-	  if (p < text_end && (posixicity != POSIXLY_BASIC || ISDIGIT (*p)))
+	  if (p == text_end)
+	    ++tail->prefix_length;
+
+	  else if (posixicity == POSIXLY_BASIC && !ISDIGIT (*p))
+	    {
+	      p[-1] = *p;
+	      ++tail->prefix_length;
+	    }
+
+	  else
 	    switch (*p)
 	      {
 	      case '0': case '1': case '2': case '3': case '4': 
