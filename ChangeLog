@@ -1,3 +1,10 @@
+2008-04-24  Paul Eggert  <eggert@twinsun.com>
+
+	* sed/compile.c (match_slash): Treat 's&foo&\&&' compatibly with
+	traditional 'sed'.
+	* testsuite/bsd.sh: Add test case for this.
+	* testsuite/bsd.good: Add test case output.
+
 2008-04-24  Paolo Bonzini  <bonzini@gnu.org>
 
 	* sed/compile.c (setup_replacement): Fix bug with \& in POSIX mode.
