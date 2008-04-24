@@ -566,7 +566,7 @@ match_slash(slash, regex)
 	      else if (ch == 'n' && regex)
 	        ch = '\n';
 #endif
-	      else if (ch != '\n' && ch != slash)
+	      else if (ch != '\n' && (ch != slash || (!regex && ch == '&')))
 	        add1_buffer(b, '\\');
 	    }
           else if (ch == OPEN_BRACKET && regex)

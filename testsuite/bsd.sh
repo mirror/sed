@@ -395,6 +395,7 @@ u2/g' lines1
 	mark '8.16'
 	echo 'eeefff' | $SED -e 'p' -e 's/e/X/p' -e ':x' \
 	    -e 's//Y/p' -e '/f/bx'
+	mark '8.17' ; $SED -e 's&.&\&&g' lines1
 }
 
 test_error()
