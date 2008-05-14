@@ -42,8 +42,18 @@ if test -f config.h; then :; else
 #undef HAVE_SYS_FILE_H
 #undef HAVE_IO_H
 
+/* Emulate stdbool.h.  */
+#define bool int
+#define true 1
+#define false 0
+
+/* Avoid uselessly complicated gnulib stuff.  */
+#define _LOCALCHARSET_H
+#define locale_charset()	"C"
+
 /* All other config.h.in options intentionally omitted.  Report as a
    bug if you need extra "#define"s in here. */
+
 END_OF_CONFIG_H
 
   cat > conftest.c << \EOF
@@ -101,6 +111,12 @@ EOF
   fi
 
   rm -f conftest.*
+
+  cat >> config.h << \EOF
+#include <sys/types.h>
+#include <stdio.h>
+EOF
+
 fi
 
 # tell the user what we're doing from here on...
@@ -119,19 +135,19 @@ ${CC} -DHAVE_CONFIG_H -I.. -I. -c getline.c || exit 1
 ${CC} -DHAVE_CONFIG_H -I.. -I. -c getopt.c || exit 1
 ${CC} -DHAVE_CONFIG_H -I.. -I. -c getopt1.c || exit 1
 ${CC} -DHAVE_CONFIG_H -I.. -I. -c malloc.c || exit 1
-${CC} -DHAVE_CONFIG_H -I.. -I. -c mbchar.c || exit 1
 ${CC} -DHAVE_CONFIG_H -I.. -I. -c memchr.c || exit 1
 ${CC} -DHAVE_CONFIG_H -I.. -I. -c memcmp.c || exit 1
 ${CC} -DHAVE_CONFIG_H -I.. -I. -c memmove.c || exit 1
 ${CC} -DHAVE_CONFIG_H -I.. -I. -c mkstemp.c || exit 1
 ${CC} -DHAVE_CONFIG_H -I.. -I. -c obstack.c || exit 1
+${CC} -DHAVE_CONFIG_H -I.. -I. -c printf-args.c || exit 1
+${CC} -DHAVE_CONFIG_H -I.. -I. -c printf-parse.c || exit 1
 ${CC} -DHAVE_CONFIG_H -I.. -I. -c quote.c || exit 1
 ${CC} -DHAVE_CONFIG_H -I.. -I. -c quotearg.c || exit 1
 ${CC} -DHAVE_CONFIG_H -I.. -I. -c strerror.c || exit 1
-${CC} -DHAVE_CONFIG_H -I.. -I. -c strncasecmp.c || exit 1
-${CC} -DHAVE_CONFIG_H -I.. -I. -c strnlen1.c || exit 1
 ${CC} -DHAVE_CONFIG_H -I.. -I. -c strverscmp.c || exit 1
 ${CC} -DHAVE_CONFIG_H -I.. -I. -c tempname.c || exit 1
+${CC} -DHAVE_CONFIG_H -I.. -I. -c vasnprintf.c || exit 1
 ${CC} -DHAVE_CONFIG_H -I.. -I. -c xalloc-die.c || exit 1
 ${CC} -DHAVE_CONFIG_H -I.. -I. -c xmalloc.c || exit 1
 
