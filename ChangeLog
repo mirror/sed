@@ -1,5 +1,9 @@
 2008-05-15  Paolo Bonzini  <bonzini@gnu.org>
 
+	* autoboot.conf: Update for newer gnulib.
+
+2008-05-15  Paolo Bonzini  <bonzini@gnu.org>
+
 	* bootstrap.sh.in: Define bool, true, false.  Reported by
 	Jason Stover.  Adjust for gnulib changes.
 	* bootstrap.sh: Regenerate.

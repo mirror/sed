@@ -1,3 +1,5 @@
+*.gmo
+.reference
 LINGUAS
 Makefile.in.in
 Makevars
