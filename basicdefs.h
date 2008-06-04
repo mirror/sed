@@ -97,7 +97,7 @@ typedef unsigned long countT;
 
 
 /* Can the compiler grok function prototypes? */
-#if (defined __STDC__ && __STDC__-0) || defined __GNUC__ || defined __SUNPRO_C || __PROTOTYPES
+#if (defined __STDC__ && __STDC__-0) || defined __GNUC__ || __PROTOTYPES
 # define P_(s)		s
 #else
 # define P_(s)		()
