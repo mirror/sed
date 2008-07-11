@@ -1,3 +1,8 @@
+2008-07-10  Paolo Bonzini  <bonzini@gnu.org>
+
+        * doc/sed-in.texi: Make the description of ^ and $ more precise.
+        * doc/sed.texi: Regenerate.
+
 2008-06-04  Vladimir Marek  <vladimir.marek@sun.com>
 
 	* basicdefs.h: Don't hardcode usage of prototypes on SunStudio.

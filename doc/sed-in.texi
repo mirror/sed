@@ -210,7 +210,8 @@ then exit.
 @opindex --silent
 @cindex Disabling autoprint, from command line
 By default, @command{sed} prints out the pattern space
-at the end of each cycle through the script.
+at the end of each cycle through the script (@pxref{Execution Cycle, ,
+How @code{sed} works}).
 These options disable this automatic printing,
 and @command{sed} only produces output when explicitly told to
 via the @code{p} command.
@@ -715,21 +716,26 @@ Use back references (see below).
 Matches any character, including newline.
 
 @item ^
-Matches the null string at beginning of line, i.e. what
-appears after the circumflex must appear at the 
-beginning of line. @code{^#include} will match only 
-lines where @samp{#include} is the first thing on line---if
-there are spaces before, for example, the match fails.
-@code{^} acts as a special character only at the beginning
-of the regular expression or subexpression (that is,
-after @code{\(} or @code{\|}).  Portable scripts should avoid
-@code{^} at the beginning of a subexpression, though, as
-@acronym{POSIX} allows implementations that treat @code{^} as
-an ordinary character in that context.
+Matches the null string at beginning of the pattern space, i.e. what
+appears after the circumflex must appear at the beginning of the
+pattern space.
 
+In most scripts, pattern space is initialized to the content of each
+line (@pxref{Execution Cycle, , How @code{sed} works}).  So, it is a
+useful simplification to think of @code{^#include} as matching only
+lines where @samp{#include} is the first thing on line---if there are
+spaces before, for example, the match fails.  This simplification is
+valid as long as the original content of pattern space is not modified,
+for example with an @code{s} command.
+
+@code{^} acts as a special character only at the beginning of the
+regular expression or subexpression (that is, after @code{\(} or
+@code{\|}).  Portable scripts should avoid @code{^} at the beginning of
+a subexpression, though, as @acronym{POSIX} allows implementations that
+treat @code{^} as an ordinary character in that context.
 
 @item $
-It is the same as @code{^}, but refers to end of line.
+It is the same as @code{^}, but refers to end of pattern space.
 @code{$} also acts as a special character only at the end
 of the regular expression or subexpression (that is, before @code{\)}
 or @code{\|}), and its use at the end of a subexpression is not
