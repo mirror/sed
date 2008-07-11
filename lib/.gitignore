@@ -8,6 +8,7 @@ alloca.in.h
 alloca_.h
 asnprintf.c
 config.charset
+copy-acl.c
 error.c
 error.h
 exitfail.c
@@ -56,6 +57,7 @@ regex.h
 regex_internal.c
 regex_internal.h
 regexec.c
+set-mode-acl.c
 size_max.h
 snprintf.c
 stat-macros.h
