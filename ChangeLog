@@ -1,3 +1,8 @@
+2008-07-21  Paolo Bonzini  <bonzini@gnu.org>
+
+	* doc/sed-in.texi: Remove northpark.edu address for sed FAQ.
+	* doc/sed.texi: Regenerate.
+
 2008-07-10  Paolo Bonzini  <bonzini@gnu.org>
 
         * doc/sed-in.texi: Make the description of ^ and $ more precise.

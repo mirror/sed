@@ -2591,10 +2591,9 @@ In addition to several books that have been written about @command{sed}
 (either specifically or as chapters in books which discuss
 shell programming), one can find out more about @command{sed}
 (including suggestions of a few books) from the FAQ
-for the @code{sed-users} mailing list, available from any of:
+for the @code{sed-users} mailing list, available from:
 @display
- @uref{http://www.student.northpark.edu/pemente/sed/sedfaq.html}
- @uref{http://sed.sf.net/grabbag/tutorials/sedfaq.html}
+ @uref{http://sed.sourceforge.net/sedfaq.html}
 @end display
 
 Also of interest are
