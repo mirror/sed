@@ -19,7 +19,6 @@
 /* compile.c: translate sed source into internal form */
 
 #include "sed.h"
-#include "strverscmp.h"
 #include <stdio.h>
 #include <ctype.h>
 
