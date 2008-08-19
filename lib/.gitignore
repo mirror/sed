@@ -68,7 +68,6 @@ strerror.c
 string.h
 string.in.h
 strverscmp.c
-strverscmp.h
 sys
 sys_stat.h
 sys_stat.in.h
