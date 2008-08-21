@@ -256,7 +256,7 @@ renamed to the output file's original name.  The extension,
 if supplied, is used to modify the name of the old file
 before renaming the temporary file, thereby making a backup
 copy@footnote{Note that @value{SSED} creates the backup
-    file whether or not any output is actually changed.}).
+file whether or not any output is actually changed.}).
 
 @cindex In-place editing, Perl-style backup file names
 This rule is followed: if the extension doesn't contain a @code{*},
@@ -435,11 +435,11 @@ executed.
 When the end of the script is reached, unless the @option{-n} option
 is in use, the contents of pattern space are printed out to the output
 stream, adding back the trailing newline if it was removed.@footnote{Actually,
-  if @command{sed} prints a line without the terminating newline, it will
-  nevertheless print the missing newline as soon as more text is sent to
-  the same output stream, which gives the ``least expected surprise''
-  even though it does not make commands like @samp{sed -n p} exactly
-  identical to @command{cat}.} Then the next cycle starts for the next
+if @command{sed} prints a line without the terminating newline, it will
+nevertheless print the missing newline as soon as more text is sent to
+the same output stream, which gives the ``least expected surprise''
+even though it does not make commands like @samp{sed -n p} exactly
+identical to @command{cat}.} Then the next cycle starts for the next
 input line.
 
 Unless special commands (like @samp{D}) are used, the pattern space is
@@ -646,7 +646,7 @@ themselves in a pattern, and match the corresponding characters
 in the subject.  As a trivial example, the pattern
 
 @example
-     The quick brown fox
+The quick brown fox
 @end example
 
 @noindent
@@ -1755,7 +1755,7 @@ transform it to be shell commands, then just feed them to shell.
 Don't worry, even worse hacks are done when using @command{sed}; I have
 seen a script converting the output of @command{date} into a @command{bc}
 program!
- 
+
 The main body of this is the @command{sed} script, which remaps the name
 from lower to upper (or vice-versa) and even checks out 
 if the remapped name is the same as the original name.
@@ -1780,7 +1780,7 @@ variables and proper quoting.
 @group
 help()
 @{
-	cat << eof
+        cat << eof
 Usage: $0 [-n] [-r] [-h] files...
 @end group
 
@@ -1841,7 +1841,7 @@ case `basename $0` in
         *)       FROM=$UPPER; TO=$LOWER ;;
 esac
 @end group
-	
+
 eval $finder | sed -n '
 
 @group
@@ -2760,7 +2760,7 @@ shell programming), one can find out more about @command{sed}
 (including suggestions of a few books) from the FAQ
 for the @code{sed-users} mailing list, available from:
 @display
- @uref{http://sed.sourceforge.net/sedfaq.html}
+@uref{http://sed.sourceforge.net/sedfaq.html}
 @end display
 
 Also of interest are
@@ -2833,7 +2833,7 @@ instead of just
 @example
 /foo/@{ N;N;N;N;N;N;N;N;N; @}
 @end example
- 
+
 @cindex @code{POSIXLY_CORRECT} behavior, @code{N} command
 In any case, the simplest workaround is to use @code{$d;N} in
 scripts that rely on the traditional behavior, or to set
@@ -3092,18 +3092,18 @@ least significant 8 bits of the value. Any subsequent digits
 stand for themselves.  For example:
 
 @example
-     \040  @i{@r{is another way of writing a space}}
-     \40   @i{@r{is the same, provided there are fewer than 40}}
-           @i{@r{previous capturing subpatterns}}
-     \7    @i{@r{is always a back reference}}
-     \011  @i{@r{is always a tab}}
-     \11   @i{@r{might be a back reference, or another way of writing a tab}}
-     \0113 @i{@r{is a tab followed by the character @samp{3}}}
-     \113  @i{@r{is the character with octal code 113 (since there}}
-           @i{@r{can be no more than 99 back references)}}
-     \377  @i{@r{is a byte consisting entirely of 1 bits (@sc{ascii} 255)}}
-     \81   @i{@r{is either a back reference, or a binary zero}}
-           @i{@r{followed by the two characters @samp{81}}}
+\040  @i{@r{is another way of writing a space}}
+\40   @i{@r{is the same, provided there are fewer than 40}}
+      @i{@r{previous capturing subpatterns}}
+\7    @i{@r{is always a back reference}}
+\011  @i{@r{is always a tab}}
+\11   @i{@r{might be a back reference, or another way of writing a tab}}
+\0113 @i{@r{is a tab followed by the character @samp{3}}}
+\113  @i{@r{is the character with octal code 113 (since there}}
+      @i{@r{can be no more than 99 back references)}}
+\377  @i{@r{is a byte consisting entirely of 1 bits (@sc{ascii} 255)}}
+\81   @i{@r{is either a back reference, or a binary zero}}
+      @i{@r{followed by the two characters @samp{81}}}
 @end example
 
 Note that octal values of 100 or greater must not be introduced
@@ -3329,7 +3329,7 @@ square brackets, and @value{SSED} supports this notation as well.
 For example,
 
 @example
-     [01[:alpha:]%]
+[01[:alpha:]%]
 @end example
 
 @noindent
@@ -3382,7 +3382,7 @@ Perl mode.  Another Perl extension is negation, which is
 indicated by a circumflex character after the colon. For example,
 
 @example
-     [12[:^digit:]]
+[12[:^digit:]]
 @end example
 
 @noindent
@@ -3416,10 +3416,10 @@ the options were set or unset at the start of matching. The
 following patterns all behave in exactly the same way:
 
 @example
-     (?i)abc
-     a(?i)bc
-     ab(?i)c
-     abc(?i)
+(?i)abc
+a(?i)bc
+ab(?i)c
+abc(?i)
 @end example
 
 which in turn is the same as specifying the pattern abc with
@@ -3435,7 +3435,7 @@ An option change inside a subpattern affects only that part
 of the subpattern @emph{that follows} it, so
 
 @example
-     (a(?i)b)c
+(a(?i)b)c
 @end example
 
 @noindent
@@ -3447,7 +3447,7 @@ into subsequent branches within the same subpattern.  For
 example,
 
 @example
-     (a(?i)b|c)
+(a(?i)b|c)
 @end example
 
 @noindent
@@ -3481,7 +3481,7 @@ For example, if the string @samp{the red king} is matched against
 the pattern
 
 @example
-     the ((red|white) (king|queen))
+the ((red|white) (king|queen))
 @end example
 
 @noindent
@@ -3497,7 +3497,7 @@ number of any subsequent capturing subpatterns. For example,
 if the string @samp{the white queen} is matched against the pattern
 
 @example
-     the ((?:red|white) (king|queen))
+the ((?:red|white) (king|queen))
 @end example
 
 @noindent
@@ -3512,8 +3512,8 @@ option letters may appear between the @code{?} and the
 @code{:}.  Thus the two patterns
 
 @example
-   (?i:saturday|sunday)
-   (?:(?i)saturday|sunday)
+(?i:saturday|sunday)
+(?:(?i)saturday|sunday)
 @end example
 
 @noindent
@@ -3555,7 +3555,7 @@ The numbers must be less than 65536, and the first must be
 less than or equal to the second. For example:
 
 @example
-     z@{2,4@}
+z@{2,4@}
 @end example
 
 @noindent
@@ -3566,7 +3566,7 @@ second number and the comma are both omitted, the quantifier
 specifies an exact number of required matches. Thus
 
 @example
-     [aeiou]@{3,@}
+[aeiou]@{3,@}
 @end example
 
 @noindent
@@ -3574,7 +3574,7 @@ matches at least 3 successive vowels, but may match many
 more, while
 
 @example
-     \d@{8@}
+\d@{8@}
 @end example
 
 @noindent
@@ -3608,7 +3608,7 @@ subpattern that can match no characters with a quantifier
 that has no upper limit, for example:
 
 @example
-     (a?)*
+(a?)*
 @end example
 
 Earlier versions of Perl used to give an error at
@@ -3629,14 +3629,14 @@ the sequences @code{/*} and @code{*/} and within the sequence, individual
 comments by applying the pattern
 
 @example
-     /\*.*\*/
+/\*.*\*/
 @end example
 
 @noindent
 to the string
 
 @example
-     /* first command */ not comment /* second comment */
+/* first command */ not comment /* second comment */
 @end example
 
 @noindent
@@ -3654,7 +3654,7 @@ mark with its use as a quantifier in its own right.
 Because it has two uses, it can sometimes appear doubled, as in
 
 @example
-     \d??\d
+\d??\d
 @end example
 
 which matches one digit by preference, but can match two if
@@ -3664,11 +3664,11 @@ Note that greediness does not matter when specifying addresses,
 but can be nevertheless used to improve performance.
 
 @ignore
-   If the PCRE_UNGREEDY option is set (an option which is not
-   available in Perl), the quantifiers are not greedy by
-   default, but individual ones can be made greedy by following
-   them with a question mark. In other words, it inverts the
-   default behaviour.
+If the PCRE_UNGREEDY option is set (an option which is not
+available in Perl), the quantifiers are not greedy by
+default, but individual ones can be made greedy by following
+them with a question mark. In other words, it inverts the
+default behaviour.
 @end ignore
 
 When a parenthesized subpattern is quantified with a minimum
@@ -3689,7 +3689,7 @@ is the substring that matched the final iteration. For example,
 after
 
 @example
-     (tweedle[dume]@{3@}\s*)+
+(tweedle[dume]@{3@}\s*)+
 @end example
 
 @noindent
@@ -3700,7 +3700,7 @@ values may have been set in previous iterations. For example,
 after
 
 @example
-     /(a|(b))+/
+/(a|(b))+/
 @end example
 
 matches @samp{aba}, the value of the second captured substring is
@@ -3729,7 +3729,7 @@ subpattern in the current subject string, rather than
 anything matching the subpattern itself. So the pattern
 
 @example
-     (sens|respons)e and \1ibility
+(sens|respons)e and \1ibility
 @end example
 
 @noindent
@@ -3739,7 +3739,7 @@ matching is in force at the time of the back reference, the
 case of letters is relevant. For example,
 
 @example
-     ((?i)blah)\s+\1
+((?i)blah)\s+\1
 @end example
 
 @noindent
@@ -3753,7 +3753,7 @@ particular match, any back references to it always fail. For
 example, the pattern
 
 @example
-     (a|(bc))\2
+(a|(bc))\2
 @end example
 
 @noindent
@@ -3777,7 +3777,7 @@ can be useful inside repeated subpatterns. For example, the
 pattern
 
 @example
-     (a|b\1)+
+(a|b\1)+
 @end example
 
 @noindent
@@ -3809,7 +3809,7 @@ changed. Lookahead assertions start with @code{(?=} for positive
 assertions and @code{(?!} for negative assertions. For example,
 
 @example
-     \w+(?=;)
+\w+(?=;)
 @end example
 
 @noindent
@@ -3817,7 +3817,7 @@ matches a word followed by a semicolon, but does not include
 the semicolon in the match, and
 
 @example
-     foo(?!bar)
+foo(?!bar)
 @end example
 
 @noindent
@@ -3827,7 +3827,7 @@ matches any occurrence of @samp{foo} that is not followed by
 Note that the apparently similar pattern
 
 @example
-     (?!foo)bar
+(?!foo)bar
 @end example
 
 @noindent
@@ -3840,7 +3840,7 @@ Lookbehind assertions start with @code{(?<=} for positive
 assertions and @code{(?<!} for negative assertions. So,
 
 @example
-     (?<!foo)bar
+(?<!foo)bar
 @end example
 
 achieves the required effect of finding an occurrence of
@@ -3853,14 +3853,14 @@ compared with Perl 5.005, which requires all branches to match
 the same length of string. Thus
 
 @example
-     (?<=dogs|cats|)
+(?<=dogs|cats|)
 @end example
 
 @noindent
 is permitted, but the apparently equivalent regular expression
 
 @example
-     (?<!dogs?|cats?)
+(?<!dogs?|cats?)
 @end example
 
 @noindent
@@ -3869,7 +3869,7 @@ length strings are permitted only at the top level of
 a lookbehind assertion: an assertion such as
 
 @example
-     (?<=ab(c|de))
+(?<=ab(c|de))
 @end example
 
 @noindent
@@ -3878,7 +3878,7 @@ match two different lengths, but it is acceptable if rewritten
 to use two top-level branches:
 
 @example
-     (?<=abc|abde)
+(?<=abc|abde)
 @end example
 
 All this is required because lookbehind assertions simply
@@ -3894,7 +3894,7 @@ Several assertions (of any sort) may occur in succession.
 For example,
 
 @example
-     (?<=\d@{3@})(?<!999)foo
+(?<=\d@{3@})(?<!999)foo
 @end example
 
 @noindent
@@ -3909,7 +3909,7 @@ of which are not @samp{999}.  For example, it doesn't match
 @samp{123abcfoo}. A pattern to do that is
 
 @example
-     (?<=\d@{3@}...)(?<!999)foo
+(?<=\d@{3@}...)(?<!999)foo
 @end example
 
 @noindent
@@ -3920,13 +3920,13 @@ characters are not @samp{999}.  Actually, assertions can be
 nested in any combination, so one can write this as 
 
 @example
-     (?<=\d@{3@}(?!999)...)foo
+(?<=\d@{3@}(?!999)...)foo
 @end example
 
 or
 
 @example
-     (?<=\d@{3@}...(?<!999))foo
+(?<=\d@{3@}...(?<!999))foo
 @end example
 
 @noindent
@@ -3961,7 +3961,7 @@ Consider, for example, the pattern @code{\d+foo} when applied to
 the subject line
 
 @example
-     123456bar
+123456bar
 @end example
 
 After matching all 6 digits and then failing to match @samp{foo},
@@ -3975,7 +3975,7 @@ so the matcher would give up immediately on failing to match
 parenthesis, starting with @code{(?>} as in this example:
 
 @example
-     (?>\d+)bar
+(?>\d+)bar
 @end example
 
 This kind of parenthesis ``locks up'' the part of the pattern
@@ -4000,7 +4000,7 @@ assertions to specify efficient matching at the end
 of the subject string. Consider a simple pattern such as
 
 @example
-     abcd$
+abcd$
 @end example
 
 @noindent
@@ -4010,7 +4010,7 @@ each @samp{a} in the subject and then see if what follows matches
 the rest of the pattern. If the pattern is specified as
 
 @example
-     ^.*abcd$
+^.*abcd$
 @end example
 
 @noindent
@@ -4022,7 +4022,7 @@ last two characters, and so on. Once again the search for
 no better off. However, if the pattern is written as
 
 @example
-     ^(?>.*)(?<=abcd)
+^(?>.*)(?<=abcd)
 @end example
 
 there can be no backtracking for the .* item; it can match
@@ -4036,15 +4036,15 @@ that can itself be repeated an unlimited number of
 times, the use of a once-only subpattern is the only way to
 avoid some failing matches taking a very long time
 indeed.@footnote{Actually, the matcher embedded in @value{SSED}
-    tries to do something for this in the simplest cases,
-    like @code{([^b]*b)*}.  These cases are actually quite
-    common: they happen for example in a regular expression
-    like @code{\/\*([^*]*\*)*\/} which matches C comments.}
+tries to do something for this in the simplest cases,
+like @code{([^b]*b)*}.  These cases are actually quite
+common: they happen for example in a regular expression
+like @code{\/\*([^*]*\*)*\/} which matches C comments.}
 
 The pattern
 
 @example
-     (\D+|<\d+>)*[!?]
+(\D+|<\d+>)*[!?]
 @end example
 
 ([^0-9<]+<(\d+>)?)*[!?]
@@ -4056,7 +4056,7 @@ an exclamation or question mark. When it matches, it runs quickly.
 However, if it is applied to
 
 @example
-     aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 @end example
 
 @noindent
@@ -4072,7 +4072,7 @@ match, and fail early if it is not present in the string.}
 If the pattern is changed to
 
 @example
-     ((?>\D+)|<\d+>)*[!?]
+((?>\D+)|<\d+>)*[!?]
 @end example
 
 sequences of non-digits cannot be broken, and failure happens
@@ -4089,8 +4089,8 @@ whether a previous capturing subpattern matched or not. The
 two possible forms of conditional subpattern are
 
 @example
-     (?(@var{condition})@var{yes-pattern})
-     (?(@var{condition})@var{yes-pattern}|@var{no-pattern})
+(?(@var{condition})@var{yes-pattern})
+(?(@var{condition})@var{yes-pattern}|@var{no-pattern})
 @end example
 
 If the condition is satisfied, the yes-pattern is used; otherwise
@@ -4106,7 +4106,7 @@ white space to make it more readable (assume the @code{X} modifier)
 and to divide it into three parts for ease of discussion:
 
 @example
-     ( \( )?   [^()]+   (?(1) \) )
+( \( )?   [^()]+   (?(1) \) )
 @end example
 
 The first part matches an optional opening parenthesis, and
@@ -4130,9 +4130,9 @@ non-significant white space, and with the two alternatives
 on the second line:
 
 @example
-     (?(?=...[a-z])
-        \d\d-[a-z]@{3@}-\d\d |
-        \d\d-\d\d-\d\d )
+(?(?=...[a-z])
+   \d\d-[a-z]@{3@}-\d\d |
+   \d\d-\d\d-\d\d )
 @end example
 
 The condition is a positive lookahead assertion that matches
@@ -4161,7 +4161,7 @@ tern to solve the parentheses problem can be created like
 this:
 
 @example
-     $re = qr@{\( (?: (?>[^()]+) | (?p@{$re@}) )* \)@}x;
+$re = qr@{\( (?: (?>[^()]+) | (?p@{$re@}) )* \)@}x;
 @end example
 
 The @code{(?p@{...@})} item interpolates Perl code at run time,
@@ -4173,7 +4173,7 @@ parentheses problem (assume the @code{X} modifier option is used
 so that white space is ignored):
 
 @example
-     \( ( (?>[^()]+) | (?R) )* \)
+\( ( (?>[^()]+) | (?R) )* \)
 @end example
 
 First it matches an opening parenthesis. Then it matches any
@@ -4189,7 +4189,7 @@ the pattern to strings that do not match. For example, when
 it is applied to
 
 @example
-     (aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa()
+(aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa()
 @end example
 
 it yields a ``no match'' response quickly. However, if a
@@ -4203,7 +4203,7 @@ the outermost level of the recursion at which the subpattern
 value is set. If the pattern above is matched against
 
 @example
-     (ab(cd)ef)
+(ab(cd)ef)
 @end example
 
 @noindent
