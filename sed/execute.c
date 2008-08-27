@@ -778,6 +778,7 @@ closedown(input)
       free (input->out_file_name);
     }
 
+  ck_fclose (input->fp);
   input->fp = NULL;
 }
 
