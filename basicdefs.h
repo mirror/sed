@@ -18,29 +18,7 @@
 #ifndef BASICDEFS_H
 #define BASICDEFS_H
 
-#if defined(_AIX)
-#pragma alloca
-#else
-# if !defined(alloca)           /* predefined by HP cc +Olibcalls */
-#  ifdef __GNUC__
-#   define alloca(size) __builtin_alloca(size)
-#  else
-#   if HAVE_ALLOCA_H
-#    include <alloca.h>
-#   else
-#    if defined(__hpux)
-        void *alloca ();
-#    else
-#     if !defined(__OS2__) && !defined(WIN32)
-	char *alloca ();
-#     else
-#      include <malloc.h>       /* OS/2 defines alloca in here */
-#     endif
-#    endif
-#   endif
-#  endif
-# endif
-#endif
+#include <alloca.h>
 
 #ifdef HAVE_WCHAR_H
 # include <wchar.h>

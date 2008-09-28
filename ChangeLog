@@ -1,5 +1,14 @@
 2008-09-29  Paolo Bonzini  <bonzini@gnu.org>
 
+	* autoboot.conf: Add vasnprintf.
+	* basicdefs.h: Replace alloca cruft with alloca.h.
+	* bootstrap.sh.in: Update for new gnulib.
+	* bootstrap.sh: Update for new gnulib.
+	* configure.ac: Move gnulib macros earlier.
+	* sed/execute.c: Do not include acl.h when bootstrapping.
+
+2008-09-29  Paolo Bonzini  <bonzini@gnu.org>
+
 	* NEWS: Document `z' extension.
 	* doc/sed-in.texi: Document `z' extension, and GNU sed's s/.*.//
 	behavior with invalid multibyte sequences.

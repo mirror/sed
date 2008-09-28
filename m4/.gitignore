@@ -1,7 +1,7 @@
 acl.m4
 alloca.m4
 codeset.m4
-eoverflow.m4
+errno_h.m4
 error.m4
 exitfail.m4
 extensions.m4

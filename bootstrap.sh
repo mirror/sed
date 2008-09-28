@@ -126,24 +126,27 @@ set -x -e
 
 rm -f lib/*.o sed/*.o sed/sed
 cd lib || exit 1
-${CC} -DHAVE_CONFIG_H -I.. -I. -c acl.c || exit 1
+cp alloca.in.h alloca.h || exit 1
 ${CC} -DHAVE_CONFIG_H -I.. -I. -c alloca.c || exit 1
+${CC} -DHAVE_CONFIG_H -I.. -I. -c copy-acl.c || exit 1
 ${CC} -DHAVE_CONFIG_H -I.. -I. -c error.c || exit 1
 ${CC} -DHAVE_CONFIG_H -I.. -I. -c exitfail.c || exit 1
+${CC} -DHAVE_CONFIG_H -I.. -I. -c file-has-acl.c || exit 1
 ${CC} -DHAVE_CONFIG_H -I.. -I. -c getdelim.c || exit 1
 ${CC} -DHAVE_CONFIG_H -I.. -I. -c getline.c || exit 1
 ${CC} -DHAVE_CONFIG_H -I.. -I. -c getopt.c || exit 1
 ${CC} -DHAVE_CONFIG_H -I.. -I. -c getopt1.c || exit 1
-${CC} -DHAVE_CONFIG_H -I.. -I. -c malloc.c || exit 1
 ${CC} -DHAVE_CONFIG_H -I.. -I. -c memchr.c || exit 1
 ${CC} -DHAVE_CONFIG_H -I.. -I. -c memcmp.c || exit 1
 ${CC} -DHAVE_CONFIG_H -I.. -I. -c memmove.c || exit 1
 ${CC} -DHAVE_CONFIG_H -I.. -I. -c mkstemp.c || exit 1
 ${CC} -DHAVE_CONFIG_H -I.. -I. -c obstack.c || exit 1
-${CC} -DHAVE_CONFIG_H -I.. -I. -c printf-args.c || exit 1
-${CC} -DHAVE_CONFIG_H -I.. -I. -c printf-parse.c || exit 1
 ${CC} -DHAVE_CONFIG_H -I.. -I. -c quote.c || exit 1
 ${CC} -DHAVE_CONFIG_H -I.. -I. -c quotearg.c || exit 1
+${CC} -DHAVE_CONFIG_H -I.. -I. -c printf-args.c || exit 1
+${CC} -DHAVE_CONFIG_H -I.. -I. -c printf-parse.c || exit 1
+${CC} -DHAVE_CONFIG_H -I.. -I. -c snprintf.c || exit 1
+${CC} -DHAVE_CONFIG_H -I.. -I. -c set-mode-acl.c || exit 1
 ${CC} -DHAVE_CONFIG_H -I.. -I. -c strerror.c || exit 1
 ${CC} -DHAVE_CONFIG_H -I.. -I. -c strverscmp.c || exit 1
 ${CC} -DHAVE_CONFIG_H -I.. -I. -c tempname.c || exit 1
