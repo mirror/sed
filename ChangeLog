@@ -1,3 +1,11 @@
+2008-09-28  Paolo Bonzini  <bonzini@gnu.org>
+
+	* basicdefs.h: Replace alloca cruft with alloca.h.
+	* bootstrap.sh.in: Update for new gnulib.
+	* bootstrap.sh: Update for new gnulib.
+	* configure.ac: Move gnulib macros earlier.
+	* sed/execute.c: Do not include acl.h when bootstrapping.
+
 2008-08-27  Paolo Bonzini  <bonzini@gnu.org>
 
 	* sed/execute.c (closedown): Close the input file!
