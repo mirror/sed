@@ -1,5 +1,9 @@
 2008-09-29  Paolo Bonzini  <bonzini@gnu.org>
 
+	* autoboot: Sync with gnulib's build-aux/bootstrap.
+
+2008-09-29  Paolo Bonzini  <bonzini@gnu.org>
+
 	* testsuite/Makefile.am: Add the utf8-{1,2,3,4} tests.
 	* testsuite/Makefile.tests: Add the utf8-{1,2,3,4} tests.
 	* testsuite/runtest: Support skipping tests.
