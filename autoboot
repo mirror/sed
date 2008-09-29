@@ -2,7 +2,7 @@
 
 # Bootstrap this package from checked-out sources.
 
-# Copyright (C) 2003, 2004, 2005, 2006, 2007 Free Software Foundation, Inc.
+# Copyright (C) 2003-2008 Free Software Foundation, Inc.
 
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -49,7 +49,7 @@ Options:
                           not to have been checked out.
  --skip-po                Do not download po files.
 
-If the file bootstrap.conf exists in the current working directory, its
+If the file autoboot.conf exists in the current working directory, its
 contents are read as shell variables to configure the bootstrap.
 
 Running without arguments will suffice in most cases.
@@ -96,6 +96,11 @@ package=`sed -n "$extract_package_name" configure.ac` || exit
 gnulib_name=lib$package
 
 build_aux=build-aux
+source_base=lib
+m4_base=m4
+doc_base=doc
+tests_base=tests
+
 # Extra files from gnulib, which override files from other sources.
 gnulib_extra_files="
 	$build_aux/install-sh
@@ -134,7 +139,7 @@ checkout_only_file=README-hacking
 # Whether to use copies instead of symlinks.
 copy=false
 
-# Set this to '.cvsignore .gitignore' in bootstrap.conf if you want
+# Set this to '.cvsignore .gitignore' in autoboot.conf if you want
 # those files to be generated in directories like lib/, m4/, and po/.
 # Or set it to 'auto' to make this script select which to use based
 # on which version control system (if any) is used in the source directory.
@@ -160,7 +165,7 @@ do
     usage
     exit;;
   --gnulib-srcdir=*)
-    GNULIB_SRCDIR=`expr "$option" : '--gnulib-srcdir=\(.*\)'`;;
+    GNULIB_SRCDIR=`expr "X$option" : 'X--gnulib-srcdir=\(.*\)'`;;
   --skip-po)
     SKIP_PO=t;;
   --force)
@@ -304,11 +309,12 @@ update_po_files() {
 
   langs=`cd $ref_po_dir && echo *.po|sed 's/\.po//g'`
   test "$langs" = '*' && langs=x
-  for po in `cd $ref_po_dir && echo *.po|sed 's/\.po//g'`; do
+  for po in $langs; do
     case $po in x) continue;; esac
     new_po="$ref_po_dir/$po.po"
     cksum_file="$ref_po_dir/$po.s1"
     if ! test -f "$cksum_file" ||
+	! test -f "$po_dir/$po.po" ||
 	! sha1sum -c --status "$cksum_file" < "$new_po" > /dev/null; then
       echo "updated $po_dir/$po.po..."
       cp "$new_po" "$po_dir/$po.po" && sha1sum < "$new_po" > "$cksum_file"
@@ -413,9 +419,13 @@ cp_mark_as_generated()
 
     if test -z "$c1"; then
       cmp -s "$cp_src" "$cp_dst" || {
+	# Copy the file first to get proper permissions if it
+	# doesn't already exist.  Then overwrite the copy.
 	echo "$0: cp -f $cp_src $cp_dst" &&
 	rm -f "$cp_dst" &&
-	sed "s!$bt_regex/!!g" "$cp_src" > "$cp_dst"
+	cp "$cp_src" "$cp_dst-t" &&
+	sed "s!$bt_regex/!!g" "$cp_src" > "$cp_dst-t" &&
+	mv -f "$cp_dst-t" "$cp_dst"
       }
     else
       # Copy the file first to get proper permissions if it
@@ -444,7 +454,9 @@ version_controlled_file() {
     grep -F "/$file/" $dir/CVS/Entries 2>/dev/null |
 	     grep '^/[^/]*/[0-9]' > /dev/null && found=yes
   elif test -d .git; then
-    git-rm -n "$dir/$file" > /dev/null 2>&1 && found=yes
+    git rm -n "$dir/$file" > /dev/null 2>&1 && found=yes
+  elif test -d .svn; then
+    svn log -r HEAD "$dir/$file" > /dev/null 2>&1 && found=yes
   else
     echo "$0: no version control for $dir/$file?" >&2
   fi
@@ -526,11 +538,11 @@ gnulib_tool_options="\
  --import\
  --no-changelog\
  --aux-dir $bt/$build_aux\
- --doc-base $bt/doc\
+ --doc-base $bt/$doc_base\
  --lib $gnulib_name\
- --m4-base $bt/m4/\
- --source-base $bt/lib/\
- --tests-base $bt/tests\
+ --m4-base $bt/$m4_base/\
+ --source-base $bt/$source_base/\
+ --tests-base $bt/$tests_base\
  --local-dir $local_gl_dir\
  $gnulib_tool_option_extras\
 "
@@ -553,28 +565,20 @@ if test $with_gettext = yes; then
   cp configure.ac $bt2 &&
   (cd $bt2 && autopoint && rm configure.ac) &&
   slurp $bt2 $bt || exit
-
-  rm -fr $bt $bt2 || exit
 fi
+rm -fr $bt $bt2 || exit
 
-# Coreutils is unusual in that it generates some of its test-related
-# Makefile.am files.  That must be done before invoking automake.
-mam_template=tests/Makefile.am.in
-if test -f $mam_template; then
-  PERL=perl
-  for tool in cut head join pr sort tac tail test tr uniq wc; do
-    m=tests/$tool/Makefile.am
-    t=${m}t
-    rm -f $m $t
-    sed -n '1,/^##test-files-begin/p' $mam_template > $t
-    echo "x = $tool" >> $t
-    srcdir=tests/$tool
-    $PERL -I$srcdir -w -- tests/mk-script $srcdir --list >> $t
-    sed -n '/^##test-files-end/,$p' $mam_template >> $t
-    chmod -w $t
-    mv $t $m
-  done
-fi
+# Remove any dangling symlink matching "*.m4" or "*.[ch]" in some
+# gnulib-populated directories.  Such .m4 files would cause aclocal to fail.
+# The following requires GNU find 4.2.3 or newer.  Considering the usual
+# portability constraints of this script, that may seem a very demanding
+# requirement, but it should be ok.  Ignore any failure, which is fine,
+# since this is only a convenience to help developers avoid the relatively
+# unusual case in which a symlinked-to .m4 file is git-removed from gnulib
+# between successive runs of this script.
+find "$m4_base" "$source_base" \
+  -depth \( -name '*.m4' -o -name '*.[ch]' \) \
+  -type l -xtype l -delete > /dev/null 2>&1
 
 # Reconfigure, getting other files.
 

@@ -1,5 +1,9 @@
 2008-09-29  Paolo Bonzini  <bonzini@gnu.org>
 
+	* autoboot: Sync with gnulib's build-aux/bootstrap.
+
+2008-09-29  Paolo Bonzini  <bonzini@gnu.org>
+
 	* autoboot.conf: Add vasnprintf.
 	* basicdefs.h: Replace alloca cruft with alloca.h.
 	* bootstrap.sh.in: Update for new gnulib.
