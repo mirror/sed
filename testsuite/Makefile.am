@@ -23,7 +23,8 @@ SEDTESTS += \
 	head madding mac-mf empty xbxcx xbxcx3 recall recall2 xemacs \
 	fasts uniq manis khadafy linecnt eval distrib 8to7 y-bracket \
 	y-newline allsub cv-vars classes middle bsd stdin flipcase \
-	insens subwrite writeout readin insert badenc \
+	insens subwrite writeout readin insert utf8-1 utf8-2 utf8-3 utf8-4 \
+	badenc \
 	help version file quiet \
 	factor binary3 binary2 binary dc
 
@@ -79,6 +80,8 @@ EXTRA_DIST = \
 	sep.good sep.inp sep.sed \
 	subwrite.inp subwrite.sed  subwrt1.good subwrt2.good \
 	uniq.good uniq.inp uniq.sed \
+	utf8-1.good utf8-1.inp utf8-1.sed \
+	utf8-2.good utf8-2.inp utf8-2.sed \
 	badenc.good badenc.inp badenc.sed \
 	version.gin \
 	writeout.inp writeout.sed wrtout1.good wrtout2.good \

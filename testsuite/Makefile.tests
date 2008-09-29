@@ -40,6 +40,22 @@ badenc::
 	$(CMP) $(srcdir)/$@.good $@.out 
 	@$(RM) $@.out 
 
+# Try with four locales.
+utf8-1 utf8-2 utf8-3 utf8-4::
+	@: > $@.skip
+	@for i in ru_RU it_IT en_US en_GB; do \
+	  locale=$$i.UTF-8; \
+	  echo "LANG=$$locale" '$(TIME) $(SED) \
+		-f $(srcdir)/$@.sed < $(srcdir)/$@.inp > $@.out'; \
+	  LANG=$$locale $(TIME) $(SED) \
+		-f $(srcdir)/$@.sed < $(srcdir)/$@.inp > $@.out; \
+	  if $(CMP) $(srcdir)/$@.inp $@.out > /dev/null 2>&1; then :; \
+	    else rm -f $@.skip; break; fi; \
+	done
+	@if test -f $@.skip; then :; \
+	  else $(CMP) $(srcdir)/$@.good $@.out; fi
+	@$(RM) $@.out 
+
 # This checks for a bug in 3.02 and 3.02.80
 stdin::
 	($(SEDENV) $(SED) d; $(SEDENV) $(SED) G) < $(srcdir)/numsub.inp > $@.1out 

@@ -1,5 +1,23 @@
 2008-09-29  Paolo Bonzini  <bonzini@gnu.org>
 
+	* testsuite/Makefile.am: Add the utf8-{1,2,3,4} tests.
+	* testsuite/Makefile.tests: Add the utf8-{1,2,3,4} tests.
+	* testsuite/runtest: Support skipping tests.
+	* testsuite/utf8-1.good: New.
+	* testsuite/utf8-1.inp: New.
+	* testsuite/utf8-1.sed: New.
+	* testsuite/utf8-2.good: New.
+	* testsuite/utf8-2.inp: New.
+	* testsuite/utf8-2.sed: New.
+	* testsuite/utf8-3.good: New.
+	* testsuite/utf8-3.inp: New.
+	* testsuite/utf8-3.sed: New.
+	* testsuite/utf8-4.good: New.
+	* testsuite/utf8-4.inp: New.
+	* testsuite/utf8-4.sed: New.
+
+2008-09-29  Paolo Bonzini  <bonzini@gnu.org>
+
 	* BUGS: Document s/.*.// behavior with invalid multibyte sequences.
 	* NEWS: Document `z' extension.
 	* doc/sed-in.texi: Document both things.
