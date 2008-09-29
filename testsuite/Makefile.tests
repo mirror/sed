@@ -25,6 +25,21 @@ y-bracket y-newline insert::
 	$(CMP) $(srcdir)/$@.good $@.out 
 	@$(RM) $@.out 
 
+badenc::
+	LANG=ru_RU.UTF-8 $(TIME) $(SED) -nf $(srcdir)/$@.sed \
+		< $(srcdir)/$@.inp > $@.out 
+	$(CMP) $(srcdir)/$@.good $@.out 
+	LANG=it_IT.UTF-8 $(TIME) $(SED) -nf $(srcdir)/$@.sed \
+		< $(srcdir)/$@.inp > $@.out 
+	$(CMP) $(srcdir)/$@.good $@.out 
+	LANG=en_US.UTF-8 $(TIME) $(SED) -nf $(srcdir)/$@.sed \
+		< $(srcdir)/$@.inp > $@.out 
+	$(CMP) $(srcdir)/$@.good $@.out 
+	LANG=en_GB.UTF-8 $(TIME) $(SED) -nf $(srcdir)/$@.sed \
+		< $(srcdir)/$@.inp > $@.out 
+	$(CMP) $(srcdir)/$@.good $@.out 
+	@$(RM) $@.out 
+
 # This checks for a bug in 3.02 and 3.02.80
 stdin::
 	($(SEDENV) $(SED) d; $(SEDENV) $(SED) G) < $(srcdir)/numsub.inp > $@.1out 

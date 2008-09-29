@@ -1,3 +1,16 @@
+2008-09-29  Paolo Bonzini  <bonzini@gnu.org>
+
+	* NEWS: Document `z' extension.
+	* doc/sed-in.texi: Document `z' extension, and GNU sed's s/.*.//
+	behavior with invalid multibyte sequences.
+	* sed/compile.c (compile_program): Recognize `z'.
+	* sed/execute.c (execute_program): Execute `z'.
+	* testsuite/Makefile.am: Add badenc test.
+	* testsuite/Makefile.tests: Add badenc test.
+	* testsuite/badenc.good: New.
+	* testsuite/badenc.inp: New.
+	* testsuite/badenc.sed: New.
+
 2008-08-27  Paolo Bonzini  <bonzini@gnu.org>
 
 	* sed/execute.c (closedown): Close the input file!

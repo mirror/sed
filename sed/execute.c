@@ -1693,6 +1693,10 @@ execute_program(vec, input)
 	      }
 	      break;
 
+	    case 'z':
+	      line.length = 0;
+	      break;
+
 	    case '=':
               output_missing_newline(&output_file);
               fprintf(output_file.fp, "%lu\n",
