@@ -1,3 +1,7 @@
+2008-10-02  Paolo Bonzini  <bonzini@gnu.org>
+
+	* autoboot: Sync with gnulib's build-aux/bootstrap.
+
 2008-09-29  Paolo Bonzini  <bonzini@gnu.org>
 
 	* autoboot: Sync with gnulib's build-aux/bootstrap.
