@@ -103,6 +103,7 @@ regex syntax clashes (problems with backslashes)
 
 
 `[a-z]' is case insensitive
+`s/.*//' does not clear pattern space
 
   You are encountering problems with locales.  POSIX mandates that `[a-z]'
   uses the current locale's collation order -- in C parlance, that means
@@ -117,6 +118,16 @@ regex syntax clashes (problems with backslashes)
   comes after `a' and before `b'; `ll' behaves similarly in Spanish
   locales, or `ij' in Dutch locales.
 
-  To work around these problems, which may cause bugs in shell scripts,
-  set the LC_ALL environment variable to `C', or set the locale on a
-  more fine-grained basis with the other LC_* environment variables.
+  Another common localization-related problem happens if your input stream
+  includes invalid multibyte sequences.  POSIX mandates that such
+  sequences are _not_ matched by `.', so that `s/.*//' will not clear
+  pattern space as you would expect.  In fact, there is no way to clear
+  sed's buffers in the middle of the script in most multibyte locales
+  (including UTF-8 locales).  For this reason, GNU sed provides a `z'
+  command (for `zap') as an extension.
+
+  However, to work around both of these problems, which may cause bugs
+  in shell scripts, you can set the LC_ALL environment variable to `C',
+  or set the locale on a more fine-grained basis with the other LC_*
+  environment variables.
+

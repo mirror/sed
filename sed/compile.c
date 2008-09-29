@@ -1227,6 +1227,7 @@ compile_program(vector)
 	case 'N':
 	case 'p':
 	case 'P':
+	case 'z':
 	case 'x':
 	  ch = in_nonblank();
 	  if (ch == CLOSE_BRACE || ch == '#')

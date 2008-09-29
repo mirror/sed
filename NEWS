@@ -1,10 +1,18 @@
+Sed 4.1f
+
+* added a new extension `z` to clear pattern space even in the presence
+of invalid multibyte sequences
+
+* multibyte processing fixed
+
+----------------------------------------------------------------------------
 Sed 4.1e
 
 * fixed --follow-symlinks to avoid attempting the creation of cross-device
 links.
 
 ----------------------------------------------------------------------------
-Sed 4.1d (final release candidate for sed 4.2)
+Sed 4.1
 
 * fixed bug in 'i\' giving a segmentation violation if given alone.
 
@@ -13,12 +21,12 @@ Sed 4.1d (final release candidate for sed 4.2)
 * GPLv3 adopted
 
 ----------------------------------------------------------------------------
-Sed 4.1c (release candidate for sed 4.2)
+Sed 4.1c
 
 * portability fixes
 
 ----------------------------------------------------------------------------
-Sed 4.1b (release candidate for sed 4.2)
+Sed 4.1b
 
 * --posix disables all extensions to regular expressions.
 
@@ -30,7 +38,7 @@ Sed 4.1b (release candidate for sed 4.2)
   indistinguishable from a correct implementation.
 
 ----------------------------------------------------------------------------
-Sed 4.1a (release candidate for sed 4.2)
+Sed 4.1a
 
 * much improved portability
 

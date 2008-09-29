@@ -1490,6 +1490,18 @@ This command enables all @value{SSEDEXT} even if
 Write to the given filename the portion of the pattern space up to
 the first newline.  Everything said under the @code{w} command about
 file handling holds here too.
+
+@item z
+@findex z (Zap) command
+@cindex @value{SSEDEXT}, emptying pattern space
+@cindex Emptying pattern space
+This command empties the content of pattern space.  It is
+usually the same as @samp{s/.*//}, but is more efficient
+and works in the presence of invalid multibyte sequences
+in the input stream.  @sc{posix} mandates that such sequences
+are @emph{not} matched by @samp{.}, so that there is no portable
+way to clear @command{sed}'s buffers in the middle of the
+script in most multibyte locales (including UTF-8 locales).
 @end table
 
 @node Escapes
@@ -2905,6 +2917,10 @@ in a read-only directory, and will break hard or symbolic links when
 @option{-i} is used on such a file.
 
 @item @code{0a} does not work (gives an error)
+@cindex @code{0} address
+@cindex @acronym{GNU} extensions, @code{0} address
+@cindex Non-bugs, @code{0} address
+
 There is no line 0.  0 is a special address that is only used to treat
 addresses like @code{0,/@var{RE}/} as active when the script starts: if
 you write @code{1,/abc/d} and the first line includes the word @samp{abc},
@@ -2915,6 +2931,8 @@ is obtained with @code{0,/abc/d}.
 
 @ifclear PERL
 @item @code{[a-z]} is case insensitive
+@cindex Non-bugs, localization-related
+
 You are encountering problems with locales.  POSIX mandates that @code{[a-z]}
 uses the current locale's collation order -- in C parlance, that means using
 @code{strcoll(3)} instead of @code{strcmp(3)}.  Some locales have a
@@ -2928,6 +2946,22 @@ the regular expression @code{^[a-z]$} matches the string @samp{aa},
 because this is a single collating symbol that comes after @samp{a}
 and before @samp{b}; @samp{ll} behaves similarly in Spanish
 locales, or @samp{ij} in Dutch locales.
+
+To work around these problems, which may cause bugs in shell scripts, set
+the @env{LC_COLLATE} and @env{LC_CTYPE} environment variables to @samp{C}.
+
+@item @code{s/.*//} does not clear pattern space
+@cindex Non-bugs, localization-related
+@cindex @value{SSEDEXT}, emptying pattern space
+@cindex Emptying pattern space
+
+This happens if your input stream includes invalid multibyte
+sequences.  @sc{posix} mandates that such sequences
+are @emph{not} matched by @samp{.}, so that @samp{s/.*//} will not clear
+pattern space as you would expect.  In fact, there is no way to clear
+sed's buffers in the middle of the script in most multibyte locales
+(including UTF-8 locales).  For this reason, @value{SSED} provides a `z'
+command (for `zap') as an extension.
 
 To work around these problems, which may cause bugs in shell scripts, set
 the @env{LC_COLLATE} and @env{LC_CTYPE} environment variables to @samp{C}.
