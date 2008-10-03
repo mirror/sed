@@ -1,3 +1,12 @@
+2008-10-03  Paolo Bonzini  <bonzini@gnu.org>
+	    Jim Meyering  <meyering@redhat.com>
+
+	* autoboot.conf: Add localcharset.
+	* Makefile.am: Remove intl subdir.  Require Automake 1.10.
+	* configure.ac: Remove useless macros, switch to external gettext.
+	* lib/Makefile.am: Remove intl subdir from CPPFLAGS.
+	* sed/Makefile.am: Remove intl subdir from CPPFLAGS.
+
 2008-10-02  Paolo Bonzini  <bonzini@gnu.org>
 
 	* autoboot: Sync with gnulib's build-aux/bootstrap.

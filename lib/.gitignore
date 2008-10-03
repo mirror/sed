@@ -55,6 +55,7 @@ stdbool.h
 stdbool.in.h
 stdint.h
 stdint.in.h
+stdio-write.c
 stdio.h
 stdio.in.h
 stdlib.h

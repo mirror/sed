@@ -10,7 +10,6 @@ config.sub
 config_h.in
 configure
 depcomp
-intl
 m4
 mdate-sh
 missing

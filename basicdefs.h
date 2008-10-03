@@ -40,19 +40,9 @@
 # include <stdbool.h>
 #endif
 
-#if ENABLE_NLS
-# include <libintl.h>
-#else
-# define gettext(msgid) (msgid)
-# define ngettext(sing, plur, n) ((n) == 1 ? (sing) : (plur))
-#endif
+#include <gettext.h>
+#define N_(String) gettext_noop(String)
 #define _(String) gettext(String)
-
-#ifdef gettext_noop
-# define N_(String) gettext_noop(String)
-#else
-# define N_(String) (String)
-#endif
 
 /* type countT is used to keep track of line numbers, etc. */
 typedef unsigned long countT;

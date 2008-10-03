@@ -1,12 +1,12 @@
 ## Process this file with automake to produce Makefile.in
 
 # Automake requirements
-AUTOMAKE_OPTIONS = gnits 1.8
-ACLOCAL_AMFLAGS = -I build-aux
+AUTOMAKE_OPTIONS = gnits 1.10
+ACLOCAL_AMFLAGS = -I m4
 
 PACKAGE = sed
 
-SUBDIRS = intl lib po sed doc testsuite
+SUBDIRS = lib po sed doc testsuite
 
 noinst_DATA = bootstrap.sh
 noinst_HEADERS = basicdefs.h

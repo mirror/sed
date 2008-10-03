@@ -12,14 +12,10 @@ AC_DEFINE_UNQUOTED(SED_FEATURE_VERSION, "$SED_FEATURE_VERSION",
 AC_SUBST(SED_FEATURE_VERSION)
 
 AC_PROG_CC
-gl_DISABLE_THREADS
-AC_USE_SYSTEM_EXTENSIONS
-AC_GNU_SOURCE
 gl_EARLY
-AC_SYS_LARGEFILE
-AC_SYS_LONG_FILE_NAMES
-
 gl_INIT
+gl_DISABLE_THREADS
+AC_SYS_LONG_FILE_NAMES
 AC_CACHE_CHECK([whether -lcP is needed], [sed_cv_libcp_needed], [
 AC_TRY_RUN([
 #include <stdio.h>
@@ -55,7 +51,7 @@ AC_FUNC_VPRINTF
 
 AC_DEFUN([AM_MKINSTALLDIRS], [MKINSTALLDIRS="$mkdir_p" AC_SUBST(MKINSTALLDIRS)])
 AM_GNU_GETTEXT_VERSION(0.15)
-AM_GNU_GETTEXT(no-libtool, need-ngettext, ../intl)
+AM_GNU_GETTEXT([external])
 
 AC_CHECK_FUNCS_ONCE(isatty bcopy bzero isascii memcpy memset strchr strtoul
 		    popen pathconf isblank fchown fchmod setlocale wcrtomb
@@ -92,5 +88,5 @@ AC_CONFIG_FILES([bootstrap.sh], chmod +x bootstrap.sh)
 AC_CONFIG_FILES([testsuite/version.good:testsuite/version.gin])
 AC_CONFIG_FILES([Makefile doc/Makefile \
 lib/Makefile sed/Makefile testsuite/Makefile \
-po/Makefile.in intl/Makefile])
+po/Makefile.in])
 AC_OUTPUT
