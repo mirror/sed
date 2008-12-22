@@ -51,8 +51,7 @@ AM_GNU_GETTEXT_VERSION(0.15)
 AM_GNU_GETTEXT([external])
 
 AC_CHECK_FUNCS_ONCE(isatty bcopy bzero isascii memcpy memset strchr strtoul
-		    popen pathconf isblank fchown fchmod setlocale wcrtomb
-		    wcscoll btowc)
+		    popen pathconf fchown fchmod setlocale)
 
 AC_ARG_ENABLE(pcregrep,
 [  --enable-pcregrep       build the pcregrep test program],

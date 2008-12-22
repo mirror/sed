@@ -1,5 +1,6 @@
 acl.m4
 alloca.m4
+btowc.m4
 codeset.m4
 errno_h.m4
 error.m4
@@ -33,11 +34,18 @@ lcmessage.m4
 lib-ld.m4
 lib-link.m4
 lib-prefix.m4
+localcharset.m4
+locale-fr.m4
+locale-ja.m4
+locale-zh.m4
 lock.m4
 longdouble.m4
 longlong.m4
+lstat.m4
 malloc.m4
+mbrlen.m4
 mbrtowc.m4
+mbsinit.m4
 mbstate_t.m4
 memchr.m4
 memcmp.m4
@@ -75,6 +83,8 @@ vasnprintf.m4
 visibility.m4
 wchar.m4
 wchar_t.m4
+wcrtomb.m4
+wctob.m4
 wctype.m4
 wint_t.m4
 xalloc.m4

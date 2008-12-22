@@ -5,6 +5,8 @@ alloca.c
 alloca.h
 alloca.in.h
 asnprintf.c
+btowc.c
+config.charset
 copy-acl.c
 errno.h
 errno.in.h
@@ -27,6 +29,12 @@ gettext.h
 gettimeofday.c
 gnulib.mk
 intprops.h
+localcharset.c
+localcharset.h
+lstat.c
+mbrlen.c
+mbrtowc.c
+mbsinit.c
 memchr.c
 memcmp.c
 memmove.c
@@ -43,6 +51,10 @@ quote.h
 quotearg.c
 quotearg.h
 realloc.c
+ref-add.sed
+ref-add.sin
+ref-del.sed
+ref-del.sin
 set-mode-acl.c
 size_max.h
 snprintf.c
@@ -56,6 +68,7 @@ stdio.h
 stdio.in.h
 stdlib.h
 stdlib.in.h
+streq.h
 strerror.c
 string.h
 string.in.h
@@ -75,6 +88,8 @@ vasnprintf.h
 verify.h
 wchar.h
 wchar.in.h
+wcrtomb.c
+wctob.c
 wctype.h
 wctype.in.h
 xalloc-die.c
