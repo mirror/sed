@@ -4,6 +4,7 @@ acl_entries.c
 alloca.c
 alloca.h
 alloca.in.h
+btowc.c
 config.charset
 copy-acl.c
 errno.h
@@ -26,7 +27,11 @@ gnulib.mk
 intprops.h
 localcharset.c
 localcharset.h
+lstat.c
 malloc.c
+mbrlen.c
+mbrtowc.c
+mbsinit.c
 memchr.c
 memcmp.c
 memmove.c
@@ -60,6 +65,7 @@ stdio.h
 stdio.in.h
 stdlib.h
 stdlib.in.h
+streq.h
 strerror.c
 string.h
 string.in.h
@@ -77,6 +83,8 @@ unlocked-io.h
 verify.h
 wchar.h
 wchar.in.h
+wcrtomb.c
+wctob.c
 wctype.h
 wctype.in.h
 xalloc-die.c
