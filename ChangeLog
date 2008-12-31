@@ -1,3 +1,14 @@
+2008-12-31  Ralf Wildenhues  <Ralf.Wildenhues@gmx.de>
+
+	Let --posix turn off more GNU extensions.
+	* sed/compile.c (mark_subst_opts): Turn off subst options i, I,
+	s, S, x, X, m, and M in --posix mode.
+	(compile_address): Disallow address modifiers, `FIRST~STEP',
+	`ADDR1,+N', and `ADDR1,~N' in --posix mode.
+	(compile_program): In --posix mode, do not accept e or z commands;
+	do not accept text between an a, c, or i command and the following
+	backslash; do not accept an argument to the l command.
+
 2008-12-22  Paolo Bonzini  <bonzini@gnu.org>
 
 	* autoboot.conf: Request modules emulating mb functions.
