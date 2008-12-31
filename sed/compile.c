@@ -605,18 +605,24 @@ mark_subst_opts(cmd)
       {
       case 'i':	/* GNU extension */
       case 'I':	/* GNU extension */
+	if (posixicity == POSIXLY_BASIC)
+	  bad_prog(_(UNKNOWN_S_OPT));
 	flags |= REG_ICASE;
 	break;
 
 #ifdef REG_PERL
       case 's':	/* GNU extension */
       case 'S':	/* GNU extension */
+	if (posixicity == POSIXLY_BASIC)
+	  bad_prog(_(UNKNOWN_S_OPT));
 	if (extended_regexp_flags & REG_PERL)
 	  flags |= REG_DOTALL;
 	break;
 
       case 'x':	/* GNU extension */
       case 'X':	/* GNU extension */
+	if (posixicity == POSIXLY_BASIC)
+	  bad_prog(_(UNKNOWN_S_OPT));
 	if (extended_regexp_flags & REG_PERL)
 	  flags |= REG_EXTENDED;
 	break;
@@ -624,6 +630,8 @@ mark_subst_opts(cmd)
 
       case 'm':	/* GNU extension */
       case 'M':	/* GNU extension */
+	if (posixicity == POSIXLY_BASIC)
+	  bad_prog(_(UNKNOWN_S_OPT));
 	flags |= REG_NEWLINE;
 	break;
 
@@ -950,6 +958,8 @@ compile_address(addr, ch)
       for(;;)
 	{
 	  ch = in_nonblank();
+	  if (posixicity == POSIXLY_BASIC)
+	    goto posix_address_modifier;
           switch(ch)
 	    {
 	    case 'I':	/* GNU extension */
@@ -973,6 +983,7 @@ compile_address(addr, ch)
 	      break;
 
 	    default:
+	    posix_address_modifier:
 	      savchar (ch);
 	      addr->addr_regex = compile_regex (b, flags, 0);
 	      free_buffer(b);
@@ -985,7 +996,7 @@ compile_address(addr, ch)
       addr->addr_number = in_integer(ch);
       addr->addr_type = ADDR_IS_NUM;
       ch = in_nonblank();
-      if (ch != '~')
+      if (ch != '~' || posixicity == POSIXLY_BASIC)
 	{
 	  savchar(ch);
 	}
@@ -999,7 +1010,7 @@ compile_address(addr, ch)
 	    }
 	}
     }
-  else if (ch == '+' || ch == '~')
+  else if ((ch == '+' || ch == '~') && posixicity != POSIXLY_BASIC)
     {
       addr->addr_step = in_integer(in_nonblank());
       if (addr->addr_step==0)
@@ -1088,8 +1099,8 @@ compile_program(vector)
       if (posixicity == POSIXLY_BASIC)
 	switch (ch)
 	  {
-	    case 'v': case 'L': case 'Q': case 'T':
-	    case 'R': case 'W':
+	    case 'e': case 'v': case 'z': case 'L':
+	    case 'Q': case 'T': case 'R': case 'W':
 	      bad_command(ch);
 
 	    case 'a': case 'i': case 'l':
@@ -1173,6 +1184,8 @@ compile_program(vector)
 	    ch = inchar();
 	  else
 	    {
+	      if (posixicity == POSIXLY_BASIC)
+		bad_prog(_(EXPECTED_SLASH));
 	      savchar(ch);
 	      ch = '\n';
 	    }
@@ -1201,7 +1214,7 @@ compile_program(vector)
 	case 'L':
 	case 'l':
 	  ch = in_nonblank();
-	  if (ISDIGIT(ch)) 
+	  if (ISDIGIT(ch) && posixicity != POSIXLY_BASIC)
 	    {
 	      cur_cmd->x.int_arg = in_integer(ch);
 	      ch = in_nonblank();

@@ -8,6 +8,11 @@ GNU sed with NLS support
 
 * multibyte processing fixed
 
+* the following GNU extensions are turned off by --posix: options [iImMsSxX]
+in the `s' command, address kinds `FIRST~STEP' and `ADDR1,+N' and `ADDR1,~N',
+`e' or `z' commands, text between an `a' or `c' or `i' command and the
+following backslash, arguments to the `l' command.
+
 ----------------------------------------------------------------------------
 Sed 4.1e
 
