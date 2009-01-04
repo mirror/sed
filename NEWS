@@ -1,4 +1,4 @@
-Sed 4.1f
+Sed 4.1e
 
 * added a new extension `z` to clear pattern space even in the presence
 of invalid multibyte sequences
@@ -6,18 +6,15 @@ of invalid multibyte sequences
 * a preexisting GNU gettext installation is needed in order to compile
 GNU sed with NLS support
 
+* fixed --follow-symlinks to avoid attempting the creation of cross-device
+links.
+
 * multibyte processing fixed
 
 * the following GNU extensions are turned off by --posix: options [iImMsSxX]
 in the `s' command, address kinds `FIRST~STEP' and `ADDR1,+N' and `ADDR1,~N',
 `e' or `z' commands, text between an `a' or `c' or `i' command and the
 following backslash, arguments to the `l' command.
-
-----------------------------------------------------------------------------
-Sed 4.1e
-
-* fixed --follow-symlinks to avoid attempting the creation of cross-device
-links.
 
 ----------------------------------------------------------------------------
 Sed 4.1
