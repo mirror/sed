@@ -1,3 +1,8 @@
+2009-01-05  Paolo Bonzini  <bonzini@gnu.org>
+
+        * execute.c (read_pattern_space): Reset hold space at end-of-file
+	if input->reset_at_next_file.
+
 2008-12-31  Ralf Wildenhues  <Ralf.Wildenhues@gmx.de>
 
 	Let --posix turn off more GNU extensions.

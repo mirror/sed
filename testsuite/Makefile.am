@@ -24,7 +24,7 @@ SEDTESTS += \
 	fasts uniq manis khadafy linecnt eval distrib 8to7 y-bracket \
 	y-newline allsub cv-vars classes middle bsd stdin flipcase \
 	insens subwrite writeout readin insert utf8-1 utf8-2 utf8-3 utf8-4 \
-	badenc \
+	badenc inplace-hold \
 	help version file quiet \
 	factor binary3 binary2 binary dc
 

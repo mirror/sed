@@ -9,6 +9,8 @@ GNU sed with NLS support
 * fixed --follow-symlinks to avoid attempting the creation of cross-device
 links.
 
+* hold-space is reset between different files in -i and -s modes.
+
 * multibyte processing fixed
 
 * the following GNU extensions are turned off by --posix: options [iImMsSxX]
