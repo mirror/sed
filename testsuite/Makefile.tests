@@ -47,6 +47,15 @@ stdin::
 	$(CMP) $@.1out $@.2out 
 	@$(RM) $@.1out $@.2out 
 
+inplace-hold::
+	echo x > $@.1out
+	echo y > $@.2out
+	echo > $@.out
+	$(SEDENV) $(SED) -i x $@.1out $@.2out 
+	$(CMP) $@.1out $@.out 
+	$(CMP) $@.2out $@.out 
+	@$(RM) $@.1out $@.2out $@.out
+
 cv-vars classes middle dc distrib factor numsub2 numsub3 numsub4 numsub5 \
 insens::
 	$(SEDENV) $(SED) -n -f $(srcdir)/$@.sed < $(srcdir)/$@.inp > $@.out 
