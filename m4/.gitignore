@@ -1,3 +1,4 @@
+/multiarch.m4
 acl.m4
 alloca.m4
 btowc.m4
@@ -49,6 +50,7 @@ memchr.m4
 memcmp.m4
 memmove.m4
 mkstemp.m4
+multiarch.m4
 nls.m4
 pathmax.m4
 po.m4
@@ -86,4 +88,3 @@ wctype.m4
 wint_t.m4
 xalloc.m4
 xsize.m4
-/multiarch.m4

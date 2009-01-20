@@ -122,9 +122,6 @@ ${CC} -DHAVE_CONFIG_H -I.. -I. -c getline.c || exit 1
 ${CC} -DHAVE_CONFIG_H -I.. -I. -c getopt.c || exit 1
 ${CC} -DHAVE_CONFIG_H -I.. -I. -c getopt1.c || exit 1
 ${CC} -DHAVE_CONFIG_H -I.. -I. -c malloc.c || exit 1
-${CC} -DHAVE_CONFIG_H -I.. -I. -c memchr.c || exit 1
-${CC} -DHAVE_CONFIG_H -I.. -I. -c memcmp.c || exit 1
-${CC} -DHAVE_CONFIG_H -I.. -I. -c memmove.c || exit 1
 ${CC} -DHAVE_CONFIG_H -I.. -I. -c mkstemp.c || exit 1
 ${CC} -DHAVE_CONFIG_H -I.. -I. -c obstack.c || exit 1
 ${CC} -DHAVE_CONFIG_H -I.. -I. -c quote.c || exit 1

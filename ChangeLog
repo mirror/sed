@@ -1,6 +1,13 @@
+2009-01-20  Paolo Bonzini  <bonzini@gnu.org>
+
+	* autoboot.conf, bootstrap.sh.in: Remove memchr, memcmp, memmove
+	compatibility code.
+	* gnulib: Update.
+
 2009-01-09  Paolo Bonzini  <bonzini@gnu.org>
 
 	* tests/SPENCER.tests: Add testcases for glibc bugzilla 697.
+	* gnulib: Update.
 
 2009-01-05  Paolo Bonzini  <bonzini@gnu.org>
 
