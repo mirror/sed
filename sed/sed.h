@@ -261,6 +261,9 @@ extern bool is_utf8;
   wcrtomb ((s), (wc), (ps))
 #endif
 
+#define MBSINIT(s) \
+  (mb_cur_max == 1 ? 1 : mbsinit ((s)))
+
 #define MBRLEN(s, n, ps) \
   (mb_cur_max == 1 ? 1 : mbrtowc (NULL, s, n, ps))
 
@@ -268,6 +271,7 @@ extern bool is_utf8;
   (mb_cur_max == 1 ? 1 : brlen (ch, ps))
 
 #else
+#define MBSINIT(s) 1
 #define MBRLEN(s, n, ps) 1
 #define BRLEN(ch, ps) 1
 #endif

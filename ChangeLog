@@ -1,3 +1,9 @@
+2009-01-23  Paolo Bonzini  <bonzini@gnu.org>
+	    Hideo AOKI <hideo.aoki.tk@hitachi.com>
+
+	* sed/compile.c (match_slash): Fix MBCS behavior.
+	* sed/sed.h (MBSINIT): New.
+
 2009-01-20  Paolo Bonzini  <bonzini@gnu.org>
 
 	* autoboot.conf, bootstrap.sh.in: Remove memchr, memcmp, memmove
