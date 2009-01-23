@@ -262,7 +262,7 @@ extern bool is_utf8;
 #endif
 
 #define MBSINIT(s) \
-  (mb_cur_max == 1 ? 1 : mbsinit ((s))
+  (mb_cur_max == 1 ? 1 : mbsinit ((s)))
 
 #define MBRLEN(s, n, ps) \
   (mb_cur_max == 1 ? 1 : mbrtowc (NULL, s, n, ps))
