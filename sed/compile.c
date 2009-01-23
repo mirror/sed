@@ -535,12 +535,11 @@ match_slash(slash, regex)
 {
   struct buffer *b;
   int ch;
-  bool pending_mb = false;
   mbstate_t cur_stat;
 
   memset (&cur_stat, 0, sizeof (mbstate_t));
 
-  if (BRLEN (slash, &cur_stat) == -2)
+  /* We allow only 1 byte characters for a slash.  */
   if (BRLEN (slash, &cur_stat) == -2)
     bad_prog (BAD_DELIM);
 
@@ -549,10 +548,8 @@ match_slash(slash, regex)
   b = init_buffer();
   while ((ch = inchar()) != EOF && ch != '\n')
     {
-      pending_mb = BRLEN (ch, &cur_stat) != 1;
-      pending_mb = BRLEN (ch, &cur_stat) != 1;
-
-      if (!pending_mb)
+      bool pending_mb = !MBSINIT (&cur_stat);
+      if (BRLEN (ch, &cur_stat) == 1 && !pending_mb)
 	{
 	  if (ch == slash)
 	    return b;
