@@ -144,7 +144,11 @@ non-option argument is taken as the sed script to interpret.  All\n\
 remaining arguments are names of input files; if no input files are\n\
 specified, then the standard input is read.\n\
 \n"));
-  fprintf(out, _("E-mail bug reports to: %s .\n\
+
+  /* Only print the bug report address for `sed --help', otherwise we'll
+     get reports for other people's bugs.  */
+  if (!status)
+    fprintf(out, _("E-mail bug reports to: %s .\n\
 Be sure to include the word ``%s'' somewhere in the ``Subject:'' field.\n"),
 	  BUG_ADDRESS, PACKAGE);
 
@@ -306,6 +310,11 @@ This is free software; see the source for copying conditions.  There is NO\n\
 warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE,\n\
 to the extent permitted by law.\n\
 "), COPYRIGHT_NOTICE);
+	  fputc('\n', stdout);
+	  fprintf(stdout, _("E-mail bug reports to: %s .\n\
+Be sure to include the word ``%s'' somewhere in the ``Subject:'' field.\n"),
+		  BUG_ADDRESS, PACKAGE);
+
 	  ck_fclose (NULL);
 	  exit (0);
 	case 'h':
