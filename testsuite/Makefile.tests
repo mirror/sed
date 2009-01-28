@@ -129,7 +129,8 @@ binary binary2 binary3::
 #
 
 help::
-	$(SED) --help | $(SED) '1s/ [^ ]* / sed /' > $@.1out 
+	$(SED) --help | grep E-mail > /dev/null 2>&1
+	$(SED) --help | $(SED) '1s/ [^ ]* / sed /; /^E-mail/,$$d' > $@.1out 
 	$(SED) 2>&1 | $(SED) '1s/ [^ ]* / sed /' > $@.2out || :
 	$(CMP) $@.1out $@.2out 
 	@$(RM) $@.1out $@.2out
