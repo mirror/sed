@@ -11,6 +11,8 @@ SEDENV = LC_ALL=C $(TIME)
 CMP=cmp
 RM=rm -f
 
+SKIP = :>$@.skip; exit 77
+
 enable sep inclib 8bit 8to7 newjis xabcx dollar noeol bkslashes \
 numsub head madding mac-mf empty xbxcx xbxcx3 recall recall2 xemacs \
 appquit fasts uniq manis linecnt khadafy allsub flipcase space modulo \
@@ -40,21 +42,26 @@ badenc::
 	$(CMP) $(srcdir)/$@.good $@.out 
 	@$(RM) $@.out 
 
-# Try with four locales.
+# Try with ru_RU.UTF-8.  If it is presumably not installed, see if the current
+# locale is UTF-8 and run it in the current locale.
 utf8-1 utf8-2 utf8-3 utf8-4::
-	@: > $@.skip
-	@for i in ru_RU it_IT en_US en_GB; do \
-	  locale=$$i.UTF-8; \
-	  echo "LANG=$$locale" '$(TIME) $(SED) \
-		-f $(srcdir)/$@.sed < $(srcdir)/$@.inp > $@.out'; \
-	  LANG=$$locale $(TIME) $(SED) \
-		-f $(srcdir)/$@.sed < $(srcdir)/$@.inp > $@.out; \
-	  if $(CMP) $(srcdir)/$@.inp $@.out > /dev/null 2>&1; then :; \
-	    else rm -f $@.skip; break; fi; \
-	done
-	@if test -f $@.skip; then :; \
-	  else $(CMP) $(srcdir)/$@.good $@.out; fi
-	@$(RM) $@.out 
+	echo "LANG=ru_RU.UTF-8" \
+	  "$(TIME) $(SED) -f $(srcdir)/$@.sed < $(srcdir)/$@.inp > $@.out"; \
+	LANG=ru_RU.UTF-8 \
+	  $(TIME) $(SED) -f $(srcdir)/$@.sed < $(srcdir)/$@.inp > $@.out; \
+	$(CMP) $(srcdir)/$@.good $@.out && exit 0; \
+	$(CMP) $(srcdir)/$@.inp $@.out || exit 1; \
+	locale > $@.info 2>/dev/null || { rm $@.info; $(SKIP); }; \
+	. $@.info; rm $@.info; \
+	case "$$LC_CTYPE" in \
+	  *UTF-8 | *UTF8 | *utf8 | *utf-8) \
+	    echo "$(TIME) $(SED) -f $(srcdir)/$@.sed < $(srcdir)/$@.inp > $@.out"; \
+	    $(TIME) $(SED) -f $(srcdir)/$@.sed < $(srcdir)/$@.inp > $@.out; \
+	    $(CMP) $(srcdir)/$@.good $@.out && exit 0; \
+	    $(CMP) $(srcdir)/$@.inp $@.out || exit 1 ;; \
+	  *) ;; \
+	esac; \
+	$(SKIP)
 
 # This checks for a bug in 3.02 and 3.02.80
 stdin::

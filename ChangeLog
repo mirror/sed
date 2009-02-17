@@ -1,5 +1,10 @@
 2009-02-17  Paolo Bonzini  <bonzini@gnu.org>
 
+	* testsuite/Makefile.tests: Rewrite rule for utf8-[1234].
+	Reported by Ralf Wildenhues.
+
+2009-02-17  Paolo Bonzini  <bonzini@gnu.org>
+
 	* sed/sed.c (usage): Print homepage URL.
 	* testsuite/version.gin: Update.
 
