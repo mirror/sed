@@ -145,10 +145,15 @@ remaining arguments are names of input files; if no input files are\n\
 specified, then the standard input is read.\n\
 \n"));
 
+#ifndef REG_PERL
+  fprintf(out, _("GNU sed home page: <http://www.gnu.org/software/sed/>.\n\
+General help using GNU software: <http://www.gnu.org/gethelp/>.\n"));
+#endif
+
   /* Only print the bug report address for `sed --help', otherwise we'll
      get reports for other people's bugs.  */
   if (!status)
-    fprintf(out, _("E-mail bug reports to: %s .\n\
+    fprintf(out, _("E-mail bug reports to: <%s>.\n\
 Be sure to include the word ``%s'' somewhere in the ``Subject:'' field.\n"),
 	  BUG_ADDRESS, PACKAGE);
 
