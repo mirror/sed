@@ -1,3 +1,18 @@
+2009-03-31  Paolo Bonzini  <bonzini@gnu.org>
+
+	* sed/sed.c (contact): New.
+	(usage): From here.
+	(main): Use it for `sed --version' too.
+
+        * configure.ac: Point to GNU project mailing lists.
+        * sed/sed.c (contact): Use PACKAGE_BUGREPORT.
+        * testsuite/version.gin: Likewise.
+        * testsuite/version.good: Regenerate.
+        * doc/sed.1: Regenerate.
+
+        * bootstrap.sh.in (PACKAGE_BUGREPORT): New.
+        * bootstrap.sh: Regenerate.
+
 2009-02-17  Paolo Bonzini  <bonzini@gnu.org>
 
 	* sed/sed.c (usage): Print homepage URL.

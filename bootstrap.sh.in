@@ -19,6 +19,7 @@ if test -f config.h; then :; else
 */
 
 #define PACKAGE "sed"
+#define PACKAGE_BUGREPORT "@PACKAGE_BUGREPORT@"
 #define VERSION "@VERSION@-boot"
 #define SED_FEATURE_VERSION "@SED_FEATURE_VERSION@"
 #define BOOTSTRAP 1
