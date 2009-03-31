@@ -1,5 +1,11 @@
 2009-03-31  Paolo Bonzini  <bonzini@gnu.org>
 
+	* bootstrap.sh.in: Add __bool_true_false_are_defined.
+	* bootstrap.sh: Regenerate.
+	* basicdefs.h: Do not provide bool definitions for BOOTSTRAP at all.
+
+2009-03-31  Paolo Bonzini  <bonzini@gnu.org>
+
 	* sed/sed.c (contact): New.
 	(usage): From here.
 	(main): Use it for `sed --version' too.
