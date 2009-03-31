@@ -19,6 +19,7 @@ if test -f config.h; then :; else
 */
 
 #define PACKAGE "sed"
+#define PACKAGE_BUGREPORT "bug-gnu-utils@gnu.org"
 #define VERSION "4.1e-boot"
 #define SED_FEATURE_VERSION "4.2"
 #define BOOTSTRAP 1

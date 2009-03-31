@@ -6,5 +6,5 @@ to the extent permitted by law.
 
 GNU sed home page: <http://www.gnu.org/software/sed/>.
 General help using GNU software: <http://www.gnu.org/gethelp/>.
-E-mail bug reports to: <bonzini@gnu.org>.
+E-mail bug reports to: <@PACKAGE_BUGREPORT@>.
 Be sure to include the word ``sed'' somewhere in the ``Subject:'' field.

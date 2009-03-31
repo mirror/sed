@@ -1,5 +1,4 @@
 #define COPYRIGHT_NOTICE "Copyright (C) 2003 Free Software Foundation, Inc."
-#define BUG_ADDRESS "bonzini@gnu.org"
 
 /*  GNU SED, a batch stream editor.
     Copyright (C) 1989,90,91,92,93,94,95,98,99,2002,2003
@@ -92,6 +91,25 @@ static struct vector *the_program = NULL;
 
 static void usage P_((int));
 static void
+contact(errmsg)
+  int errmsg;
+{
+  FILE *out = errmsg ? stderr : stdout;
+#ifndef REG_PERL
+  fprintf(out, _("GNU sed home page: <http://www.gnu.org/software/sed/>.\n\
+General help using GNU software: <http://www.gnu.org/gethelp/>.\n"));
+#endif
+
+  /* Only print the bug report address for `sed --help', otherwise we'll
+     get reports for other people's bugs.  */
+  if (!errmsg)
+    fprintf(out, _("E-mail bug reports to: <%s>.\n\
+Be sure to include the word ``%s'' somewhere in the ``Subject:'' field.\n"),
+	  PACKAGE_BUGREPORT, PACKAGE);
+}
+
+static void usage P_((int));
+static void
 usage(status)
   int status;
 {
@@ -144,18 +162,7 @@ non-option argument is taken as the sed script to interpret.  All\n\
 remaining arguments are names of input files; if no input files are\n\
 specified, then the standard input is read.\n\
 \n"));
-
-#ifndef REG_PERL
-  fprintf(out, _("GNU sed home page: <http://www.gnu.org/software/sed/>.\n\
-General help using GNU software: <http://www.gnu.org/gethelp/>.\n"));
-#endif
-
-  /* Only print the bug report address for `sed --help', otherwise we'll
-     get reports for other people's bugs.  */
-  if (!status)
-    fprintf(out, _("E-mail bug reports to: <%s>.\n\
-Be sure to include the word ``%s'' somewhere in the ``Subject:'' field.\n"),
-	  BUG_ADDRESS, PACKAGE);
+  contact (status);
 
   ck_fclose (NULL);
   exit (status);
@@ -316,9 +323,7 @@ warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE,\n\
 to the extent permitted by law.\n\
 "), COPYRIGHT_NOTICE);
 	  fputc('\n', stdout);
-	  fprintf(stdout, _("E-mail bug reports to: %s .\n\
-Be sure to include the word ``%s'' somewhere in the ``Subject:'' field.\n"),
-		  BUG_ADDRESS, PACKAGE);
+	  contact(false);
 
 	  ck_fclose (NULL);
 	  exit (0);
