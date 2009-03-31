@@ -1,3 +1,7 @@
+2009-03-31  Paolo Bonzini  <bonzini@gnu.org>
+
+	* testsuite/Makefile.am: Distribute utf8-3 and utf8-4 test files.
+
 2009-02-17  Paolo Bonzini  <bonzini@gnu.org>
 
 	* testsuite/Makefile.tests: Rewrite rule for utf8-[1234].

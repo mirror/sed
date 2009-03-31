@@ -82,6 +82,8 @@ EXTRA_DIST = \
 	uniq.good uniq.inp uniq.sed \
 	utf8-1.good utf8-1.inp utf8-1.sed \
 	utf8-2.good utf8-2.inp utf8-2.sed \
+	utf8-3.good utf8-3.inp utf8-3.sed \
+	utf8-4.good utf8-4.inp utf8-4.sed \
 	badenc.good badenc.inp badenc.sed \
 	version.gin \
 	writeout.inp writeout.sed wrtout1.good wrtout2.good \
