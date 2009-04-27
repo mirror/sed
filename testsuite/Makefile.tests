@@ -8,6 +8,8 @@ SED = ../sed/sed
 SEDENV = LC_ALL=C $(TIME)
 
 #TIME=time
+TIME=
+
 CMP=cmp
 RM=rm -f
 
@@ -87,10 +89,7 @@ writeout::
 	$(CMP) $(srcdir)/wrtout2.good $@.wout
 	@$(RM) $@.1out $@.wout
 
-readin.in2: $(srcdir)/readin.in2
-	cat $(srcdir)/readin.in2 > $@
-
-readin:: readin.in2
+readin::
 	$(SEDENV) $(SED) -f $(srcdir)/$@.sed < $(srcdir)/$@.inp >$@.out 
 	$(CMP) $(srcdir)/$@.good $@.out 
 	@$(RM) $@.out 

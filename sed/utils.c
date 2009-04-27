@@ -19,7 +19,7 @@
 #include "config.h"
 
 #include <stdio.h>
-
+#include <stdarg.h>
 #include <errno.h>
 #ifndef errno
   extern int errno;
@@ -61,34 +61,24 @@ static struct open_file *open_files = NULL;
 static void do_ck_fclose P_((FILE *fp));
 
 /* Print an error message and exit */
-#if !defined __STDC__ || !(__STDC__-0)
-# include <varargs.h>
-# define VSTART(l,a)	va_start(l)
-void
-panic(str, va_alist)
-  char *str;
-  va_dcl
-#else /*__STDC__*/
-# include <stdarg.h>
-# define VSTART(l,a)	va_start(l, a)
+
 void
 panic(const char *str, ...)
-#endif /* __STDC__ */
 {
-  va_list iggy;
+  va_list ap;
 
   fprintf(stderr, "%s: ", myname);
-  VSTART(iggy, str);
+  va_start(ap, str);
 #ifndef HAVE_VPRINTF
 # ifndef HAVE_DOPRNT
   fputs(str, stderr);	/* not great, but perhaps better than nothing... */
 # else /* HAVE_DOPRNT */
-  _doprnt(str, &iggy, stderr);
+  _doprnt(str, &ap, stderr);
 # endif /* HAVE_DOPRNT */
 #else /* HAVE_VFPRINTF */
-  vfprintf(stderr, str, iggy);
+  vfprintf(stderr, str, ap);
 #endif /* HAVE_VFPRINTF */
-  va_end(iggy);
+  va_end(ap);
   putc('\n', stderr);
 
   /* Unlink the temporary files.  */

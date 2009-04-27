@@ -1,4 +1,4 @@
-CLEANFILES = tmp* core *.core $(EXTRA_PROGRAMS) *.*out *.log
+CLEANFILES = tmp* core *.core $(EXTRA_PROGRAMS) *.*out *.log eval.in2
 
 TESTS = $(check_PROGRAMS) $(SEDTESTS)
 
@@ -79,9 +79,6 @@ EXTRA_DIST = runtest Makefile.tests \
 	xemacs.good xemacs.inp xemacs.sed \
 	y-bracket.good y-bracket.sed y-bracket.inp \
 	y-newline.good y-newline.sed y-newline.inp
-
-clean-local:
-	test x$(srcdir) = x. || rm -f readin.in2 eval.in2
 
 # automake makes `check' depend on $(TESTS).  Declare
 # dummy targets for $(TESTS) so that make does not complain.

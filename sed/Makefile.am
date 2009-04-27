@@ -9,7 +9,7 @@ noinst_HEADERS = sed.h utils.h
 AM_CPPFLAGS = -I$(top_srcdir)/lib -I$(top_srcdir)/pcre \
 	-I$(top_srcdir) -I$(top_builddir)/lib -DLOCALEDIR=\"$(localedir)\"
 
-sed_LDADD = ../pcre/libpcre.a @INTLLIBS@ @LIB_ACL@ ../lib/libsed.a
+sed_LDADD = ../pcre/libpcre.a ../lib/libsed.a @INTLLIBS@ @LIB_ACL@
 sed_DEPENDENCIES = ../pcre/libpcre.a ../lib/libsed.a
 
 $(PROGRAMS): $(LDADD)

@@ -373,12 +373,12 @@ read_filename()
   return b;
 }
 
-static struct output *get_openfile P_((struct output **file_ptrs, const char *mode, bool fail));
+static struct output *get_openfile P_((struct output **file_ptrs, const char *mode, int fail));
 static struct output *
 get_openfile(file_ptrs, mode, fail)
      struct output **file_ptrs;
      const char *mode;
-     bool fail;
+     int fail;
 {
   struct buffer *b;
   char *file_name;

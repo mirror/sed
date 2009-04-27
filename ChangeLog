@@ -1,3 +1,17 @@
+2009-04-27  Paolo Bonzini  <bonzini@gnu.org>
+
+	* configure.ac: Link readin.in2 into builddir.
+	* configure: Regenerate.
+	* doc/Makefile.am: Do not distribute sed.html.  Do not update
+	sed.texi if the output does not change.
+	* sed/Makefile.am: Order libraries according to their dependencies.
+	* sed/compile.c (get_openfile): Declare FAIL as int.
+	* sed/sed.c: Avoid printf ("") if REG_PERL is not defined.
+	* testsuite/eval.in2: Do not include in the repository.
+	* testsuite/Makefile.am: Clean always eval.in2 and never readin.in2.
+	* testsuite/Makefile.tests: Provide a default empty definition of TIME
+	and remove rules for readin.in2.
+
 2009-03-31  Paolo Bonzini  <bonzini@gnu.org>
 
 	* bootstrap.sh.in: Add __bool_true_false_are_defined.
