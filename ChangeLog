@@ -1,4 +1,9 @@
 2009-04-27  Paolo Bonzini  <bonzini@gnu.org>
+ 
+	* autoboot.conf: Add rename.
+	* gnulib: Update.
+
+2009-04-27  Paolo Bonzini  <bonzini@gnu.org>
 
 	* configure.ac: Link readin.in2 into builddir.
 	* configure: Regenerate.
