@@ -1,5 +1,9 @@
 2009-04-27  Paolo Bonzini  <bonzini@gnu.org>
 
+	* testsuite/Makefile.tests: Handle CRLF endings for mingw.
+
+2009-04-27  Paolo Bonzini  <bonzini@gnu.org>
+
 	* configure.ac: Link readin.in2 into builddir.
 	* configure: Regenerate.
 	* doc/Makefile.am: Do not distribute sed.html.  Do not update
