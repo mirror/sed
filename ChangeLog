@@ -1,5 +1,9 @@
 2009-04-27  Paolo Bonzini  <bonzini@gnu.org>
 
+	* configure.ac: XFAIL UTF-8 tests where appropriate.
+
+2009-04-27  Paolo Bonzini  <bonzini@gnu.org>
+
 	* testsuite/Makefile.tests: Handle CRLF endings for mingw.
 
 2009-04-27  Paolo Bonzini  <bonzini@gnu.org>
