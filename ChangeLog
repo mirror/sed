@@ -1,4 +1,8 @@
 2009-04-27  Paolo Bonzini  <bonzini@gnu.org>
+
+	* testsuite/Makefile.tests: Handle CRLF endings for mingw.
+
+2009-04-27  Paolo Bonzini  <bonzini@gnu.org>
  
 	* autoboot.conf: Add rename.
 	* gnulib: Update.
