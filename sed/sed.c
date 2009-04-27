@@ -147,7 +147,9 @@ Usage: %s [OPTION]... {script-only-if-no-other-script} [input-file]...\n\
                  disable all GNU extensions.\n"));
   fprintf(out, _("  -r, --regexp-extended\n\
                  use extended regular expressions in the script.\n"));
+#ifdef REG_PERL
   fprintf(out, PERL_HELP);
+#endif
   fprintf(out, _("  -s, --separate\n\
                  consider files as separate rather than as a single continuous\n\
                  long stream.\n"));

@@ -83,6 +83,9 @@ if test "x$have_lstat" = xyes -a "x$have_readlink" = xyes; then
    AC_DEFINE(ENABLE_FOLLOW_SYMLINKS, ,[Follow symlinks when processing in place])
 fi
 
+if test "$srcdir" != .; then
+  AC_CONFIG_LINKS([testsuite/readin.in2:testsuite/readin.in2])
+fi
 AC_CONFIG_FILES([bootstrap.sh], chmod +x bootstrap.sh)
 AC_CONFIG_FILES([testsuite/version.good:testsuite/version.gin])
 AC_CONFIG_FILES([Makefile doc/Makefile \
