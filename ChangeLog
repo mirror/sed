@@ -1,4 +1,9 @@
 2009-04-27  Paolo Bonzini  <bonzini@gnu.org>
+ 
+	* autoboot.conf: Add rename.
+	* gnulib: Update.
+
+2009-04-27  Paolo Bonzini  <bonzini@gnu.org>
 
 	* configure.ac: XFAIL UTF-8 tests where appropriate.
 
