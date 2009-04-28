@@ -1,4 +1,4 @@
-Sed 4.1e
+Sed 4.1f
 
 * added a new extension `z` to clear pattern space even in the presence
 of invalid multibyte sequences

@@ -1,5 +1,10 @@
 2009-04-27  Paolo Bonzini  <bonzini@gnu.org>
 
+	* configure.ac: Bump version number.
+	* configure: Regenerate.
+
+2009-04-27  Paolo Bonzini  <bonzini@gnu.org>
+
 	* configure.ac: Do not create homonymous links from builddir to srcdir.
 	* testsuite/Makefile.tests: Create readin.in2 here.
 	* testsuite/Makefile.am: Do not distribute it.
