@@ -1,3 +1,10 @@
+2009-04-30  Paolo Bonzini  <bonzini@gnu.org>
+
+	* sed/compile.c: Declare bool arguments as int instead to please AIX XLC.
+	* sed/execute.c: Declare bool arguments as int instead to please AIX XLC.
+	* sed/utils.c: Declare bool arguments as int instead to please AIX XLC.
+	* sed/utils.h: Declare bool arguments as int instead to please AIX XLC.
+
 2009-04-27  Paolo Bonzini  <bonzini@gnu.org>
 
 	* configure.ac: Bump version number.

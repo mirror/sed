@@ -421,12 +421,12 @@ line_reset(buf, state)
 /* Copy the contents of the line `from' into the line `to'.
    This destroys the old contents of `to'.
    Copy the multibyte state if `state' is true. */
-static void line_copy P_((struct line *from, struct line *to, bool state));
+static void line_copy P_((struct line *from, struct line *to, int state));
 static void
 line_copy(from, to, state)
   struct line *from;
   struct line *to;
-  bool state;
+  int state;
 {
   /* Remove the inactive portion in the destination buffer. */
   to->alloc += to->active - to->text;
@@ -457,12 +457,12 @@ line_copy(from, to, state)
 
 /* Append the contents of the line `from' to the line `to'.
    Copy the multibyte state if `state' is true. */
-static void line_append P_((struct line *from, struct line *to, bool state));
+static void line_append P_((struct line *from, struct line *to, int state));
 static void
 line_append(from, to, state)
   struct line *from;
   struct line *to;
-  bool state;
+  int state;
 {
   str_append(to, "\n", 1);
   str_append(to, from->active, from->length);
@@ -476,12 +476,12 @@ line_append(from, to, state)
 
 /* Exchange two "struct line" buffers.
    Copy the multibyte state if `state' is true. */
-static void line_exchange P_((struct line *a, struct line *b, bool state));
+static void line_exchange P_((struct line *a, struct line *b, int state));
 static void
 line_exchange(a, b, state)
   struct line *a;
   struct line *b;
-  bool state;
+  int state;
 {
   struct line t;
 
@@ -553,12 +553,12 @@ flush_output(fp)
     ck_fflush(fp);
 }
 
-static void output_line P_((const char *, size_t, bool, struct output *));
+static void output_line P_((const char *, size_t, int, struct output *));
 static void
 output_line(text, length, nl, outf)
   const char *text;
   size_t length;
-  bool nl;
+  int nl;
   struct output *outf;
 {
   if (!text)
@@ -804,12 +804,12 @@ reset_addresses(vec)
 
 /* Read in the next line of input, and store it in the pattern space.
    Return zero if there is nothing left to input. */
-static bool read_pattern_space P_((struct input *, struct vector *, bool));
+static bool read_pattern_space P_((struct input *, struct vector *, int));
 static bool
 read_pattern_space(input, the_program, append)
   struct input *input;
   struct vector *the_program;
-  bool append;
+  int append;
 {
   if (append_head) /* redundant test to optimize for common case */
     dump_append_queue();
