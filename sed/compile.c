@@ -527,11 +527,11 @@ snarf_char_class(b, cur_stat)
     }
 }
 
-static struct buffer *match_slash P_((int slash, bool regex));
+static struct buffer *match_slash P_((int slash, int regex));
 static struct buffer *
 match_slash(slash, regex)
   int slash;
-  bool regex;
+  int regex;
 {
   struct buffer *b;
   int ch;

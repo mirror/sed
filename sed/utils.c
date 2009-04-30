@@ -125,7 +125,7 @@ static void
 register_open_file (fp, name, temp)
   FILE *fp;
   const char *name;
-  bool temp;
+  int temp;
 {
   struct open_file *p;
   for (p=open_files; p; p=p->link)
@@ -152,7 +152,7 @@ FILE *
 ck_fopen(name, mode, fail)
   const char *name;
   const char *mode;
-  bool fail;
+  int fail;
 {
   FILE *fp;
 
@@ -175,7 +175,7 @@ ck_fdopen(fd, name, mode, fail)
   int fd;
   const char *name;
   const char *mode;
-  bool fail;
+  int fail;
 {
   FILE *fp;
 

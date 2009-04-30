@@ -1,5 +1,12 @@
 2009-05-11  Paolo Bonzini  <bonzini@gnu.org>
 
+	* sed/compile.c: Declare bool arguments as int instead to please AIX XLC.
+	* sed/execute.c: Declare bool arguments as int instead to please AIX XLC.
+	* sed/utils.c: Declare bool arguments as int instead to please AIX XLC.
+	* sed/utils.h: Declare bool arguments as int instead to please AIX XLC.
+
+2009-05-11  Paolo Bonzini  <bonzini@gnu.org>
+
 	* configure.ac: XFAIL bsd test where appropriate.
 
 2009-05-11  Paolo Bonzini  <bonzini@gnu.org>
