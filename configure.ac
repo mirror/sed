@@ -11,6 +11,11 @@ AC_DEFINE_UNQUOTED(SED_FEATURE_VERSION, "$SED_FEATURE_VERSION",
   [Define to the version of GNU sed whose features are supported by this sed.])
 AC_SUBST(SED_FEATURE_VERSION)
 
+COPYRIGHT_YEAR=2009
+AC_DEFINE_UNQUOTED(COPYRIGHT_YEAR, $COPYRIGHT_YEAR,
+  [Define to the copyright year printed by --version.])
+AC_SUBST(COPYRIGHT_YEAR)
+
 AC_PROG_CC
 gl_EARLY
 gl_INIT

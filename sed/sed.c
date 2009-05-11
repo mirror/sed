@@ -1,7 +1,5 @@
-#define COPYRIGHT_NOTICE "Copyright (C) 2003 Free Software Foundation, Inc."
-
 /*  GNU SED, a batch stream editor.
-    Copyright (C) 1989,90,91,92,93,94,95,98,99,2002,2003
+    Copyright (C) 1989,90,91,92,93,94,95,98,99,2002,2003,2006,2008,2009
     Free Software Foundation, Inc.
 
     This program is free software; you can redistribute it and/or modify
@@ -319,11 +317,11 @@ main(argc, argv)
 #else
 	  fprintf(stdout, _("GNU sed version %s\n"), VERSION);
 #endif
-	  fprintf(stdout, _("%s\n\
+	  fprintf(stdout, _("Copyright (C) %d Free Software Foundation, Inc.\n\
 This is free software; see the source for copying conditions.  There is NO\n\
 warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE,\n\
 to the extent permitted by law.\n\
-"), COPYRIGHT_NOTICE);
+"), COPYRIGHT_YEAR);
 	  fputc('\n', stdout);
 	  contact(false);
 
