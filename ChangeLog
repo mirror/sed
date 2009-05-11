@@ -1,3 +1,13 @@
+2009-05-11  Paolo Bonzini  <bonzini@gnu.org>
+
+	* configure.ac: Define COPYRIGHT_YEAR.
+	* Makefile.am (dist-hook): Test it.
+	* sed/mbcs.c: Fix copyright years.
+	* sed/sed.c: Fix copyright years.  Change COPYRIGHT_NOTICE to
+	COPYRIGHT_YEAR.
+	* sed/utils.c: Fix copyright years.
+	* testsuite/version.gin: Use COPYRIGHT_YEAR.
+
 2009-04-30  Paolo Bonzini  <bonzini@gnu.org>
 
 	* sed/compile.c: Declare bool arguments as int instead to please AIX XLC.
