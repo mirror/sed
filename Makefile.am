@@ -1,7 +1,7 @@
 ## Process this file with automake to produce Makefile.in
 
 # Automake requirements
-AUTOMAKE_OPTIONS = gnits 1.10
+AUTOMAKE_OPTIONS = gnits 1.10 dist-bzip2
 ACLOCAL_AMFLAGS = -I m4
 
 PACKAGE = sed

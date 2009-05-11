@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: bug-gnu-utils@gnu.org\n"
-"POT-Creation-Date: 2009-03-31 09:43+0200\n"
+"POT-Creation-Date: 2009-04-30 10:58+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -148,7 +148,7 @@ msgstr ""
 msgid "couldn't edit %s: not a regular file"
 msgstr ""
 
-#: sed/execute.c:740 sed/utils.c:232
+#: sed/execute.c:740 sed/utils.c:222
 #, c-format
 msgid "couldn't open temporary file %s: %s"
 msgstr ""
@@ -274,7 +274,7 @@ msgid ""
 "                 use extended regular expressions in the script.\n"
 msgstr ""
 
-#: sed/sed.c:151
+#: sed/sed.c:153
 #, c-format
 msgid ""
 "  -s, --separate\n"
@@ -283,7 +283,7 @@ msgid ""
 "                 long stream.\n"
 msgstr ""
 
-#: sed/sed.c:154
+#: sed/sed.c:156
 #, c-format
 msgid ""
 "  -u, --unbuffered\n"
@@ -292,17 +292,17 @@ msgid ""
 "                 the output buffers more often\n"
 msgstr ""
 
-#: sed/sed.c:157
+#: sed/sed.c:159
 #, c-format
 msgid "      --help     display this help and exit\n"
 msgstr ""
 
-#: sed/sed.c:158
+#: sed/sed.c:160
 #, c-format
 msgid "      --version  output version information and exit\n"
 msgstr ""
 
-#: sed/sed.c:159
+#: sed/sed.c:161
 #, c-format
 msgid ""
 "\n"
@@ -313,24 +313,24 @@ msgid ""
 "\n"
 msgstr ""
 
-#: sed/sed.c:315
+#: sed/sed.c:317
 #, c-format
 msgid "super-sed version %s\n"
 msgstr ""
 
-#: sed/sed.c:316
+#: sed/sed.c:318
 #, c-format
 msgid ""
 "based on GNU sed version %s\n"
 "\n"
 msgstr ""
 
-#: sed/sed.c:318
+#: sed/sed.c:320
 #, c-format
 msgid "GNU sed version %s\n"
 msgstr ""
 
-#: sed/sed.c:320
+#: sed/sed.c:322
 #, c-format
 msgid ""
 "%s\n"
@@ -339,44 +339,44 @@ msgid ""
 "to the extent permitted by law.\n"
 msgstr ""
 
-#: sed/utils.c:103 sed/utils.c:443
+#: sed/utils.c:93 sed/utils.c:433
 #, c-format
 msgid "cannot remove %s: %s"
 msgstr ""
 
-#: sed/utils.c:173
+#: sed/utils.c:163
 #, c-format
 msgid "couldn't open file %s: %s"
 msgstr ""
 
-#: sed/utils.c:196
+#: sed/utils.c:186
 #, c-format
 msgid "couldn't attach to %s: %s"
 msgstr ""
 
-#: sed/utils.c:250
+#: sed/utils.c:240
 #, c-format
 msgid "couldn't write %d item to %s: %s"
 msgid_plural "couldn't write %d items to %s: %s"
 msgstr[0] ""
 msgstr[1] ""
 
-#: sed/utils.c:265 sed/utils.c:281
+#: sed/utils.c:255 sed/utils.c:271
 #, c-format
 msgid "read error on %s: %s"
 msgstr ""
 
-#: sed/utils.c:383
+#: sed/utils.c:373
 #, c-format
 msgid "couldn't follow symlink %s: %s"
 msgstr ""
 
-#: sed/utils.c:417
+#: sed/utils.c:407
 #, c-format
 msgid "cannot stat %s: %s"
 msgstr ""
 
-#: sed/utils.c:448
+#: sed/utils.c:438
 #, c-format
 msgid "cannot rename %s: %s"
 msgstr ""
