@@ -1,5 +1,9 @@
 2009-05-11  Paolo Bonzini  <bonzini@gnu.org>
 
+	* configure.ac: XFAIL bsd test where appropriate.
+
+2009-05-11  Paolo Bonzini  <bonzini@gnu.org>
+
 	* configure.ac: Do not create homonymous links from builddir to srcdir.
 	* testsuite/Makefile.tests: Create readin.in2 here.
 	* testsuite/Makefile.am: Do not distribute it.

@@ -66,6 +66,13 @@ if test "x$have_lstat" = xyes -a "x$have_readlink" = xyes; then
    AC_DEFINE(ENABLE_FOLLOW_SYMLINKS, ,[Follow symlinks when processing in place])
 fi
 
+# Under MinGW, the bsd.sh test fails because of the EOF character (^Z).
+case $host in
+  *mingw*) XFAIL_TESTS="$XFAIL_TESTS bsd" ;;
+  *) ;;
+esac
+AC_SUBST([XFAIL_TESTS])
+
 AC_CONFIG_FILES([bootstrap.sh], chmod +x bootstrap.sh)
 AC_CONFIG_FILES([testsuite/version.good:testsuite/version.gin])
 AC_CONFIG_FILES([Makefile doc/Makefile \
