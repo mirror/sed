@@ -1,5 +1,16 @@
 2009-05-11  Paolo Bonzini  <bonzini@gnu.org>
 
+	* sed/compile.c (snarf_char_class): Fix logic bug with [[[ in regular
+	expressions (and a possibly uninitialized use of variable delim stemming
+	from the bug).  Uninitialized variable bug reported by Zhongxing Xu.
+	* testsuite/brackets.good: New.
+	* testsuite/brackets.inp: New.
+	* testsuite/brackets.sed: New.
+	* testsuite/Makefile.am: Add test.
+	* testsuite/Makefile.tests: Add test.
+
+2009-05-11  Paolo Bonzini  <bonzini@gnu.org>
+
 	* configure.ac: Define COPYRIGHT_YEAR.
 	* Makefile.am (dist-hook): Test it.
 	* sed/mbcs.c: Fix copyright years.

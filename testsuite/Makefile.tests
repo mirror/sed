@@ -21,7 +21,7 @@ SKIP = :>$@.skip; exit 77
 enable sep inclib 8bit 8to7 newjis xabcx dollar noeol bkslashes \
 numsub head madding mac-mf empty xbxcx xbxcx3 recall recall2 xemacs \
 appquit fasts uniq manis linecnt khadafy allsub flipcase space modulo \
-y-bracket y-newline insert::
+y-bracket y-newline insert brackets::
 	$(SEDENV) $(SED) -f $(srcdir)/$@.sed \
 		< $(srcdir)/$@.inp | $(TR) -d \\r > $@.out 
 	$(CMP) $(srcdir)/$@.good $@.out 
