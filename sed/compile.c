@@ -489,10 +489,10 @@ snarf_char_class(b, cur_stat)
 	  if (state == 1)
 	    {
 	      delim = ch;
-	      state++;
+	      state = 2;
 	    }
 	  else if (state == 2 && ch == delim)
-	    state++;
+	    state = 3;
 	  else
 	    break;
 
@@ -502,7 +502,8 @@ snarf_char_class(b, cur_stat)
 	  if (pending_mb)
 	    continue;
 
-	  state++;
+	  if (state == 0)
+	    state = 1;
 	  continue;
 
 	case CLOSE_BRACKET:

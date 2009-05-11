@@ -1,7 +1,7 @@
 TODO: look what really changed from ssed 3.62!
 
 Sed 3.62 (aligned with GNU sed CVS at 2005-02-10)
-  
+
 * added a note to BUGS and the manual about changed interpretation
   of `s|abc\|def||', and about localization issues.
 
