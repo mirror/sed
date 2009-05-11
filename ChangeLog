@@ -1,3 +1,9 @@
+2009-05-11  Paolo Bonzini  <bonzini@gnu.org>
+
+	* configure.ac: Do not create homonymous links from builddir to srcdir.
+	* testsuite/Makefile.tests: Create readin.in2 here.
+	* testsuite/Makefile.am: Do not distribute it.
+
 2009-04-27  Paolo Bonzini  <bonzini@gnu.org>
 
 	* testsuite/Makefile.tests: Handle CRLF endings for mingw.

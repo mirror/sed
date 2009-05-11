@@ -99,10 +99,11 @@ writeout::
 	@$(RM) $@.1out $@.wout
 
 readin::
+	echo MOO | $(SEDENV) $(SED) b > $@.in2
 	$(SEDENV) $(SED) -f $(srcdir)/$@.sed \
 	  < $(srcdir)/$@.inp | $(TR) -d \\r > $@.out 
 	$(CMP) $(srcdir)/$@.good $@.out 
-	@$(RM) $@.out 
+	@$(RM) $@.out $@.in2
 
 eval.in2: $(srcdir)/eval.inp
 	cat $(srcdir)/eval.inp > $@

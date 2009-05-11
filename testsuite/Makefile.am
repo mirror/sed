@@ -64,7 +64,7 @@ EXTRA_DIST = runtest Makefile.tests \
 	numsub3.good numsub3.inp numsub3.sed \
 	numsub4.good numsub4.inp numsub4.sed \
 	numsub5.good numsub5.inp numsub5.sed \
-	readin.good readin.in2 readin.inp readin.sed \
+	readin.good readin.inp readin.sed \
 	recall.good recall.inp recall.sed \
 	recall2.good recall2.inp recall2.sed \
 	sep.good sep.inp sep.sed \
