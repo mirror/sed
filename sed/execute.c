@@ -720,7 +720,7 @@ open_next_file(name, input)
       /* get the base name */
       tmpdir = ck_strdup(input->in_file_name);
       if ((p = strrchr(tmpdir, '/')))
-	*(p + 1) = 0;
+	*p = 0;
       else
 	strcpy(tmpdir, ".");
 

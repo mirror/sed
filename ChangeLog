@@ -1,3 +1,8 @@
+2009-06-11  Sergey Farbotka  <z8sergey8z@gmail.com>  (tiny change)
+
+	* sed/execute.c (open_next_file): Fix off-by-one causing problems
+	under Cygwin.
+
 2009-05-11  Paolo Bonzini  <bonzini@gnu.org>
 
 	* sed/compile.c (snarf_char_class): Fix logic bug with [[[ in regular
