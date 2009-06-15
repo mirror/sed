@@ -1,3 +1,8 @@
+2009-06-15  Paolo Bonzini  <bonzini@gnu.org>
+
+	* autoboot.conf: Add memchr again.
+	* gnulib: Update.
+
 2009-06-11  Sergey Farbotka  <z8sergey8z@gmail.com>  (tiny change)
 
 	* sed/execute.c (open_next_file): Fix off-by-one causing problems
