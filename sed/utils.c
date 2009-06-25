@@ -200,6 +200,7 @@ ck_mkstemp (p_filename, tmpdir, base)
   char *template;
   FILE *fp;
   int fd;
+  int save_umask;
 
   if (tmpdir == NULL)
     tmpdir = getenv("TMPDIR");
@@ -217,7 +218,11 @@ ck_mkstemp (p_filename, tmpdir, base)
   template = xmalloc (strlen (tmpdir) + strlen (base) + 8);
   sprintf (template, "%s/%sXXXXXX", tmpdir, base);
 
+   /* The ownership might change, so omit some permissions at first
+      so unauthorized users cannot nip in before the file is ready.  */
+  save_umask = umask (8r700);
   fd = mkstemp (template);
+  umask (save_umask);
   if (fd == -1)
     panic(_("couldn't open temporary file %s: %s"), template, strerror(errno));
 

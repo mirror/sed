@@ -769,9 +769,6 @@ open_next_file(name, input)
       if (fchown (output_fd, st.st_uid, st.st_gid) == -1)
         fchown (output_fd, -1, st.st_gid);
 #endif
-      copy_acl (input->in_file_name, input_fd,
-		input->out_file_name, output_fd,
-		st.st_mode);
     }
   else
     output_file.fp = stdout;
@@ -791,9 +788,17 @@ closedown(input)
   if (in_place_extension && output_file.fp != NULL)
     {
       const char *target_name;
-      ck_fclose (output_file.fp);
+      int input_fd, output_fd;
 
       target_name = input->in_file_name;
+      input_fd = fileno (input->fp);
+      output_fd = fileno (output_file.fp);
+      copy_acl (input->in_file_name, input_fd,
+		input->out_file_name, output_fd,
+		st.st_mode);
+
+      ck_fclose (input->fp);
+      ck_fclose (output_file.fp);
       if (strcmp(in_place_extension, "*") != 0)
         {
           char *backup_file_name = get_backup_file_name(target_name);
@@ -804,8 +809,9 @@ closedown(input)
       ck_rename (input->out_file_name, target_name, input->out_file_name);
       free (input->out_file_name);
     }
+  else
+    ck_fclose (input->fp);
 
-  ck_fclose (input->fp);
   input->fp = NULL;
 }
 
