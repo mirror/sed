@@ -2,6 +2,9 @@ Sed 4.2a
 
 * fix parsing of s/[[[[[[[[[]//
 
+* temporary files for sed -i are not made group/world-readable until
+  they are complete
+
 ----------------------------------------------------------------------------
 Sed 4.2
 

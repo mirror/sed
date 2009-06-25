@@ -1,3 +1,8 @@
+2009-06-25  Paolo Bonzini  <bonzini@gnu.org>
+
+	* execute.c: Do not copy ACLs until the file is copied.
+	* utils.c (ck_mkstemp): Set a restrictive umask on temporary files.
+
 2009-06-26  Paolo Bonzini  <bonzini@gnu.org>
 
 	* autoboot: Do not use GIT_CONFIG_LOCAL.

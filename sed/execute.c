@@ -133,6 +133,9 @@ struct input {
 
   const char *in_file_name;
 
+  /* Owner and mode to be set just before closing the file.  */
+  struct stat st;
+
   /* if NULL, none of the following are valid */
   FILE *fp;
 
@@ -708,9 +711,8 @@ open_next_file(name, input)
 
   if (in_place_extension)
     {
-      int input_fd, output_fd;
+      int input_fd;
       char *tmpdir, *p;
-      struct stat st;
 
       if (follow_symlinks)
 	input->in_file_name = follow_symlink (name);
@@ -728,8 +730,8 @@ open_next_file(name, input)
         panic(_("couldn't edit %s: is a terminal"), input->in_file_name);
 
       input_fd = fileno (input->fp);
-      fstat (input_fd, &st);
-      if (!S_ISREG (st.st_mode))
+      fstat (input_fd, &input->st);
+      if (!S_ISREG (input->st.st_mode))
         panic(_("couldn't edit %s: not a regular file"), input->in_file_name);
 
       output_file.fp = ck_mkstemp (&input->out_file_name, tmpdir, "sed");
@@ -738,15 +740,6 @@ open_next_file(name, input)
 
       if (!output_file.fp)
         panic(_("couldn't open temporary file %s: %s"), input->out_file_name, strerror(errno));
-
-      output_fd = fileno (output_file.fp);
-#ifdef HAVE_FCHOWN
-      if (fchown (output_fd, st.st_uid, st.st_gid) == -1)
-        fchown (output_fd, -1, st.st_gid);
-#endif
-      copy_acl (input->in_file_name, input_fd,
-		input->out_file_name, output_fd,
-		st.st_mode);
     }
   else
     output_file.fp = stdout;
@@ -766,9 +759,21 @@ closedown(input)
   if (in_place_extension && output_file.fp != NULL)
     {
       const char *target_name;
-      ck_fclose (output_file.fp);
+      int input_fd, output_fd;
 
       target_name = input->in_file_name;
+      input_fd = fileno (input->fp);
+      output_fd = fileno (output_file.fp);
+      copy_acl (input->in_file_name, input_fd,
+		input->out_file_name, output_fd,
+		input->st.st_mode);
+#ifdef HAVE_FCHOWN
+      if (fchown (output_fd, input->st.st_uid, input->st.st_gid) == -1)
+        fchown (output_fd, -1, input->st.st_gid);
+#endif
+
+      ck_fclose (input->fp);
+      ck_fclose (output_file.fp);
       if (strcmp(in_place_extension, "*") != 0)
         {
           char *backup_file_name = get_backup_file_name(target_name);
@@ -779,8 +784,9 @@ closedown(input)
       ck_rename (input->out_file_name, target_name, input->out_file_name);
       free (input->out_file_name);
     }
+  else
+    ck_fclose (input->fp);
 
-  ck_fclose (input->fp);
   input->fp = NULL;
 }
 
