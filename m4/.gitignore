@@ -4,6 +4,9 @@ acl.m4
 alloca.m4
 btowc.m4
 codeset.m4
+dirname.m4
+dos.m4
+double-slash-root.m4
 errno_h.m4
 error.m4
 exitfail.m4
@@ -11,6 +14,7 @@ extensions.m4
 getdelim.m4
 getline.m4
 getopt.m4
+getpagesize.m4
 gettext.m4
 gettimeofday.m4
 glibc2.m4
@@ -51,6 +55,7 @@ memchr.m4
 memcmp.m4
 memmove.m4
 mkstemp.m4
+mmap-anon.m4
 multiarch.m4
 nls.m4
 pathmax.m4
@@ -61,6 +66,9 @@ quote.m4
 quotearg.m4
 realloc.m4
 regex.m4
+rename.m4
+selinux-context-h.m4
+selinux-selinux-h.m4
 signed.m4
 size_max.m4
 ssize_t.m4
@@ -71,6 +79,8 @@ stdio_h.m4
 stdlib_h.m4
 strerror.m4
 string_h.m4
+strndup.m4
+strnlen.m4
 strverscmp.m4
 sys_stat_h.m4
 sys_time_h.m4
@@ -89,3 +99,4 @@ wctype.m4
 wint_t.m4
 xalloc.m4
 xsize.m4
+xstrndup.m4

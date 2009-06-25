@@ -4,9 +4,14 @@ acl_entries.c
 alloca.c
 alloca.h
 alloca.in.h
+basename.c
 btowc.c
+c-ctype.c
+c-ctype.h
 config.charset
 copy-acl.c
+dirname.c
+dirname.h
 errno.h
 errno.in.h
 error.c
@@ -21,6 +26,7 @@ getopt.h
 getopt.in.h
 getopt1.c
 getopt_int.h
+getpagesize.c
 gettext.h
 gettimeofday.c
 gnulib.mk
@@ -54,6 +60,11 @@ regex.h
 regex_internal.c
 regex_internal.h
 regexec.c
+rename.c
+se-context.h
+se-context.in.h
+se-selinux.h
+se-selinux.in.h
 set-mode-acl.c
 stat-macros.h
 stdbool.h
@@ -69,6 +80,9 @@ streq.h
 strerror.c
 string.h
 string.in.h
+stripslash.c
+strndup.c
+strnlen.c
 strverscmp.c
 sys
 sys_stat.h
@@ -90,3 +104,5 @@ wctype.in.h
 xalloc-die.c
 xalloc.h
 xmalloc.c
+xstrndup.c
+xstrndup.h

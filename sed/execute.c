@@ -31,6 +31,11 @@
 extern int errno;
 #endif
 
+#ifndef BOOTSTRAP
+#include <selinux/selinux.h>
+#include <selinux/context.h>
+#endif
+
 #ifdef HAVE_UNISTD_H
 # include <unistd.h>
 #endif
@@ -713,6 +718,11 @@ open_next_file(name, input)
     {
       int input_fd;
       char *tmpdir, *p;
+#ifndef BOOTSTRAP
+      security_context_t old_fscreatecon;
+      int reset_fscreatecon = 0;
+      memset (&old_fscreatecon, 0, sizeof (old_fscreatecon));
+#endif
 
       if (follow_symlinks)
 	input->in_file_name = follow_symlink (name);
@@ -734,9 +744,40 @@ open_next_file(name, input)
       if (!S_ISREG (input->st.st_mode))
         panic(_("couldn't edit %s: not a regular file"), input->in_file_name);
 
+#ifndef BOOTSTRAP
+      if (is_selinux_enabled ())
+	{
+          security_context_t con;
+	  if (getfilecon (input->in_file_name, &con) != -1)
+	    {
+	      /* Save and restore the old context for the sake of w and W
+		 commands.  */
+	      reset_fscreatecon = getfscreatecon (&old_fscreatecon) >= 0;
+	      if (setfscreatecon (con) < 0)
+		fprintf (stderr, _("%s: warning: failed to set default file creation context to %s: %s"),
+			 myname, con, strerror (errno));
+	      freecon (con);
+	    }
+	  else
+	    {
+	      if (errno != ENOSYS)
+		fprintf (stderr, _("%s: warning: failed to get security context of %s: %s"),
+			 myname, input->in_file_name, strerror (errno));
+	    }
+	}
+#endif
+
       output_file.fp = ck_mkstemp (&input->out_file_name, tmpdir, "sed");
       output_file.missing_newline = false;
       free (tmpdir);
+
+#ifndef BOOTSTRAP
+      if (reset_fscreatecon)
+	{
+	  setfscreatecon (old_fscreatecon);
+	  freecon (old_fscreatecon);
+	}
+#endif
 
       if (!output_file.fp)
         panic(_("couldn't open temporary file %s: %s"), input->out_file_name, strerror(errno));

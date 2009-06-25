@@ -1,5 +1,10 @@
 2009-06-25  Paolo Bonzini  <bonzini@gnu.org>
 
+	* autoboot.conf: Add selinux-h.
+	* execute.c: Copy over file creation context before creating a new file.
+
+2009-06-25  Paolo Bonzini  <bonzini@gnu.org>
+
 	* execute.c: Do not copy ACLs until the file is copied.
 	* utils.c (ck_mkstemp): Set a restrictive umask on temporary files.
 
