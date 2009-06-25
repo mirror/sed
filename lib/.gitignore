@@ -5,9 +5,14 @@ alloca.c
 alloca.h
 alloca.in.h
 asnprintf.c
+basename.c
 btowc.c
+c-ctype.c
+c-ctype.h
 config.charset
 copy-acl.c
+dirname.c
+dirname.h
 errno.h
 errno.in.h
 error.c
@@ -25,6 +30,7 @@ getopt.h
 getopt.in.h
 getopt1.c
 getopt_int.h
+getpagesize.c
 gettext.h
 gettimeofday.c
 gnulib.mk
@@ -55,6 +61,17 @@ ref-add.sed
 ref-add.sin
 ref-del.sed
 ref-del.sin
+regcomp.c
+regex.c
+regex.h
+regex_internal.c
+regex_internal.h
+regexec.c
+rename.c
+se-context.h
+se-context.in.h
+se-selinux.h
+se-selinux.in.h
 set-mode-acl.c
 size_max.h
 snprintf.c
@@ -72,6 +89,9 @@ streq.h
 strerror.c
 string.h
 string.in.h
+stripslash.c
+strndup.c
+strnlen.c
 strverscmp.c
 sys
 sys_stat.h
@@ -96,3 +116,5 @@ xalloc-die.c
 xalloc.h
 xmalloc.c
 xsize.h
+xstrndup.c
+xstrndup.h

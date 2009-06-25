@@ -31,6 +31,11 @@
 extern int errno;
 #endif
 
+#ifndef BOOTSTRAP
+#include <selinux/selinux.h>
+#include <selinux/context.h>
+#endif
+
 #ifdef HAVE_UNISTD_H
 # include <unistd.h>
 #endif
@@ -731,6 +736,26 @@ open_next_file(name, input)
       fstat (input_fd, &st);
       if (!S_ISREG (st.st_mode))
         panic(_("couldn't edit %s: not a regular file"), input->in_file_name);
+
+#ifndef BOOTSTRAP
+      if (is_selinux_enabled ())
+	{
+          security_context_t con;
+	  if (getfilecon (input->in_file_name, &con) != -1)
+	    {
+	      if (setfscreatecon (con) < 0)
+		fprintf (stderr, _("%s: warning: failed to set default file creation context to %s: %s"),
+			 myname, con, strerror (errno));
+	      freecon (con);
+	    }
+	  else
+	    {
+	      if (errno != ENOSYS)
+		fprintf (stderr, _("%s: warning: failed to get security context of %s: %s"),
+			 myname, input->in_file_name, strerror (errno));
+	    }
+	}
+#endif
 
       output_file.fp = ck_mkstemp (&input->out_file_name, tmpdir, "sed");
       output_file.missing_newline = false;
