@@ -1,3 +1,7 @@
+2009-06-26  Paolo Bonzini  <bonzini@gnu.org>
+
+	* autoboot: Do not use GIT_CONFIG_LOCAL.
+
 2009-06-15  Paolo Bonzini  <bonzini@gnu.org>
 
 	* autoboot.conf: Add memchr again.
