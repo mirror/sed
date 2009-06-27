@@ -1,3 +1,10 @@
+2009-06-27  Paolo Bonzini  <bonzini@gnu.org>
+
+	* configure.ac: Bump version.
+	* NEWS: Bump version.
+	* gnulib: Update.
+	* doc/sed.1: Regenerate.
+
 2009-06-25  Paolo Bonzini  <bonzini@gnu.org>
 
 	* autoboot.conf: Add selinux-h.

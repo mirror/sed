@@ -39,6 +39,7 @@ mbrlen.c
 mbrtowc.c
 mbsinit.c
 memchr.c
+memchr.valgrind
 memcmp.c
 memmove.c
 mkstemp.c
