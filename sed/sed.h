@@ -211,8 +211,9 @@ extern void fmt P_ ((const char *line, const char *line_end, int max_length, FIL
 
 extern int extended_regexp_flags;
 
-/* If set, fflush(stdout) on every line output. */
-extern bool unbuffered_output;
+/* If set, fflush(stdout) on every line output,
+   and turn off stream buffering on inputs.  */
+extern bool unbuffered;
 
 /* If set, don't write out the line unless explicitly told to. */
 extern bool no_default_output;

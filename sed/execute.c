@@ -557,7 +557,7 @@ static inline void
 flush_output(fp)
   FILE *fp;
 {
-  if (fp != stdout || unbuffered_output)
+  if (fp != stdout || unbuffered)
     ck_fflush(fp);
 }
 
@@ -783,7 +783,11 @@ open_next_file(name, input)
         panic(_("couldn't open temporary file %s: %s"), input->out_file_name, strerror(errno));
     }
   else
-    output_file.fp = stdout;
+    {
+      if (input->fp && unbuffered)
+        setvbuf (input->fp, NULL, _IONBF, 0);
+      output_file.fp = stdout;
+    }
 }
 
 

@@ -61,7 +61,7 @@ char *program_name;
 int extended_regexp_flags = 0;
 
 /* If set, fflush(stdout) on every line output. */
-bool unbuffered_output = false;
+bool unbuffered = false;
 
 /* If set, don't write out the line unless explicitly told to */
 bool no_default_output = false;
@@ -307,7 +307,7 @@ main(argc, argv)
 	  break;
 
 	case 'u':
-	  unbuffered_output = true;
+	  unbuffered = true;
 	  break;
 
 	case 'v':
