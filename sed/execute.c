@@ -554,7 +554,7 @@ static inline void
 flush_output(fp)
   FILE *fp;
 {
-  if (fp != stdout || unbuffered_output)
+  if (fp != stdout || unbuffered)
     ck_fflush(fp);
 }
 
@@ -771,7 +771,11 @@ open_next_file(name, input)
 #endif
     }
   else
-    output_file.fp = stdout;
+    {
+      if (input->fp && unbuffered)
+        setvbuf (input->fp, NULL, _IONBF, 0);
+      output_file.fp = stdout;
+    }
 }
 
 
