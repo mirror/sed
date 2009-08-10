@@ -424,7 +424,7 @@ and any additional command-specific code.
 and the auxiliary @emph{hold} space. Both are initially empty.
 
 @command{sed} operates by performing the following cycle on each
-lines of input: first, @command{sed} reads one line from the input
+line of input: first, @command{sed} reads one line from the input
 stream, removes any trailing newline, and places it in the pattern space.
 Then commands are executed; each command can have an address associated
 to it: addresses are a kind of condition code, and a command is only

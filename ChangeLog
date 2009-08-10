@@ -1,3 +1,7 @@
+2009-08-10  Bake Timmons  <b3timmons@speedymail.org> (tiny change)
+
+	* doc/sed-in.texi: Fix typo.
+
 2009-06-25  Paolo Bonzini  <bonzini@gnu.org>
 
 	* execute.c: Do not copy ACLs until the file is copied.
