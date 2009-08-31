@@ -20,7 +20,6 @@ AC_PROG_CC
 gl_EARLY
 gl_INIT
 gl_DISABLE_THREADS
-AC_SYS_LONG_FILE_NAMES
 AC_CACHE_CHECK([whether -lcP is needed], [sed_cv_libcp_needed], [
 AC_TRY_RUN([
 #include <stdio.h>
@@ -49,10 +48,9 @@ AC_CHECK_HEADERS_ONCE(io.h limits.h locale.h stdarg.h alloca.h stddef.h errno.h 
 		      wchar.h wctype.h sys/file.h, [], [], [AC_INCLUDES_DEFAULT])
 AC_C_CONST
 AC_TYPE_SIZE_T
-AC_CHECK_TYPE(ssize_t, int)
-
 AC_FUNC_VPRINTF
-AM_GNU_GETTEXT_VERSION(0.15)
+
+AM_GNU_GETTEXT_VERSION(0.17)
 AM_GNU_GETTEXT([external])
 
 AC_CHECK_FUNCS_ONCE(isatty bcopy bzero isascii memcpy memset strchr strtoul
