@@ -1,3 +1,8 @@
+2009-08-30  Paolo Bonzini  <bonzini@gnu.org>
+
+	* autoboot.conf: Add ssize_t.
+	* configure.ac: Remove useless stuff, bump gettext requirement to 0.17.
+
 2009-08-10  Bake Timmons  <b3timmons@speedymail.org> (tiny change)
 
 	* doc/sed-in.texi: Fix typo.
