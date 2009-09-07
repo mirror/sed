@@ -1,7 +1,7 @@
 \input texinfo  @c -*-texinfo-*-
 @c
 @c -- Stuff that needs adding: ----------------------------------------------
-@c (document the `;' command-separator)
+@c (nothing!)
 @c --------------------------------------------------------------------------
 @c Check for consistency: regexps in @code, text that they match in @samp.
 @c 
@@ -395,6 +395,14 @@ options are used.
 This document will refer to ``the'' @command{sed} script;
 this is understood to mean the in-order catenation
 of all of the @var{script}s and @var{script-file}s passed in.
+
+Commands within a @var{script} or @var{script-file} can be
+separated by semicolons (@code{;}) or newlines (ASCII 10).
+Some commands, due to their syntax, cannot be followed by semicolons
+working as command separators and thus should be terminated
+with newlines or be placed at the end of a @var{script} or @var{script-file}.
+Commands can also be preceded with optional non-significant
+whitespace characters.
 
 Each @code{sed} command consists of an optional address or
 address range, followed by a one-character command name
