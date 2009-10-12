@@ -1,3 +1,10 @@
+2009-10-12  Ralf Wildenhues  <Ralf.Wildenhues@gmx.de>
+
+	* doc/sed-in.texi (Invoking sed): Add index entries for --posix,
+	-s, --separate.
+	(Other Commands): Fix typo.
+	* doc/sed.texi: Regenerate.
+
 2009-09-07  Dmitry Chistikov <dd1email@gmail.com> (tiny change)
 
 	* doc/sed-in.texi: Document how to separate commands.
