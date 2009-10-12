@@ -280,6 +280,7 @@ A length of 0 (zero) means to never wrap long lines.  If
 not specified, it is taken to be 70.
 
 @item --posix
+@opindex --posix
 @cindex @value{SSEDEXT}, disabling
 @value{SSED} includes several extensions to @acronym{POSIX}
 sed.  In order to simplify writing portable scripts, this
@@ -346,6 +347,8 @@ Perl-style regular expressions}.
 
 @item -s
 @itemx --separate
+@opindex -s
+@opindex --separate
 @cindex Working on separate files
 By default, @command{sed} will consider the files specified on the
 command line as a single continuous long stream.  This @value{SSED}
@@ -1267,11 +1270,10 @@ error, and @file{/dev/stdout}, which writes to the standard
 output.@footnote{This is equivalent to @code{p} unless the @option{-i}
 option is being used.}
 
-The file will be created (or truncated) before the
-first input line is read; all @code{w} commands
-(including instances of @code{w} flag on successful @code{s} commands)
-which refer to the same @var{filename} are output without
-closing and reopening the file.
+The file will be created (or truncated) before the first input line is
+read; all @code{w} commands (including instances of the @code{w} flag
+on successful @code{s} commands) which refer to the same @var{filename}
+are output without closing and reopening the file.
 
 @item D
 @findex D (delete first line) command
