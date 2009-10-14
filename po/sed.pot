@@ -6,9 +6,9 @@
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: PACKAGE VERSION\n"
+"Project-Id-Version: GNU sed 4.2.1\n"
 "Report-Msgid-Bugs-To: bug-gnu-utils@gnu.org\n"
-"POT-Creation-Date: 2009-06-27 15:08+0200\n"
+"POT-Creation-Date: 2009-10-14 11:16+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -158,24 +158,24 @@ msgstr ""
 msgid "%s: warning: failed to get security context of %s: %s"
 msgstr ""
 
-#: sed/execute.c:783 sed/utils.c:227
+#: sed/execute.c:783 sed/utils.c:219
 #, c-format
 msgid "couldn't open temporary file %s: %s"
 msgstr ""
 
-#: sed/execute.c:1317 sed/execute.c:1497
+#: sed/execute.c:1321 sed/execute.c:1501
 msgid "error in subprocess"
 msgstr ""
 
-#: sed/execute.c:1319
+#: sed/execute.c:1323
 msgid "option `e' not supported"
 msgstr ""
 
-#: sed/execute.c:1499
+#: sed/execute.c:1503
 msgid "`e' command not supported"
 msgstr ""
 
-#: sed/execute.c:1843
+#: sed/execute.c:1847
 msgid "no input files"
 msgstr ""
 
@@ -349,44 +349,44 @@ msgid ""
 "to the extent permitted by law.\n"
 msgstr ""
 
-#: sed/utils.c:93 sed/utils.c:438
+#: sed/utils.c:85 sed/utils.c:430
 #, c-format
 msgid "cannot remove %s: %s"
 msgstr ""
 
-#: sed/utils.c:163
+#: sed/utils.c:155
 #, c-format
 msgid "couldn't open file %s: %s"
 msgstr ""
 
-#: sed/utils.c:186
+#: sed/utils.c:178
 #, c-format
 msgid "couldn't attach to %s: %s"
 msgstr ""
 
-#: sed/utils.c:245
+#: sed/utils.c:237
 #, c-format
 msgid "couldn't write %d item to %s: %s"
 msgid_plural "couldn't write %d items to %s: %s"
 msgstr[0] ""
 msgstr[1] ""
 
-#: sed/utils.c:260 sed/utils.c:276
+#: sed/utils.c:252 sed/utils.c:268
 #, c-format
 msgid "read error on %s: %s"
 msgstr ""
 
-#: sed/utils.c:378
+#: sed/utils.c:370
 #, c-format
 msgid "couldn't follow symlink %s: %s"
 msgstr ""
 
-#: sed/utils.c:412
+#: sed/utils.c:404
 #, c-format
 msgid "cannot stat %s: %s"
 msgstr ""
 
-#: sed/utils.c:443
+#: sed/utils.c:435
 #, c-format
 msgid "cannot rename %s: %s"
 msgstr ""
