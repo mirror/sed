@@ -1,3 +1,7 @@
+2009-10-14  Yuri G. Kudryashov  <urkud.urkud@gmail.com> (tiny change)
+
+	* testsuite/Makefile.tests: Override LC_ALL, not LANG.
+
 2009-10-12  Ralf Wildenhues  <Ralf.Wildenhues@gmx.de>
 
 	* doc/sed-in.texi (Invoking sed): Add index entries for --posix,
