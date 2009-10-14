@@ -51,21 +51,19 @@ AC_TYPE_SIZE_T
 AM_GNU_GETTEXT_VERSION(0.17)
 AM_GNU_GETTEXT([external])
 
-AC_CHECK_FUNCS_ONCE(isatty isascii memcpy strchr strtoul
+AC_CHECK_FUNCS_ONCE(isatty isascii memcpy strchr strtoul lstat readlink
 		    popen pathconf fchown fchmod setlocale)
+
+# Check whether we are able to follow symlinks
+if test "$ac_cv_func_lstat:$ac_cv_func_readlink" = yes:yes; then
+   AC_DEFINE(ENABLE_FOLLOW_SYMLINKS, ,[Follow symlinks when processing in place])
+fi
 
 AC_ARG_ENABLE(pcregrep,
 [  --enable-pcregrep       build the pcregrep test program],
 PCREGREP=pcregrep,
 PCREGREP=)
 AC_SUBST(PCREGREP)
-
-# Check whether we are able to follow symlinks
-AC_CHECK_FUNC(lstat, have_lstat=yes)
-AC_CHECK_FUNC(readlink, have_readlink=yes)
-if test "x$have_lstat" = xyes -a "x$have_readlink" = xyes; then
-   AC_DEFINE(ENABLE_FOLLOW_SYMLINKS, ,[Follow symlinks when processing in place])
-fi
 
 # Under MinGW, the bsd.sh test fails because of the EOF character (^Z).
 case $host in
