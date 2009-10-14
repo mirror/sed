@@ -43,25 +43,22 @@ if test "$sed_cv_libcp_needed" = yes; then
   LIBS="-lcP $LIBS"
 fi
 
-AC_HEADER_DIRENT
-AC_CHECK_HEADERS_ONCE(io.h limits.h locale.h stdarg.h alloca.h stddef.h
-		      errno.h wchar.h wctype.h sys/file.h mcheck.h, [], [],
-		 [AC_INCLUDES_DEFAULT])
+AC_CHECK_HEADERS_ONCE(locale.h errno.h wchar.h wctype.h mcheck.h,
+		      [], [], [AC_INCLUDES_DEFAULT])
 AC_C_CONST
 AC_TYPE_SIZE_T
-AC_FUNC_VPRINTF
 
 AM_GNU_GETTEXT_VERSION(0.17)
 AM_GNU_GETTEXT([external])
 
-AC_CHECK_FUNCS_ONCE(isatty bcopy bzero isascii memcpy memset strchr strtoul
+AC_CHECK_FUNCS_ONCE(isatty isascii memcpy strchr strtoul
 		    popen pathconf fchown fchmod setlocale)
 
 AC_ARG_ENABLE(i18n,
 [  --disable-i18n          disable internationalization (default=enabled)], ,
 enable_i18n=yes)
 if test "x$enable_i18n" = xno; then
-  ac_cv_func_wcscoll=false
+  ac_cv_func_wcscoll=no
 fi
 
 AC_ARG_ENABLE(regex-tests, 
@@ -85,7 +82,7 @@ if test "x$have_lstat" = xyes -a "x$have_readlink" = xyes; then
 fi
 
 # Determine whether we should run UTF-8 tests by checking if cyrillic
-# letters are case-folded properly.  The test for UTF-8 locales (bot
+# letters are case-folded properly.  The test for UTF-8 locales (both
 # in general and specifically for a Russian one) is a bit weak, but it
 # should match exactly what is done in the testsuite.  In fact, sed's
 # logic is portable (though testing it requires care) so it is enough to

@@ -69,15 +69,7 @@ panic(const char *str, ...)
 
   fprintf(stderr, "%s: ", myname);
   va_start(ap, str);
-#ifndef HAVE_VPRINTF
-# ifndef HAVE_DOPRNT
-  fputs(str, stderr);	/* not great, but perhaps better than nothing... */
-# else /* HAVE_DOPRNT */
-  _doprnt(str, &ap, stderr);
-# endif /* HAVE_DOPRNT */
-#else /* HAVE_VFPRINTF */
   vfprintf(stderr, str, ap);
-#endif /* HAVE_VFPRINTF */
   va_end(ap);
   putc('\n', stderr);
 
