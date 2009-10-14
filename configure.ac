@@ -43,17 +43,15 @@ if test "$sed_cv_libcp_needed" = yes; then
   LIBS="-lcP $LIBS"
 fi
 
-AC_HEADER_DIRENT
-AC_CHECK_HEADERS_ONCE(io.h limits.h locale.h stdarg.h alloca.h stddef.h errno.h \
-		      wchar.h wctype.h sys/file.h, [], [], [AC_INCLUDES_DEFAULT])
+AC_CHECK_HEADERS_ONCE(locale.h errno.h wchar.h wctype.h,
+		      [], [], [AC_INCLUDES_DEFAULT])
 AC_C_CONST
 AC_TYPE_SIZE_T
-AC_FUNC_VPRINTF
 
 AM_GNU_GETTEXT_VERSION(0.17)
 AM_GNU_GETTEXT([external])
 
-AC_CHECK_FUNCS_ONCE(isatty bcopy bzero isascii memcpy memset strchr strtoul
+AC_CHECK_FUNCS_ONCE(isatty isascii memcpy strchr strtoul
 		    popen pathconf fchown fchmod setlocale)
 
 AC_ARG_ENABLE(pcregrep,

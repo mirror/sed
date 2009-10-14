@@ -1,3 +1,9 @@
+2009-10-14  Paolo Bonzini  <bonzini@gnu.org>
+
+	* configure.ac: Remove obselete configure tests.
+	* sed/fmt.c: Assume limits.h is always present.
+	* sed/utils.c: Assume vfprintf is always present.
+
 2009-10-14  Yuri G. Kudryashov  <urkud.urkud@gmail.com> (tiny change)
 
 	* testsuite/Makefile.tests: Override LC_ALL, not LANG.

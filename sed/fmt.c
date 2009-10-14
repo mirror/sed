@@ -23,18 +23,7 @@
 #include <string.h>
 #include <ctype.h>
 #include <sys/types.h>
-
-#if HAVE_LIMITS_H
-# include <limits.h>
-#endif
-
-#ifndef UINT_MAX
-# define UINT_MAX ((unsigned int) ~(unsigned int) 0)
-#endif
-
-#ifndef INT_MAX
-# define INT_MAX ((int) (UINT_MAX >> 1))
-#endif
+#include <limits.h>
 
 /* The following parameters represent the program's idea of what is
    "best".  Adjust to taste, subject to the caveats given.  */
