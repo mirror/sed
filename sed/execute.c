@@ -254,8 +254,8 @@ str_append(to, string, length)
       {
         size_t n = MBRLEN (string, length, &to->mbstate);
 
-        /* An invalid sequence is treated like a singlebyte character. */
-        if (n == (size_t) -1)
+        /* An invalid or imcomplete sequence is treated like a singlebyte character. */
+        if (n == (size_t) -1 || n == (size_t) -2)
 	  {
 	    memset (&to->mbstate, 0, sizeof (to->mbstate));
 	    n = 1;
@@ -341,7 +341,7 @@ str_append_modified(to, string, length, type)
       /* Copy the new wide character to the end of the string. */
       n = WCRTOMB (to->active + to->length, wc, &to->mbstate);
       to->length += n;
-      if (n == -1)
+      if (n == -1 || n == -2)
 	{
 	  fprintf (stderr, "Case conversion produced an invalid character!");
 	  abort ();

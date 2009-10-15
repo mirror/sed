@@ -1,6 +1,8 @@
 Sed 4.2.2
 
-* -u also does unbuffered input
+* fix endless loop on incomplete multibyte sequences
+
+* -u also does unbuffered input, rather than unbuffered output only
 
 ----------------------------------------------------------------------------
 Sed 4.2.1
