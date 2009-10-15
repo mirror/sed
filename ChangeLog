@@ -1,3 +1,9 @@
+2009-10-15  Paolo Bonzini  <bonzini@gnu.org>
+	    WANG Yunfeng  <uhuruh@gmail.com>
+
+	* sed/execute.c (str_append, str_append_modified): Handle incomplete
+	sequences as if they were invalid.
+
 2009-10-14  Paolo Bonzini  <bonzini@gnu.org>
 
 	* configure.ac: Use cache variables rather than AC_CHECK_FUNC.
