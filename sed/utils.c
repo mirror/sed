@@ -212,7 +212,7 @@ ck_mkstemp (p_filename, tmpdir, base)
 
    /* The ownership might change, so omit some permissions at first
       so unauthorized users cannot nip in before the file is ready.  */
-  save_umask = umask (8r700);
+  save_umask = umask (0700);
   fd = mkstemp (template);
   umask (save_umask);
   if (fd == -1)

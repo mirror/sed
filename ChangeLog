@@ -1,4 +1,9 @@
 2009-10-15  Paolo Bonzini  <bonzini@gnu.org>
+
+	* sed/execute.c (closedown, open_next_file): Merge 5156c19b correctly.
+	* sed/utils.c: Likewise.
+
+2009-10-15  Paolo Bonzini  <bonzini@gnu.org>
 	    WANG Yunfeng  <uhuruh@gmail.com>
 
 	* sed/execute.c (str_append, str_append_modified): Handle incomplete
