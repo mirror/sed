@@ -1,4 +1,9 @@
 2009-10-15  Paolo Bonzini  <bonzini@gnu.org>
+
+	* sed/execute.c (closedown): First change owner (while permissions
+	stay 0?00), then mode.
+
+2009-10-15  Paolo Bonzini  <bonzini@gnu.org>
 	    WANG Yunfeng  <uhuruh@gmail.com>
 
 	* sed/execute.c (str_append, str_append_modified): Handle incomplete
