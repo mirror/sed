@@ -740,7 +740,7 @@ open_next_file(name, input)
         panic(_("couldn't edit %s: not a regular file"), input->in_file_name);
 
 #ifndef BOOTSTRAP
-      if (is_selinux_enabled ())
+      if (is_selinux_enabled () > 0)
 	{
           security_context_t con;
 	  if (getfilecon (input->in_file_name, &con) != -1)
