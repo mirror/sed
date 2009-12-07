@@ -1,3 +1,8 @@
+2009-12-07  Clint Adams  <schizo@debian.org>  (tiny change)
+
+	* sed/execute.c (open_next_file): If is_selinux_enabled returns -1,
+	treat it as "disabled".
+
 2009-10-15  Paolo Bonzini  <bonzini@gnu.org>
 
 	* sed/execute.c (closedown): First change owner (while permissions
