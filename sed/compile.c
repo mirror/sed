@@ -1095,11 +1095,11 @@ compile_program(vector)
       /* Do not accept extended commands in --posix mode.  Also,
 	 a few commands only accept one address in that mode.  */
       if (posixicity == POSIXLY_BASIC)
-	switch (ch)
-	  {
-	    case 'e': case 'v': case 'z': case 'L':
-	    case 'Q': case 'T': case 'R': case 'W':
-	      bad_command(ch);
+       switch (ch)
+         {
+           case 'e': case 'F': case 'v': case 'z': case 'L':
+           case 'Q': case 'T': case 'R': case 'W':
+             bad_command(ch);
 
 	    case 'a': case 'i': case 'l':
 	    case '=': case 'r':
@@ -1227,12 +1227,13 @@ compile_program(vector)
 
 	  break;
 
-	case '=':
-	case 'd':
-	case 'D':
-	case 'g':
-	case 'G':
-	case 'h':
+       case '=':
+       case 'd':
+       case 'D':
+       case 'F':
+       case 'g':
+       case 'G':
+       case 'h':
 	case 'H':
 	case 'n':
 	case 'N':

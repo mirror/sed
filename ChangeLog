@@ -1,3 +1,13 @@
+2009-11-15  Ralf Wildenhues  <Ralf.Wildenhues@gmx.de>
+
+	* doc/sed.texi (Extended Commands): Document F command.
+	* doc/sed-in.texi: Regenerate.
+	* sed/compile.c (compile_program): Accept 'F' if not --posix.
+	* sed/execute.c (open_next_file): Always initialize in_file_name.
+	(execute_program): Handle 'F'.
+	* configure.ac: Bump SED_FEATURE_VERSION.
+	* NEWS: Update.
+
 2009-12-07  Clint Adams  <schizo@debian.org>  (tiny change)
 
 	* sed/execute.c (open_next_file): If is_selinux_enabled returns -1,

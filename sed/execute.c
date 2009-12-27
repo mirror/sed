@@ -714,6 +714,11 @@ open_next_file(name, input)
 
   input->read_fn = read_file_line;
 
+  if (follow_symlinks)
+    input->in_file_name = follow_symlink (name);
+  else
+    input->in_file_name = name;
+
   if (in_place_extension)
     {
       int input_fd;
@@ -723,11 +728,6 @@ open_next_file(name, input)
       int reset_fscreatecon = 0;
       memset (&old_fscreatecon, 0, sizeof (old_fscreatecon));
 #endif
-
-      if (follow_symlinks)
-	input->in_file_name = follow_symlink (name);
-      else
-        input->in_file_name = name;
 
       /* get the base name */
       tmpdir = ck_strdup(input->in_file_name);
@@ -1756,11 +1756,18 @@ execute_program(vec, input)
               fprintf(output_file.fp, "%lu\n",
                       CAST(unsigned long)input->line_number);
               flush_output(output_file.fp);
-	      break;
+             break;
 
-	    default:
-	      panic("INTERNAL ERROR: Bad cmd %c", cur_cmd->cmd);
-	    }
+           case 'F':
+              output_missing_newline(&output_file);
+              fprintf(output_file.fp, "%s\n",
+                      input->in_file_name);
+              flush_output(output_file.fp);
+             break;
+
+           default:
+             panic("INTERNAL ERROR: Bad cmd %c", cur_cmd->cmd);
+           }
 	}
 
 #ifdef EXPERIMENTAL_DASH_N_OPTIMIZATION

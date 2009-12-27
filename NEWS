@@ -4,6 +4,8 @@ Sed 4.2.2
 
 * -u also does unbuffered input, rather than unbuffered output only
 
+* New command `F' to print current input file name
+
 ----------------------------------------------------------------------------
 Sed 4.2.1
 
