@@ -1400,6 +1400,13 @@ lines, all but the last ending with a back-slash.
 In both cases, the results are undefined if the command to be
 executed contains a @sc{nul} character.
 
+@item F
+@findex F (File name) command
+@cindex Printing file name
+@cindex File name, printing
+Print out the file name of the current input file (with a trailing
+newline).
+
 @item L @var{n}
 @findex L (fLow paragraphs) command
 @cindex Reformat pattern space

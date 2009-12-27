@@ -6,7 +6,7 @@ AM_CONFIG_HEADER(config.h:config_h.in)
 AC_PREREQ(2.60)
 AM_INIT_AUTOMAKE
 
-SED_FEATURE_VERSION=4.2
+SED_FEATURE_VERSION=4.2.2
 AC_DEFINE_UNQUOTED(SED_FEATURE_VERSION, "$SED_FEATURE_VERSION",
   [Define to the version of GNU sed whose features are supported by this sed.])
 AC_SUBST(SED_FEATURE_VERSION)
