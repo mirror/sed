@@ -1,3 +1,7 @@
+2010-08-30  Timothy Baker  <timothypaulbaker@gmail.com> (tiny change)
+
+	* doc/sed.texi (Regular expressions): Fix typo.
+
 2010-08-17  Paolo Bonzini  <bonzini@gnu.org>
 
 	Fix imprecision in the documentation of `D'.

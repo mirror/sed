@@ -847,7 +847,7 @@ string), while the second matches only strings containing
 at least one character.
 
 @item ^main.*(.*)
-his matches a string starting with @samp{main},
+This matches a string starting with @samp{main},
 followed by an opening and closing
 parenthesis.  The @samp{n}, @samp{(} and @samp{)} need not
 be adjacent.
