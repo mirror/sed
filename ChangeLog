@@ -1,3 +1,7 @@
+2010-05-03  Timothy Baker  <timothypaulbaker@gmail.com> (tiny change)
+
+	* doc/sed.texi (Regular expressions): Fix typo.
+
 2009-11-15  Ralf Wildenhues  <Ralf.Wildenhues@gmx.de>
 
 	* doc/sed.texi (Extended Commands): Document F command.
