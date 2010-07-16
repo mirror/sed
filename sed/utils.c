@@ -211,9 +211,11 @@ ck_mkstemp (p_filename, tmpdir, base)
   sprintf (template, "%s/%sXXXXXX", tmpdir, base);
 
    /* The ownership might change, so omit some permissions at first
-      so unauthorized users cannot nip in before the file is ready.  */
+      so unauthorized users cannot nip in before the file is ready.
+    
+      mkstemp forces O_BINARY on cygwin, so use mkostemp instead.  */
   save_umask = umask (0700);
-  fd = mkstemp (template);
+  fd = mkostemp (template, 0);
   umask (save_umask);
   if (fd == -1)
     panic(_("couldn't open temporary file %s: %s"), template, strerror(errno));

@@ -11,6 +11,5 @@ config.sub
 config_h.in
 configure
 depcomp
-m4
 mdate-sh
 missing

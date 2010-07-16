@@ -1,4 +1,8 @@
+arg-nonnull.h
+c++defs.h
 config.rpath
 install-sh
 link-warning.h
 texinfo.tex
+unused-parameter.h
+warn-on-use.h
