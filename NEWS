@@ -6,6 +6,8 @@ Sed 4.2.2
 
 * New command `F' to print current input file name
 
+* -i does not convert the input file to binary (LF-terminated) on Cygwin
+
 ----------------------------------------------------------------------------
 Sed 4.2.1
 
