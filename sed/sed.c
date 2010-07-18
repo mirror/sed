@@ -75,8 +75,9 @@ bool follow_symlinks = false;
 /* How do we edit files in-place? (we don't if NULL) */
 char *in_place_extension = NULL;
 
-/* The mode to use to read files, either "rt" or "rb".  */
+/* The mode to use to read/write files, either "rt"/"w" or "rb"/"wb".  */
 char *read_mode = "rt";
+char *write_mode = "w";
 
 /* Do we need to be pedantically POSIX compliant? */
 enum posixicity_types posixicity;
@@ -284,6 +285,7 @@ main(argc, argv)
 
         case 'b':
 	  read_mode = "rb";
+	  write_mode = "wb";
 	  break;
 
 	/* Undocumented, for compatibility with BSD sed.  */

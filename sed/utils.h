@@ -30,7 +30,8 @@ void ck_fflush P_((FILE *stream));
 void ck_fclose P_((FILE *stream));
 const char *follow_symlink P_((const char *path));
 size_t ck_getline P_((char **text, size_t *buflen, FILE *stream));
-FILE * ck_mkstemp P_((char **p_filename, char *tmpdir, char *base));
+FILE * ck_mkstemp P_((char **p_filename, const char *tmpdir, const char *base,
+		      const char *mode));
 void ck_rename P_((const char *from, const char *to, const char *unlink_if_fail));
 
 VOID *ck_malloc P_((size_t size));

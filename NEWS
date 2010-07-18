@@ -6,7 +6,8 @@ Sed 4.2.2
 
 * New command `F' to print current input file name
 
-* -i does not convert the input file to binary (LF-terminated) on Cygwin
+* sed -i, s///w, and the `w' and `W' commands also obey the --binary option
+  (and create CR/LF-terminated files if the option is absent)
 
 * --posix fails for scripts (or fragments as passed to the -e option) that
   end in a backslash, as they are not portable.

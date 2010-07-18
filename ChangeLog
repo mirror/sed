@@ -1,3 +1,14 @@
+2010-07-18  Paolo Bonzini  <bonzini@gnu.org>
+
+	* sed.c (write_mode): New.
+	(main): Initialize it to "wb" if --binary is passed.
+	* sed.h (write_mode): New.
+	* compile.c (mark_subst_opts, compile_program): Use it instead
+	of "w".
+	* execute.c (open_next_file): Pass write_mode to ck_mkstemp.
+	* utils.c (ck_mkstemp): Accept mode, pass it to fdopen.  Constify.
+	* utils.h (ck_mkstemp): Adjust prototype.
+
 2010-08-17  Paolo Bonzini  <bonzini@gnu.org>
 
 	Fix imprecision in the documentation of `D'.
