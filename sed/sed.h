@@ -233,8 +233,9 @@ extern countT lcmd_out_line_len;
 /* How do we edit files in-place? (we don't if NULL) */
 extern char *in_place_extension;
 
-/* The mode to use to read files, either "rt" or "rb".  */
+/* The mode to use to read and write files, either "rt"/"w" or "rb"/"wb".  */
 extern char *read_mode;
+extern char *write_mode;
 
 /* Should we use EREs? */
 extern bool use_extended_syntax_p;

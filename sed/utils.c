@@ -186,9 +186,10 @@ ck_fdopen(fd, name, mode, fail)
 }
 
 FILE *
-ck_mkstemp (p_filename, tmpdir, base)
+ck_mkstemp (p_filename, tmpdir, base, mode)
   char **p_filename;
-  char *base, *tmpdir;
+  const char *base, *tmpdir;
+  const char *mode;
 {
   char *template;
   FILE *fp;
@@ -222,7 +223,7 @@ ck_mkstemp (p_filename, tmpdir, base)
     panic(_("couldn't open temporary file %s: %s"), template, strerror(errno));
 
   *p_filename = template;
-  fp = fdopen (fd, "w");
+  fp = fdopen (fd, mode);
   register_open_file (fp, template, true);
   return fp;
 }

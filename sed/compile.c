@@ -652,7 +652,7 @@ mark_subst_opts(cmd)
 	break;
 
       case 'w':
-	cmd->outf = get_openfile(&file_write, "w", true);
+	cmd->outf = get_openfile(&file_write, write_mode, true);
 	return flags;
 
       case '0': case '1': case '2': case '3': case '4':
@@ -1262,7 +1262,7 @@ compile_program(vector)
 
         case 'W':
 	case 'w':
-	  cur_cmd->x.outf = get_openfile(&file_write, "w", true);
+	  cur_cmd->x.outf = get_openfile(&file_write, write_mode, true);
 	  break;
 
 	case 's':

@@ -763,7 +763,8 @@ open_next_file(name, input)
 	}
 #endif
 
-      output_file.fp = ck_mkstemp (&input->out_file_name, tmpdir, "sed");
+      output_file.fp = ck_mkstemp (&input->out_file_name, tmpdir, "sed",
+				   write_mode);
       output_file.missing_newline = false;
       free (tmpdir);
 
