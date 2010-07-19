@@ -1,3 +1,12 @@
+2019-07-19  Ralf Wildenhues  <Ralf.Wildenhues@gmx.de>
+
+	Let --posix turn off nonportable scripts ending in backslash.
+	* sed/compile.c (errors, INCOMPLETE_CMD): New error string.
+	(compile_program): In strict posix mode, complain about incomplete
+	command.
+	* NEWS: Update.
+	Report by Bruno Haible.
+
 2010-07-16  Paolo Bonzini  <bonzini@gnu.org>
 
 	* autoboot.conf (gnulib_modules): Replace mkstemp with mkostemp.

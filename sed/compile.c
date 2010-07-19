@@ -155,7 +155,8 @@ static const char errors[] =
   "delimiter character is not a single-byte character\0"
   "expected newer version of sed\0"
   "invalid usage of line address 0\0"
-  "unknown command: `%c'";
+  "unknown command: `%c'\0"
+  "incomplete command";
 
 #define BAD_BANG (errors)
 #define BAD_COMMA (BAD_BANG + sizeof(N_("multiple `!'s")))
@@ -182,7 +183,8 @@ static const char errors[] =
 #define ANCIENT_VERSION (BAD_DELIM + sizeof(N_("delimiter character is not a single-byte character")))
 #define INVALID_LINE_0 (ANCIENT_VERSION + sizeof(N_("expected newer version of sed")))
 #define UNKNOWN_CMD (INVALID_LINE_0 + sizeof(N_("invalid usage of line address 0")))
-#define END_ERRORS (UNKNOWN_CMD + sizeof(N_("unknown command: `%c'")))
+#define INCOMPLETE_CMD (UNKNOWN_CMD + sizeof(N_("unknown command: `%c'")))
+#define END_ERRORS (INCOMPLETE_CMD + sizeof(N_("incomplete command")))
 
 static struct output *file_read = NULL;
 static struct output *file_write = NULL;
@@ -1404,6 +1406,8 @@ compile_program(vector)
       /* this is buried down here so that "continue" statements will miss it */
       ++vector->v_length;
     }
+  if (posixicity == POSIXLY_BASIC && pending_text)
+    bad_prog (_(INCOMPLETE_CMD));
   return vector;
 }
 

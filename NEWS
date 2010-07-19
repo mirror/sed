@@ -8,6 +8,9 @@ Sed 4.2.2
 
 * -i does not convert the input file to binary (LF-terminated) on Cygwin
 
+* --posix fails for scripts (or fragments as passed to the -e option) that
+  end in a backslash, as they are not portable.
+
 ----------------------------------------------------------------------------
 Sed 4.2.1
 
