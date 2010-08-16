@@ -130,9 +130,10 @@ Delete pattern space.
 Start next cycle.
 .TP
 D
-Delete up to the first embedded newline in the pattern space.
-Start next cycle, but skip reading from the input
-if there is still data in the pattern space.
+If pattern space contains no newline, start a normal new cycle as if
+the d command was issued.  Otherwise, delete text in the pattern
+space up to the first newline, and restart cycle with the resultant
+pattern space, without reading a new line of input.
 .TP
 h H
 Copy/append pattern space to hold space.

@@ -1,4 +1,15 @@
-2019-07-19  Ralf Wildenhues  <Ralf.Wildenhues@gmx.de>
+2010-08-17  Paolo Bonzini  <bonzini@gnu.org>
+
+	Fix imprecision in the documentation of `D'.
+	* doc/sed-in.texi (D command): Fix documentation of behavior for
+	pattern space ending with \n and with no other newline.
+	Reported by Randall Cotton.
+	* doc/sed.x (D command): Fix documentation of behavior for
+	pattern space ending with \n and with no other newline.
+	* doc/sed.texi: Regenerate.
+	* doc/sed.1: Regenerate.
+
+2010-07-19  Ralf Wildenhues  <Ralf.Wildenhues@gmx.de>
 
 	Let --posix turn off nonportable scripts ending in backslash.
 	* sed/compile.c (errors, INCOMPLETE_CMD): New error string.
