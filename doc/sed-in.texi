@@ -846,7 +846,7 @@ string), while the second matches only strings containing
 at least one character.
 
 @item ^main.*(.*)
-his matches a string starting with @samp{main},
+This matches a string starting with @samp{main},
 followed by an opening and closing
 parenthesis.  The @samp{n}, @samp{(} and @samp{)} need not
 be adjacent.
@@ -1278,10 +1278,10 @@ are output without closing and reopening the file.
 @item D
 @findex D (delete first line) command
 @cindex Delete first line from pattern space
-Delete text in the pattern space up to the first newline.
-If any text is left, restart cycle with the resultant
-pattern space (without reading a new line of input),
-otherwise start a normal new cycle.
+If pattern space contains no newline, start a normal new cycle as if
+the @code{d} command was issued.  Otherwise, delete text in the pattern
+space up to the first newline, and restart cycle with the resultant
+pattern space, without reading a new line of input.
 
 @item N
 @findex N (append Next line) command
