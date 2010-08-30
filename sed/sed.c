@@ -56,6 +56,12 @@
 # define ATOI(x)	strtoul(x, NULL, 0)
 #endif
 
+#define AUTHORS \
+   _("Jay Fenlason"), \
+   _("Tom Lord"), \
+   _("Ken Pizzini"), \
+   _("Paolo Bonzini")
+
 char *program_name;
 
 int extended_regexp_flags = 0;
@@ -311,20 +317,9 @@ main(argc, argv)
 	  break;
 
 	case 'v':
-#ifdef REG_PERL
-	  fprintf(stdout, _("super-sed version %s\n"), VERSION);
-	  fprintf(stdout, _("based on GNU sed version %s\n\n"), SED_FEATURE_VERSION);
-#else
-	  fprintf(stdout, _("GNU sed version %s\n"), VERSION);
-#endif
-	  fprintf(stdout, _("Copyright (C) %d Free Software Foundation, Inc.\n\
-This is free software; see the source for copying conditions.  There is NO\n\
-warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE,\n\
-to the extent permitted by law.\n\
-"), COPYRIGHT_YEAR);
-	  fputc('\n', stdout);
+          version_etc(stdout, program_name, PACKAGE_NAME, VERSION,
+                      AUTHORS, (char *) NULL);
 	  contact(false);
-
 	  ck_fclose (NULL);
 	  exit (0);
 	case 'h':
