@@ -28,6 +28,8 @@ gnulib-common.m4
 gnulib-comp.m4
 gnulib-tool.m4
 iconv.m4
+iconv_h.m4
+iconv_open.m4
 include_next.m4
 inline.m4
 intdiv0.m4
@@ -43,6 +45,7 @@ lcmessage.m4
 lib-ld.m4
 lib-link.m4
 lib-prefix.m4
+libunistring-base.m4
 localcharset.m4
 locale-fr.m4
 locale-ja.m4
@@ -53,9 +56,12 @@ longlong.m4
 lstat.m4
 malloc.m4
 malloca.m4
+mbchar.m4
+mbiter.m4
 mbrlen.m4
 mbrtowc.m4
 mbsinit.m4
+mbslen.m4
 mbstate_t.m4
 memchr.m4
 memcmp.m4
@@ -83,6 +89,7 @@ signed.m4
 size_max.m4
 ssize_t.m4
 stat.m4
+stdarg.m4
 stdbool.m4
 stddef_h.m4
 stdint.m4
@@ -103,6 +110,7 @@ uintmax_t.m4
 ulonglong.m4
 unistd_h.m4
 unlocked-io.m4
+version-etc.m4
 visibility.m4
 warn-on-use.m4
 wchar.m4
@@ -112,6 +120,7 @@ wcrtomb.m4
 wctob.m4
 wctype.m4
 wctype_h.m4
+wcwidth.m4
 wint_t.m4
 xalloc.m4
 xsize.m4

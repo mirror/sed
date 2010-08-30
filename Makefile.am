@@ -21,8 +21,6 @@ DISTCHECK_CONFIGURE_FLAGS = XGETTEXT='$(SHELL) -c : dummy' $(EXTRA_DC_FLAGS)
 EXTRA_DC_FLAGS = 
 
 dist-hook:
-	test $(COPYRIGHT_YEAR) = `date +%Y` || \
-	  { echo Copyright year not updated; exit 1; }
 	cmp bootstrap.sh $(srcdir)/bootstrap.sh > /dev/null 2>&1 || \
 	  cp -p bootstrap.sh $(srcdir)/bootstrap.sh
 	cp -p $(srcdir)/bootstrap.sh $(distdir)/bootstrap.sh

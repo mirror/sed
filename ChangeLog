@@ -1,3 +1,13 @@
+2010-08-30  Paolo Bonzini  <bonzini@gnu.org>
+
+	* Makefile.am (dist-hook): Remove COPYRIGHT_YEAR check.
+	* autoboot.conf (gnulib_modules): Add version-etc-fsf.
+	* configure.ac (COPYRIGHT_YEAR): Remove.  Change package name to
+	"GNU sed".
+	* doc/sed.1: Regenerate.
+	* sed/sed.c (AUTHORS): New.
+	(main): Use version_etc.
+
 2010-07-18  Paolo Bonzini  <bonzini@gnu.org>
 
 	* sed.c (write_mode): New.
