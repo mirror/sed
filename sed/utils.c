@@ -42,6 +42,7 @@
 
 #include "utils.h"
 #include "pathmax.h"
+#include "fwriting.h"
 
 const char *myname;
 
