@@ -2805,8 +2805,7 @@ for the @code{sed-users} mailing list.
 @chapter Reporting Bugs
 
 @cindex Bugs, reporting
-Email bug reports to @email{bonzini@@gnu.org}.
-Be sure to include the word ``sed'' somewhere in the @code{Subject:} field.
+Email bug reports to @email{bug-sed@@gnu.org}.
 Also, please include the output of @samp{sed --version} in the body
 of your report if at all possible.
 

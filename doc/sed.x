@@ -325,7 +325,6 @@ http://sed.sf.net/grabbag/.
 [BUGS]
 .PP
 E-mail bug reports to
-.BR bonzini@gnu.org .
-Be sure to include the word ``sed'' somewhere in the ``Subject:'' field.
+.BR bug-sed@gnu.org .
 Also, please include the output of ``sed --version'' in the body
 of your report if at all possible.

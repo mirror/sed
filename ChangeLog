@@ -1,3 +1,9 @@
+2010-09-20  Paolo Bonzini  <bonzini@gnu.org>
+
+	* doc/configure.ac: Mention bug-sed@gnu.org.
+	* doc/sed.x: Mention bug-sed@gnu.org.
+	* doc/sed-in.texi: Mention bug-sed@gnu.org.
+
 2010-08-30  Paolo Bonzini  <bonzini@gnu.org>
 
 	* Makefile.am (dist-hook): Remove COPYRIGHT_YEAR check.
