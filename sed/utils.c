@@ -277,6 +277,9 @@ void
 ck_fflush(stream)
   FILE *stream;
 {
+  if (!fwriting(stream))
+    return;
+
   clearerr(stream);
   if (fflush(stream) == EOF && errno != EBADF)
     panic("couldn't flush %s: %s", utils_fp_name(stream), strerror(errno));
