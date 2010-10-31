@@ -2824,10 +2824,12 @@ the @env{LC_COLLATE} and @env{LC_CTYPE} environment variables to @samp{C}.
 
 The only difference between basic and extended regular expressions is in
 the behavior of a few characters: @samp{?}, @samp{+}, parentheses,
-and braces (@samp{@{@}}).  While basic regular expressions require
-these to be escaped if you want them to behave as special characters,
-when using extended regular expressions you must escape them if
-you want them @emph{to match a literal character}.
+braces (@samp{@{@}}), and @samp{|}.  While basic regular expressions
+require these to be escaped if you want them to behave as special
+characters, when using extended regular expressions you must escape
+them if you want them @emph{to match a literal character}.  @samp{|}
+is special here because @samp{\|} is a GNU extension -- standard
+basic regular expressions do not provide its functionality.
 
 @noindent
 Examples:
