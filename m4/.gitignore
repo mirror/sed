@@ -15,6 +15,7 @@ error.m4
 exitfail.m4
 extensions.m4
 fcntl-o.m4
+fwriting.m4
 getdelim.m4
 getline.m4
 getopt.m4

@@ -25,6 +25,8 @@ error.h
 exitfail.c
 exitfail.h
 file-has-acl.c
+fwriting.c
+fwriting.h
 getdelim.c
 getfilecon.c
 getline.c
@@ -114,6 +116,7 @@ stddef.h
 stddef.in.h
 stdint.h
 stdint.in.h
+stdio-impl.h
 stdio-write.c
 stdio.h
 stdio.in.h
