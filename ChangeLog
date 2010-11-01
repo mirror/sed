@@ -1,3 +1,10 @@
+2010-11-01  Paolo Bonzini  <bonzini@gnu.org>
+
+	* autoboot.conf: Replace gettext with gettext-h.  Suggested by
+	Gerald Pfeifer and Eric Blake.
+	* configure.ac: Downgrade minimum requested version of gettext
+	to 0.17.
+
 2010-10-31  Gerald Pfeifer  <gerald@pfeifer.com>
 
 	* doc/sed-in.texi (Extended regexps): Add '|' to the list of
