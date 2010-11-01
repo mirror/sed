@@ -2,6 +2,7 @@
 
 	* doc/sed-in.texi (Extended regexps): Add '|' to the list of
 	differences.  Note that "\|" is a GNU extension to begin with.
+	* doc/sed.texi: Rebuild.
 
 2010-10-20  Paolo Bonzini  <bonzini@gnu.org>
 
