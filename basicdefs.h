@@ -1,5 +1,5 @@
 /*  GNU SED, a batch stream editor.
-    Copyright (C) 1998, 1999, 2002, 2003 Free Software Foundation, Inc.
+    Copyright (C) 1998, 1999, 2002, 2003, 2010 Free Software Foundation, Inc.
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -151,7 +151,7 @@ typedef unsigned long countT;
 
 #undef ISPRINT
 #define ISPRINT(c) (ISASCII (c) && isprint (c))
-#define ISDIGIT(c) (ISASCII (c) && isdigit (c))
+#define ISDIGIT(c) (ISASCII (c) && isdigit ((unsigned char) (c)))
 #define ISALNUM(c) (ISASCII (c) && isalnum (c))
 #define ISALPHA(c) (ISASCII (c) && isalpha (c))
 #define ISCNTRL(c) (ISASCII (c) && iscntrl (c))

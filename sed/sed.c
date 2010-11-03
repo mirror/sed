@@ -1,5 +1,5 @@
 /*  GNU SED, a batch stream editor.
-    Copyright (C) 1989,90,91,92,93,94,95,98,99,2002,2003,2006,2008,2009
+    Copyright (C) 1989,90,91,92,93,94,95,98,99,2002,2003,2006,2008,2009,2010
     Free Software Foundation, Inc.
 
     This program is free software; you can redistribute it and/or modify
@@ -43,6 +43,8 @@
 # include <sys/types.h>
 #endif
 #include "getopt.h"
+
+#include "version-etc.h"
 
 #ifndef BOOTSTRAP
 #ifndef HAVE_STDLIB_H
