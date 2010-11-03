@@ -1,5 +1,8 @@
 2010-11-03  Eric Blake  <eblake@redhat.com>
 
+	* basicdefs.h (ISDIGIT): Avoid compiler warning on cygwin.
+	* sed/compile.c (normalize_text): Avoid undefined behavior.
+
 	* sed/sed.c (includes): Supply missing header.
 
 2010-11-01  Paolo Bonzini  <bonzini@gnu.org>
