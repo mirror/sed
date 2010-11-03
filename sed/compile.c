@@ -1,5 +1,5 @@
 /*  GNU SED, a batch stream editor.
-    Copyright (C) 1989,90,91,92,93,94,95,98,99,2002,2003,2004,2005,2006,2008
+    Copyright (C) 1989,90,91,92,93,94,95,98,99,2002,2003,2004,2005,2006,2008,2010
     Free Software Foundation, Inc.
 
     This program is free software; you can redistribute it and/or modify
@@ -1520,7 +1520,7 @@ normalize_text(buf, len, buftype)
 	  case 'c':
 	    if (++p < bufend)
 	      {
-		*q++ = toupper(*p) ^ 0x40;
+		*q++ = toupper((unsigned char) *p) ^ 0x40;
 		p++;
 		continue;
 	      }
