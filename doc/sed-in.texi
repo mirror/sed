@@ -1858,8 +1858,11 @@ x
 G
 
 # check if converted file name is equal to original file name,
-# if it is, do not print nothing
+# if it is, do not print anything
 /^.*\/\(.*\)\n\1/b
+
+# escape special characters for the shell
+s/["$`\\]/\\&/g
 
 # now, transform path/fromfile\n, into
 # mv path/fromfile path/tofile and print it
