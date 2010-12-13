@@ -1,3 +1,7 @@
+2010-11-13  Jari Aalto  <jari.aalto@cante.net>
+
+	* doc/sed.x: Order commands alphabetically.
+
 2010-11-10  Paolo Bonzini  <bonzini@gnu.org>
 
 	* doc/sed-in.texi: Fix double negation in comment, escape

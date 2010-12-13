@@ -1912,8 +1912,13 @@ G
 
 @group
 # check if converted file name is equal to original file name,
-# if it is, do not print nothing
+# if it is, do not print anything
 /^.*\/\(.*\)\n\1/b
+@end group
+
+@group
+# escape special characters for the shell
+s/["$`\\]/\\&/g
 @end group
 
 @group
