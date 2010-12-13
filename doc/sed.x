@@ -99,25 +99,6 @@ if
 .I label
 is omitted, branch to end of script.
 .TP
-.RI t\  label
-If a s/// has done a successful substitution since the
-last input line was read and since the last t or T
-command, then branch to
-.IR label ;
-if
-.I label
-is omitted, branch to end of script.
-.TP
-.RI T\  label
-If no s/// has done a successful substitution since the
-last input line was read and since the last t or T
-command, then branch to
-.IR label ;
-if
-.I label
-is omitted, branch to end of script.  This is a GNU
-extension.
-.TP
 c \e
 .TP
 .I text
@@ -140,9 +121,6 @@ Copy/append pattern space to hold space.
 .TP
 g G
 Copy/append hold space to pattern space.
-.TP
-x
-Exchange the contents of the hold and pattern spaces.
 .TP
 l
 List out the current line in a ``visually unambiguous'' form.
@@ -178,6 +156,25 @@ and the special escapes \e1 through \e9 to refer to the
 corresponding matching sub-expressions in the
 .IR regexp .
 .TP
+.RI t\  label
+If a s/// has done a successful substitution since the
+last input line was read and since the last t or T
+command, then branch to
+.IR label ;
+if
+.I label
+is omitted, branch to end of script.
+.TP
+.RI T\  label
+If no s/// has done a successful substitution since the
+last input line was read and since the last t or T
+command, then branch to
+.IR label ;
+if
+.I label
+is omitted, branch to end of script.  This is a GNU
+extension.
+.TP
 .RI w\  filename
 Write the current pattern space to
 .IR filename .
@@ -186,6 +183,9 @@ Write the current pattern space to
 Write the first line of the current pattern space to
 .IR filename .
 This is a GNU extension.
+.TP
+x
+Exchange the contents of the hold and pattern spaces.
 .TP
 .RI y/ source / dest /
 Transliterate the characters in the pattern space which appear in
