@@ -26,7 +26,7 @@ dist-hook:
 	cp -p $(srcdir)/bootstrap.sh $(distdir)/bootstrap.sh
 
 full-distcheck:
-        make distcheck EXTRA_DC_FLAGS='--enable-html'
-        make distcheck EXTRA_DC_FLAGS='--disable-i18n'
-        make distcheck EXTRA_DC_FLAGS='--disable-nls'
-        make distcheck EXTRA_DC_FLAGS='--without-included-gettext'
+	make distcheck EXTRA_DC_FLAGS='--enable-html'
+	make distcheck EXTRA_DC_FLAGS='--disable-i18n'
+	make distcheck EXTRA_DC_FLAGS='--disable-nls'
+	make distcheck EXTRA_DC_FLAGS='--without-included-gettext'
