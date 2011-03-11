@@ -1437,7 +1437,6 @@ normalize_text(buf, len, buftype)
 
   while (p < bufend)
     {
-      int c;
       mbclen = MBRLEN (p, bufend - p, &cur_stat);
       if (mbclen != 1)
 	{
@@ -1453,7 +1452,7 @@ normalize_text(buf, len, buftype)
 	}
 
       if (*p == '\\' && p+1 < bufend && bracket_state == 0)
-	switch ( (c = *++p) )
+	switch (*++p)
 	  {
 #if defined __STDC__ && __STDC__-0
 	  case 'a': *q++ = '\a'; p++; continue;

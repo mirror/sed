@@ -1,3 +1,9 @@
+2011-03-11  Paolo Bonzini  <bonzini@gnu.org>
+
+	* sed/compile.c (normalize_text): Clang analyzer cleanup.
+	* sed/execute.c (append_replacement, do_subst): Same.
+	* sed/utils.c (ck_getline): Same.
+
 2010-11-13  Jari Aalto  <jari.aalto@cante.net>
 
 	* doc/sed.x: Order commands alphabetically.

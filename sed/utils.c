@@ -265,10 +265,16 @@ ck_getline(text, buflen, stream)
   FILE *stream;
 {
   int result;
-  if (!ferror (stream))
-    result = getline (text, buflen, stream);
+  bool error;
 
-  if (ferror (stream))
+  error = ferror (stream);
+  if (!error)
+    {
+      result = getline (text, buflen, stream);
+      error = ferror (stream);
+    }
+
+  if (error)
     panic (_("read error on %s: %s"), utils_fp_name(stream), strerror(errno));
 
   return result;

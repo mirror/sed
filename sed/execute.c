@@ -1125,10 +1125,10 @@ do_list(line_len)
 }
 
 
-static enum replacement_types append_replacement P_((struct line *, struct replacement *,
-						     struct re_registers *,
-						     enum replacement_types));
-static enum replacement_types
+static void append_replacement P_((struct line *, struct replacement *,
+				   struct re_registers *,
+				   enum replacement_types));
+static void
 append_replacement (buf, p, regs, repl_mod)
   struct line *buf;
   struct replacement *p;
@@ -1169,8 +1169,6 @@ append_replacement (buf, p, regs, repl_mod)
 			        curr_type);
 	}
     }
-
-  return repl_mod;
 }
 
 static void do_subst P_((struct subst *));
@@ -1242,7 +1240,7 @@ do_subst(sub)
           replaced = true;
 
           /* Now expand the replacement string into the output string. */
-          repl_mod = append_replacement (&s_accum, sub->replacement, &regs, repl_mod);
+          append_replacement (&s_accum, sub->replacement, &regs, repl_mod);
 	  again = sub->global;
         }
       else
