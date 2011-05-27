@@ -1,3 +1,9 @@
+2011-05-27  Paolo Bonzini  <bonzini@gnu.org>
+
+	* doc/sed-in.texi: Fix incorrect comment in the "Increment a
+	number" example.  Reported by Wu Liang and Micah Cowan.
+	* doc/sed.texi: Regenerate.
+
 2011-03-11  Paolo Bonzini  <bonzini@gnu.org>
 
 	* sed/compile.c (normalize_text): Clang analyzer cleanup.
