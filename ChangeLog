@@ -1,3 +1,9 @@
+2011-05-27  Paolo Bonzini  <bonzini@gnu.org>
+
+	* doc/sed-in.texi: Fix incorrect comment in the "Increment a
+	number" example.  Reported by Wu Liang and Micah Cowan.
+	* doc/sed.texi: Regenerate.
+
 2011-03-11  Paolo Bonzini  <bonzini@gnu.org>
 
 	* sed/compile.c (normalize_text): Clang analyzer cleanup.
@@ -7,6 +13,8 @@
 2010-11-13  Jari Aalto  <jari.aalto@cante.net>
 
 	* doc/sed.x: Order commands alphabetically.
+	* doc/sed.1: Regenerate.
+	* doc/sed.texi: Regenerate.
 
 2010-11-10  Paolo Bonzini  <bonzini@gnu.org>
 

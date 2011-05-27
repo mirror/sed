@@ -1741,7 +1741,7 @@ and then again substituting underscores with zeros.
 /[^0-9]/ d
 
 @group
-# replace all leading 9s by _ (any other character except digits, could
+# replace all trailing 9s by _ (any other character except digits, could
 # be used)
 :d
 s/9\(_*\)$/_\1/
@@ -1751,9 +1751,6 @@ td
 @group
 # incr last digit only.  The first line adds a most-significant
 # digit of 1 if we have to add a digit.
-#
-# The @code{tn} commands are not necessary, but make the thing
-# faster
 @end group
 
 @group
