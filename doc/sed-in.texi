@@ -1015,6 +1015,32 @@ to uppercase,
 Stop case conversion started by @code{\L} or @code{\U}.
 @end table
 
+When the @code{g} flag is being used, case conversion does not
+propagate from one occurrence of the regular expression to
+another.  For example, when the following command is executed
+with @samp{a-b-} in pattern space:
+@example
+s/\(b\?\)-/x\u\1/g
+@end example
+
+@noindent
+the output is @samp{axxB}.  When replacing the first @samp{-},
+the @samp{\u} sequence only affects the empty replacement of
+@samp{\1}.  It does not affect the @code{x} character that is
+added to pattern space when replacing @code{b-} with @code{xB}.
+
+On the other hand, @code{\l} and @code{\u} do affect the remainder
+of the replacement text if they are followed by an empty substitution.
+With @samp{a-b-} in pattern space, the following command:
+@example
+s/\(b\?\)-/\u\1x/g
+@end example
+
+@noindent
+will replace @samp{-} with @samp{X} (uppercase) and @samp{b-} with
+@samp{Bx}.  If this behavior is undesirable, you can prevent it by
+adding a @samp{\E} sequence---after @samp{\1} in this case.
+
 To include a literal @code{\}, @code{&}, or newline in the final
 replacement, be sure to precede the desired @code{\}, @code{&},
 or newline in the @var{replacement} with a @code{\}.

@@ -1,5 +1,13 @@
 2011-05-27  Paolo Bonzini  <bonzini@gnu.org>
 
+	* doc/sed-in.texi: Explain behavior of \l and \u at the end
+	of the replacement text.
+	* doc/sed.texi: Regenerate.
+	* sed/execute.c (append_replacement, do_subst): Further
+	simplification.
+
+2011-05-27  Paolo Bonzini  <bonzini@gnu.org>
+
 	* doc/sed-in.texi: Fix incorrect comment in the "Increment a
 	number" example.  Reported by Wu Liang and Micah Cowan.
 	* doc/sed.texi: Regenerate.
