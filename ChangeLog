@@ -1,3 +1,8 @@
+2011-05-27  Paolo Bonzini  <bonzini@gnu.org>
+
+	* sed/execute.c (append_replacement, do_subst): Further
+	simplification.
+
 2012-03-16  Paolo Bonzini  <bonzini@gnu.org>
 
 	* basicdefs.h (FREE): Remove.
