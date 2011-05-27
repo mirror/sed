@@ -1126,15 +1126,15 @@ do_list(line_len)
 
 
 static void append_replacement P_((struct line *, struct replacement *,
-				   struct re_registers *,
-				   enum replacement_types));
+				   struct re_registers *));
 static void
-append_replacement (buf, p, regs, repl_mod)
+append_replacement (buf, p, regs)
   struct line *buf;
   struct replacement *p;
   struct re_registers *regs;
-  enum replacement_types repl_mod;
 {
+  enum replacement_types repl_mod = 0;
+
   for (; p; p=p->next)
     {
       int i = p->subst_id;
@@ -1215,8 +1215,6 @@ do_subst(sub)
 
   do
     {
-      enum replacement_types repl_mod = 0;
-
       size_t offset = regs.start[0];
       size_t matched = regs.end[0] - regs.start[0];
 
@@ -1240,7 +1238,7 @@ do_subst(sub)
           replaced = true;
 
           /* Now expand the replacement string into the output string. */
-          append_replacement (&s_accum, sub->replacement, &regs, repl_mod);
+          append_replacement (&s_accum, sub->replacement, &regs);
 	  again = sub->global;
         }
       else
