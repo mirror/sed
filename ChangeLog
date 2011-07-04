@@ -1,3 +1,7 @@
+2011-07-14  Padraig Brady  <p@draigbrady.com>
+
+	* execute.c (open_next_file): Only reopen stdin on Windows/DOS.
+
 2011-05-27  Paolo Bonzini  <bonzini@gnu.org>
 
 	* doc/sed-in.texi: Explain behavior of \l and \u at the end

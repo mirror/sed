@@ -701,7 +701,11 @@ open_next_file(name, input)
   if (name[0] == '-' && name[1] == '\0' && !in_place_extension)
     {
       clearerr(stdin);	/* clear any stale EOF indication */
+#if defined(WIN32) || defined(_WIN32) || defined(__CYGWIN__) || defined(MSDOS) || defined(__EMX__)
       input->fp = ck_fdopen (fileno (stdin), "stdin", read_mode, false);
+#else
+      input->fp = stdin;
+#endif
     }
   else if ( ! (input->fp = ck_fopen(name, read_mode, false)) )
     {
