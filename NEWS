@@ -1,5 +1,7 @@
 Sed 4.2.2
 
+* don't misbehave (truncate input) for lines of length 231 and longer
+
 * fix endless loop on incomplete multibyte sequences
 
 * -u also does unbuffered input, rather than unbuffered output only

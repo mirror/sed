@@ -1,5 +1,5 @@
 /*  Functions from hack's utils library.
-    Copyright (C) 1989, 1990, 1991, 1998, 1999, 2003, 2008, 2009
+    Copyright (C) 1989, 1990, 1991, 1998, 1999, 2003, 2008, 2009, 2011
     Free Software Foundation, Inc.
 
     This program is free software; you can redistribute it and/or modify
@@ -264,7 +264,7 @@ ck_getline(text, buflen, stream)
   size_t *buflen;
   FILE *stream;
 {
-  int result;
+  ssize_t result;
   bool error;
 
   error = ferror (stream);
