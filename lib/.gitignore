@@ -18,6 +18,7 @@ copy-acl.c
 dirname-lgpl.c
 dirname.c
 dirname.h
+dosname.h
 errno.h
 errno.in.h
 error.c
@@ -70,6 +71,8 @@ mbrtowc.c
 mbsinit.c
 mbslen.c
 mbsstr.c
+mbtowc-impl.h
+mbtowc.c
 mbuiter.h
 memchr.c
 memchr.valgrind
@@ -124,6 +127,8 @@ stdlib.h
 stdlib.in.h
 str-kmp.h
 streq.h
+strerror-override.c
+strerror-override.h
 strerror.c
 striconv.c
 striconv.h
@@ -161,10 +166,13 @@ wchar.h
 wchar.in.h
 wcrtomb.c
 wctob.c
+wctomb-impl.h
+wctomb.c
 wctype.h
 wctype.in.h
 wcwidth.c
 xalloc-die.c
+xalloc-oversized.h
 xalloc.h
 xmalloc.c
 xstriconv.c
