@@ -1,9 +1,14 @@
+2011-08-29  Paolo Bonzini  <bonzini@gnu.org>
+
+	* sed/sed.c (usage): Fix documentation for -i.  Reported by
+	Dennis Bartlett.
+
 2011-07-11  Jim Meyering  <meyering@redhat.com>
 
-	avoid silent data loss when an input line is 231 bytes or longer
-	If one line in a file has length (including newline) of 231, then
+	avoid silent data loss when an input line is 2^31 bytes or longer
+	If one line in a file has length (including newline) of 2^31, then
 	applying sed -i to that file truncates it to size 0.  I first
-	noticed it like this: Create a file with line of length 231-1
+	noticed it like this: Create a file with line of length 2^31-1
 	  $ perl -le 'print "v"x(2**31-1)' > k
 	Then prepend a byte to that line:
 	  $ sed -i 's/^/v/' k

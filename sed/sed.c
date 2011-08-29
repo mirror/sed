@@ -143,7 +143,7 @@ Usage: %s [OPTION]... {script-only-if-no-other-script} [input-file]...\n\
                  follow symlinks when processing in place\n"));
 #endif
   fprintf(out, _("  -i[SUFFIX], --in-place[=SUFFIX]\n\
-                 edit files in place (makes backup if extension supplied)\n"));
+                 edit files in place (makes backup if SUFFIX supplied)\n"));
 #if defined(WIN32) || defined(_WIN32) || defined(__CYGWIN__) || defined(MSDOS) || defined(__EMX__)
   fprintf(out, _("  -b, --binary\n\
                  open files in binary mode (CR+LFs are not processed specially)\n"));
