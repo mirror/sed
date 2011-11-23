@@ -533,15 +533,16 @@ a case-insensitive manner.
 
 @item /@var{regexp}/M
 @itemx \%@var{regexp}%M
-@ifset PERL
 @cindex @value{SSEDEXT}, @code{M} modifier
-@end ifset
+@ifset PERL
 @cindex Perl-style regular expressions, multiline
+@end ifset
 The @code{M} modifier to regular-expression matching is a @value{SSED}
-extension which causes @code{^} and @code{$} to match respectively
-(in addition to the normal behavior) the empty string after a newline,
-and the empty string before a newline.  There are special character
-sequences
+extension which directs @value{SSED} to match the regular expression
+in @cite{multi-line} mode.  The modifier causes @code{^} and @code{$} to
+match respectively (in addition to the normal behavior) the empty string
+after a newline, and the empty string before a newline.  There are
+special character sequences
 @ifset PERL
 (@code{\A} and @code{\Z} in Perl mode, @code{\`} and @code{\'}
 in basic or extended regular expression modes)
@@ -550,7 +551,12 @@ in basic or extended regular expression modes)
 (@code{\`} and @code{\'})
 @end ifclear
 which always match the beginning or the end of the buffer.
-@code{M} stands for @cite{multi-line}.
+In addition,
+@ifset PERL
+just like in Perl mode without the @code{S} modifier,
+@end ifset
+the period character does not match a new-line character in
+multi-line mode.
 
 @ifset PERL
 @item /@var{regexp}/S
@@ -1129,10 +1135,11 @@ case-insensitive manner.
 @cindex Perl-style regular expressions, multiline
 @end ifset
 The @code{M} modifier to regular-expression matching is a @value{SSED}
-extension which causes @code{^} and @code{$} to match respectively
-(in addition to the normal behavior) the empty string after a newline,
-and the empty string before a newline.  There are special character
-sequences
+extension which directs @value{SSED} to match the regular expression
+in @cite{multi-line} mode.  The modifier causes @code{^} and @code{$} to
+match respectively (in addition to the normal behavior) the empty string
+after a newline, and the empty string before a newline.  There are
+special character sequences
 @ifset PERL
 (@code{\A} and @code{\Z} in Perl mode, @code{\`} and @code{\'}
 in basic or extended regular expression modes)
@@ -1141,7 +1148,12 @@ in basic or extended regular expression modes)
 (@code{\`} and @code{\'})
 @end ifclear
 which always match the beginning or the end of the buffer.
-@code{M} stands for @cite{multi-line}.
+In addition,
+@ifset PERL
+just like in Perl mode without the @code{S} modifier,
+@end ifset
+the period character does not match a new-line character in
+multi-line mode.
 
 @ifset PERL
 @item S
