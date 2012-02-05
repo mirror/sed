@@ -68,6 +68,9 @@ char *program_name;
 
 int extended_regexp_flags = 0;
 
+/* one-byte buffer delimiter */
+char buffer_delimiter = '\n';
+
 /* If set, fflush(stdout) on every line output. */
 bool unbuffered = false;
 
@@ -163,6 +166,8 @@ Usage: %s [OPTION]... {script-only-if-no-other-script} [input-file]...\n\
   fprintf(out, _("  -u, --unbuffered\n\
                  load minimal amounts of data from the input files and flush\n\
                  the output buffers more often\n"));
+  fprintf(out, _("  -z, --null-data\n\
+                 separate lines by NUL characters\n"));
   fprintf(out, _("      --help     display this help and exit\n"));
   fprintf(out, _("      --version  output version information and exit\n"));
   fprintf(out, _("\n\
@@ -183,9 +188,9 @@ main(argc, argv)
   char **argv;
 {
 #ifdef REG_PERL
-#define SHORTOPTS "bsnrRuEe:f:l:i::V:"
+#define SHORTOPTS "bsnrzRuEe:f:l:i::V:"
 #else
-#define SHORTOPTS "bsnruEe:f:l:i::V:"
+#define SHORTOPTS "bsnrzuEe:f:l:i::V:"
 #endif
 
   static struct option longopts[] = {
@@ -198,6 +203,8 @@ main(argc, argv)
     {"file", 1, NULL, 'f'},
     {"in-place", 2, NULL, 'i'},
     {"line-length", 1, NULL, 'l'},
+    {"null-data", 0, NULL, 'z'},
+    {"zero-terminated", 0, NULL, 'z'},
     {"quiet", 0, NULL, 'n'},
     {"posix", 0, NULL, 'p'},
     {"silent", 0, NULL, 'n'},
@@ -259,6 +266,10 @@ main(argc, argv)
 	  break;
 	case 'f':
 	  the_program = compile_file(the_program, optarg);
+	  break;
+
+	case 'z':
+	  buffer_delimiter = 0;
 	  break;
 
 	case 'F':

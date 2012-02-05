@@ -369,6 +369,16 @@ Buffer both input and output as minimally as practical.
 the likes of @samp{tail -f}, and you wish to see the transformed
 output as soon as possible.)
 
+@item -z
+@itemx --null-data
+@itemx --zero-terminated
+@opindex -z
+@opindex --null-data
+@opindex --zero-terminated
+Treat the input as a set of lines, each terminated by a zero byte
+(the ASCII @samp{NUL} character) instead of a newline.  This option can
+be used with commands like @samp{sort -z} and @samp{find -print0}
+to process arbitrary file names.
 @end table
 
 If no @option{-e}, @option{-f}, @option{--expression}, or @option{--file}

@@ -14,6 +14,8 @@ Sed 4.2.2
 * --posix fails for scripts (or fragments as passed to the -e option) that
   end in a backslash, as they are not portable.
 
+* New option -z (--null-data) to separate lines by ASCII NUL characters.
+
 ----------------------------------------------------------------------------
 Sed 4.2.1
 

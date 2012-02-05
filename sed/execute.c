@@ -472,7 +472,7 @@ line_append(from, to, state)
   struct line *to;
   int state;
 {
-  str_append(to, "\n", 1);
+  str_append(to, &buffer_delimiter, 1);
   str_append(to, from->active, from->length);
   to->chomped = from->chomped;
 
@@ -525,12 +525,12 @@ read_file_line(input)
   static char *b;
   static size_t blen;
 
-  long result = ck_getline (&b, &blen, input->fp);
+  long result = ck_getdelim (&b, &blen, buffer_delimiter, input->fp);
   if (result <= 0)
     return false;
 
   /* Remove the trailing new-line that is left by getline. */
-  if (b[result - 1] == '\n')
+  if (b[result - 1] == buffer_delimiter)
     --result;
   else
     line.chomped = false;
@@ -547,7 +547,7 @@ output_missing_newline(outf)
 {
   if (outf->missing_newline)
     {
-      ck_fwrite("\n", 1, 1, outf->fp);
+      ck_fwrite(&buffer_delimiter, 1, 1, outf->fp);
       outf->missing_newline = false;
     }
 }
@@ -576,7 +576,7 @@ output_line(text, length, nl, outf)
   if (length)
     ck_fwrite(text, 1, length, outf->fp);
   if (nl)
-    ck_fwrite("\n", 1, 1, outf->fp);
+    ck_fwrite(&buffer_delimiter, 1, 1, outf->fp);
   else
     outf->missing_newline = true;
 
@@ -1315,7 +1315,7 @@ do_subst(sub)
 	     for 'g' as to while the third argument is incorrect anyway.  */
 	  line_exchange(&line, &s_accum, true);
 	  if (line.length &&
-	      line.active[line.length - 1] == '\n')
+	      line.active[line.length - 1] == buffer_delimiter)
 	    line.length--;
 	}
       else
@@ -1435,7 +1435,7 @@ execute_program(vec, input)
 
 	    case 'D':
 	      {
-		char *p = memchr(line.active, '\n', line.length);
+		char *p = memchr(line.active, buffer_delimiter, line.length);
 		if (!p)
 		  return -1;
 
@@ -1485,7 +1485,7 @@ execute_program(vec, input)
 		    {
 		      /* Store into pattern space for plain `e' commands */
 		      if (s_accum.length &&
-			  s_accum.active[s_accum.length - 1] == '\n')
+			  s_accum.active[s_accum.length - 1] == buffer_delimiter)
 			s_accum.length--;
 
 		      /* Exchange line and s_accum.  This can be much
@@ -1566,7 +1566,7 @@ execute_program(vec, input)
 	      break;
 
 	    case 'N':
-	      str_append(&line, "\n", 1);
+	      str_append(&line, &buffer_delimiter, 1);
  
               if (test_eof(input) || !read_pattern_space(input, vec, true))
                 {
@@ -1584,7 +1584,7 @@ execute_program(vec, input)
 
 	    case 'P':
 	      {
-		char *p = memchr(line.active, '\n', line.length);
+		char *p = memchr(line.active, buffer_delimiter, line.length);
 		output_line(line.active, p ? p - line.active : line.length,
 			    p ? true : line.chomped, &output_file);
 	      }
@@ -1614,7 +1614,8 @@ execute_program(vec, input)
 		  char *text = NULL;
 		  int result;
 
-		  result = ck_getline (&text, &buflen, cur_cmd->x.fp);
+		  result = ck_getdelim (&text, &buflen, buffer_delimiter,
+				        cur_cmd->x.fp);
 		  if (result != EOF)
 		    {
 		      aq = next_append_slot();
@@ -1657,7 +1658,7 @@ execute_program(vec, input)
 	    case 'W':
 	      if (cur_cmd->x.fp)
 	        {
-		  char *p = memchr(line.active, '\n', line.length);
+		  char *p = memchr(line.active, buffer_delimiter, line.length);
 		  output_line(line.active, p ? p - line.active : line.length,
 			      p ? true : line.chomped, cur_cmd->x.outf);
 	        }

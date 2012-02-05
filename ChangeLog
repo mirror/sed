@@ -1,3 +1,17 @@
+2012-02-05  Paolo Bonzini  <bonzini@gnu.org>
+            Jim Hill  <gjthill@gmail.com>
+
+	* autoboot.conf: Change getline to getdelim.
+	* doc/sed-in.texi: Document -z/--null-data.
+	* doc/sed.texi: Regenerate.
+	* doc/sed.1: Regenerate.
+	* sed/execute.c: Change '\n' to buffer_delimiter.
+	* sed/sed.c: Add support for -z/--null-data.
+	* sed/sed.h: Add buffer_delimiter.
+	* sed/utils.c: Change ck_getline to ck_getdelim.
+	* sed/utils.h: Change ck_getline to ck_getdelim.
+	* NEWS: Document new option.
+
 2011-11-23  Paolo Bonzini  <bonzini@gnu.org>
 
 	* doc/sed-in.texi: Document how multiline mode affects matching
