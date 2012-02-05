@@ -29,7 +29,7 @@ size_t ck_fread P_((VOID *ptr, size_t size, size_t nmemb, FILE *stream));
 void ck_fflush P_((FILE *stream));
 void ck_fclose P_((FILE *stream));
 const char *follow_symlink P_((const char *path));
-size_t ck_getline P_((char **text, size_t *buflen, FILE *stream));
+size_t ck_getdelim P_((char **text, size_t *buflen, char buffer_delimiter, FILE *stream));
 FILE * ck_mkstemp P_((char **p_filename, const char *tmpdir, const char *base,
 		      const char *mode));
 void ck_rename P_((const char *from, const char *to, const char *unlink_if_fail));

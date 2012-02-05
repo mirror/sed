@@ -259,9 +259,10 @@ ck_fread(ptr, size, nmemb, stream)
 }
 
 size_t
-ck_getline(text, buflen, stream)
+ck_getdelim(text, buflen, buffer_delimiter, stream)
   char **text;
   size_t *buflen;
+  char buffer_delimiter;
   FILE *stream;
 {
   ssize_t result;
@@ -270,7 +271,7 @@ ck_getline(text, buflen, stream)
   error = ferror (stream);
   if (!error)
     {
-      result = getline (text, buflen, stream);
+      result = getdelim (text, buflen, buffer_delimiter, stream);
       error = ferror (stream);
     }
 
