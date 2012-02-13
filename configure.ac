@@ -15,6 +15,30 @@ AC_PROG_CC
 gl_EARLY
 gl_INIT
 gl_DISABLE_THREADS
+AC_CACHE_CHECK([whether "rt" can be used with fopen], [sed_cv_fopen_rt], [
+AC_TRY_RUN([
+#include <stdio.h>
+#include <errno.h>
+
+int main()
+{
+  FILE *fp;
+  int result;
+  errno = 0;
+  fp = fopen ("conftest.c", "rt");
+  if (fp) fclose (fp);
+  return fp ? 0 : 1;
+}], [sed_cv_fopen_rt=yes],
+    [sed_cv_fopen_rt=no],
+    [case $host in
+       *cygwin* | *mingw*) sed_cv_fopen_rt=yes ;;
+       *) sed_cv_fopen_rt='assuming no' ;;
+     esac])])
+if test "$sed_cv_fopen_rt" = yes; then
+  AC_DEFINE([HAVE_FOPEN_RT], [1],
+            [Defined if "rt" can be used as a mode to fopen.])
+fi
+
 AC_CACHE_CHECK([whether -lcP is needed], [sed_cv_libcp_needed], [
 AC_TRY_RUN([
 #include <stdio.h>
