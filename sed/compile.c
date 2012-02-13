@@ -1610,7 +1610,13 @@ compile_file(cur_program, cmdfile)
 
   prog.file = stdin;
   if (cmdfile[0] != '-' || cmdfile[1] != '\0')
-    prog.file = ck_fopen(cmdfile, "rt", true);
+    {
+#ifdef HAVE_FOPEN_RT
+      prog.file = ck_fopen(cmdfile, "rt", true);
+#else
+      prog.file = ck_fopen(cmdfile, "r", true);
+#endif
+    }
 
   cur_input.line = 1;
   cur_input.name = cmdfile;

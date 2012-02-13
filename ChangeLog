@@ -1,3 +1,9 @@
+2012-02-13  Paolo Bonzini  <bonzini@gnu.org>
+
+	* configure.ac: Test whether fopen("foo", "rt") works.
+	* sed/compile.c: Do not open scripts with "rt" mode if it doesn't.
+	* sed/sed.c: Never open input files with "rt" mode.
+
 2012-02-05  Paolo Bonzini  <bonzini@gnu.org>
             Jim Hill  <gjthill@gmail.com>
 
