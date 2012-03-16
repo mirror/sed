@@ -55,16 +55,10 @@ struct line {
   size_t length;	/* Length of text (or active, if used). */
   size_t alloc;		/* Allocated space for active. */
   bool chomped;		/* Was a trailing newline dropped? */
-#ifdef HAVE_MBRTOWC
   mbstate_t mbstate;
-#endif
 };
 
-#ifdef HAVE_MBRTOWC
 #define SIZEOF_LINE	offsetof (struct line, mbstate)
-#else
-#define SIZEOF_LINE	(sizeof (struct line))
-#endif
 
 /* A queue of text to write out at the end of a cycle
    (filled by the "a", "r" and "R" commands.) */
@@ -185,7 +179,6 @@ str_append(to, string, length)
   MEMCPY(to->active + to->length, string, length);
   to->length = new_length;
 
-#ifdef HAVE_MBRTOWC
   if (mb_cur_max > 1 && !is_utf8)
     while (length)
       {
@@ -206,7 +199,6 @@ str_append(to, string, length)
         else
 	  break;
       }
-#endif
 }
 
 static void str_append_modified P_((struct line *, const char *, size_t,
@@ -218,7 +210,6 @@ str_append_modified(to, string, length, type)
   size_t length;
   enum replacement_types type;
 {
-#ifdef HAVE_MBRTOWC
   mbstate_t from_stat;
 
   if (type == REPL_ASIS)
@@ -284,39 +275,6 @@ str_append_modified(to, string, length, type)
 	  abort ();
 	}
     }
-#else
-  size_t old_length = to->length;
-  char *start, *end;
-
-  str_append(to, string, length);
-  start = to->active + old_length;
-  end = start + length;
-
-  /* Now do the required modifications.  First \[lu]... */
-  if (type & REPL_UPPERCASE_FIRST)
-    {
-      *start = toupper(*start);
-      start++;
-      type &= ~REPL_UPPERCASE_FIRST;
-    }
-  else if (type & REPL_LOWERCASE_FIRST)
-    {
-      *start = tolower(*start);
-      start++;
-      type &= ~REPL_LOWERCASE_FIRST;
-    }
-
-  if (type == REPL_ASIS)
-    return;
-
-  /* ...and then \[LU] */
-  if (type == REPL_UPPERCASE)
-    for (; start != end; start++)
-      *start = toupper(*start);
-  else
-    for (; start != end; start++)
-      *start = tolower(*start);
-#endif
 }
 
 /* Initialize a "struct line" buffer.  Copy multibyte state from `state'
@@ -334,12 +292,10 @@ line_init(buf, state, initial_size)
   buf->length = 0;
   buf->chomped = true;
 
-#ifdef HAVE_MBRTOWC
   if (state)
     memcpy (&buf->mbstate, &state->mbstate, sizeof (buf->mbstate));
   else
     memset (&buf->mbstate, 0, sizeof (buf->mbstate));
-#endif
 }
 
 /* Reset a "struct line" buffer to length zero.  Copy multibyte state from
@@ -354,12 +310,10 @@ line_reset(buf, state)
   else
     {
       buf->length = 0;
-#ifdef HAVE_MBRTOWC
       if (state)
         memcpy (&buf->mbstate, &state->mbstate, sizeof (buf->mbstate));
       else
         memset (&buf->mbstate, 0, sizeof (buf->mbstate));
-#endif
     }
 }
 
@@ -394,10 +348,8 @@ line_copy(from, to, state)
   to->chomped = from->chomped;
   MEMCPY(to->active, from->active, from->length);
 
-#ifdef HAVE_MBRTOWC
   if (state)
     MEMCPY(&to->mbstate, &from->mbstate, sizeof (from->mbstate));
-#endif
 }
 
 /* Append the contents of the line `from' to the line `to'.
@@ -413,10 +365,8 @@ line_append(from, to, state)
   str_append(to, from->active, from->length);
   to->chomped = from->chomped;
 
-#ifdef HAVE_MBRTOWC
   if (state)
     MEMCPY (&to->mbstate, &from->mbstate, sizeof (from->mbstate));
-#endif
 }
 
 /* Exchange two "struct line" buffers.
@@ -1604,7 +1554,6 @@ execute_program(vec, input)
 
 	    case 'y':
 	      {
-#ifdef HAVE_MBRTOWC
                if (mb_cur_max > 1)
                  {
                    int idx, prev_idx; /* index in the input line.  */
@@ -1672,7 +1621,6 @@ execute_program(vec, input)
                      }
                  }
                else
-#endif /* HAVE_MBRTOWC */
                  {
                    unsigned char *p, *e;
                    p = CAST(unsigned char *)line.active;
