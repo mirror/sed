@@ -262,6 +262,6 @@ release_regex(regex)
   struct regex *regex;
 {
   regfree(&regex->pattern);
-  FREE(regex);
+  free(regex);
 }
 #endif /*DEBUG_LEAKS*/

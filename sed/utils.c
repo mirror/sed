@@ -113,7 +113,7 @@ register_open_file (fp, name, temp)
     {
       if (fp == p->fp)
 	{
-	  FREE(p->name);
+	  free(p->name);
 	  break;
 	}
     }
@@ -300,8 +300,8 @@ ck_fclose(stream)
 	{
 	  do_ck_fclose (cur->fp);
 	  prev->link = cur->link;
-	  FREE(cur->name);
-	  FREE(cur);
+	  free(cur->name);
+	  free(cur);
 	}
       else
 	prev = cur;
@@ -461,7 +461,7 @@ ck_realloc(ptr, size)
 
   if (size == 0)
     {
-      FREE(ptr);
+      free(ptr);
       return NULL;
     }
   if (!ptr)
@@ -489,15 +489,6 @@ ck_memdup(buf, len)
 {
   void *ret = ck_malloc(len);
   return memcpy(ret, buf, len);
-}
-
-/* Release a malloc'd block of memory */
-void
-ck_free(ptr)
-  void *ptr;
-{
-  if (ptr)
-    free(ptr);
 }
 
 
@@ -603,6 +594,6 @@ free_buffer(b)
   struct buffer *b;
 {
   if (b)
-    FREE(b->b);
-  FREE(b);
+    free(b->b);
+  free(b);
 }

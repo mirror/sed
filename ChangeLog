@@ -1,5 +1,14 @@
 2012-03-16  Paolo Bonzini  <bonzini@gnu.org>
 
+	* basicdefs.h (FREE): Remove.
+	* sed/compile.c: Adjust.
+	* sed/execute.c: Adjust.
+	* sed/regexp.c: Adjust.
+	* sed/utils.c: Adjust, remove ck_free.
+	* sed/utils.h: Adjust, remove ck_free.
+
+2012-03-16  Paolo Bonzini  <bonzini@gnu.org>
+
 	* basicdefs.h (CAST, VCAST, VOID, MEMCPY, MEMMOVE): Rip out.
 	* sed/compile.c: Adjust.
 	* sed/execute.c: Adjust.

@@ -39,7 +39,6 @@ void *xmalloc P_((size_t size));
 void *ck_realloc P_((void *ptr, size_t size));
 char *ck_strdup P_((const char *str));
 void *ck_memdup P_((const void *buf, size_t len));
-void ck_free P_((void *ptr));
 
 struct buffer *init_buffer P_((void));
 char *get_buffer P_((struct buffer *b));
