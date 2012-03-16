@@ -42,11 +42,10 @@ typedef unsigned long countT;
 #define MALLOC(n,t)	 ((t *)ck_malloc((n)*sizeof(t)))
 #define REALLOC(x,n,t)	 ((t *)ck_realloc((void *)(x),(n)*sizeof(t)))
 #define MEMDUP(x,n,t)	 ((t *)ck_memdup((void *)(x),(n)*sizeof(t)))
-#define FREE(x)		 (ck_free((void *)x))
 #define OB_MALLOC(o,n,t) ((t *)(void *)obstack_alloc(o,(n)*sizeof(t)))
 
 #define obstack_chunk_alloc  ck_malloc
-#define obstack_chunk_free   ck_free
+#define obstack_chunk_free   free
 
 
 /* handle misdesigned <ctype.h> macros (snarfed from lib/regex.c) */

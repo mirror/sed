@@ -337,9 +337,9 @@ line_copy(from, to, state)
 	to->alloc = from->length;
       if (to->alloc < INITIAL_BUFFER_SIZE)
 	to->alloc = INITIAL_BUFFER_SIZE;
-      /* Use FREE()+MALLOC() instead of REALLOC() to
+      /* Use free()+MALLOC() instead of REALLOC() to
 	 avoid unnecessary copying of old text. */
-      FREE(to->text);
+      free(to->text);
       to->text = MALLOC(to->alloc, char);
     }
 
@@ -498,10 +498,10 @@ release_append_queue()
   for (p=append_head; p; p=q)
     {
       if (p->free)
-        FREE(p->text);
+        free(p->text);
 
       q = p->next;
-      FREE(p);
+      free(p);
     }
   append_head = append_tail = NULL;
 }
@@ -1759,10 +1759,10 @@ process_files(the_program, argv)
      deallocate in order to avoid extraneous noise from
      the allocator. */
   release_append_queue();
-  FREE(buffer.text);
-  FREE(hold.text);
-  FREE(line.text);
-  FREE(s_accum.text);
+  free(buffer.text);
+  free(hold.text);
+  free(line.text);
+  free(s_accum.text);
 #endif /*DEBUG_LEAKS*/
 
   if (input.bad_count)

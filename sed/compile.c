@@ -723,11 +723,11 @@ release_label(list_head)
     return NULL;
   ret = list_head->next;
 
-  FREE(list_head->name);
+  free(list_head->name);
 
 #if 0
   /* We use obstacks */
-  FREE(list_head);
+  free(list_head);
 #endif
   return ret;
 }
@@ -1671,14 +1671,14 @@ check_final_program(program)
     for (p=file_read; p; p=p->link)
       if (p->name)
 	{
-	  FREE(p->name);
+	  free(p->name);
 	  p->name = NULL;
 	}
 
     for (p=file_write; p; p=p->link)
       if (p->name)
 	{
-	  FREE(p->name);
+	  free(p->name);
 	  p->name = NULL;
 	}
   }
@@ -1711,7 +1711,7 @@ finish_program(program)
 	q = p->link;
 #if 0
 	/* We use obstacks. */
-	FREE(p);
+	free(p);
 #endif
       }
 
@@ -1722,7 +1722,7 @@ finish_program(program)
 	q = p->link;
 #if 0
 	/* We use obstacks. */
-	FREE(p);
+	free(p);
 #endif
       }
     file_read = file_write = NULL;
