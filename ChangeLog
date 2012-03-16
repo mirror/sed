@@ -1,5 +1,9 @@
 2012-03-16  Paolo Bonzini  <bonzini@gnu.org>
 
+	* gnulib: Update.
+
+2012-03-16  Paolo Bonzini  <bonzini@gnu.org>
+
 	* doc/sed.x: Document address behavior across input files.
 	* doc/sed.1: Regenerate.
 
