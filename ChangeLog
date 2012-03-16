@@ -1,5 +1,16 @@
 2012-03-16  Paolo Bonzini  <bonzini@gnu.org>
 
+	* bootstrap.sh.in: Remove.
+	* bootstrap.sh: Remove.
+	* configure.ac: Do not create bootstrap.sh.
+	* basicdefs.h: Remove guards.
+	* pcre/pcre.h [BOOTSTRAP]: Remove guards.
+	* sed/execute.c [BOOTSTRAP]: Remove guards.
+	* sed/sed.c [BOOTSTRAP]: Remove guards.
+	* sed/sed.h [BOOTSTRAP]: Remove guards.
+
+2012-03-16  Paolo Bonzini  <bonzini@gnu.org>
+
 	* execute.c (open_next_file): Save/restore file creation context.
 
 2010-11-03  Eric Blake  <eblake@redhat.com>

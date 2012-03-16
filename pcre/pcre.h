@@ -16,11 +16,6 @@
 #ifdef STDC_HEADERS
 #include <stdlib.h>
 #endif
-#ifdef BOOTSTRAP
-#ifdef HAVE_MALLOC_H
-#include <malloc.h>
-#endif
-#endif
 
 /* Allow for C++ users */
 

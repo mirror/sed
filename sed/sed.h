@@ -22,11 +22,8 @@
 
 #include "basicdefs.h"
 #include "regexp.h"
-
-#ifndef BOOTSTRAP
 #include <stdio.h>
 #include "unlocked-io.h"
-#endif
 
 #include "utils.h"
 

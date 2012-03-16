@@ -91,7 +91,6 @@ case $host in
 esac
 AC_SUBST([XFAIL_TESTS])
 
-AC_CONFIG_FILES([bootstrap.sh], chmod +x bootstrap.sh)
 AC_CONFIG_FILES([testsuite/version.good:testsuite/version.gin])
 AC_CONFIG_FILES([Makefile doc/Makefile \
 lib/Makefile sed/Makefile testsuite/Makefile \

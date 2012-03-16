@@ -46,10 +46,8 @@
 
 #include "version-etc.h"
 
-#ifndef BOOTSTRAP
 #ifndef HAVE_STDLIB_H
  extern char *getenv P_((const char *));
-#endif
 #endif
 
 #ifndef HAVE_STRTOUL
