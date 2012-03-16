@@ -1,3 +1,8 @@
+2012-03-16  Paolo Bonzini  <bonzini@gnu.org>
+
+	* doc/sed.x: Document address behavior across input files.
+	* doc/sed.1: Regenerate.
+
 2012-02-13  Paolo Bonzini  <bonzini@gnu.org>
 
 	* configure.ac: Test whether fopen("foo", "rt") works.
