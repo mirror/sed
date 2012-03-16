@@ -21,20 +21,8 @@
 #include <stdio.h>
 #include <stdarg.h>
 #include <errno.h>
-#ifndef errno
-  extern int errno;
-#endif
-
-#ifdef HAVE_STRINGS_H
-# include <strings.h>
-#else
-# include <string.h>
-#endif /* HAVE_STRINGS_H */
-
-#ifdef HAVE_STDLIB_H
-# include <stdlib.h>
-#endif /* HAVE_STDLIB_H */
-
+#include <string.h>
+#include <stdlib.h>
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <unistd.h>

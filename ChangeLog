@@ -1,5 +1,15 @@
 2012-03-16  Paolo Bonzini  <bonzini@gnu.org>
 
+	* basicdefs.h: Enjoy gnulib's headers.
+	* sed/compile.c: Likewise.
+	* sed/execute.c: Likewise.
+	* sed/regexp.c: Likewise.
+	* sed/sed.c: Likewise.
+	* sed/sed.h: Likewise.
+	* sed/utils.c: Likewise.
+
+2012-03-16  Paolo Bonzini  <bonzini@gnu.org>
+
 	* bootstrap.sh.in: Remove.
 	* bootstrap.sh: Remove.
 	* configure.ac: Do not create bootstrap.sh.

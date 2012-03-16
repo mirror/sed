@@ -19,18 +19,9 @@
 #define BASICDEFS_H
 
 #include <alloca.h>
-
-#ifdef HAVE_WCHAR_H
-# include <wchar.h>
-#endif
-#ifdef HAVE_LOCALE_H
-# include <locale.h>
-#endif
-#ifdef HAVE_WCTYPE_H
-# include <wctype.h>
-#endif
-
-
+#include <wchar.h>
+#include <locale.h>
+#include <wctype.h>
 #include <stdbool.h>
 
 #include <gettext.h>
@@ -89,31 +80,6 @@ typedef unsigned long countT;
 
 #define obstack_chunk_alloc  ck_malloc
 #define obstack_chunk_free   ck_free
-
-
-#ifdef HAVE_MEMORY_H
-# include <memory.h>
-#endif
-
-#ifndef HAVE_MEMMOVE
-# ifndef memmove
-   /* ../lib/libsed.a provides a memmove() if the system doesn't.
-      Here is where we declare its return type; we don't prototype
-      it because that sometimes causes problems when we're running in
-      bootstrap mode on a system which really does support memmove(). */
-   extern VOID *memmove();
-# endif
-#endif
-
-#ifndef HAVE_MEMCPY
-# ifndef memcpy
-#  define memcpy(d, s, n)	memmove(d, s, n)
-# endif
-#endif
-
-#ifndef HAVE_STRERROR
- extern char *strerror P_((int e));
-#endif
 
 
 /* handle misdesigned <ctype.h> macros (snarfed from lib/regex.c) */

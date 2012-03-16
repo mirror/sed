@@ -21,40 +21,12 @@
 
 
 #include <stdio.h>
-#ifdef HAVE_STRINGS_H
-# include <strings.h>
-#else
-# include <string.h>
-#endif /*HAVE_STRINGS_H*/
-#ifdef HAVE_MEMORY_H
-# include <memory.h>
-#endif
-
-#ifndef HAVE_STRCHR
-# define strchr index
-# define strrchr rindex
-#endif
-
-#ifdef HAVE_STDLIB_H
-# include <stdlib.h>
-#endif
-
-#ifdef HAVE_SYS_TYPES_H
-# include <sys/types.h>
-#endif
+#include <string.h>
+#include <stdlib.h>
+#include <sys/types.h>
 #include "getopt.h"
 
 #include "version-etc.h"
-
-#ifndef HAVE_STDLIB_H
- extern char *getenv P_((const char *));
-#endif
-
-#ifndef HAVE_STRTOUL
-# define ATOI(x)	atoi(x)
-#else
-# define ATOI(x)	strtoul(x, NULL, 0)
-#endif
 
 #define AUTHORS \
    _("Jay Fenlason"), \
@@ -246,7 +218,7 @@ main(argc, argv)
    */
   if (cols)
     {
-      countT t = ATOI(cols);
+      countT t = atoi(cols);
       if (t > 1)
 	lcmd_out_line_len = t-1;
     }
@@ -293,7 +265,7 @@ main(argc, argv)
 	  break;
 
 	case 'l':
-	  lcmd_out_line_len = ATOI(optarg);
+	  lcmd_out_line_len = atoi(optarg);
 	  break;
 
 	case 'p':

@@ -21,9 +21,7 @@
 #include <ctype.h>
 #include <string.h>
 #include <stdio.h>
-#ifdef HAVE_STDLIB_H
-# include <stdlib.h>
-#endif
+#include <stdlib.h>
 
 #ifdef gettext_noop
 # define N_(String) gettext_noop(String)
