@@ -219,7 +219,7 @@ ck_mkstemp (p_filename, tmpdir, base, mode)
 /* Panic on failing fwrite */
 void
 ck_fwrite(ptr, size, nmemb, stream)
-  const VOID *ptr;
+  const void *ptr;
   size_t size;
   size_t nmemb;
   FILE *stream;
@@ -234,7 +234,7 @@ ck_fwrite(ptr, size, nmemb, stream)
 /* Panic on failing fread */
 size_t
 ck_fread(ptr, size, nmemb, stream)
-  VOID *ptr;
+  void *ptr;
   size_t size;
   size_t nmemb;
   FILE *stream;
@@ -441,23 +441,23 @@ ck_rename (from, to, unlink_if_fail)
 
 
 /* Panic on failing malloc */
-VOID *
+void *
 ck_malloc(size)
   size_t size;
 {
-  VOID *ret = calloc(1, size ? size : 1);
+  void *ret = calloc(1, size ? size : 1);
   if (!ret)
     panic("couldn't allocate memory");
   return ret;
 }
 
 /* Panic on failing realloc */
-VOID *
+void *
 ck_realloc(ptr, size)
-  VOID *ptr;
+  void *ptr;
   size_t size;
 {
-  VOID *ret;
+  void *ret;
 
   if (size == 0)
     {
@@ -482,19 +482,19 @@ ck_strdup(str)
 }
 
 /* Return a malloc()'d copy of a block of memory */
-VOID *
+void *
 ck_memdup(buf, len)
-  const VOID *buf;
+  const void *buf;
   size_t len;
 {
-  VOID *ret = ck_malloc(len);
+  void *ret = ck_malloc(len);
   return memcpy(ret, buf, len);
 }
 
 /* Release a malloc'd block of memory */
 void
 ck_free(ptr)
-  VOID *ptr;
+  void *ptr;
 {
   if (ptr)
     free(ptr);

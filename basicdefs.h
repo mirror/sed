@@ -31,23 +31,6 @@
 /* type countT is used to keep track of line numbers, etc. */
 typedef unsigned long countT;
 
-/* Oftentimes casts are used as an ugly hack to silence warnings
- * from the compiler.  However, sometimes those warnings really
- * do point to something worth avoiding.  I define this
- * dummy marker to make searching for them with a text editor
- * much easier, in case I want to verify that they are all
- * legitimate.  It is defined in the way it is so that it is
- * easy to disable all casts so that the compiler (or lint)
- * can tell me potentially interesting things about what would
- * happen to the code without the explicit casts.
- */
-#ifdef LOUD_LINT
-# define CAST(x)
-#else
-# define CAST(x) (x)
-#endif
-
-
 /* Can the compiler grok function prototypes? */
 #if (defined __STDC__ && __STDC__-0) || defined __GNUC__ || defined __SUNPRO_C || __PROTOTYPES
 # define P_(s)		s
@@ -55,27 +38,11 @@ typedef unsigned long countT;
 # define P_(s)		()
 #endif
 
-/* (VOID *) is the generic pointer type; some ancient compilers
-   don't know about (void *), and typically use (char *) instead.
-   VCAST() is used to cast to and from (VOID *)s --- but if the
-   compiler *does* support (void *) make this a no-op, so that
-   the compiler can detect if we omitted an essential function
-   declaration somewhere.
- */
-#ifndef VOID
-# define VOID		void
-# define VCAST(t)	
-#else
-# define VCAST(t)	(t)
-#endif
-
-/* some basic definitions to avoid undue promulgating of VCAST ugliness */
-#define MALLOC(n,t)	 (VCAST(t *)ck_malloc((n)*sizeof(t)))
-#define REALLOC(x,n,t)	 (VCAST(t *)ck_realloc(VCAST(VOID *)(x),(n)*sizeof(t)))
-#define MEMDUP(x,n,t)	 (VCAST(t *)ck_memdup(VCAST(VOID *)(x),(n)*sizeof(t)))
-#define FREE(x)		 (ck_free(VCAST(VOID *)x))
-#define MEMCPY(d,s,l)	 (memcpy(VCAST(VOID *)(d),VCAST(const VOID *)(s),l))
-#define MEMMOVE(d,s,l)	 (memmove(VCAST(VOID *)(d),VCAST(const VOID *)(s),l))
+/* some basic definitions to avoid undue promulgating of  ugliness */
+#define MALLOC(n,t)	 ((t *)ck_malloc((n)*sizeof(t)))
+#define REALLOC(x,n,t)	 ((t *)ck_realloc((void *)(x),(n)*sizeof(t)))
+#define MEMDUP(x,n,t)	 ((t *)ck_memdup((void *)(x),(n)*sizeof(t)))
+#define FREE(x)		 (ck_free((void *)x))
 #define OB_MALLOC(o,n,t) ((t *)(void *)obstack_alloc(o,(n)*sizeof(t)))
 
 #define obstack_chunk_alloc  ck_malloc
