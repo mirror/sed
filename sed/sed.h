@@ -241,8 +241,6 @@ extern bool use_extended_syntax_p;
 extern int mb_cur_max;
 extern bool is_utf8;
 
-#ifdef HAVE_MBRTOWC
-#ifdef HAVE_BTOWC
 #define MBRTOWC(pwc, s, n, ps) \
   (mb_cur_max == 1 ? \
    (*(pwc) = btowc (*(unsigned char *) (s)), 1) : \
@@ -252,13 +250,6 @@ extern bool is_utf8;
   (mb_cur_max == 1 ? \
    (*(s) = wctob ((wint_t) (wc)), 1) : \
    wcrtomb ((s), (wc), (ps)))
-#else
-#define MBRTOWC(pwc, s, n, ps) \
-  mbrtowc ((pwc), (s), (n), (ps))
-
-#define WCRTOMB(s, wc, ps) \
-  wcrtomb ((s), (wc), (ps))
-#endif
 
 #define MBSINIT(s) \
   (mb_cur_max == 1 ? 1 : mbsinit ((s)))
@@ -268,12 +259,6 @@ extern bool is_utf8;
 
 #define BRLEN(ch, ps) \
   (mb_cur_max == 1 ? 1 : brlen (ch, ps))
-
-#else
-#define MBSINIT(s) 1
-#define MBRLEN(s, n, ps) 1
-#define BRLEN(ch, ps) 1
-#endif
 
 extern int brlen P_ ((int ch, mbstate_t *ps));
 extern void initialize_mbcs P_ ((void));

@@ -1,5 +1,11 @@
 2012-03-16  Paolo Bonzini  <bonzini@gnu.org>
 
+	* sed/execute.c: Unconditionally compile for MBCS.
+	* sed/mbcs.c: Unconditionally compile for MBCS.
+	* sed/sed.h: Unconditionally compile for MBCS.
+
+2012-03-16  Paolo Bonzini  <bonzini@gnu.org>
+
 	* basicdefs.h: Enjoy gnulib's headers.
 	* sed/compile.c: Likewise.
 	* sed/execute.c: Likewise.

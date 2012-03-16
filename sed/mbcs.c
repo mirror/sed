@@ -24,7 +24,6 @@
 int mb_cur_max;
 bool is_utf8;
 
-#ifdef HAVE_MBRTOWC
 /* Add a byte to the multibyte character represented by the state
    CUR_STAT, and answer its length if a character is completed,
    or -2 if it is yet to be completed.  */
@@ -46,7 +45,6 @@ int brlen (ch, cur_stat)
 
   return result;
 }
-#endif
 
 void
 initialize_mbcs ()
@@ -57,10 +55,6 @@ initialize_mbcs ()
   codeset_name = locale_charset ();
   is_utf8 = (strcmp (codeset_name, "UTF-8") == 0);
 
-#ifdef HAVE_MBRTOWC
   mb_cur_max = MB_CUR_MAX;
-#else
-  mb_cur_max = 1;
-#endif
 }
 
