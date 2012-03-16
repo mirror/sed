@@ -20,31 +20,31 @@
 
 #include "basicdefs.h"
 
-void panic P_((const char *str, ...));
+void panic (const char *str, ...);
 
-FILE *ck_fopen P_((const char *name, const char *mode, int fail));
-FILE *ck_fdopen P_((int fd, const char *name, const char *mode, int fail));
-void ck_fwrite P_((const void *ptr, size_t size, size_t nmemb, FILE *stream));
-size_t ck_fread P_((void *ptr, size_t size, size_t nmemb, FILE *stream));
-void ck_fflush P_((FILE *stream));
-void ck_fclose P_((FILE *stream));
-const char *follow_symlink P_((const char *path));
-size_t ck_getdelim P_((char **text, size_t *buflen, char buffer_delimiter, FILE *stream));
-FILE * ck_mkstemp P_((char **p_filename, const char *tmpdir, const char *base,
-		      const char *mode));
-void ck_rename P_((const char *from, const char *to, const char *unlink_if_fail));
+FILE *ck_fopen (const char *name, const char *mode, int fail);
+FILE *ck_fdopen (int fd, const char *name, const char *mode, int fail);
+void ck_fwrite (const void *ptr, size_t size, size_t nmemb, FILE *stream);
+size_t ck_fread (void *ptr, size_t size, size_t nmemb, FILE *stream);
+void ck_fflush (FILE *stream);
+void ck_fclose (FILE *stream);
+const char *follow_symlink (const char *path);
+size_t ck_getdelim (char **text, size_t *buflen, char buffer_delimiter, FILE *stream);
+FILE * ck_mkstemp (char **p_filename, const char *tmpdir, const char *base,
+		   const char *mode);
+void ck_rename (const char *from, const char *to, const char *unlink_if_fail);
 
-void *ck_malloc P_((size_t size));
-void *xmalloc P_((size_t size));
-void *ck_realloc P_((void *ptr, size_t size));
-char *ck_strdup P_((const char *str));
-void *ck_memdup P_((const void *buf, size_t len));
+void *ck_malloc (size_t size);
+void *xmalloc (size_t size);
+void *ck_realloc (void *ptr, size_t size);
+char *ck_strdup (const char *str);
+void *ck_memdup (const void *buf, size_t len);
 
-struct buffer *init_buffer P_((void));
-char *get_buffer P_((struct buffer *b));
-size_t size_buffer P_((struct buffer *b));
-char *add_buffer P_((struct buffer *b, const char *p, size_t n));
-char *add1_buffer P_((struct buffer *b, int ch));
-void free_buffer P_((struct buffer *b));
+struct buffer *init_buffer (void);
+char *get_buffer (struct buffer *b);
+size_t size_buffer (struct buffer *b);
+char *add_buffer (struct buffer *b, const char *p, size_t n);
+char *add1_buffer (struct buffer *b, int ch);
+void free_buffer (struct buffer *b);
 
 extern const char *myname;

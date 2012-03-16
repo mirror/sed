@@ -69,7 +69,7 @@ countT lcmd_out_line_len = 70;
 /* The complete compiled SED program that we are going to run: */
 static struct vector *the_program = NULL;
 
-static void usage P_((int));
+static void usage (int);
 static void
 contact(errmsg)
   int errmsg;
@@ -88,7 +88,7 @@ Be sure to include the word ``%s'' somewhere in the ``Subject:'' field.\n"),
 	  PACKAGE_BUGREPORT, PACKAGE);
 }
 
-static void usage P_((int));
+static void usage (int);
 static void
 usage(status)
   int status;

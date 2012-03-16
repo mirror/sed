@@ -124,20 +124,20 @@ struct Word
 
 /* Forward declarations.  */
 
-static bool get_paragraph P_ ((void));
-static int get_line P_ ((int c));
-static int get_space P_ ((int c));
-static int copy_rest P_ ((int c));
-static bool same_para P_ ((int c));
-static void flush_paragraph P_ ((void));
-static void fmt_paragraph P_ ((void));
-static void check_punctuation P_ ((WORD *w));
-static COST base_cost P_ ((WORD *this));
-static COST line_cost P_ ((WORD *next, int len));
-static void put_paragraph P_ ((WORD *finish));
-static void put_line P_ ((WORD *w, int indent));
-static void put_word P_ ((WORD *w));
-static void put_space P_ ((int space));
+static bool get_paragraph (void);
+static int get_line (int c);
+static int get_space (int c);
+static int copy_rest (int c);
+static bool same_para (int c);
+static void flush_paragraph (void);
+static void fmt_paragraph (void);
+static void check_punctuation (WORD *w);
+static COST base_cost (WORD *this);
+static COST line_cost (WORD *next, int len);
+static void put_paragraph (WORD *finish);
+static void put_line (WORD *w, int indent);
+static void put_word (WORD *w);
+static void put_space (int space);
 
 /* Option values.  */
 

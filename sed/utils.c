@@ -47,7 +47,7 @@ struct open_file
   };
 
 static struct open_file *open_files = NULL;
-static void do_ck_fclose P_((FILE *fp));
+static void do_ck_fclose (FILE *fp);
 
 /* Print an error message and exit */
 
@@ -82,7 +82,7 @@ panic(const char *str, ...)
 
 
 /* Internal routine to get a filename from open_files */
-static const char *utils_fp_name P_((FILE *fp));
+static const char *utils_fp_name (FILE *fp);
 static const char *
 utils_fp_name(fp)
   FILE *fp;
@@ -528,7 +528,7 @@ size_buffer(b)
   return b->length;
 }
 
-static void resize_buffer P_((struct buffer *b, size_t newlen));
+static void resize_buffer (struct buffer *b, size_t newlen);
 static void
 resize_buffer(b, newlen)
   struct buffer *b;
