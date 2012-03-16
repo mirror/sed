@@ -25,19 +25,17 @@
 #include <stddef.h>
 #include <stdio.h>
 #include <ctype.h>
-
+#include <unistd.h>
 #include <errno.h>
-#ifndef errno
-extern int errno;
-#endif
+#include <string.h>
+#include <stdlib.h>
+#include <sys/types.h>
+#include <sys/stat.h>
+#include "stat-macros.h"
 
 #include <selinux/selinux.h>
 #include <selinux/context.h>
 #include "acl.h"
-
-#ifdef HAVE_UNISTD_H
-# include <unistd.h>
-#endif
 
 #ifdef __GNUC__
 # if __GNUC__ > 2 || (__GNUC__ == 2 && __GNUC_MINOR__-0 >= 7)
@@ -48,34 +46,6 @@ extern int errno;
 #ifndef UNUSED
 # define UNUSED
 #endif
-
-#ifdef HAVE_STRINGS_H
-# include <strings.h>
-#else
-# include <string.h>
-#endif /*HAVE_STRINGS_H*/
-#ifdef HAVE_MEMORY_H
-# include <memory.h>
-#endif
-
-#ifndef HAVE_STRCHR
-# define strchr index
-# define strrchr rindex
-#endif
-
-#ifdef HAVE_STDLIB_H
-# include <stdlib.h>
-#endif
-#ifndef EXIT_SUCCESS
-# define EXIT_SUCCESS 0
-#endif
-
-#ifdef HAVE_SYS_TYPES_H
-# include <sys/types.h>
-#endif
-
-#include <sys/stat.h>
-#include "stat-macros.h"
 
 
 /* Sed operates a line at a time. */

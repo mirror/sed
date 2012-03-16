@@ -21,27 +21,9 @@
 #include "sed.h"
 #include <stdio.h>
 #include <ctype.h>
-
-#ifdef HAVE_STRINGS_H
-# include <strings.h>
-# ifdef HAVE_MEMORY_H
-#  include <memory.h>
-# endif
-#else
-# include <string.h>
-#endif /* HAVE_STRINGS_H */
-
-#ifdef HAVE_STDLIB_H
-# include <stdlib.h>
-#endif
-#ifndef EXIT_FAILURE
-# define EXIT_FAILURE 1
-#endif
-
-#ifdef HAVE_SYS_TYPES_H
-# include <sys/types.h>
-#endif
-
+#include <string.h>
+#include <stdlib.h>
+#include <sys/types.h>
 #include <obstack.h>
 
 
