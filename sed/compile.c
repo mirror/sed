@@ -204,7 +204,7 @@ bad_prog(why)
 /* Read the next character from the program.  Return EOF if there isn't
    anything to read.  Keep cur_input.line up to date, so error messages
    can be meaningful. */
-static int inchar P_((void));
+static int inchar (void);
 static int
 inchar()
 {
@@ -226,7 +226,7 @@ inchar()
 }
 
 /* unget `ch' so the next call to inchar will return it.   */
-static void savchar P_((int ch));
+static void savchar (int ch);
 static void
 savchar(ch)
   int ch;
@@ -246,7 +246,7 @@ savchar(ch)
 }
 
 /* Read the next non-blank character from the program.  */
-static int in_nonblank P_((void));
+static int in_nonblank (void);
 static int
 in_nonblank()
 {
@@ -258,7 +258,7 @@ in_nonblank()
 }
 
 /* Read an integer value from the program.  */
-static countT in_integer P_((int ch));
+static countT in_integer (int ch);
 static countT
 in_integer(ch)
   int ch;
@@ -274,7 +274,7 @@ in_integer(ch)
   return num;
 }
 
-static int add_then_next P_((struct buffer *b, int ch));
+static int add_then_next (struct buffer *b, int ch);
 static int
 add_then_next(b, ch)
   struct buffer *b;
@@ -284,7 +284,7 @@ add_then_next(b, ch)
   return inchar();
 }
 
-static char * convert_number P_((char *, char *, const char *, int, int, int));
+static char * convert_number (char *, char *, const char *, int, int, int);
 static char *
 convert_number(result, buf, bufend, base, maxdigits, default_char)
   char *result;
@@ -332,7 +332,7 @@ convert_number(result, buf, bufend, base, maxdigits, default_char)
 
 
 /* Read in a filename for a `r', `w', or `s///w' command. */
-static struct buffer *read_filename P_((void));
+static struct buffer *read_filename (void);
 static struct buffer *
 read_filename()
 {
@@ -357,7 +357,7 @@ read_filename()
   return b;
 }
 
-static struct output *get_openfile P_((struct output **file_ptrs, const char *mode, int fail));
+static struct output *get_openfile (struct output **file_ptrs, const char *mode, int fail);
 static struct output *
 get_openfile(file_ptrs, mode, fail)
      struct output **file_ptrs;
@@ -405,7 +405,7 @@ get_openfile(file_ptrs, mode, fail)
 }
 
 
-static struct sed_cmd *next_cmd_entry P_((struct vector **vectorp));
+static struct sed_cmd *next_cmd_entry (struct vector **vectorp);
 static struct sed_cmd *
 next_cmd_entry(vectorp)
   struct vector **vectorp;
@@ -431,7 +431,7 @@ next_cmd_entry(vectorp)
   return cmd;
 }
 
-static int snarf_char_class P_((struct buffer *b, mbstate_t *cur_stat));
+static int snarf_char_class (struct buffer *b, mbstate_t *cur_stat);
 static int
 snarf_char_class(b, cur_stat)
   struct buffer *b;
@@ -512,7 +512,7 @@ snarf_char_class(b, cur_stat)
     }
 }
 
-static struct buffer *match_slash P_((int slash, int regex));
+static struct buffer *match_slash (int slash, int regex);
 static struct buffer *
 match_slash(slash, regex)
   int slash;
@@ -568,7 +568,7 @@ match_slash(slash, regex)
   return NULL;
 }
 
-static int mark_subst_opts P_((struct subst *cmd));
+static int mark_subst_opts (struct subst *cmd);
 static int
 mark_subst_opts(cmd)
   struct subst *cmd;
@@ -668,7 +668,7 @@ mark_subst_opts(cmd)
 
 
 /* read in a label for a `:', `b', or `t' command */
-static char *read_label P_((void));
+static char *read_label (void);
 static char *
 read_label()
 {
@@ -695,7 +695,7 @@ read_label()
    compilation is complete, or a reference created by a `{' to be
    backpatched when the corresponding `}' is found.  */
 static struct sed_label *setup_label
-  P_((struct sed_label *, countT, char *, const struct error_info *));
+  (struct sed_label *, countT, char *, const struct error_info *);
 static struct sed_label *
 setup_label(list, idx, name, err_info)
   struct sed_label *list;
@@ -712,7 +712,7 @@ setup_label(list, idx, name, err_info)
   return ret;
 }
 
-static struct sed_label *release_label P_((struct sed_label *list_head));
+static struct sed_label *release_label (struct sed_label *list_head);
 static struct sed_label *
 release_label(list_head)
   struct sed_label *list_head;
@@ -732,13 +732,8 @@ release_label(list_head)
   return ret;
 }
 
-static struct replacement *new_replacement P_((char *, size_t,
-					       enum replacement_types));
 static struct replacement *
-new_replacement(text, length, type)
-  char *text;
-  size_t length;
-  enum replacement_types type;
+new_replacement(char *text, size_t length, enum replacement_types type)
 {
   struct replacement *r = OB_MALLOC(&obs, 1, struct replacement);
 
@@ -751,7 +746,7 @@ new_replacement(text, length, type)
   return r;
 }
 
-static void setup_replacement P_((struct subst *, const char *, size_t));
+static void setup_replacement (struct subst *, const char *, size_t);
 static void
 setup_replacement(sub, text, length)
      struct subst *sub;
@@ -856,7 +851,7 @@ setup_replacement(sub, text, length)
   sub->replacement = root.next;
 }
 
-static void read_text P_((struct text_buf *buf, int leadin_ch));
+static void read_text (struct text_buf *buf, int leadin_ch);
 static void
 read_text(buf, leadin_ch)
   struct text_buf *buf;
@@ -916,7 +911,7 @@ read_text(buf, leadin_ch)
    return non-zero and store the resulting address in `*addr'.
    If the input doesn't look like an address read nothing
    and return zero.  */
-static bool compile_address P_((struct addr *addr, int ch));
+static bool compile_address (struct addr *addr, int ch);
 static bool
 compile_address(addr, ch)
   struct addr *addr;
@@ -1014,7 +1009,7 @@ compile_address(addr, ch)
 
 /* Read a program (or a subprogram within `{' `}' pairs) in and store
    the compiled form in `*vector'.  Return a pointer to the new vector.  */
-static struct vector *compile_program P_((struct vector *));
+static struct vector *compile_program (struct vector *);
 static struct vector *
 compile_program(vector)
   struct vector *vector;

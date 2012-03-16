@@ -1,5 +1,16 @@
 2012-03-16  Paolo Bonzini  <bonzini@gnu.org>
 
+	* basicdefs.h (P_): Remove.
+	* sed/compile.c: Adjust.
+	* sed/execute.c: Likewise.
+	* sed/fmt.c: Likewise.
+	* sed/sed.c: Likewise.
+	* sed/sed.h: Likewise.
+	* sed/utils.c: Likewise.
+	* sed/utils.h: Likewise.
+
+2012-03-16  Paolo Bonzini  <bonzini@gnu.org>
+
 	* basicdefs.h (FREE): Remove.
 	* sed/compile.c: Adjust.
 	* sed/execute.c: Adjust.

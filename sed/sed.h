@@ -181,27 +181,27 @@ struct sed_cmd {
 
 
 
-void bad_prog P_((const char *why));
-size_t normalize_text P_((char *text, size_t len, enum text_types buftype));
-struct vector *compile_string P_((struct vector *, char *str, size_t len));
-struct vector *compile_file P_((struct vector *, const char *cmdfile));
-void check_final_program P_((struct vector *));
-void rewind_read_files P_((void));
-void finish_program P_((struct vector *));
+void bad_prog (const char *why);
+size_t normalize_text (char *text, size_t len, enum text_types buftype);
+struct vector *compile_string (struct vector *, char *str, size_t len);
+struct vector *compile_file (struct vector *, const char *cmdfile);
+void check_final_program (struct vector *);
+void rewind_read_files (void);
+void finish_program (struct vector *);
 
-struct regex *compile_regex P_((struct buffer *b, int flags, int needed_sub));
-int match_regex P_((struct regex *regex,
-		    char *buf, size_t buflen, size_t buf_start_offset,
-		    struct re_registers *regarray, int regsize));
+struct regex *compile_regex (struct buffer *b, int flags, int needed_sub);
+int match_regex (struct regex *regex,
+		 char *buf, size_t buflen, size_t buf_start_offset,
+		 struct re_registers *regarray, int regsize);
 #ifdef DEBUG_LEAKS
-void release_regex P_((struct regex *));
+void release_regex (struct regex *);
 #endif
 
-int process_files P_((struct vector *, char **argv));
+int process_files (struct vector *, char **argv);
 
-int main P_((int, char **));
+int main (int, char **);
 
-extern void fmt P_ ((const char *line, const char *line_end, int max_length, FILE *output_file));
+extern void fmt (const char *line, const char *line_end, int max_length, FILE *output_file);
 
 extern int extended_regexp_flags;
 
@@ -260,6 +260,6 @@ extern bool is_utf8;
 #define BRLEN(ch, ps) \
   (mb_cur_max == 1 ? 1 : brlen (ch, ps))
 
-extern int brlen P_ ((int ch, mbstate_t *ps));
-extern void initialize_mbcs P_ ((void));
+extern int brlen (int ch, mbstate_t *ps);
+extern void initialize_mbcs (void);
 

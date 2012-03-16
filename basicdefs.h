@@ -31,13 +31,6 @@
 /* type countT is used to keep track of line numbers, etc. */
 typedef unsigned long countT;
 
-/* Can the compiler grok function prototypes? */
-#if (defined __STDC__ && __STDC__-0) || defined __GNUC__ || __PROTOTYPES
-# define P_(s)		s
-#else
-# define P_(s)		()
-#endif
-
 /* some basic definitions to avoid undue promulgating of  ugliness */
 #define MALLOC(n,t)	 ((t *)ck_malloc((n)*sizeof(t)))
 #define REALLOC(x,n,t)	 ((t *)ck_realloc((void *)(x),(n)*sizeof(t)))
