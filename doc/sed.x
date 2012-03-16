@@ -233,7 +233,10 @@ The following address types are supported:
 .TP
 .I number
 Match only the specified line
-.IR number .
+.IR number
+(which increments cumulatively across files, unless the
+.B -s
+option is specified on the command line).
 .TP
 .IR first ~ step
 Match every
