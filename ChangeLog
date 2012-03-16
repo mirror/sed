@@ -1,5 +1,9 @@
 2012-03-16  Paolo Bonzini  <bonzini@gnu.org>
 
+	* testsuite/version.gin: Regenerate.
+
+2012-03-16  Paolo Bonzini  <bonzini@gnu.org>
+
 	* basicdefs.h (P_): Remove.
 	* sed/compile.c: Adjust.
 	* sed/execute.c: Likewise.
