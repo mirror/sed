@@ -31,17 +31,12 @@
 extern int errno;
 #endif
 
-#ifndef BOOTSTRAP
 #include <selinux/selinux.h>
 #include <selinux/context.h>
-#endif
+#include "acl.h"
 
 #ifdef HAVE_UNISTD_H
 # include <unistd.h>
-#endif
-
-#ifndef BOOTSTRAP
-#include "acl.h"
 #endif
 
 #ifdef __GNUC__
@@ -171,34 +166,6 @@ static struct append_queue *append_head = NULL;
 static struct append_queue *append_tail = NULL;
 
 
-#ifdef BOOTSTRAP
-/* We can't be sure that the system we're boostrapping on has
-   memchr(), and ../lib/memchr.c requires configuration knowledge
-   about how many bits are in a `long'.  This implementation
-   is far from ideal, but it should get us up-and-limping well
-   enough to run the configure script, which is all that matters.
-*/
-# ifdef memchr
-#  undef memchr
-# endif
-# define memchr bootstrap_memchr
-
-static VOID *bootstrap_memchr P_((const VOID *s, int c, size_t n));
-static VOID *
-bootstrap_memchr(s, c, n)
-  const VOID *s;
-  int c;
-  size_t n;
-{
-  char *p;
-
-  for (p=(char *)s; n-- > 0; ++p)
-    if (*p == c)
-      return p;
-  return CAST(VOID *)0;
-}
-#endif /*BOOTSTRAP*/
-
 /* increase a struct line's length, making some attempt at
    keeping realloc() calls under control by padding for future growth.  */
 static void resize_line P_((struct line *, size_t));
@@ -727,11 +694,9 @@ open_next_file(name, input)
     {
       int input_fd;
       char *tmpdir, *p;
-#ifndef BOOTSTRAP
       security_context_t old_fscreatecon;
       int reset_fscreatecon = 0;
       memset (&old_fscreatecon, 0, sizeof (old_fscreatecon));
-#endif
 
       /* get the base name */
       tmpdir = ck_strdup(input->in_file_name);
@@ -748,7 +713,6 @@ open_next_file(name, input)
       if (!S_ISREG (input->st.st_mode))
         panic(_("couldn't edit %s: not a regular file"), input->in_file_name);
 
-#ifndef BOOTSTRAP
       if (is_selinux_enabled () > 0)
 	{
           security_context_t con;
@@ -769,20 +733,17 @@ open_next_file(name, input)
 			 myname, input->in_file_name, strerror (errno));
 	    }
 	}
-#endif
 
       output_file.fp = ck_mkstemp (&input->out_file_name, tmpdir, "sed",
 				   write_mode);
       output_file.missing_newline = false;
       free (tmpdir);
 
-#ifndef BOOTSTRAP
       if (reset_fscreatecon)
 	{
 	  setfscreatecon (old_fscreatecon);
 	  freecon (old_fscreatecon);
 	}
-#endif
 
       if (!output_file.fp)
         panic(_("couldn't open temporary file %s: %s"), input->out_file_name, strerror(errno));

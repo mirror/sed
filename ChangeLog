@@ -1,5 +1,15 @@
 2012-03-16  Paolo Bonzini  <bonzini@gnu.org>
 
+	* bootstrap.sh.in: Remove.
+	* bootstrap.sh: Remove.
+	* configure.ac: Do not create bootstrap.sh.
+	* basicdefs.h: Remove guards.
+	* sed/execute.c [BOOTSTRAP]: Remove guards.
+	* sed/sed.c [BOOTSTRAP]: Remove guards.
+	* sed/sed.h [BOOTSTRAP]: Remove guards.
+
+2012-03-16  Paolo Bonzini  <bonzini@gnu.org>
+
 	* gnulib: Update.
 
 2012-03-16  Paolo Bonzini  <bonzini@gnu.org>

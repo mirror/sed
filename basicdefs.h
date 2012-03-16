@@ -31,14 +31,7 @@
 #endif
 
 
-#ifdef BOOTSTRAP
-# define false 0
-# define true 1
-# define bool unsigned
-# define __bool_true_false_are_defined 1
-#else
-# include <stdbool.h>
-#endif
+#include <stdbool.h>
 
 #include <gettext.h>
 #define N_(String) gettext_noop(String)
