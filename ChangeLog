@@ -1,3 +1,7 @@
+2012-03-16  Paolo Bonzini  <bonzini@gnu.org>
+
+	* execute.c (open_next_file): Save/restore file creation context.
+
 2010-11-03  Eric Blake  <eblake@redhat.com>
 
 	* basicdefs.h (ISDIGIT): Avoid compiler warning on cygwin.

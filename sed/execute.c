@@ -727,6 +727,11 @@ open_next_file(name, input)
     {
       int input_fd;
       char *tmpdir, *p;
+#ifndef BOOTSTRAP
+      security_context_t old_fscreatecon;
+      int reset_fscreatecon = 0;
+      memset (&old_fscreatecon, 0, sizeof (old_fscreatecon));
+#endif
 
       /* get the base name */
       tmpdir = ck_strdup(input->in_file_name);
@@ -749,6 +754,9 @@ open_next_file(name, input)
           security_context_t con;
 	  if (getfilecon (input->in_file_name, &con) != -1)
 	    {
+	      /* Save and restore the old context for the sake of w and W
+		 commands.  */
+	      reset_fscreatecon = getfscreatecon (&old_fscreatecon) >= 0;
 	      if (setfscreatecon (con) < 0)
 		fprintf (stderr, _("%s: warning: failed to set default file creation context to %s: %s"),
 			 myname, con, strerror (errno));
@@ -767,6 +775,14 @@ open_next_file(name, input)
 				   write_mode);
       output_file.missing_newline = false;
       free (tmpdir);
+
+#ifndef BOOTSTRAP
+      if (reset_fscreatecon)
+	{
+	  setfscreatecon (old_fscreatecon);
+	  freecon (old_fscreatecon);
+	}
+#endif
 
       if (!output_file.fp)
         panic(_("couldn't open temporary file %s: %s"), input->out_file_name, strerror(errno));
