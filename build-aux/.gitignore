@@ -3,6 +3,7 @@ c++defs.h
 config.rpath
 install-sh
 link-warning.h
+snippet
 texinfo.tex
 unused-parameter.h
 warn-on-use.h

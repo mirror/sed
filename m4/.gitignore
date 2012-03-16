@@ -1,11 +1,15 @@
 /multiarch.m4
 00gnulib.m4
+<<<<<<< HEAD
+=======
+>>>>>>> 1e0501c... update gnulib to latest
 acl.m4
 alloca.m4
 asm-underscore.m4
 btowc.m4
 canonicalize.m4
 codeset.m4
+configmake.m4
 dirname.m4
 dos.m4
 double-slash-root.m4
@@ -13,9 +17,13 @@ eealloc.m4
 errno_h.m4
 error.m4
 exitfail.m4
+exponentd.m4
 extensions.m4
 fcntl-o.m4
+fcntl_h.m4
 float_h.m4
+fstat.m4
+fwriting.m4
 getdelim.m4
 getline.m4
 getopt.m4
@@ -43,6 +51,7 @@ inttypes-h.m4
 inttypes-pri.m4
 inttypes_h.m4
 langinfo_h.m4
+largefile.m4
 lcmessage.m4
 lib-ld.m4
 lib-link.m4
@@ -58,6 +67,7 @@ longlong.m4
 lstat.m4
 malloc.m4
 malloca.m4
+math_h.m4
 mbchar.m4
 mbiter.m4
 mbrlen.m4
@@ -65,15 +75,19 @@ mbrtowc.m4
 mbsinit.m4
 mbslen.m4
 mbstate_t.m4
+mbtowc.m4
 memchr.m4
 memcmp.m4
 memmove.m4
 mkostemp.m4
 mkstemp.m4
 mmap-anon.m4
+msvc-inval.m4
+msvc-nothrow.m4
 multiarch.m4
 nl_langinfo.m4
 nls.m4
+nocrash.m4
 pathmax.m4
 po.m4
 printf-posix.m4
@@ -100,13 +114,17 @@ stdint.m4
 stdint_h.m4
 stdio_h.m4
 stdlib_h.m4
+strcase.m4
 strerror.m4
 string_h.m4
+strings_h.m4
 strndup.m4
 strnlen.m4
 strverscmp.m4
+sys_socket_h.m4
 sys_stat_h.m4
 sys_time_h.m4
+sys_types_h.m4
 tempname.m4
 threadlib.m4
 time_h.m4
@@ -123,6 +141,7 @@ wchar_h.m4
 wchar_t.m4
 wcrtomb.m4
 wctob.m4
+wctomb.m4
 wctype.m4
 wctype_h.m4
 wcwidth.m4
