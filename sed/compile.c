@@ -190,12 +190,12 @@ bad_prog(why)
 {
   if (cur_input.name)
     fprintf(stderr, _("%s: file %s line %lu: %s\n"),
-	    myname, cur_input.name, CAST(unsigned long)cur_input.line, why);
+	    myname, cur_input.name, (unsigned long)cur_input.line, why);
   else
     fprintf(stderr, _("%s: -e expression #%lu, char %lu: %s\n"),
 	    myname,
-	    CAST(unsigned long)cur_input.string_expr_count,
-	    CAST(unsigned long)(prog.cur-prog.base),
+	    (unsigned long)cur_input.string_expr_count,
+	    (unsigned long)(prog.cur-prog.base),
 	    why);
   exit(EXIT_FAILURE);
 }
@@ -239,7 +239,7 @@ savchar(ch)
     {
       if (prog.cur <= prog.base || *--prog.cur != ch)
 	panic("Called savchar() with unexpected pushback (%x)",
-	      CAST(unsigned char)ch);
+	      (unsigned char)ch);
     }
   else
     ungetc(ch, prog.file);
@@ -707,7 +707,7 @@ setup_label(list, idx, name, err_info)
   ret->v_index = idx;
   ret->name = name;
   if (err_info)
-    MEMCPY(&ret->err_info, err_info, sizeof (ret->err_info));
+    memcpy(&ret->err_info, err_info, sizeof (ret->err_info));
   ret->next = list;
   return ret;
 }
@@ -778,7 +778,7 @@ setup_replacement(sub, text, length)
 	{
 	  /* Preceding the backslash may be some literal text: */
 	  tail = tail->next =
-	    new_replacement(base, CAST(size_t)(p - base), repl_type);
+	    new_replacement(base, (size_t)(p - base), repl_type);
 
 	  repl_type = save_type;
 
@@ -840,7 +840,7 @@ setup_replacement(sub, text, length)
 	{
 	  /* Preceding the ampersand may be some literal text: */
 	  tail = tail->next =
-	    new_replacement(base, CAST(size_t)(p - base), repl_type);
+	    new_replacement(base, (size_t)(p - base), repl_type);
 
 	  repl_type = save_type;
 	  tail->subst_id = 0;
@@ -850,7 +850,7 @@ setup_replacement(sub, text, length)
   /* There may be some trailing literal text: */
   if (base < text_end)
     tail = tail->next =
-      new_replacement(base, CAST(size_t)(text_end - base), repl_type);
+      new_replacement(base, (size_t)(text_end - base), repl_type);
 
   tail->next = NULL;
   sub->replacement = root.next;
@@ -1354,7 +1354,7 @@ compile_program(vector)
               {
 	        unsigned char *translate =
 		  OB_MALLOC(&obs, YMAP_LENGTH, unsigned char);
-                unsigned char *ustring = CAST(unsigned char *)src_buf;
+                unsigned char *ustring = (unsigned char *)src_buf;
 
 		if (len != dest_len)
                   bad_prog(_(Y_CMD_LEN));
@@ -1563,7 +1563,7 @@ compile_string(cur_program, str, len)
   struct vector *ret;
 
   prog.file = NULL;
-  prog.base = CAST(unsigned char *)str;
+  prog.base = (unsigned char *)str;
   prog.cur = prog.base;
   prog.end = prog.cur + len;
 
@@ -1627,7 +1627,7 @@ check_final_program(program)
   if (blocks)
     {
       /* update info for error reporting: */
-      MEMCPY(&cur_input, &blocks->err_info, sizeof (cur_input));
+      memcpy(&cur_input, &blocks->err_info, sizeof (cur_input));
       bad_prog(_(EXCESS_OPEN_BRACE));
     }
 

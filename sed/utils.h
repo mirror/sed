@@ -24,8 +24,8 @@ void panic P_((const char *str, ...));
 
 FILE *ck_fopen P_((const char *name, const char *mode, int fail));
 FILE *ck_fdopen P_((int fd, const char *name, const char *mode, int fail));
-void ck_fwrite P_((const VOID *ptr, size_t size, size_t nmemb, FILE *stream));
-size_t ck_fread P_((VOID *ptr, size_t size, size_t nmemb, FILE *stream));
+void ck_fwrite P_((const void *ptr, size_t size, size_t nmemb, FILE *stream));
+size_t ck_fread P_((void *ptr, size_t size, size_t nmemb, FILE *stream));
 void ck_fflush P_((FILE *stream));
 void ck_fclose P_((FILE *stream));
 const char *follow_symlink P_((const char *path));
@@ -34,12 +34,12 @@ FILE * ck_mkstemp P_((char **p_filename, const char *tmpdir, const char *base,
 		      const char *mode));
 void ck_rename P_((const char *from, const char *to, const char *unlink_if_fail));
 
-VOID *ck_malloc P_((size_t size));
-VOID *xmalloc P_((size_t size));
-VOID *ck_realloc P_((VOID *ptr, size_t size));
+void *ck_malloc P_((size_t size));
+void *xmalloc P_((size_t size));
+void *ck_realloc P_((void *ptr, size_t size));
 char *ck_strdup P_((const char *str));
-VOID *ck_memdup P_((const VOID *buf, size_t len));
-void ck_free P_((VOID *ptr));
+void *ck_memdup P_((const void *buf, size_t len));
+void ck_free P_((void *ptr));
 
 struct buffer *init_buffer P_((void));
 char *get_buffer P_((struct buffer *b));

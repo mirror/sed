@@ -145,7 +145,7 @@ resize_line(lb, len)
    * remove it. */
   if (inactive > lb->alloc * 2)
     {
-      MEMMOVE(lb->text, lb->active, lb->length);
+      memmove(lb->text, lb->active, lb->length);
       lb->alloc += lb->active - lb->text;
       lb->active = lb->text;
       inactive = 0;
@@ -176,7 +176,7 @@ str_append(to, string, length)
 
   if (to->alloc < new_length)
     resize_line(to, new_length);
-  MEMCPY(to->active + to->length, string, length);
+  memcpy(to->active + to->length, string, length);
   to->length = new_length;
 
   if (mb_cur_max > 1 && !is_utf8)
@@ -221,7 +221,7 @@ str_append_modified(to, string, length, type)
   if (to->alloc - to->length < length * mb_cur_max)
     resize_line(to, to->length + length * mb_cur_max);
 
-  MEMCPY (&from_stat, &to->mbstate, sizeof(mbstate_t));
+  memcpy (&from_stat, &to->mbstate, sizeof(mbstate_t));
   while (length)
     {
       wchar_t wc;
@@ -346,10 +346,10 @@ line_copy(from, to, state)
   to->active = to->text;
   to->length = from->length;
   to->chomped = from->chomped;
-  MEMCPY(to->active, from->active, from->length);
+  memcpy(to->active, from->active, from->length);
 
   if (state)
-    MEMCPY(&to->mbstate, &from->mbstate, sizeof (from->mbstate));
+    memcpy(&to->mbstate, &from->mbstate, sizeof (from->mbstate));
 }
 
 /* Append the contents of the line `from' to the line `to'.
@@ -366,7 +366,7 @@ line_append(from, to, state)
   to->chomped = from->chomped;
 
   if (state)
-    MEMCPY (&to->mbstate, &from->mbstate, sizeof (from->mbstate));
+    memcpy (&to->mbstate, &from->mbstate, sizeof (from->mbstate));
 }
 
 /* Exchange two "struct line" buffers.
@@ -382,15 +382,15 @@ line_exchange(a, b, state)
 
   if (state)
     {
-      MEMCPY(&t,  a, sizeof (struct line));
-      MEMCPY( a,  b, sizeof (struct line));
-      MEMCPY( b, &t, sizeof (struct line));
+      memcpy(&t,  a, sizeof (struct line));
+      memcpy( a,  b, sizeof (struct line));
+      memcpy( b, &t, sizeof (struct line));
     }
   else
     {
-      MEMCPY(&t,  a, SIZEOF_LINE);
-      MEMCPY( a,  b, SIZEOF_LINE);
-      MEMCPY( b, &t, SIZEOF_LINE);
+      memcpy(&t,  a, SIZEOF_LINE);
+      memcpy( a,  b, SIZEOF_LINE);
+      memcpy( b, &t, SIZEOF_LINE);
     }
 }
 
@@ -565,7 +565,7 @@ get_backup_file_name(name)
        (asterisk = strchr(old_asterisk, '*'));
        old_asterisk = asterisk + 1)
     {
-      MEMCPY (p, old_asterisk, asterisk - old_asterisk);
+      memcpy (p, old_asterisk, asterisk - old_asterisk);
       p += asterisk - old_asterisk;
       strcpy (p, name);
       p += name_length;
@@ -954,7 +954,7 @@ static void
 do_list(line_len)
      int line_len;
 {
-  unsigned char *p = CAST(unsigned char *)line.active;
+  unsigned char *p = (unsigned char *)line.active;
   countT len = line.length;
   countT width = 0;
   char obuf[180];	/* just in case we encounter a 512-bit char (;-) */
@@ -1050,7 +1050,7 @@ append_replacement (buf, p, regs)
 
 	  else if (regs->end[i] != regs->start[i])
 	    str_append_modified(buf, line.active + regs->start[i],
-			        CAST(size_t)(regs->end[i] - regs->start[i]),
+			        (size_t)(regs->end[i] - regs->start[i]),
 			        curr_type);
 	}
     }
@@ -1253,15 +1253,15 @@ shrink_program(vec, cur_cmd)
 
   for (p=v; p < cur_cmd; ++p)
     if (p->cmd != '#')
-      MEMCPY(v++, p, sizeof *v);
+      memcpy(v++, p, sizeof *v);
   cmd_cnt = v - vec->v;
 
   for (; p < last_cmd; ++p)
     if (p->cmd != '#')
-      MEMCPY(v++, p, sizeof *v);
+      memcpy(v++, p, sizeof *v);
   vec->v_length = v - vec->v;
 
-  return (0 < vec->v_length) ? (vec->v + cmd_cnt) : CAST(struct sed_cmd *)0;
+  return (0 < vec->v_length) ? (vec->v + cmd_cnt) : (struct sed_cmd *)0;
 }
 #endif /*EXPERIMENTAL_DASH_N_OPTIMIZATION*/
 
@@ -1621,7 +1621,7 @@ execute_program(vec, input)
                else
                  {
                    unsigned char *p, *e;
-                   p = CAST(unsigned char *)line.active;
+                   p = (unsigned char *)line.active;
                    for (e=p+line.length; p<e; ++p)
                      *p = cur_cmd->x.translate[*p];
                  }
@@ -1635,7 +1635,7 @@ execute_program(vec, input)
 	    case '=':
               output_missing_newline(&output_file);
               fprintf(output_file.fp, "%lu\n",
-                      CAST(unsigned long)input->line_number);
+                      (unsigned long)input->line_number);
               flush_output(output_file.fp);
              break;
 
