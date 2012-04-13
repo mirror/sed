@@ -15,7 +15,7 @@ SEDTESTS = \
 	fasts uniq manis khadafy linecnt eval distrib 8to7 y-bracket \
 	y-newline allsub cv-vars classes middle bsd stdin flipcase \
 	insens subwrite writeout readin insert \
-	badenc inplace-hold brackets \
+	badenc inplace-hold brackets amp-escape \
 	help version file quiet \
 	factor binary3 binary2 binary dc
 
@@ -29,6 +29,7 @@ EXTRA_DIST = runtest Makefile.tests \
 	8bit.good 8bit.inp 8bit.sed \
 	8to7.good 8to7.inp 8to7.sed \
 	allsub.good allsub.inp allsub.sed \
+	amp-escape.good amp-escape.inp amp-escape.sed \
 	appquit.good appquit.inp appquit.sed \
 	binary.good binary.inp binary.sed binary2.sed binary3.sed \
 	bkslashes.good bkslashes.inp bkslashes.sed \
