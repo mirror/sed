@@ -1,3 +1,12 @@
+2012-04-13  Paolo Bonzini  <bonzini@gnu.org>
+
+	* sed/compile.c (convert_number): Remove default_char argument,
+	expect buf to point to it.  Remove maxdigits argument and compute
+	it on the fly.
+	(normalize_text): Unify calls to convert_number under the convert
+	label.  For TEXT_REPLACEMENT add a backslash to the output if
+	convert_number returns ch == '&'.
+
 2012-03-16  Paolo Bonzini  <bonzini@gnu.org>
 
 	* testsuite/version.gin: Regenerate.

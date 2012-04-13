@@ -16,6 +16,10 @@ Sed 4.2.2
 
 * New option -z (--null-data) to separate lines by ASCII NUL characters.
 
+* \x26 (and similar escaped sequences) produces a literal & in the
+  replacement argument of the s/// command, rather than including the
+  matched text.
+
 ----------------------------------------------------------------------------
 Sed 4.2.1
 

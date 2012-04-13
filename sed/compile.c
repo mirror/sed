@@ -284,20 +284,19 @@ add_then_next(b, ch)
   return inchar();
 }
 
-static char * convert_number (char *, char *, const char *, int, int, int);
+static char * convert_number (char *, char *, const char *, int);
 static char *
-convert_number(result, buf, bufend, base, maxdigits, default_char)
+convert_number(result, buf, bufend, base)
   char *result;
   char *buf;
   const char *bufend;
   int base;
-  int maxdigits;
-  int default_char;
 {
   int n = 0;
+  int max = 1;
   char *p;
 
-  for (p=buf; p < bufend && maxdigits-- > 0; ++p)
+  for (p=buf+1; p < bufend && max <= 255; ++p, max *= base)
     {
       int d = -1;
       switch (*p)
@@ -323,8 +322,8 @@ convert_number(result, buf, bufend, base, maxdigits, default_char)
 	break;
       n = n * base + d;
     }
-  if (p == buf)
-    *result = default_char;
+  if (p == buf+1)
+    *result = *buf;
   else
     *result = n;
   return p;
@@ -1399,6 +1398,8 @@ normalize_text(buf, len, buftype)
   const char *bufend = buf + len;
   char *p = buf;
   char *q = buf;
+  char ch;
+  int base;
 
   /* This variable prevents normalizing text within bracket
      subexpressions when conforming to POSIX.  If 0, we
@@ -1445,14 +1446,12 @@ normalize_text(buf, len, buftype)
 	  case 'v': *q++ = '\v'; p++; continue;
 
 	  case 'd': /* decimal byte */
-	    p = convert_number(q, p+1, bufend, 10, 3, 'd');
-	    q++;
-	    continue;
+            base = 10;
+            goto convert;
 
 	  case 'x': /* hexadecimal byte */
-	    p = convert_number(q, p+1, bufend, 16, 2, 'x');
-	    q++;
-	    continue;
+            base = 16;
+            goto convert;
 
 #ifdef REG_PERL
 	  case '0': case '1': case '2': case '3':
@@ -1461,8 +1460,8 @@ normalize_text(buf, len, buftype)
 		&& p+1 < bufend
 		&& p[1] >= '0' && p[1] <= '9')
 	      {
-		p = convert_number(q, p, bufend, 8, 3, *p);
-		q++;
+                base = 8;
+                goto convert;
 	      }
 	    else
 	      {
@@ -1476,8 +1475,8 @@ normalize_text(buf, len, buftype)
 	  case 'o': /* octal byte */
 	    if (!(extended_regexp_flags & REG_PERL))
 	      {
-	        p = convert_number(q, p+1, bufend,  8, 3, 'o');
-		q++;
+                base = 8;
+                goto convert;
 	      }
 	    else
 	      {
@@ -1489,10 +1488,16 @@ normalize_text(buf, len, buftype)
 	    continue;
 #else
 	  case 'o': /* octal byte */
-	    p = convert_number(q, p+1, bufend,  8, 3, 'o');
-	    q++;
-	    continue;
+            base = 8;
 #endif
+convert:
+            p = convert_number(&ch, p, bufend, base);
+
+            /* for an ampersand in a replacement, pass the \ up one level */
+            if (buftype == TEXT_REPLACEMENT && ch == '&')
+              *q++ = '\\';
+            *q++ = ch;
+            continue;
 
 	  case 'c':
 	    if (++p < bufend)
