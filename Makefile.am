@@ -8,7 +8,7 @@ PACKAGE = sed
 
 SUBDIRS = lib pcre po sed doc testsuite
 
-noinst_DATA = bootstrap.sh
+noinst_DATA =
 noinst_HEADERS = basicdefs.h
 
 EXTRA_DIST = BUGS THANKS COPYING.DOC README.boot \
@@ -19,11 +19,6 @@ html:
 
 DISTCHECK_CONFIGURE_FLAGS = XGETTEXT='$(SHELL) -c : dummy' $(EXTRA_DC_FLAGS)
 EXTRA_DC_FLAGS =
-
-dist-hook:
-	cmp bootstrap.sh $(srcdir)/bootstrap.sh > /dev/null 2>&1 || \
-	  cp -p bootstrap.sh $(srcdir)/bootstrap.sh
-	cp -p $(srcdir)/bootstrap.sh $(distdir)/bootstrap.sh
 
 full-distcheck:
 	make distcheck EXTRA_DC_FLAGS='--enable-html'
