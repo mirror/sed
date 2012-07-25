@@ -1,3 +1,8 @@
+2012-07-25  Paolo Bonzini  <bonzini@gnu.org>
+
+	* doc/sed-in.texi: Document difference between "e" and "r"
+	commands.
+
 2012-04-29  Jim Hill  <gjthill@gmail.com>
 
 	* Makefile.am (noinst_DATA, dist-hook): build failed after git

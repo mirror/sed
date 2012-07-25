@@ -1441,12 +1441,16 @@ replaces the pattern space with the output; a trailing newline
 is suppressed.
 
 If a parameter is specified, instead, the @code{e} command
-interprets it as a command and sends its output to the output stream
-(like @code{r} does).  The command can run across multiple
-lines, all but the last ending with a back-slash.
+interprets it as a command and sends its output to the output stream.
+The command can run across multiple lines, all but the last ending with
+a back-slash.
 
 In both cases, the results are undefined if the command to be
 executed contains a @sc{nul} character.
+
+Note that, unlike the @code{r} command, the output of the command will
+be printed immediately; the @code{r} command instead delays the output
+to the end of the current cycle.
 
 @item F
 @findex F (File name) command
