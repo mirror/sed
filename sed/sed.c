@@ -78,7 +78,11 @@ bool follow_symlinks = false;
 char *in_place_extension = NULL;
 
 /* The mode to use to read files, either "rt" or "rb".  */
+#ifndef __CYGWIN__
 char *read_mode = "rt";
+#else
+char *read_mode = "r";
+#endif
 
 /* Do we need to be pedantically POSIX compliant? */
 enum posixicity_types posixicity;
