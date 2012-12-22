@@ -62,6 +62,9 @@ langinfo.h
 langinfo.in.h
 localcharset.c
 localcharset.h
+locale.h
+locale.in.h
+localeconv.c
 lstat.c
 malloc.c
 malloca.c
@@ -112,8 +115,10 @@ regexec.c
 rename.c
 rmdir.c
 same-inode.h
+se-context.c
 se-context.h
 se-context.in.h
+se-selinux.c
 se-selinux.h
 se-selinux.in.h
 set-mode-acl.c
@@ -129,6 +134,7 @@ stdint.h
 stdint.in.h
 stdio-impl.h
 stdio-write.c
+stdio.c
 stdio.h
 stdio.in.h
 stdlib.h
@@ -165,6 +171,7 @@ time.h
 time.in.h
 trim.c
 trim.h
+unistd.c
 unistd.h
 unistd.in.h
 unitypes.h
@@ -182,6 +189,7 @@ wcrtomb.c
 wctob.c
 wctomb-impl.h
 wctomb.c
+wctype-h.c
 wctype.h
 wctype.in.h
 wcwidth.c

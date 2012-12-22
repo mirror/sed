@@ -1,11 +1,11 @@
-../../sed (GNU sed) version @VERSION@
+../sed/sed (GNU sed) @VERSION@
 Copyright (C) @COPYRIGHT_YEAR@ Free Software Foundation, Inc.
-This is free software; see the source for copying conditions.  There is NO
-warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE,
-to the extent permitted by law.
+License GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html>.
+This is free software: you are free to change and redistribute it.
+There is NO WARRANTY, to the extent permitted by law.
+
 Written by Jay Fenlason, Tom Lord, Ken Pizzini,
 and Paolo Bonzini.
-
 GNU sed home page: <http://www.gnu.org/software/sed/>.
 General help using GNU software: <http://www.gnu.org/gethelp/>.
 E-mail bug reports to: <@PACKAGE_BUGREPORT@>.

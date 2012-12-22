@@ -1,5 +1,10 @@
 2012-12-21  Paolo Bonzini  <bonzini@gnu.org>
 
+	* gnulib: Update.
+	* testsuite/version.gin: Regenerate.
+
+2012-12-21  Paolo Bonzini  <bonzini@gnu.org>
+
 	* doc/sed.texi: Regenerate.
 	* doc/sed.1: Regenerate.
 	* po/sed.pot: Regenerate.

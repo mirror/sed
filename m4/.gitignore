@@ -15,6 +15,7 @@ errno_h.m4
 error.m4
 exitfail.m4
 extensions.m4
+extern-inline.m4
 fcntl-o.m4
 fcntl_h.m4
 fstat.m4
@@ -55,6 +56,8 @@ localcharset.m4
 locale-fr.m4
 locale-ja.m4
 locale-zh.m4
+locale_h.m4
+localeconv.m4
 lock.m4
 longdouble.m4
 longlong.m4
@@ -81,6 +84,7 @@ multiarch.m4
 nl_langinfo.m4
 nls.m4
 nocrash.m4
+off_t.m4
 pathmax.m4
 po.m4
 printf-posix.m4
