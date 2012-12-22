@@ -1,5 +1,12 @@
 2012-12-21  Paolo Bonzini  <bonzini@gnu.org>
 
+	* autoboot: Rename to bootstrap.
+	* autoboot.conf: Rename to bootstrap.conf.
+	* README.boot: Remove.
+	* Makefile.am: Remove README.boot, add bootstrap and bootstrap.conf.
+
+2012-12-21  Paolo Bonzini  <bonzini@gnu.org>
+
 	* gnulib: Update.
 	* testsuite/version.gin: Regenerate.
 

@@ -11,8 +11,8 @@ SUBDIRS = lib po sed doc testsuite
 noinst_DATA =
 noinst_HEADERS = basicdefs.h
 
-EXTRA_DIST = BUGS THANKS COPYING.DOC README.boot \
-	autoboot build-aux/texi2dvi build-aux/help2man
+EXTRA_DIST = BUGS THANKS COPYING.DOC \
+	bootstrap bootstrap.conf build-aux/texi2dvi build-aux/help2man
 
 html:
 	cd doc && make html
