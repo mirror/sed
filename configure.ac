@@ -1,5 +1,5 @@
 dnl Process this file with -*- autoconf -*- to produce a configure script.
-AC_INIT([GNU sed], 4.2.1, bug-sed@gnu.org, sed)
+AC_INIT([GNU sed], 4.2.2, bug-sed@gnu.org, sed)
 AC_CONFIG_AUX_DIR(build-aux)
 AC_CONFIG_SRCDIR([sed/sed.c])
 AM_CONFIG_HEADER(config.h:config_h.in)
@@ -10,6 +10,9 @@ SED_FEATURE_VERSION=4.2.2
 AC_DEFINE_UNQUOTED(SED_FEATURE_VERSION, "$SED_FEATURE_VERSION",
   [Define to the version of GNU sed whose features are supported by this sed.])
 AC_SUBST(SED_FEATURE_VERSION)
+
+COPYRIGHT_YEAR=2012
+AC_SUBST(COPYRIGHT_YEAR)
 
 AC_PROG_CC
 gl_EARLY

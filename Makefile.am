@@ -20,6 +20,10 @@ html:
 DISTCHECK_CONFIGURE_FLAGS = XGETTEXT='$(SHELL) -c : dummy' $(EXTRA_DC_FLAGS)
 EXTRA_DC_FLAGS = 
 
+dist-hook:
+	test $(COPYRIGHT_YEAR) = `date +%Y` || \
+	  { echo Copyright year not updated; exit 1; }
+
 full-distcheck:
 	make distcheck EXTRA_DC_FLAGS='--enable-regex-tests'
 	make distcheck EXTRA_DC_FLAGS='--enable-html'

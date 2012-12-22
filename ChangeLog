@@ -1,5 +1,10 @@
 2012-12-21  Paolo Bonzini  <bonzini@gnu.org>
 
+	* configure.ac: Bump version number.  Replace COPYRIGHT_YEAR.
+	* Makefile.am (dist-hook): Revert 2010-08-10 change.
+
+2012-12-21  Paolo Bonzini  <bonzini@gnu.org>
+
 	* autoboot: Rename to bootstrap.
 	* autoboot.conf: Rename to bootstrap.conf.
 	* README.boot: Remove.
