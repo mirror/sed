@@ -1,5 +1,22 @@
 2012-12-29  Stefano Lattarini  <stefano.lattarini@gnu.org>  (tiny change)
 
+	maint: enable Automake parallel testsuite harness
+	It is better than the older test driver.  It is also the
+	default now, starting from Automake 1.13; so having it
+	enabled unconditionally will allow GNU sed to be seamlessly
+	bootstrapped by Automake 1.13.
+	* configure.ac (AM_INIT_AUTOMAKE): Add 'parallel-tests' option.
+	Also require Automake 1.11.1, since that is the minimal version
+	to have a sane 'parallel-tests' support.
+	(AC_PREREQ): Bump requirement to 2.62, since that is the
+	minimal version required by Automake 1.11.1.
+	* testsuite/Makefile.am (TESTS_ENVIRONMENT): Remove the
+	invocation for the test runner "$(srcdir)/runtest"; it's
+	correct place is ...
+	(LOG_COMPILER): ... here.
+
+2012-12-29  Stefano Lattarini  <stefano.lattarini@gnu.org>  (tiny change)
+
 	build: avoid bootstrap failure
 	* bootstrap.conf (gnulib_modules): Add 'threadlib'.
 
