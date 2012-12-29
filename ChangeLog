@@ -1,3 +1,8 @@
+2012-12-29  Stefano Lattarini  <stefano.lattarini@gnu.org>  (tiny change)
+
+	build: avoid bootstrap failure
+	* bootstrap.conf (gnulib_modules): Add 'threadlib'.
+
 2012-12-21  Paolo Bonzini  <bonzini@gnu.org>
 
 	* configure.ac: Bump version number.  Replace COPYRIGHT_YEAR.
