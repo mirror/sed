@@ -1,3 +1,8 @@
+2013-02-02  Jose E. Marchesi  <jemarch@gnu.org>
+
+	* gnulib: Update.
+	* configure.ac (COPYRIGHT_YEAR): Updated to 2013.
+
 2012-12-29  Stefano Lattarini  <stefano.lattarini@gnu.org>  (tiny change)
 
 	testsuite: make test logs more verbose
