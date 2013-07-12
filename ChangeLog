@@ -1,3 +1,8 @@
+2013-07-12  Jose E. Marchesi  <jemarch@gnu.org>
+
+	* doc/sed-in.texi (Extended regexps): Add an example on using | in
+	extended regular expressions.  Suggested by Nils Barth.
+
 2013-02-02  Jose E. Marchesi  <jemarch@gnu.org>
 
 	* gnulib: Update.

@@ -3075,6 +3075,10 @@ matches either @samp{abcabc} or @samp{abcabcabc}.
 becomes @samp{(abc*)\1} when using extended regular expressions.
 Backreferences must still be escaped when using extended regular
 expressions.
+
+@item a\|b
+becomes @samp{a|b} when using extended regular expressions.  It matches
+@samp{a} or @samp{b}.
 @end table
 
 @ifset PERL
