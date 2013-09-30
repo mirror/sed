@@ -814,7 +814,7 @@ operators.
 @item \@var{digit}
 Matches the @var{digit}-th @code{\(@dots{}\)} parenthesized
 subexpression in the regular expression.  This is called a @dfn{back
-reference}.  Subexpressions are implicity numbered by counting
+reference}.  Subexpressions are implicitly numbered by counting
 occurrences of @code{\(} left-to-right.
 
 @item \n

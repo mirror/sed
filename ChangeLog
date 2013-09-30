@@ -1,3 +1,9 @@
+2013-09-30  Jose E. Marchesi  <jemarch@gnu.org>
+
+	* doc/sed.texi (Regular Expressions): Typo: implicity numbered ->
+	implicitly numbered.
+	Reported by Arthur Budco.
+
 2013-07-12  Jose E. Marchesi  <jemarch@gnu.org>
 
 	* doc/sed-in.texi (Extended regexps): Add an example on using | in
