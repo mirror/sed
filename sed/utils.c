@@ -1,5 +1,5 @@
 /*  Functions from hack's utils library.
-    Copyright (C) 1989, 1990, 1991, 1998, 1999, 2003, 2008, 2009, 2011
+    Copyright (C) 1989, 1990, 1991, 1998, 1999, 2003, 2008, 2009, 2011, 2013
     Free Software Foundation, Inc.
 
     This program is free software; you can redistribute it and/or modify
@@ -29,7 +29,6 @@
 #include <limits.h>
 
 #include "utils.h"
-#include "pathmax.h"
 #include "fwriting.h"
 
 const char *myname;

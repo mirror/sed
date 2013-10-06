@@ -1,5 +1,6 @@
 /*  GNU SED, a batch stream editor.
-    Copyright (C) 1998, 1999, 2002, 2003, 2010 Free Software Foundation, Inc.
+    Copyright (C) 1998, 1999, 2002, 2003, 2010, 2013
+    Free Software Foundation, Inc.
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -40,6 +41,13 @@ typedef unsigned long countT;
 #define obstack_chunk_alloc  ck_malloc
 #define obstack_chunk_free   free
 
+/* MAX_PATH is not defined in some platforms, most notably GNU/Hurd.
+   In that case we define it here to some constant.  Note however that
+   this relies in the fact that sed does reallocation if a buffer
+   needs to be larger than PATH_MAX.  */
+#ifndef PATH_MAX
+# define PATH_MAX 200
+#endif
 
 /* handle misdesigned <ctype.h> macros (snarfed from lib/regex.c) */
 /* Jim Meyering writes:

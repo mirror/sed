@@ -1,3 +1,11 @@
+2013-10-06  Jose E. Marchesi  <jemarch@gnu.org>
+
+	* basicdefs.h (PATH_MAX): Defined to some constant in case it is
+	not defined by system headers.
+	* sed/utils.c: Do not include pathmax.h anymore.
+	* bootstrap.conf (gnulib_modules): Do not use the gnulib module
+	pathmax.
+
 2013-09-30  Jose E. Marchesi  <jemarch@gnu.org>
 
 	* doc/sed.texi (Regular Expressions): Typo: implicity numbered ->
