@@ -1,3 +1,13 @@
+2013-10-16  David A. Wheeler <dwheeler@dwheeler.com>
+
+	* doc/sed-in.texi: Document "-E" option to use EREs.  GNU sed already
+	  supported "-E" as an undocumented synonym for "-r", but "-E" is now
+	  in POSIX.  See: http://austingroupbugs.net/view.php?id=528.
+	* doc/sed.1: Likewise.
+	* doc/sed.texi: Likewise.
+	* doc/sed.x: Likewise.
+	* sed/sed.c: Likewise.
+
 2013-10-06  Jose E. Marchesi  <jemarch@gnu.org>
 
 	* basicdefs.h (PATH_MAX): Defined to some constant in case it is

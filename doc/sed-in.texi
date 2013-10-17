@@ -318,8 +318,10 @@ follow the link and edit the ultimate destination of the
 link.  The default behavior is to break the symbolic link,
 so that the link destination will not be modified.
 
-@item -r
+@item -E
+@itemx -r
 @itemx --regexp-extended
+@opindex -E
 @opindex -r
 @opindex --regexp-extended
 @cindex Extended regular expressions, choosing
@@ -327,8 +329,15 @@ so that the link destination will not be modified.
 Use extended regular expressions rather than basic
 regular expressions.  Extended regexps are those that
 @command{egrep} accepts; they can be clearer because they
-usually have less backslashes, but are a @acronym{GNU} extension
-and hence scripts that use them are not portable.
+usually have fewer backslashes.
+Historically this was a @acronym{GNU} extension,
+but the @option{-E}
+extension has since been added to the POSIX standard
+(http://austingroupbugs.net/view.php?id=528),
+so use @option{-E} for portability.
+GNU sed has accepted @option{-E} as an undocumented option for years,
+and *BSD seds have accepted @option{-E} for years as well,
+but scripts that use @option{-E} might not port to other older systems.
 @xref{Extended regexps, , Extended regular expressions}.
 
 @ifset PERL

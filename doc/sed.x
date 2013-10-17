@@ -4,7 +4,7 @@ sed \- a Stream EDitor
 .nf
 sed [-V] [--version] [--help] [-n] [--quiet] [--silent]
     [-l N] [--line-length=N] [-u] [--unbuffered]
-    [-r] [--regexp-extended] 
+    [-E] [-r] [--regexp-extended]
     [-e script] [--expression=script]
     [-f script-file] [--file=script-file]
     [script-if-no-other-script]
@@ -312,6 +312,9 @@ and similarly for
 .BR \ea ,
 .BR \et ,
 and other sequences.
+The \fI-E\fP option switches to using extended regular expressions instead;
+the -E option has been supported for years by GNU sed, and is now
+included in POSIX.
 
 [SEE ALSO]
 .BR awk (1),

@@ -125,8 +125,9 @@ Usage: %s [OPTION]... {script-only-if-no-other-script} [input-file]...\n\
                  specify the desired line-wrap length for the `l' command\n"));
   fprintf(out, _("  --posix\n\
                  disable all GNU extensions.\n"));
-  fprintf(out, _("  -r, --regexp-extended\n\
-                 use extended regular expressions in the script.\n"));
+  fprintf(out, _("  -E, -r, --regexp-extended\n\
+                 use extended regular expressions in the script\n\
+                 (for portability use POSIX -E).\n"));
 #ifdef REG_PERL
   fprintf(out, PERL_HELP);
 #endif
@@ -277,7 +278,6 @@ main(argc, argv)
 	  write_mode = "wb";
 	  break;
 
-	/* Undocumented, for compatibility with BSD sed.  */
 	case 'E':
 	case 'r':
 	  if (extended_regexp_flags)
