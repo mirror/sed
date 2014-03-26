@@ -808,11 +808,11 @@ symbols, equivalence classes, and character classes, respectively, and
 
 @item @var{regexp1}\|@var{regexp2}
 @cindex @acronym{GNU} extensions, to basic regular expressions
-Matches either @var{regexp1} or @var{regexp2}.  Use
-parentheses to use complex alternative regular expressions.
-The matching process tries each alternative in turn, from
-left to right, and the first one that succeeds is used.
-It is a @acronym{GNU} extension.
+Matches either @var{regexp1} or @var{regexp2}.  Use escaped
+parentheses to use complex alternative regular expressions.  The
+matching process tries each alternative in turn, from left to right,
+and the first one that succeeds is used.  It is a @acronym{GNU}
+extension.
 
 @item @var{regexp1}@var{regexp2}
 Matches the concatenation of @var{regexp1} and @var{regexp2}.

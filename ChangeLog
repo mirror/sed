@@ -1,3 +1,8 @@
+2014-03-26  Jose E. Marchesi  <jemarch@gnu.org>
+
+	* doc/sed.texi (Regular Expressions): avoid a potential
+	misunderstanding in the description of the \| operator.
+
 2013-10-16  David A. Wheeler <dwheeler@dwheeler.com>
 
 	* doc/sed-in.texi: Document "-E" option to use EREs.  GNU sed already
