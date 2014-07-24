@@ -1,3 +1,7 @@
+2014-07-24  Jose E. Marchesi  <jemarch@gnu.org>
+
+	* gnulib: Update.
+
 2014-03-26  Jose E. Marchesi  <jemarch@gnu.org>
 
 	* doc/sed.texi (Regular Expressions): avoid a potential
