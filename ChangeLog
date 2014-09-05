@@ -1,3 +1,17 @@
+2014-09-04  Jim Meyering  <meyering@fb.com>
+
+	fix "y" to work with NUL in the RHS
+	* sed/execute.c (do_list) [case 'y']: Handle NUL bytes
+	in the RHS of a y/LHS/RHS/ transliteration.
+	* testsuite/y-zero.good: New test-related files.
+	* testsuite/y-zero.inp:
+	* testsuite/y-zero.sed:
+	* testsuite/Makefile.am (SEDTESTS): Add y-zero here.
+	* testsuite/Makefile.tests: And here.
+	* NEWS (Bug fixes): Describe it.
+	The bug was reported by table@inventati.org,
+	with the execute.c change mostly by Paolo Bonzini.
+
 2014-07-24  Jose E. Marchesi  <jemarch@gnu.org>
 
 	* gnulib: Update.

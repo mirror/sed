@@ -1,4 +1,20 @@
-Sed 4.2.2
+GNU sed NEWS                                    -*- outline -*-
+
+* Noteworthy changes in release ?.? (????-??-??) [?]
+
+** Bug fixes
+
+  The 'y' (transliterate) operator once again works with a NUL byte
+  on the RHS.  E.g., sed 'y/b/\x00/' now works like tr b '\0'.  GNU sed
+  has never before recognized \x00 in this context.  However, sed-3.02
+  and prior did accept a literal NUL byte in the RHS, which was possible
+  only when reading a script from a file.  For example, this:
+    echo abc|sed -f <(printf 'y/b/\x00/\n')|cat -A
+  is what stopped working. [bug introduced some time after sed-3.02 and
+  prior to the first sed-4* test release]
+
+
+* Noteworthy changes in release 4.2.2 (2012-12-22) [stable]
 
 * don't misbehave (truncate input) for lines of length 2^31 and longer
 

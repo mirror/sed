@@ -22,7 +22,7 @@ SEDTESTS += \
 	modulo numsub numsub2 numsub3 numsub4 numsub5 0range bkslashes \
 	head madding mac-mf empty xbxcx xbxcx3 recall recall2 xemacs \
 	fasts uniq manis khadafy linecnt eval distrib 8to7 y-bracket \
-	y-newline allsub cv-vars classes middle bsd stdin flipcase \
+	y-newline y-zero allsub cv-vars classes middle bsd stdin flipcase \
 	insens subwrite writeout readin insert utf8-1 utf8-2 utf8-3 utf8-4 \
 	badenc inplace-hold brackets amp-escape \
 	help version file quiet \
@@ -95,6 +95,7 @@ EXTRA_DIST = \
 	xbxcx3.good xbxcx3.inp xbxcx3.sed \
 	xemacs.good xemacs.inp xemacs.sed \
 	y-bracket.good y-bracket.sed y-bracket.inp \
+	y-NUL.good y-NUL.sed y-NUL.inp \
 	y-newline.good y-newline.sed y-newline.inp
 
 # automake makes `check' depend on $(TESTS).  Declare

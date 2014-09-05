@@ -1567,7 +1567,8 @@ execute_program(vec, input)
                            if (strncmp(line.active + idx, trans[2*i], mbclen) == 0)
                              {
                                bool move_remain_buffer = false;
-                               int trans_len = strlen(trans[2*i+1]);
+                               const char *tr = trans[2*i+1];
+                               size_t trans_len = *tr == '\0' ? 1 : strlen (tr);
 
                                if (mbclen < trans_len)
                                  {
