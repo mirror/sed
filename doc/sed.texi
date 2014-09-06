@@ -35,7 +35,7 @@
 This file documents version @value{VERSION} of
 @value{SSED}, a stream editor.
 
-Copyright @copyright{} 1998, 1999, 2001, 2002, 2003, 2004 Free
+Copyright @copyright{} 1998, 1999, 2001, 2002, 2003, 2004, 2014 Free
 Software Foundation, Inc.
 
 This document is released under the terms of the @acronym{GNU} Free
