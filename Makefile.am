@@ -12,17 +12,36 @@ noinst_DATA =
 noinst_HEADERS = basicdefs.h
 
 EXTRA_DIST = BUGS THANKS COPYING.DOC \
-	bootstrap bootstrap.conf build-aux/texi2dvi build-aux/help2man
+  ChangeLog-2014 po/ChangeLog-2014 \
+  bootstrap bootstrap.conf build-aux/texi2dvi build-aux/help2man
+
+# Arrange so that .tarball-version appears only in the distribution
+# tarball, and never in a checked-out repository.
+dist-hook: gen-ChangeLog
+	$(AM_V_GEN)echo $(VERSION) > $(distdir)/.tarball-version
+	test $(COPYRIGHT_YEAR) = `date +%Y` || \
+	  { echo Copyright year not updated; exit 1; }
+
+
+gen_start_date = 2014-09-06
+.PHONY: gen-ChangeLog
+gen-ChangeLog:
+	$(AM_V_GEN)if test -d .git; then				\
+	  log_fix="$(srcdir)/build-aux/git-log-fix";			\
+	  test -e "$$log_fix"						\
+	    && amend_git_log="--amend=$$log_fix"			\
+	    || amend_git_log=;						\
+	  $(top_srcdir)/build-aux/gitlog-to-changelog			\
+	    $$amend_git_log --since=$(gen_start_date) > $(distdir)/cl-t && \
+	    { rm -f $(distdir)/ChangeLog &&				\
+	      mv $(distdir)/cl-t $(distdir)/ChangeLog; }		\
+	fi
 
 html:
 	cd doc && make html
 
 DISTCHECK_CONFIGURE_FLAGS = XGETTEXT='$(SHELL) -c : dummy' $(EXTRA_DC_FLAGS)
 EXTRA_DC_FLAGS = 
-
-dist-hook:
-	test $(COPYRIGHT_YEAR) = `date +%Y` || \
-	  { echo Copyright year not updated; exit 1; }
 
 full-distcheck:
 	make distcheck EXTRA_DC_FLAGS='--enable-regex-tests'
@@ -53,4 +72,3 @@ full-distcheck:
 ##	wget -O testsuite/BOOST.tests "$$BASEURL/BOOST.tests?$$QUERY" && \
 ##	wget -O testsuite/PCRE.tests "$$BASEURL/PCRE.tests?$$QUERY" && \
 ##	wget -O testsuite/SPENCER.tests "$$BASEURL/rxspencer/tests?$$QUERY"
-
