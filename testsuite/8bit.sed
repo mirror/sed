@@ -16,6 +16,6 @@
 #  Oh, well I remember
 #  How on such a day we used to meet--
 #  My lover and I!
-#       -- Kakinomoto Hitomaro 
+#       -- Kakinomoto Hitomaro
 #
 s/ÂçÏÂ/ÆüËÜ/

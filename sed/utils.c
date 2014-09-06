@@ -201,7 +201,7 @@ ck_mkstemp (p_filename, tmpdir, base, mode)
 
    /* The ownership might change, so omit some permissions at first
       so unauthorized users cannot nip in before the file is ready.
-    
+
       mkstemp forces O_BINARY on cygwin, so use mkostemp instead.  */
   save_umask = umask (0700);
   fd = mkostemp (template, 0);
@@ -226,7 +226,7 @@ ck_fwrite(ptr, size, nmemb, stream)
   clearerr(stream);
   if (size && fwrite(ptr, size, nmemb, stream) != nmemb)
     panic(ngettext("couldn't write %d item to %s: %s",
-		   "couldn't write %d items to %s: %s", nmemb), 
+		   "couldn't write %d items to %s: %s", nmemb),
 		nmemb, utils_fp_name(stream), strerror(errno));
 }
 

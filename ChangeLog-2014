@@ -1,5 +1,17 @@
 2014-09-06  Jim Meyering  <meyering@fb.com>
 
+	maint: remove all trailing white space
+	First, run this command:
+	  git grep -l '	 $'|xargs perl -pi -e 's/[ \t]+$//'
+	Then some minor fix-up to make the two newly-failing tests
+	pass once again:
+	* testsuite/mac-mf.sed: Append this, s/ $//,
+	to eliminate trailing spaces in the actual output.
+	* testsuite/y-newline.good: Manually remove a trailing
+	space between two concatenated prompts.
+
+2014-09-06  Jim Meyering  <meyering@fb.com>
+
 	fixup: add the properly-named new test files
 	* testsuite/Makefile.am (EXTRA_DIST): Add y-zero.*,
 	not y-NUL.* here.
@@ -502,7 +514,7 @@
 	* testsuite/Makefile.am: Do not distribute it.
 
 2009-04-27  Paolo Bonzini  <bonzini@gnu.org>
- 
+
 	* autoboot.conf: Add rename.
 	* gnulib: Update.
 
@@ -794,7 +806,7 @@
 	* sed/utils.c: Include pathmax.
 	* sed/mbcs.c: Use local_charset.
 	* sed/execute.c: Copy with padding after the mbstate_t member.
-	
+
 2006-12-21  Paolo Bonzini  <bonzini@gnu.org>
 
 	* sed/mbcs.c: Include string.h (reported by Henning Nielsen Lund).
@@ -900,7 +912,7 @@
 
 2005-05-16  Eero Hakkinen  <eero17@bigfoot.com>
 
-	* sed/compile.c (snarf_char_class): Fix handling of 
+	* sed/compile.c (snarf_char_class): Fix handling of
 	[^]xyz].
 
 2005-04-04  Paolo Bonzini  <bonzini@gnu.org>
@@ -1054,6 +1066,12 @@
 	(closedown): Use ck_rename.
 	(open_next_file): Use ck_mkstemp.
 
+2004-01-17  Paolo Bonzini  <bonzini@gnu.org>
+
+	* sed/sed.h: Do not include wchar.h and wctype.h, and do
+	not include the alloca stuff.
+	* basicdefs.h: Move all that here.
+
 2004-01-20  Paolo Bonzini  <bonzini@gnu.org>
 
 	* sed/sed.h (enum addr_state): New definition.
@@ -1072,12 +1090,6 @@
 	(struct input): New field "reset_at_next_file".
 	(read_pattern_space): Use it instead of "separate_files".
 	(process_files): Initialize it.
-	
-2004-01-17  Paolo Bonzini  <bonzini@gnu.org>
-
-	* sed/sed.h: Do not include wchar.h and wctype.h, and do
-	not include the alloca stuff.
-	* basicdefs.h: Move all that here.
 
 2004-01-15  Paolo Bonzini  <bonzini@gnu.org>
 
@@ -1224,7 +1236,7 @@
 	do_subst
 	(do_subst): Don't update count when a match was
 	skipped.
-	* testsuite/xbxcx3.good, testsuite/xbxcx3.sed, 
+	* testsuite/xbxcx3.good, testsuite/xbxcx3.sed,
 	testsuite/xbxcx3.inp: Regression tests
 
 2003-03-23  Paolo Bonzini  <bonzini@gnu.org>
@@ -1426,19 +1438,12 @@
 	* src/compile.c (compile_program): Implement W
 	* src/execute.c (execute_program): Likewise
 
-2002-04-23  Paolo Bonzini  <bonzini@gnu.org>
+2002-02-14  Paolo Bonzini  <bonzini@gnu.org>
 
-	* src/sed.c (usage, main): Parse -s
-	* src/sed.h (separate_files): New variable
-	* src/execute.c (separate_files): New variable
-	* src/execute.c (reset_addresses): New function to make range
-	addresses work separately on each file when using in-place
-	editing
-	* src/execute.c (execute_program): The `n' and `N' use test_eof
-	so that the script restarts at end of file, not at end of input
-	* src/execute.c (test_dollar_EOF): Make $ work separately
-	on each file when using -s; renamed to test_eof
-	
+	* src/execute.c (str_append_modified): Fixed a stupid
+	bug (stop condition was *start == *end, meant to be
+	start == end)
+
 2002-02-28  Paolo Bonzini  <bonzini@gnu.org>
 
 	* src/sed.h (struct sed_cmd): exit_status -> int_arg
@@ -1455,12 +1460,19 @@
 	* src/fmt.c: New file, looted from GNU textutils
 	* src/compile.c: Parse `L'
 	* src/execute.c: Execute `L'
-	
-2002-02-14  Paolo Bonzini  <bonzini@gnu.org>
 
-	* src/execute.c (str_append_modified): Fixed a stupid
-	bug (stop condition was *start == *end, meant to be
-	start == end)
+2002-04-23  Paolo Bonzini  <bonzini@gnu.org>
+
+	* src/sed.c (usage, main): Parse -s
+	* src/sed.h (separate_files): New variable
+	* src/execute.c (separate_files): New variable
+	* src/execute.c (reset_addresses): New function to make range
+	addresses work separately on each file when using in-place
+	editing
+	* src/execute.c (execute_program): The `n' and `N' use test_eof
+	so that the script restarts at end of file, not at end of input
+	* src/execute.c (test_dollar_EOF): Make $ work separately
+	on each file when using -s; renamed to test_eof
 
 2002-02-05  Paolo Bonzini  <bonzini@gnu.org>
 
@@ -1481,13 +1493,13 @@
 
 	* lib/getline.c: Strip the terminating \r under Windows
 	or MS-DOS.
-	
+
 	* testsuite/xemacs.sed, testsuite/xemacs.inp,
 	testsuite/xemacs.good: Submitted by John Fremlin
 	(john@fremlin.de)
 
 2001-12-27  Paolo Bonzini  <bonzini@gnu.org>
-	
+
 	* sed/execute.c (do_subst): Flags in optimized s/^xx/
 	commands were discarded (see the change below)
 
@@ -1504,7 +1516,7 @@
 	of the buffer inactive and s/xx$// by truncating it.
 	* sed/execute.c (execute_program): Optimize D by making a part
 	of the buffer inactive
-	
+
 	* testsuite/uniq.sed, testsuite/uniq.inp, testsuite/uniq.good:
 	added to test P and D commands.
 	* testsuite/fasts.sed, testsuite/fasts.inp, testsuite/fasts.good:
@@ -1548,7 +1560,7 @@
 	support in-place editing
 	* sed/main.c (usage, main): Parse -i.
 	* sed/utils.c: Moved to lib directory
-	
+
 	* lib/utils.c (temp_file_template): New function.
 	* sed/utils.h: Declared temp_file_template.
 
@@ -1584,7 +1596,7 @@
 	regex
 	* sed/regex.c (execute_regex): Track here the last compiled
 	regex
-	
+
 2001-03-02  Paolo Bonzini  <bonzini@gnu.org>
 
 	* sed/compile.c (setup_replacement): Support \[lLuUE] like
@@ -1605,23 +1617,14 @@
 	* sed/compile.c (compile_address, compile_program,
 	check_final_program): Callers adjusted
 
-2001-02-08  Paolo Bonzini  <bonzini@gnu.org>
+2001-01-03  Paolo Bonzini  <bonzini@gnu.org>
 
-	* sed/compile.c (compile_program): Added `Q' (quit without output)
-	* sed/execute.c (execute_program): Ditto
+	* sed/compile.c(snarf_char_class) [REG_PERL]: Don't parse
+	`\n' specially
+	* sed/compile.c(match_slash) [REG_PERL]: Ditto
 
-	* sed/compile.c (compile_program): Fill in exit_status for `q' and `Q'
-	* sed/execute.c (execute_program): Return -1 for `go on', 0..255
-	to set the exit status
-	* sed/execute.c (process_files): Interpret new convention for
-	execute_program, return sed's exit code
-	* sed/sed.c (main): Return process_files's exit code
-	* sed/sed.h (struct sed_cmd): Declare exit_status
-	
-2001-01-07  Paolo Bonzini  <bonzini@gnu.org>
-
-	* sed/compile.c (compile_program): Added `T' (branch if failed)
-	* sed/execute.c (shrink_program, execute_program): Ditto
+	* sed/compile.c(read_text) [REG_PERL]: Support [xX] modifiers
+	* sed/compile.c(mark_subst_opts) [REG_PERL]: Ditto
 
 2001-01-04  Paolo Bonzini  <bonzini@gnu.org>
 
@@ -1636,15 +1639,24 @@
 	* testsuite/spencer.inp: Removed the ^* test
 
 	* testsuite/spencer.sh: Don't rely on awk; more comments too
-	
-2001-01-03  Paolo Bonzini  <bonzini@gnu.org>
-   
-	* sed/compile.c(snarf_char_class) [REG_PERL]: Don't parse
-	`\n' specially
-	* sed/compile.c(match_slash) [REG_PERL]: Ditto
 
-	* sed/compile.c(read_text) [REG_PERL]: Support [xX] modifiers
-	* sed/compile.c(mark_subst_opts) [REG_PERL]: Ditto
+2001-01-07  Paolo Bonzini  <bonzini@gnu.org>
+
+	* sed/compile.c (compile_program): Added `T' (branch if failed)
+	* sed/execute.c (shrink_program, execute_program): Ditto
+
+2001-02-08  Paolo Bonzini  <bonzini@gnu.org>
+
+	* sed/compile.c (compile_program): Added `Q' (quit without output)
+	* sed/execute.c (execute_program): Ditto
+
+	* sed/compile.c (compile_program): Fill in exit_status for `q' and `Q'
+	* sed/execute.c (execute_program): Return -1 for `go on', 0..255
+	to set the exit status
+	* sed/execute.c (process_files): Interpret new convention for
+	execute_program, return sed's exit code
+	* sed/sed.c (main): Return process_files's exit code
+	* sed/sed.h (struct sed_cmd): Declare exit_status
 
 2000-12-21  Paolo Bonzini  <bonzini@gnu.org>
 
@@ -1655,7 +1667,7 @@
 2000-12-11  Paolo Bonzini  <bonzini@gnu.org>
 
 	* sed/compile.c(mark_subst_opts): Support [mMsS] flags
-	* sed/compile.c(read_text): Support [MS] flags for 
+	* sed/compile.c(read_text): Support [MS] flags for
 	addresses
 	* sed/regex.c(compile_regex): Support arbitrary flags for
 	regncomp.
@@ -1666,12 +1678,12 @@
 2000-12-08  Paolo Bonzini  <bonzini@gnu.org>
 
 	* basicdefs.h: Moved here from the `sed' subdirectory.
-	
+
 	* configure.in: Removed crap to pick a regex engine.
 	Added snprintf to the AC_REPLACE_FUNCS call.
 
 	* lib/snprintf.c: New file.
-	
+
 	* sed/regex.c(compile_regex): Use regncomp
 	* sed/regex.c(match_regex): Use regexec2
 
@@ -1689,7 +1701,7 @@
 Mon Aug 30 23:40:08 PDT 1999  Ken Pizzini <ken@gnu.org>
 
 	*** Version 3.02.80 released
-	
+
 	* sed/execute.c(do_subst): lib/regex.c(re_search_2) seems to
 	want one extra backreference register; humor it.
 
@@ -1708,7 +1720,7 @@ Mon Aug 30 23:40:08 PDT 1999  Ken Pizzini <ken@gnu.org>
 
 
 Thu Aug 19 23:27:54 PDT 1999  Ken Pizzini <ken@gnu.org>
-	
+
 	* sed/sed.h: Add explicit #include of "regex-sed.h" (rather
 	 than relying on parent file doing so); change the "cmd_regex"
 	 member of sed_cmd: make it a pointer (instead of a struct),
@@ -1915,7 +1927,7 @@ Wed Sep  9 22:17:28 PDT 1998  Ken Pizzini <ken@gnu.org>
 Wed Sep  9 19:28:14 PDT 1998  Ken Pizzini <ken@gnu.org>
 
 	*** Version 3.02a released
-	
+
 	* sed/compile.c(mark_subst_opts,read_label,compile_program):
 	wherever we accept a ; as a command terminator, also allow a } or
 	a # to appear.  (This allows for less cluttered-looking scripts,
@@ -2200,14 +2212,14 @@ Mon Aug  3 11:44:55 PDT 1998  Ken Pizzini <ken@gnu.org>
 Sat Aug 01 17:49:06 PDT 1998  Ken Pizzini <ken@gnu.org>
 
 	*** Version 3.02 released
-	
+
 	* configure.in: Because of code change in 3.01a, bump the
 	minor revision number for the release (now 3.02).
 
 Sun Jul 26 16:07:55 PDT 1998  Ken Pizzini <ken@gnu.org>
 
 	*** Version 3.01a released
-	
+
 	* sed/compile.c(snarf_char_class):  the POSIX char-class
 	recognition loop forgot to update its concept of "prev"
 	as the loop progressed.
@@ -2226,7 +2238,7 @@ Sun Jul 26 16:07:55 PDT 1998  Ken Pizzini <ken@gnu.org>
 Tue Jul 21 06:04:42 PDT 1998  Ken Pizzini <ken@gnu.org>
 
 	*** Version 3.01 released
-	
+
 	* configure.in: mark as release version!
 
 	* Makefile.am: add BUGS and THANKS to the EXTRA_DIST target.
@@ -2243,7 +2255,7 @@ Mon Jul 20 12:38:10 PDT 1998  Ken Pizzini <ken@gnu.org>
 Fri Jul 17 00:36:34 PDT 1998  Ken Pizzini <ken@gnu.org>
 
 	*** Version 3.01-beta18 released
-	
+
 	* djgpp/config.sed: my "tweak" in beta17 was too
 	hastily considered.  Back it out.
 
@@ -2252,7 +2264,7 @@ Fri Jul 17 00:36:34 PDT 1998  Ken Pizzini <ken@gnu.org>
 Wed Jul 15 01:02:15 PDT 1998  Ken Pizzini <ken@gnu.org>
 
 	*** Version 3.01-beta17 released
-	
+
         * djgpp/config.sed: tweak/simplify s,,, commands at end.
 
 	* configure.in: update to beta17.
@@ -2272,7 +2284,7 @@ Wed Jul 15 01:02:15 PDT 1998  Ken Pizzini <ken@gnu.org>
 Thu Jul  9 13:06:00 PDT 1998 16:51:43 PDT 1998  Ken Pizzini <ken@gnu.org>
 
 	*** Version 3.01-beta16 released
-	
+
 	* djgpp/config.sed: tweak the configure script to use :
 	instead of = for --with-foo=bar option parsing, to
 	work around problems with how command.com handles =s.
@@ -2301,7 +2313,7 @@ Wed Jul  8 16:51:43 PDT 1998  Ken Pizzini <ken@gnu.org>
 Sun Jul  5 21:02:16 PDT 1998  Ken Pizzini <ken@gnu.org>
 
 	*** Version 3.01-beta15 released
-	
+
 	* sed/utils.c(ck_fflush), sed/utils.h, sed/execute.c(output_line):
 	add and use new ck_fflush() function.
 
@@ -2327,7 +2339,7 @@ Sun Jul  5 14:29:45 PDT 1998  Ken Pizzini <ken@gnu.org>
 Sat Jul  4 09:54:45 PDT 1998  Ken Pizzini <ken@gnu.org>
 
 	*** Version 3.01-beta14 released
-	
+
 	* sed/basicdefs.h, sed/compile.c, sed/execute.c:
 	per report by "Kaveh R. Ghazi" <ghazi@caip.rutgers.edu>,
 	copied the ISXXX macros from lib/regex.c so that
@@ -2340,7 +2352,7 @@ Sat Jul  4 09:54:45 PDT 1998  Ken Pizzini <ken@gnu.org>
 Thu Jul  2 23:46:13 PDT 1998  Ken Pizzini <ken@gnu.org>
 
 	*** Version 3.01-beta13 released
-	
+
 	* configure.in, acconfig.h: set USE_REGEX_GNU_H symbol if we
 	are going to be using lib/regex.c.
 
@@ -2389,7 +2401,7 @@ Thu Jul  2 17:22:31 PDT 1998  Ken Pizzini <ken@gnu.org>
 Sun Jun 28 16:21:02 PDT 1998  Ken Pizzini <ken@gnu.org>
 
 	*** Version 3.01-beta12 released
-	
+
 	* doc/sed.texi: Avoid mixing @code and @samp markups together:
 	they look ugly in Info.  Use @url and @email instead of @example.
 	Add indexes.  (Basis of changes contributed by Eli Zaretskii.)
@@ -2411,7 +2423,7 @@ Sun Jun 28 16:21:02 PDT 1998  Ken Pizzini <ken@gnu.org>
 Fri Jun 12 16:41:48 PDT 1998  Ken Pizzini <ken@gnu.org>
 
 	*** Version 3.01-beta11 released
-	
+
 	* sed/compile.c: add module-static variables first_script
 	(for #n change below) and pending_text (for a/c/i change
 	below).
@@ -2455,7 +2467,7 @@ Fri Jun  5 04:40:24 PDT 1998  Ken Pizzini <ken@gnu.org>
 Fri Jun  5 00:54:25 PDT 1998  Ken Pizzini <ken@gnu.org>
 
 	*** Version 3.01-beta10 released
-	
+
 	* sed/execute.c: forgot to P_() the prototype and
 	old-style the declaration for bootstrap_memchr()!
 
@@ -2522,7 +2534,7 @@ Tue Jun  2 08:41:05 PDT 1998  Ken Pizzini <ken@gnu.org>
 Sat May 30 17:28:00 PDT 1998  Ken Pizzini <ken@gnu.org>
 
 	*** Version 3.01-beta9 released
-	
+
 	* Makefile.am: make testsuite a normal SUBDIR.
 
 	* configure.in: discontinue using AC_ISC_POSIX --
@@ -2581,7 +2593,7 @@ Fri May 29 12:07:38 PDT 1998  Ken Pizzini <ken@gnu.org>
 Sat May 23 20:04:31 HST 1998  Ken Pizzini <ken@gnu.org>
 
 	*** Version 3.01-beta8 released
-	
+
 	* sed/compile.c(compile_regex): forgot to make last_re be
 	a *copy* of the buffered text in today's earlier fix.
 
@@ -2601,7 +2613,7 @@ Sat May 23 18:07:18 HST 1998  Ken Pizzini <ken@gnu.org>
 Sat May 23 16:07:09 HST 1998  Ken Pizzini <ken@gnu.org>
 
 	*** Version 3.01-beta7 released
-	
+
 	* sed/execute.c: #undef'd EXPERIMENTAL_DASH_N_OPTIMIZATION
 	because its code is buggy.
 
@@ -2624,7 +2636,7 @@ Sat May 16 23:16:26 HST 1998  Ken Pizzini <ken@gnu.org>
 Wed May 13 21:44:28 PDT 1998  Ken Pizzini <ken@gnu.org>
 
 	*** Version 3.01-beta6 released
-	
+
 	* lib/Makefile.am: fix spelling of libsed_a_LIBADD in
 	libsed_a_DEPENDENCIES.
 
@@ -2633,7 +2645,7 @@ Wed May 13 21:44:28 PDT 1998  Ken Pizzini <ken@gnu.org>
 Wed May 13 14:38:08 PDT 1998  Ken Pizzini <ken@gnu.org>
 
 	*** Version 3.01-beta5 released
-	
+
 	* sed/execute.c(do_subst): added not_bol_p variable to track when
 	we have iterated past the beginning of the pattern.
 	[Thanks to Jim Meyering <meyering@ascend.com> for the bug report.]
@@ -2655,7 +2667,7 @@ Wed May 13 13:54:04 PDT 1998  Ken Pizzini <ken@gnu.org>
 Wed May 13 06:39:06 PDT 1998  Ken Pizzini <ken@gnu.org>
 
 	*** Version 3.01-beta4 released
-	
+
 	* rename writeout.good? to wrtout?.good and subwrite.good? to
 	subwrt?.good to comply with DOS 8+3 file name restrictions.
 	[Eli Zaretskii <eliz@is.elta.co.il> suggested this to
@@ -2693,9 +2705,9 @@ Tue May 12 10:02:37 PDT 1998  Ken Pizzini <ken@gnu.org>
 	* testsuite/version.good: updated for new version identifier.
 
 Mon May 11 18:50:56 PDT 1998  Ken Pizzini <ken@gnu.org>
-	
+
 	*** Version 3.01-beta3 released
-	
+
 	* sed/Makefile.am: fix INCLUDES to work right with VPATH.
 	[Thanks to Jim Meyering <meyering@ascend.com> for the bug report.]
 
@@ -2712,7 +2724,7 @@ Mon May 11 18:50:56 PDT 1998  Ken Pizzini <ken@gnu.org>
 Sat May  9 22:35:45 PDT 1998  Ken Pizzini <ken@gnu.org>
 
 	*** Version 3.01-beta2 released
-	
+
 	* sed/sed.c: add #include <sys/types.h> in HAVE_MMAP
 	block (needed on some machines).
 
@@ -2775,7 +2787,7 @@ Sat May  9 21:29:00 PDT 1998  Ken Pizzini <ken@gnu.org>
 Fri May  8 15:08:28 PDT 1998  Ken Pizzini <ken@gnu.org>
 
 	*** Version 3.01-beta1 released
-	
+
 	* sed/sed.c (main, usage): once again tweak the --help and
 	--version output to bettery comply with GNU coding standards.
 
@@ -3178,7 +3190,7 @@ Sun Jul 13 00:46:48 PDT 1997  Ken Pizzini <ken@gnu.org>
 Sat Dec 30 20:16:59 1995  Tom Lord  <lord@beehive>
 
 	*** Version 3.00 released
-	
+
 	* sed.c: Use posix entry points to regexp functions.
 	Fix enough bugs to pass the test-suite.
 
@@ -3190,7 +3202,7 @@ Sat Dec 30 20:16:59 1995  Tom Lord  <lord@beehive>
 Wed May 11 07:46:24 1994  Chip Salzenberg  (chip@fin.uucp)
 
 	*** Version 2.05 released
-	
+
 	* sed.c (compile_address): Recognize numeric addresses.
 	Fixes typo made during installation of "~" feature.
 
@@ -3248,7 +3260,7 @@ Mon Oct 11 21:06:10 1993  Tom Lord  (lord@cygnus.com)
 Sat Aug  7 01:04:59 1993  Tom Lord  (lord@unix7.andrew.cmu.edu)
 
 	*** Version 2.03 released
-	
+
 	* sed.c (compile_regex): report error messages for bogus
 	regexps.
 

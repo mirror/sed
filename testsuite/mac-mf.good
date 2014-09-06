@@ -6,72 +6,72 @@
 #
 # This first part is long enough that NFS:Share doesn't notice the non-ASCII
 # characters in the rest of the file, so it claims that the file is type
-# TEXT, which is what we want.  The non-ASCII chars are necessary for MPW 
+# TEXT, which is what we want.  The non-ASCII chars are necessary for MPW
 # Make
 #
 # This first part is long enough that NFS:Share doesn't notice the non-ASCII
 # characters in the rest of the file, so it claims that the file is type
-# TEXT, which is what we want.  The non-ASCII chars are necessary for MPW 
+# TEXT, which is what we want.  The non-ASCII chars are necessary for MPW
 # Make
 #
 # This first part is long enough that NFS:Share doesn't notice the non-ASCII
 # characters in the rest of the file, so it claims that the file is type
-# TEXT, which is what we want.  The non-ASCII chars are necessary for MPW 
+# TEXT, which is what we want.  The non-ASCII chars are necessary for MPW
 # Make
 #
 # This first part is long enough that NFS:Share doesn't notice the non-ASCII
 # characters in the rest of the file, so it claims that the file is type
-# TEXT, which is what we want.  The non-ASCII chars are necessary for MPW 
+# TEXT, which is what we want.  The non-ASCII chars are necessary for MPW
 # Make
 #
 # This first part is long enough that NFS:Share doesn't notice the non-ASCII
 # characters in the rest of the file, so it claims that the file is type
-# TEXT, which is what we want.  The non-ASCII chars are necessary for MPW 
+# TEXT, which is what we want.  The non-ASCII chars are necessary for MPW
 # Make
 #
 # This first part is long enough that NFS:Share doesn't notice the non-ASCII
 # characters in the rest of the file, so it claims that the file is type
-# TEXT, which is what we want.  The non-ASCII chars are necessary for MPW 
+# TEXT, which is what we want.  The non-ASCII chars are necessary for MPW
 # Make
 #
 # This first part is long enough that NFS:Share doesn't notice the non-ASCII
 # characters in the rest of the file, so it claims that the file is type
-# TEXT, which is what we want.  The non-ASCII chars are necessary for MPW 
+# TEXT, which is what we want.  The non-ASCII chars are necessary for MPW
 # Make
 #
 # This first part is long enough that NFS:Share doesn't notice the non-ASCII
 # characters in the rest of the file, so it claims that the file is type
-# TEXT, which is what we want.  The non-ASCII chars are necessary for MPW 
+# TEXT, which is what we want.  The non-ASCII chars are necessary for MPW
 # Make
 #
 # This first part is long enough that NFS:Share doesn't notice the non-ASCII
 # characters in the rest of the file, so it claims that the file is type
-# TEXT, which is what we want.  The non-ASCII chars are necessary for MPW 
+# TEXT, which is what we want.  The non-ASCII chars are necessary for MPW
 # Make
 #
 # This first part is long enough that NFS:Share doesn't notice the non-ASCII
 # characters in the rest of the file, so it claims that the file is type
-# TEXT, which is what we want.  The non-ASCII chars are necessary for MPW 
+# TEXT, which is what we want.  The non-ASCII chars are necessary for MPW
 # Make
 #
 # This first part is long enough that NFS:Share doesn't notice the non-ASCII
 # characters in the rest of the file, so it claims that the file is type
-# TEXT, which is what we want.  The non-ASCII chars are necessary for MPW 
+# TEXT, which is what we want.  The non-ASCII chars are necessary for MPW
 # Make
 #
 # This first part is long enough that NFS:Share doesn't notice the non-ASCII
 # characters in the rest of the file, so it claims that the file is type
-# TEXT, which is what we want.  The non-ASCII chars are necessary for MPW 
+# TEXT, which is what we want.  The non-ASCII chars are necessary for MPW
 # Make
 #
 # This first part is long enough that NFS:Share doesn't notice the non-ASCII
 # characters in the rest of the file, so it claims that the file is type
-# TEXT, which is what we want.  The non-ASCII chars are necessary for MPW 
+# TEXT, which is what we want.  The non-ASCII chars are necessary for MPW
 # Make
 #
 # This first part is long enough that NFS:Share doesn't notice the non-ASCII
 # characters in the rest of the file, so it claims that the file is type
-# TEXT, which is what we want.  The non-ASCII chars are necessary for MPW 
+# TEXT, which is what we want.  The non-ASCII chars are necessary for MPW
 # Make
 
 #
@@ -80,18 +80,18 @@
 
 WHAT = mac
 
-# Directory syntax Ä 
+# Directory syntax Ä
 R=
 C=
 S=:
 U=:
 
 BUILDTOP = :::
-srcdir = 
+srcdir =
 
 # FIXME Ä   This doesn't translate to MPW yet, srcdir must be same as objdir
 # File in object dir can come from either the current dir or srcdir
-# 
+#
 # .  Ä  . "{srcdir}"
 
 # Default rule that puts each file into separate segment
@@ -106,8 +106,8 @@ LD = link
 # The funny quoting in the LDFLAGS is to avoid xxx.c.o being mangled by
 # mac-mf.sed into xxx.c.o
 LDFLAGS=-t MPST -c "MPS " -sym on {Libraries}"Runtime."o {CLibraries}"StdClib."o {Libraries}"ToolLibs."o {Libraries}"Interface."o
-CCOPTS = 
-LIBS = 
+CCOPTS =
+LIBS =
 KRB5ROOT= @KRB5ROOT@
 KRB4=@KRB4@
 INSTALL=Duplicate -y
@@ -157,7 +157,7 @@ OBJEXT = c.o
 LIBEXT = a
 EXEEXT =
 
-all ÄÄ 
+all ÄÄ
 # Generated automatically from Makefile.in by configure
 CFLAGS = {CCOPTS} {DEFS} -i ::des
 
@@ -169,32 +169,32 @@ OBJS=	md5.{OBJEXT} md5glue.{OBJEXT} md5crypto.{OBJEXT}
 
 SRCS=	md5.c md5glue.c md5crypto.c
 
-all ÄÄ  {OBJS} 
+all ÄÄ  {OBJS}
 
 t_mddriver Ä  t_mddriver.c.o md5.c.o
 	Link    {LDFLAGS} -o t_mddriver t_mddriver.c.o md5.c.o
 
-t_mddriver.exe Ä 
+t_mddriver.exe Ä
 	{CC} {CFLAGS2} -o t_mddriver.exe t_mddriver.c md5.c
 
 check ÄÄ  t_mddriver{EXEEXT}
 	{C}t_mddriver{EXEEXT} -x
 
-clean ÄÄ 
+clean ÄÄ
 	{RM} t_mddriver{EXEEXT} t_mddriver.{OBJEXT}
 # config:post.in
 # put all ÄÄ  first just in case no other rules occur here
 #
-all ÄÄ 
+all ÄÄ
 
-check ÄÄ 
+check ÄÄ
 
 clean ÄÄ  clean-{WHAT}
 	{RM} config.log pre.c.out post.c.out Makefile.c.out
 
-clean-unix ÄÄ 
+clean-unix ÄÄ
 	if test -n "{OBJS}" ; then {RM} {OBJS}; else  Ä ; fi
 
-clean-windows ÄÄ 
+clean-windows ÄÄ
 	{RM} Å.{OBJEXT}
 	{RM} msvc.pdb Å.err

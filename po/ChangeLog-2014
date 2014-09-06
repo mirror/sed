@@ -20,7 +20,7 @@
 
 	* po/it.po: updated
 	* po/sed.pot: likewise.
-	
+
 2000-12-10  Paolo Bonzini  <bonzini@gnu.org>
 
 	* po/it.po: Italian translation reviewed for new POT file.

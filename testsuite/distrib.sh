@@ -1,7 +1,7 @@
 #! /bin/sh
 #
 #   This is stolen from C News
-# 
+#
 
 
 #

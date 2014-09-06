@@ -79,10 +79,10 @@ struct input {
   char **file_list;
 
   /* Count of files we failed to open. */
-  countT bad_count;	    
+  countT bad_count;
 
   /* Current input line number (over all files).  */
-  countT line_number;	    
+  countT line_number;
 
   /* True if we'll reset line numbers and addresses before
      starting to process the next (possibly the first) file.  */
@@ -159,7 +159,7 @@ resize_line(lb, len)
     lb->alloc = len;
   if (lb->alloc < INITIAL_BUFFER_SIZE)
     lb->alloc = INITIAL_BUFFER_SIZE;
-    
+
   lb->text = REALLOC(lb->text, inactive + lb->alloc, char);
   lb->active = lb->text + inactive;
 }
@@ -960,7 +960,7 @@ do_list(line_len)
   output_missing_newline(&output_file);
   for (; len--; ++p) {
       o = obuf;
-      
+
       /* Some locales define 8-bit characters as printable.  This makes the
 	 testsuite fail at 8to7.sed because the `l' command in fact will not
 	 convert the 8-bit characters. */
@@ -1065,7 +1065,7 @@ do_subst(sub)
   if (!match_regex(sub->regx, line.active, line.length, start,
 		   &regs, sub->max_id + 1))
     return;
-  
+
   if (!sub->replacement && sub->numb <= 1)
     {
       if (regs.start[0] == 0 && !sub->global)
@@ -1159,26 +1159,26 @@ do_subst(sub)
  post_subst:
   if (sub->print & 1)
     output_line(line.active, line.length, line.chomped, &output_file);
-  
-  if (sub->eval) 
+
+  if (sub->eval)
     {
 #ifdef HAVE_POPEN
       FILE *pipe_fp;
       line_reset(&s_accum, NULL);
-      
+
       str_append (&line, "", 1);
       pipe_fp = popen(line.active, "r");
-      
-      if (pipe_fp != NULL) 
+
+      if (pipe_fp != NULL)
 	{
-	  while (!feof (pipe_fp)) 
+	  while (!feof (pipe_fp))
 	    {
 	      char buf[4096];
 	      int n = fread (buf, sizeof(char), 4096, pipe_fp);
 	      if (n > 0)
 		str_append(&s_accum, buf, n);
 	    }
-	  
+
 	  pclose (pipe_fp);
 
 	  /* Exchange line and s_accum.  This can be much cheaper than copying
@@ -1194,8 +1194,8 @@ do_subst(sub)
 #else
       panic(_("option `e' not supported"));
 #endif
-    } 
-  
+    }
+
   if (sub->print & 2)
     output_line(line.active, line.length, line.chomped, &output_file);
   if (sub->outf)
@@ -1330,7 +1330,7 @@ execute_program(vec, input)
 		{
 		  str_append (&line, "", 1);
 		  pipe_fp = popen(line.active, "r");
-		} 
+		}
 	      else
 		{
 		  cur_cmd->x.cmd_txt.text[cmd_length - 1] = 0;
@@ -1338,11 +1338,11 @@ execute_program(vec, input)
                   output_missing_newline(&output_file);
 		}
 
-	      if (pipe_fp != NULL) 
+	      if (pipe_fp != NULL)
 		{
 		  char buf[4096];
 		  int n;
-		  while (!feof (pipe_fp)) 
+		  while (!feof (pipe_fp))
 		    if ((n = fread (buf, sizeof(char), 4096, pipe_fp)) > 0)
 		      {
 			if (!cmd_length)
@@ -1350,7 +1350,7 @@ execute_program(vec, input)
 			else
 			  ck_fwrite(buf, 1, n, output_file.fp);
 		      }
-		  
+
 		  pclose (pipe_fp);
 		  if (!cmd_length)
 		    {
@@ -1438,7 +1438,7 @@ execute_program(vec, input)
 
 	    case 'N':
 	      str_append(&line, &buffer_delimiter, 1);
- 
+
               if (test_eof(input) || !read_pattern_space(input, vec, true))
                 {
                   line.length--;
@@ -1652,8 +1652,8 @@ execute_program(vec, input)
          compared against how much time is saved.  One semantic
          difference (which I think is an improvement) is that *this*
          version will terminate after printing line two in the script
-         "yes | sed -n 2p". 
-        
+         "yes | sed -n 2p".
+
          Don't use this when in-place editing is active, because line
          numbers restart each time then. */
       else if (!separate_files)

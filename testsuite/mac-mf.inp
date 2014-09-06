@@ -6,72 +6,72 @@
 #
 # This first part is long enough that NFS/Share doesn't notice the non-ASCII
 # characters in the rest of the file, so it claims that the file is type
-# TEXT, which is what we want.  The non-ASCII chars are necessary for MPW 
+# TEXT, which is what we want.  The non-ASCII chars are necessary for MPW
 # Make.
 #
 # This first part is long enough that NFS/Share doesn't notice the non-ASCII
 # characters in the rest of the file, so it claims that the file is type
-# TEXT, which is what we want.  The non-ASCII chars are necessary for MPW 
+# TEXT, which is what we want.  The non-ASCII chars are necessary for MPW
 # Make.
 #
 # This first part is long enough that NFS/Share doesn't notice the non-ASCII
 # characters in the rest of the file, so it claims that the file is type
-# TEXT, which is what we want.  The non-ASCII chars are necessary for MPW 
+# TEXT, which is what we want.  The non-ASCII chars are necessary for MPW
 # Make.
 #
 # This first part is long enough that NFS/Share doesn't notice the non-ASCII
 # characters in the rest of the file, so it claims that the file is type
-# TEXT, which is what we want.  The non-ASCII chars are necessary for MPW 
+# TEXT, which is what we want.  The non-ASCII chars are necessary for MPW
 # Make.
 #
 # This first part is long enough that NFS/Share doesn't notice the non-ASCII
 # characters in the rest of the file, so it claims that the file is type
-# TEXT, which is what we want.  The non-ASCII chars are necessary for MPW 
+# TEXT, which is what we want.  The non-ASCII chars are necessary for MPW
 # Make.
 #
 # This first part is long enough that NFS/Share doesn't notice the non-ASCII
 # characters in the rest of the file, so it claims that the file is type
-# TEXT, which is what we want.  The non-ASCII chars are necessary for MPW 
+# TEXT, which is what we want.  The non-ASCII chars are necessary for MPW
 # Make.
 #
 # This first part is long enough that NFS/Share doesn't notice the non-ASCII
 # characters in the rest of the file, so it claims that the file is type
-# TEXT, which is what we want.  The non-ASCII chars are necessary for MPW 
+# TEXT, which is what we want.  The non-ASCII chars are necessary for MPW
 # Make.
 #
 # This first part is long enough that NFS/Share doesn't notice the non-ASCII
 # characters in the rest of the file, so it claims that the file is type
-# TEXT, which is what we want.  The non-ASCII chars are necessary for MPW 
+# TEXT, which is what we want.  The non-ASCII chars are necessary for MPW
 # Make.
 #
 # This first part is long enough that NFS/Share doesn't notice the non-ASCII
 # characters in the rest of the file, so it claims that the file is type
-# TEXT, which is what we want.  The non-ASCII chars are necessary for MPW 
+# TEXT, which is what we want.  The non-ASCII chars are necessary for MPW
 # Make.
 #
 # This first part is long enough that NFS/Share doesn't notice the non-ASCII
 # characters in the rest of the file, so it claims that the file is type
-# TEXT, which is what we want.  The non-ASCII chars are necessary for MPW 
+# TEXT, which is what we want.  The non-ASCII chars are necessary for MPW
 # Make.
 #
 # This first part is long enough that NFS/Share doesn't notice the non-ASCII
 # characters in the rest of the file, so it claims that the file is type
-# TEXT, which is what we want.  The non-ASCII chars are necessary for MPW 
+# TEXT, which is what we want.  The non-ASCII chars are necessary for MPW
 # Make.
 #
 # This first part is long enough that NFS/Share doesn't notice the non-ASCII
 # characters in the rest of the file, so it claims that the file is type
-# TEXT, which is what we want.  The non-ASCII chars are necessary for MPW 
+# TEXT, which is what we want.  The non-ASCII chars are necessary for MPW
 # Make.
 #
 # This first part is long enough that NFS/Share doesn't notice the non-ASCII
 # characters in the rest of the file, so it claims that the file is type
-# TEXT, which is what we want.  The non-ASCII chars are necessary for MPW 
+# TEXT, which is what we want.  The non-ASCII chars are necessary for MPW
 # Make.
 #
 # This first part is long enough that NFS/Share doesn't notice the non-ASCII
 # characters in the rest of the file, so it claims that the file is type
-# TEXT, which is what we want.  The non-ASCII chars are necessary for MPW 
+# TEXT, which is what we want.  The non-ASCII chars are necessary for MPW
 # Make.
 
 #
@@ -91,7 +91,7 @@ srcdir = .
 
 # FIXME:  This doesn't translate to MPW yet, srcdir must be same as objdir.
 # File in object dir can come from either the current dir or srcdir.
-# 
+#
 # . : . "{srcdir}"
 
 # Default rule that puts each file into separate segment.
@@ -106,8 +106,8 @@ LD = link
 # The funny quoting in the LDFLAGS is to avoid xxx.o being mangled by
 # mac-mf.sed into xxx.c.o.
 LDFLAGS=-t MPST -c "MPS " -sym on {Libraries}"Runtime."o {CLibraries}"StdClib."o {Libraries}"ToolLibs."o {Libraries}"Interface."o
-CCOPTS = 
-LIBS = 
+CCOPTS =
+LIBS =
 KRB5ROOT= @KRB5ROOT@
 KRB4=@KRB4@
 INSTALL=Duplicate -y
@@ -169,7 +169,7 @@ OBJS=	md5.$(OBJEXT) md5glue.$(OBJEXT) md5crypto.$(OBJEXT)
 
 SRCS=	$(srcdir)/md5.c $(srcdir)/md5glue.c $(srcdir)/md5crypto.c
 
-all:: $(OBJS) 
+all:: $(OBJS)
 
 t_mddriver: t_mddriver.o md5.o
 	$(CC) $(CFLAGS) $(LDFLAGS) -o t_mddriver t_mddriver.o md5.o

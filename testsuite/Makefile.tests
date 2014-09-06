@@ -23,30 +23,30 @@ numsub head madding mac-mf empty xbxcx xbxcx3 recall recall2 xemacs \
 appquit fasts uniq manis linecnt khadafy allsub flipcase space modulo \
 y-bracket y-newline y-zero insert brackets amp-escape::
 	$(SEDENV) $(SED) -f $(srcdir)/$@.sed \
-		< $(srcdir)/$@.inp | $(TR) -d \\r > $@.out 
-	$(CMP) $(srcdir)/$@.good $@.out 
-	@$(RM) $@.out 
+		< $(srcdir)/$@.inp | $(TR) -d \\r > $@.out
+	$(CMP) $(srcdir)/$@.good $@.out
+	@$(RM) $@.out
 
 0range::
 	$(SEDENV) $(SED) -s -f $(srcdir)/$@.sed \
-		< $(srcdir)/$@.inp | $(TR) -d \\r > $@.out 
-	$(CMP) $(srcdir)/$@.good $@.out 
-	@$(RM) $@.out 
+		< $(srcdir)/$@.inp | $(TR) -d \\r > $@.out
+	$(CMP) $(srcdir)/$@.good $@.out
+	@$(RM) $@.out
 
 badenc::
 	LC_ALL=ru_RU.UTF-8 $(TIME) $(SED) -nf $(srcdir)/$@.sed \
-		< $(srcdir)/$@.inp | $(TR) -d \\r > $@.out 
-	$(CMP) $(srcdir)/$@.good $@.out 
+		< $(srcdir)/$@.inp | $(TR) -d \\r > $@.out
+	$(CMP) $(srcdir)/$@.good $@.out
 	LC_ALL=it_IT.UTF-8 $(TIME) $(SED) -nf $(srcdir)/$@.sed \
-		< $(srcdir)/$@.inp | $(TR) -d \\r > $@.out 
-	$(CMP) $(srcdir)/$@.good $@.out 
+		< $(srcdir)/$@.inp | $(TR) -d \\r > $@.out
+	$(CMP) $(srcdir)/$@.good $@.out
 	LC_ALL=en_US.UTF-8 $(TIME) $(SED) -nf $(srcdir)/$@.sed \
-		< $(srcdir)/$@.inp | $(TR) -d \\r > $@.out 
-	$(CMP) $(srcdir)/$@.good $@.out 
+		< $(srcdir)/$@.inp | $(TR) -d \\r > $@.out
+	$(CMP) $(srcdir)/$@.good $@.out
 	LC_ALL=en_GB.UTF-8 $(TIME) $(SED) -nf $(srcdir)/$@.sed \
-		< $(srcdir)/$@.inp | $(TR) -d \\r > $@.out 
-	$(CMP) $(srcdir)/$@.good $@.out 
-	@$(RM) $@.out 
+		< $(srcdir)/$@.inp | $(TR) -d \\r > $@.out
+	$(CMP) $(srcdir)/$@.good $@.out
+	@$(RM) $@.out
 
 # Try with ru_RU.UTF-8.  If it is presumably not installed, see if the current
 # locale is UTF-8 and run it in the current locale.
@@ -76,39 +76,39 @@ utf8-1 utf8-2 utf8-3 utf8-4::
 # This checks for a bug in 3.02 and 3.02.80
 stdin::
 	($(SEDENV) $(SED) d; $(SEDENV) $(SED) G) < $(srcdir)/numsub.inp \
-	  | $(TR) -d \\r > $@.1out 
+	  | $(TR) -d \\r > $@.1out
 	$(SEDENV) cat $(srcdir)/numsub.inp \
-	  | ($(SEDENV) $(SED) d; $(SEDENV) $(SED) G) | $(TR) -d \\r > $@.2out 
-	$(CMP) $@.1out $@.2out 
-	@$(RM) $@.1out $@.2out 
+	  | ($(SEDENV) $(SED) d; $(SEDENV) $(SED) G) | $(TR) -d \\r > $@.2out
+	$(CMP) $@.1out $@.2out
+	@$(RM) $@.1out $@.2out
 
 inplace-hold::
 	echo x > $@.1out
 	echo y > $@.2out
 	echo > $@.out
-	$(SEDENV) $(SED) -i x $@.1out $@.2out 
-	$(CMP) $@.1out $@.out 
-	$(CMP) $@.2out $@.out 
+	$(SEDENV) $(SED) -i x $@.1out $@.2out
+	$(CMP) $@.1out $@.out
+	$(CMP) $@.2out $@.out
 	@$(RM) $@.1out $@.2out $@.out
 
 cv-vars classes middle dc distrib factor numsub2 numsub3 numsub4 numsub5 \
 insens::
 	$(SEDENV) $(SED) -n -f $(srcdir)/$@.sed \
-	  < $(srcdir)/$@.inp | $(TR) -d \\r > $@.out 
-	$(CMP) $(srcdir)/$@.good $@.out 
-	@$(RM) $@.out 
+	  < $(srcdir)/$@.inp | $(TR) -d \\r > $@.out
+	$(CMP) $(srcdir)/$@.good $@.out
+	@$(RM) $@.out
 
 noeolw::
 	$(SEDENV) $(SED) -n -f $(srcdir)/$@.sed \
-	  $(srcdir)/noeol.inp $(srcdir)/noeol.inp | $(TR) -d \\r > $@.out 
-	$(CMP) $(srcdir)/$@.good $@.out 
+	  $(srcdir)/noeol.inp $(srcdir)/noeol.inp | $(TR) -d \\r > $@.out
+	$(CMP) $(srcdir)/$@.good $@.out
 	$(TR) -d \\r <  $@.1out | $(CMP) $(srcdir)/$@.1good -
 	$(TR) -d \\r <  $@.2out | $(CMP) $(srcdir)/$@.2good -
 	@$(RM) $@.1out $@.2out $@.out
 
 subwrite::
 	$(SEDENV) $(SED) -f $(srcdir)/$@.sed \
-	  < $(srcdir)/$@.inp | $(TR) -d \\r > $@.1out 
+	  < $(srcdir)/$@.inp | $(TR) -d \\r > $@.1out
 	$(CMP) $(srcdir)/subwrt1.good $@.1out
 	$(TR) -d \\r < $@.wout | $(CMP) $(srcdir)/subwrt2.good -
 	@$(RM) $@.1out $@.wout
@@ -116,20 +116,20 @@ subwrite::
 bsd::
 	$(SEDENV_2) sh $(srcdir)/$@.sh '$(TIME) $(SED)' $@.out
 	$(TR) -d \\r < $@.out | $(CMP) $(srcdir)/$@.good -
-	@$(RM) $@.out 
+	@$(RM) $@.out
 
 writeout::
 	$(SEDENV) $(SED) -f $(srcdir)/$@.sed \
-	  < $(srcdir)/$@.inp | $(TR) -d \\r > $@.1out 
-	$(CMP) $(srcdir)/wrtout1.good $@.1out 
+	  < $(srcdir)/$@.inp | $(TR) -d \\r > $@.1out
+	$(CMP) $(srcdir)/wrtout1.good $@.1out
 	$(TR) -d \\r < $@.wout | $(CMP) $(srcdir)/wrtout2.good -
 	@$(RM) $@.1out $@.wout
 
 readin::
 	echo MOO | $(SEDENV) $(SED) b > $@.in2
 	$(SEDENV) $(SED) -f $(srcdir)/$@.sed \
-	  < $(srcdir)/$@.inp | $(TR) -d \\r > $@.out 
-	$(CMP) $(srcdir)/$@.good $@.out 
+	  < $(srcdir)/$@.inp | $(TR) -d \\r > $@.out
+	$(CMP) $(srcdir)/$@.good $@.out
 	@$(RM) $@.out $@.in2
 
 eval.in2: $(srcdir)/eval.inp
@@ -137,15 +137,15 @@ eval.in2: $(srcdir)/eval.inp
 
 eval:: eval.in2
 	$(SEDENV) $(SED) -f $(srcdir)/$@.sed \
-	  < $(srcdir)/$@.inp | $(TR) -d \\r > $@.out 
-	$(CMP) $(srcdir)/$@.good $@.out 
-	@$(RM) $@.out 
+	  < $(srcdir)/$@.inp | $(TR) -d \\r > $@.out
+	$(CMP) $(srcdir)/$@.good $@.out
+	@$(RM) $@.out
 
 binary binary2 binary3::
 	$(SEDENV) $(SED) -n -f $(srcdir)/$@.sed \
-	  < $(srcdir)/binary.inp | $(TR) -d \\r > $@.out 
-	$(CMP) $(srcdir)/binary.good $@.out 
-	@$(RM) $@.out 
+	  < $(srcdir)/binary.inp | $(TR) -d \\r > $@.out
+	$(CMP) $(srcdir)/binary.good $@.out
+	@$(RM) $@.out
 
 #
 # cmdlines targets
@@ -153,27 +153,27 @@ binary binary2 binary3::
 
 help::
 	$(SEDENV) $(SED) --help | grep E-mail > /dev/null 2>&1
-	$(SEDENV) $(SED) --help | $(SEDENV) $(SED) '1s/ [^ ]* / sed /; /^E-mail/,$$d' > $@.1out 
+	$(SEDENV) $(SED) --help | $(SEDENV) $(SED) '1s/ [^ ]* / sed /; /^E-mail/,$$d' > $@.1out
 	$(SEDENV) $(SED) 2>&1 | $(SEDENV) $(SED) '1s/ [^ ]* / sed /' > $@.2out || :
-	$(CMP) $@.1out $@.2out 
+	$(CMP) $@.1out $@.2out
 	@$(RM) $@.1out $@.2out
 
 version::
 	$(SEDENV) $(SED) --version 2>&1 | $(TR) -d \\r > $@.out
-	$(CMP) $@.good $@.out 
+	$(CMP) $@.good $@.out
 	@$(RM) $@.out
 
 file::
 	$(SEDENV) $(SED) --file=$(srcdir)/newjis.sed \
-		< $(srcdir)/newjis.inp | $(TR) -d \\r > $@.out 
-	$(CMP) $(srcdir)/newjis.good $@.out 
-	@$(RM) $@.out 
+		< $(srcdir)/newjis.inp | $(TR) -d \\r > $@.out
+	$(CMP) $(srcdir)/newjis.good $@.out
+	@$(RM) $@.out
 
 quiet::
 	$(SEDENV) $(SED) --quiet -f $(srcdir)/cv-vars.sed \
-		< $(srcdir)/cv-vars.inp | $(TR) -d \\r > $@.out 
-	$(CMP) $(srcdir)/cv-vars.good $@.out 
-	@$(RM) $@.out 
+		< $(srcdir)/cv-vars.inp | $(TR) -d \\r > $@.out
+	$(CMP) $(srcdir)/cv-vars.good $@.out
+	@$(RM) $@.out
 
 # The following target is not used in super sed builds (only GNU sed)
 

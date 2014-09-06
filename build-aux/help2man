@@ -527,7 +527,7 @@ for (@pre, (grep ! /^($filter)$/o, @include), @post)
     {
 	my $quote = /\W/ ? '"' : '';
 	print ".SH $quote$_$quote\n";
-	
+
 	for ($include{$_})
 	{
 	    # Replace leading dot, apostrophe and backslash tokens.

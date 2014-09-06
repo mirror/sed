@@ -88,7 +88,7 @@ if test "x$enable_i18n" = xno; then
   ac_cv_func_wcscoll=no
 fi
 
-AC_ARG_ENABLE(regex-tests, 
+AC_ARG_ENABLE(regex-tests,
 [  --enable-regex-tests    enable regex matcher regression tests (default=yes)],
 [if test "x$with_included_regex" = xno; then
   enable_regex_tests=no

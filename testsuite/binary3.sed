@@ -41,23 +41,23 @@
 # 255.255.255.0; 2 parameters => given host address and netmask compute
 # network and broadcast addresses):
 #
-# if [ $# = 1 ]; then 
+# if [ $# = 1 ]; then
 #   OUTPUT='$1.$2.$3.$4'
 #   set 255.255.255.255 $1
 # else
 #   OUTPUT='$1.$2.$3.$4 $5.$6.$7.$8'
 # fi
-# 
+#
 # if [ `expr $2 : ".*\\."` -gt 0 ]; then
 #   MASK="$2 br b8<r b16<r b24< R|R|R|"
 # else
 #   MASK="$2b 31b ^d D
 #         11111111111111111111111111111111 x>1> x<1<"
 # fi
-# 
+#
 # set `echo "$1 br b8<r b16<r b24< R|R|R| D    # Load address
 #            $MASK D ~r                        # Load mask
-# 
+#
 #            & DDD 24>dpP 16>11111111& dpP 8>11111111& dpP 11111111& dpP
 #            | DDD 24>dpP 16>11111111& dpP 8>11111111& dpP 11111111& dpP
 #       " | sed -f binary.sed`

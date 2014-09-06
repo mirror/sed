@@ -26,7 +26,7 @@
 # Rules for .. and . elsewhere in the line
 # Convert ../: to ::, recur to get whole paths.
 /\./s,\.\./:,::,g
-# Convert ../../ to ::: 
+# Convert ../../ to :::
 /\./s,\.\./\.\./,:::,g
 /\./s,\.\./,::,g
 /\.\//s,\./,:,g
@@ -152,3 +152,4 @@
 /Option/s/\\Option-f/Ä/g
 /Option/s/\\Option-d/¶/g
 /Option/s/\\Option-x/Å/g
+s/ $//

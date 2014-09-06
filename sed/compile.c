@@ -377,7 +377,7 @@ get_openfile(file_ptrs, mode, fail)
     {
       /* Check whether it is a special file (stdin, stdout or stderr) */
       struct special_files *special = special_files;
-		  
+
       /* std* sometimes are not constants, so they
          cannot be used in the initializer for special_files */
       my_stdin = stdin; my_stdout = stdout; my_stderr = stderr;
@@ -440,13 +440,13 @@ snarf_char_class(b, cur_stat)
   int state = 0;
   int delim;
   bool pending_mb = 0;
-  
+
   ch = inchar();
   if (ch == '^')
     ch = add_then_next(b, ch);
   if (ch == CLOSE_BRACKET)
     ch = add_then_next(b, ch);
-  
+
   /* States are:
 	0 outside a collation element, character class or collation class
 	1 after the bracket
@@ -791,8 +791,8 @@ setup_replacement(sub, text, length)
 	  else
 	    switch (*p)
 	      {
-	      case '0': case '1': case '2': case '3': case '4': 
-	      case '5': case '6': case '7': case '8': case '9': 
+	      case '0': case '1': case '2': case '3': case '4':
+	      case '5': case '6': case '7': case '8': case '9':
 		tail->subst_id = *p - '0';
 		if (sub->max_id < tail->subst_id)
 		  sub->max_id = tail->subst_id;
@@ -807,7 +807,7 @@ setup_replacement(sub, text, length)
 		repl_type = REPL_UPPERCASE;
 		save_type = REPL_UPPERCASE;
 		break;
-		
+
 	      case 'E':
 		repl_type = REPL_ASIS;
 		save_type = REPL_ASIS;
@@ -822,7 +822,7 @@ setup_replacement(sub, text, length)
 		save_type = repl_type;
 		repl_type |= REPL_UPPERCASE_FIRST;
 		break;
-		
+
 	      default:
 		p[-1] = *p;
 		++tail->prefix_length;
@@ -1155,7 +1155,7 @@ compile_program(vector)
 	read_text_to_slash:
 	  if (ch == EOF)
 	    bad_prog(_(EXPECTED_SLASH));
-	      
+
 	  if (ch == '\\')
 	    ch = inchar();
 	  else
@@ -1174,7 +1174,7 @@ compile_program(vector)
 	    bad_prog(_(NO_COLON_ADDR));
 	  labels = setup_label(labels, vector->v_length, read_label(), NULL);
 	  break;
-	
+
 	case 'T':
 	case 'b':
 	case 't':
@@ -1271,7 +1271,7 @@ compile_program(vector)
 	    int slash;
 	    struct buffer *b2;
             char *src_buf, *dest_buf;
-  
+
 	    slash = inchar();
 	    if ( !(b = match_slash(slash, false)) )
 	      bad_prog(_(UNTERM_Y_CMD));
@@ -1484,7 +1484,7 @@ normalize_text(buf, len, buftype)
 	        if (buftype != TEXT_BUFFER)
 		  *q++ = '\\';
 	      }
-	    
+
 	    continue;
 #else
 	  case 'o': /* octal byte */
@@ -1527,7 +1527,7 @@ convert:
             if (!bracket_state)
               bracket_state = -1;
             break;
- 
+
 	  case ':':
 	  case '.':
 	  case '=':

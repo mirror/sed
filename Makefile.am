@@ -41,7 +41,7 @@ html:
 	cd doc && make html
 
 DISTCHECK_CONFIGURE_FLAGS = XGETTEXT='$(SHELL) -c : dummy' $(EXTRA_DC_FLAGS)
-EXTRA_DC_FLAGS = 
+EXTRA_DC_FLAGS =
 
 full-distcheck:
 	make distcheck EXTRA_DC_FLAGS='--enable-regex-tests'

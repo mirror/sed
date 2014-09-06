@@ -53,7 +53,7 @@ struct regex {
   size_t sz;
   char re[1];
 };
-  
+
 enum replacement_types {
   REPL_ASIS = 0,
   REPL_UPPERCASE = 1,

@@ -5,7 +5,7 @@
 @c (nothing!)
 @c --------------------------------------------------------------------------
 @c Check for consistency: regexps in @code, text that they match in @samp.
-@c 
+@c
 @c Tips:
 @c    @command for command
 @c    @samp for command fragments: @samp{cat -s}
@@ -731,19 +731,19 @@ Matches between @var{i} and @var{j}, inclusive, sequences.
 Matches more than or equal to @var{i} sequences.
 
 @item \(@var{regexp}\)
-Groups the inner @var{regexp} as a whole, this is used to: 
+Groups the inner @var{regexp} as a whole, this is used to:
 
 @itemize @bullet
 @item
 @cindex @acronym{GNU} extensions, to basic regular expressions
 Apply postfix operators, like @code{\(abcd\)*}:
-this will search for zero or more whole sequences 
+this will search for zero or more whole sequences
 of @samp{abcd}, while @code{abcd*} would search
 for @samp{abc} followed by zero or more occurrences
 of @samp{d}.  Note that support for @code{\(abcd\)*} is
 required by @acronym{POSIX} 1003.1-2001, but many non-@acronym{GNU}
 implementations do not support it and hence it is not universally
-portable.         
+portable.
 
 @item
 Use back references (see below).
@@ -808,11 +808,11 @@ symbols, equivalence classes, and character classes, respectively, and
 
 @item @var{regexp1}\|@var{regexp2}
 @cindex @acronym{GNU} extensions, to basic regular expressions
-Matches either @var{regexp1} or @var{regexp2}.  Use escaped
-parentheses to use complex alternative regular expressions.  The
-matching process tries each alternative in turn, from left to right,
-and the first one that succeeds is used.  It is a @acronym{GNU}
-extension.
+Matches either @var{regexp1} or @var{regexp2}.  Use
+parentheses to use complex alternative regular expressions.
+The matching process tries each alternative in turn, from
+left to right, and the first one that succeeds is used.
+It is a @acronym{GNU} extension.
 
 @item @var{regexp1}@var{regexp2}
 Matches the concatenation of @var{regexp1} and @var{regexp2}.
@@ -853,7 +853,7 @@ Matches @samp{abcdef}.
 
 @item a*b
 Matches zero or more @samp{a}s followed by a single
-@samp{b}.  For example, @samp{b} or @samp{aaaaab}. 
+@samp{b}.  For example, @samp{b} or @samp{aaaaab}.
 
 @item a\?b
 Matches @samp{b} or @samp{ab}.
@@ -1844,7 +1844,7 @@ seen a script converting the output of @command{date} into a @command{bc}
 program!
 
 The main body of this is the @command{sed} script, which remaps the name
-from lower to upper (or vice-versa) and even checks out 
+from lower to upper (or vice-versa) and even checks out
 if the remapped name is the same as the original name.
 Note how the script is parameterized using shell
 variables and proper quoting.
@@ -1853,11 +1853,11 @@ variables and proper quoting.
 @example
 @group
 #! /bin/sh
-# rename files to lower/upper case... 
+# rename files to lower/upper case...
 #
-# usage: 
-#    move-to-lower * 
-#    move-to-upper * 
+# usage:
+#    move-to-lower *
+#    move-to-upper *
 # or
 #    move-to-lower -R .
 #    move-to-upper -R .
@@ -1900,7 +1900,7 @@ files_only=
 @group
 while :
 do
-    case "$1" in 
+    case "$1" in
         -n) apply_cmd='cat' ;;
         -R) finder='find "$@@" -type f';;
         -h) help ; exit 1 ;;
@@ -2723,7 +2723,7 @@ the script automatically at the end of a line.
 p
 # get next
 n
-# got chars? print it again, etc... 
+# got chars? print it again, etc...
 /./bx
 @end group
 
@@ -2876,7 +2876,7 @@ Please do not send a bug report like this:
 
 @example
 @i{@i{@r{while building frobme-1.3.4}}}
-$ configure 
+$ configure
 @error{} sed: file sedscr line 1: Unknown option to 's'
 @end example
 
@@ -3112,7 +3112,7 @@ Summarizing, we have:
 A backslash can introduce several special sequences
 
 @item
-The circumflex, dollar sign, and period characters behave specially 
+The circumflex, dollar sign, and period characters behave specially
 with regard to new lines
 
 @item
@@ -3179,7 +3179,7 @@ group.
 @appendixsec Backslash
 @cindex Perl-style regular expressions, escaped sequences
 
-There are a few difference in the handling of backslashed 
+There are a few difference in the handling of backslashed
 sequences in Perl mode.
 
 First of all, there are no @code{\o} and @code{\d} sequences.
@@ -3227,8 +3227,8 @@ stand for themselves.  For example:
 
 Note that octal values of 100 or greater must not be introduced
 by a leading zero, because no more than three octal
-digits are ever read. Note that this applies only to the LHS 
-pattern; it is not possible yet to specify more than 9 backreferences 
+digits are ever read. Note that this applies only to the LHS
+pattern; it is not possible yet to specify more than 9 backreferences
 on the RHS of the `s' command.
 
 All the sequences that define a single byte value can be
@@ -3886,8 +3886,8 @@ reference.  If the @code{X} modifier option is set, this can be
 whitespace.  Otherwise an empty comment can be used, or the
 following character can be expressed in hexadecimal or octal.
 Note that this applies only to the LHS pattern; it is
-not possible yet to specify more than 9 backreferences on the 
-RHS of the `s' command. 
+not possible yet to specify more than 9 backreferences on the
+RHS of the `s' command.
 
 A back reference that occurs inside the parentheses to which
 it refers fails when the subpattern is first used, so, for
@@ -4036,7 +4036,7 @@ This time the first assertion looks at the preceding six
 characters, checking that the first three are digits, and
 then the second assertion checks that the preceding three
 characters are not @samp{999}.  Actually, assertions can be
-nested in any combination, so one can write this as 
+nested in any combination, so one can write this as
 
 @example
 (?<=\d@{3@}(?!999)...)foo
@@ -4258,7 +4258,7 @@ The condition is a positive lookahead assertion that matches
 a letter that is three characters away from the current point.
 If a letter is found, the subject is matched against the first
 alternative @samp{@var{dd}-@var{aaa}-@var{dd}} (where @var{aaa} are
-letters and @var{dd} are digits); otherwise it is matched against 
+letters and @var{dd} are digits); otherwise it is matched against
 the second alternative, @samp{@var{dd}-@var{dd}-@var{dd}}.
 
 

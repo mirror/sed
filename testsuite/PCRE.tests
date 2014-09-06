@@ -552,21 +552,21 @@ No match
  1: cataract
  2: aract
  3: ract
- 4: 
+ 4:
  5: 3
     catatonic catatonic23
  0: catatonic catatonic23
  1: catatonic
  2: atonic
  3: tonic
- 4: 
+ 4:
  5: 3
     caterpillar caterpillar23
  0: caterpillar caterpillar23
  1: caterpillar
  2: erpillar
  3: <unset>
- 4: 
+ 4:
  5: 3
 
 
@@ -578,10 +578,10 @@ No match
 /^From\s+\S+\s+([a-zA-Z]{3}\s+){2}[0-9]{1,2}\s+[0-9][0-9]:[0-9][0-9]/
     From abcd  Mon Sep 01 12:33:02 1997
  0: From abcd  Mon Sep 01 12:33
- 1: Sep 
+ 1: Sep
     From abcd  Mon Sep  1 12:33:02 1997
  0: From abcd  Mon Sep  1 12:33
- 1: Sep  
+ 1: Sep
     *** Failers
 No match
     From abcd  Sep 01 12:33:02 1997
@@ -617,7 +617,7 @@ No match
  2: bell
     bell
  0: bell
- 1: 
+ 1:
  2: bell
     *** Failers
 No match
@@ -633,7 +633,7 @@ No match
  1: a
     b
  0: b
- 1: 
+ 1:
     *** Failers
 No match
     ab
@@ -645,7 +645,7 @@ No match
  1: a
     b
  0: b
- 1: 
+ 1:
     *** Failers
 No match
     ab
@@ -664,7 +664,7 @@ No match
  1: a
     b
  0: b
- 1: 
+ 1:
     *** Failers
 No match
     ab
@@ -781,7 +781,7 @@ No match
  0: baccc
  1: b
  2: a
- 3: 
+ 3:
  4: ccc
     *** Failers
  0: *** Failers
@@ -799,7 +799,7 @@ No match
  0: A
 
 /[^a]/i
-    Abc 
+    Abc
  0: b
 
 /[^a]+/
@@ -831,7 +831,7 @@ No match
 No match
     akb
 No match
-    akk 
+    akk
 No match
 
 /^[0-9]{8,}@.+[^k]$/
@@ -843,7 +843,7 @@ No match
 No match
     12345678@x.y.uk
 No match
-    1234567@a.b.c.d       
+    1234567@a.b.c.d
 No match
 
 /(a)\1{8,}/
@@ -855,31 +855,31 @@ No match
  1: a
     *** Failers
 No match
-    aaaaaaa   
+    aaaaaaa
 No match
 
 /[^a]/
     aaaabcd
  0: b
-    aaAabcd 
+    aaAabcd
  0: A
 
 /[^a]/i
     aaaabcd
  0: b
-    aaAabcd 
+    aaAabcd
  0: b
 
 /[^az]/
     aaaabcd
  0: b
-    aaAabcd 
+    aaAabcd
  0: A
 
 /[^az]/i
     aaaabcd
  0: b
-    aaAabcd 
+    aaAabcd
  0: b
 
 /P[^*]TAIRE[^*]{1,6}LL/
@@ -894,30 +894,30 @@ No match
     1.230003938
  0: .230003938
  1: .23
-    1.875000282   
+    1.875000282
  0: .875000282
  1: .875
-    1.235  
+    1.235
  0: .235
  1: .23
-                  
+
 /\b(foo)\s+(\w+)/i
     Food is on the foo table
  0: foo table
  1: foo
  2: table
-    
+
 /foo(.*)bar/
     The food is under the bar in the barn.
  0: food is under the bar in the bar
- 1: d is under the bar in the 
-    
+ 1: d is under the bar in the
+
 /(.*)([0-9]*)/
     I have 2 numbers: 53147
  0: I have 2 numbers: 53147
  1: I have 2 numbers: 53147
- 2: 
-    
+ 2:
+
 /(.*)([0-9]+)/
     I have 2 numbers: 53147
  0: I have 2 numbers: 53147
@@ -933,13 +933,13 @@ No match
 /(.*)\b([0-9]+)$/
     I have 2 numbers: 53147
  0: I have 2 numbers: 53147
- 1: I have 2 numbers: 
+ 1: I have 2 numbers:
  2: 53147
 
 /(.*[^0-9])([0-9]+)$/
     I have 2 numbers: 53147
  0: I have 2 numbers: 53147
- 1: I have 2 numbers: 
+ 1: I have 2 numbers:
  2: 53147
 
 /[[:digit:]][[:digit:]]\/[[:digit:]][[:digit:]]\/[[:digit:]][[:digit:]][[:digit:]][[:digit:]]/
@@ -948,48 +948,35 @@ No match
 
 /^(a){0,0}/
     bcd
- 0: 
+ 0:
     abc
- 0: 
-    aab     
- 0: 
+ 0:
+    aab
+ 0:
 
 /^(a){0,1}/
     bcd
- 0: 
+ 0:
     abc
  0: a
  1: a
-    aab  
+    aab
  0: a
  1: a
 
 /^(a){0,2}/
     bcd
- 0: 
-    abc
- 0: a
- 1: a
-    aab  
- 0: aa
- 1: a
-
-/^(a){0,3}/
-    bcd
- 0: 
+ 0:
     abc
  0: a
  1: a
     aab
  0: aa
  1: a
-    aaa   
- 0: aaa
- 1: a
 
-/^(a){0,}/
+/^(a){0,3}/
     bcd
- 0: 
+ 0:
     abc
  0: a
  1: a
@@ -999,7 +986,20 @@ No match
     aaa
  0: aaa
  1: a
-    aaaaaaaa    
+
+/^(a){0,}/
+    bcd
+ 0:
+    abc
+ 0: a
+ 1: a
+    aab
+ 0: aa
+ 1: a
+    aaa
+ 0: aaa
+ 1: a
+    aaaaaaaa
  0: aaaaaaaa
  1: a
 
@@ -1009,7 +1009,7 @@ No match
     abc
  0: a
  1: a
-    aab  
+    aab
  0: a
  1: a
 
@@ -1019,7 +1019,7 @@ No match
     abc
  0: a
  1: a
-    aab  
+    aab
  0: aa
  1: a
 
@@ -1032,7 +1032,7 @@ No match
     aab
  0: aa
  1: a
-    aaa   
+    aaa
  0: aaa
  1: a
 
@@ -1048,7 +1048,7 @@ No match
     aaa
  0: aaa
  1: a
-    aaaaaaaa    
+    aaaaaaaa
  0: aaaaaaaa
  1: a
 
@@ -1057,28 +1057,28 @@ No match
  0: 123456654321
 
 /^[[:digit:]][[:digit:]][[:digit:]][[:digit:]][[:digit:]][[:digit:]][[:digit:]][[:digit:]][[:digit:]][[:digit:]][[:digit:]][[:digit:]]/
-    123456654321 
+    123456654321
  0: 123456654321
 
 /^[abc]{12}/
     abcabcabcabc
  0: abcabcabcabc
-    
+
 /^[a-c]{12}/
     abcabcabcabc
  0: abcabcabcabc
-    
+
 /^(a|b|c){12}/
-    abcabcabcabc 
+    abcabcabcabc
  0: abcabcabcabc
  1: c
 
 /^[abcdefghijklmnopqrstuvwxy0123456789]/
     n
  0: n
-    *** Failers 
+    *** Failers
 No match
-    z 
+    z
 No match
 
 /abcde{0,0}/
@@ -1086,7 +1086,7 @@ No match
  0: abcd
     *** Failers
 No match
-    abce  
+    abce
 No match
 
 /ab[cd]{0,0}e/
@@ -1094,21 +1094,21 @@ No match
  0: abe
     *** Failers
 No match
-    abcde 
+    abcde
 No match
-    
+
 /ab(c){0,0}d/
     abd
  0: abd
     *** Failers
 No match
-    abcd   
+    abcd
 No match
 
 /a(b*)/
     a
  0: a
- 1: 
+ 1:
     ab
  0: ab
  1: b
@@ -1117,33 +1117,33 @@ No match
  1: bbbb
     *** Failers
  0: a
- 1: 
-    bbbbb    
+ 1:
+    bbbbb
 No match
-    
+
 /ab[0-9]{0}e/
     abe
  0: abe
     *** Failers
 No match
-    ab1e   
+    ab1e
 No match
-    
+
 /(A|B)*CD/
-    CD 
+    CD
  0: CD
 
 /(AB)*\1/
     ABABAB
  0: ABABAB
  1: AB
-    
+
 /([0-9]+)(\w)/
     12345a
  0: 12345a
  1: 12345
  2: a
-    12345+ 
+    12345+
  0: 12345
  1: 1234
  2: 5
@@ -1158,15 +1158,15 @@ No match
     abcabcabc
  0: abcabcabc
  1: abc
-    xyz      
- 0: 
- 1: 
+    xyz
+ 0:
+ 1:
 
 /([a]*)*/
     a
  0: a
  1: a
-    aaaaa 
+    aaaaa
  0: aaaaa
  1: aaaaa
 
@@ -1183,7 +1183,7 @@ No match
     aaaabcde
  0: aaaab
  1: aaaab
-    bbbb    
+    bbbb
  0: bbbb
  1: bbbb
 
@@ -1194,15 +1194,15 @@ No match
     bbbb
  0: bbbb
  1: bbbb
-    aaa   
- 0: 
+    aaa
+ 0:
 
 /([^ab]*)*/
     cccc
  0: cccc
  1: cccc
-    abab  
- 0: 
+    abab
+ 0:
 
 /abc/
     abc
@@ -1322,11 +1322,11 @@ No match
 
 /^/
     abc
- 0: 
+ 0:
 
 /$/
     abc
- 0: 
+ 0:
 
 /a.c/
     abc
@@ -1483,7 +1483,7 @@ No match
 /()ef/
     def
  0: ef
- 1: 
+ 1:
 
 /a\(b/
     a(b
@@ -1554,10 +1554,10 @@ No match
 No match
     b
 No match
-    
+
 
 /a*/
-    
+
 
 /([abc])*d/
     abbbcd
@@ -1600,7 +1600,7 @@ No match
 /(abc|)ef/
     abcdef
  0: ef
- 1: 
+ 1:
 
 /(a|b)c*d/
     abcd
@@ -1847,11 +1847,11 @@ No match
 
 /^/i
     ABC
- 0: 
+ 0:
 
 /$/i
     ABC
- 0: 
+ 0:
 
 /a.c/i
     ABC
@@ -1924,7 +1924,7 @@ No match
 /()ef/i
     DEF
  0: EF
- 1: 
+ 1:
 
 /$b/i
     *** Failers
@@ -2043,7 +2043,7 @@ No match
 /(abc|)ef/i
     ABCDEF
  0: EF
- 1: 
+ 1:
 
 /(a|b)c*d/i
     ABCD
@@ -2236,8 +2236,8 @@ No match
 
 /^(){3,5}/
     abc
- 0: 
- 1: 
+ 0:
+ 1:
 
 /^(a+)*ax/
     aax
@@ -2339,20 +2339,20 @@ No match
     ZABCDEFG
  0: ZA
  1: A
- 2: 
+ 2:
 
 /(Z(())|A)*/
     ZABCDEFG
  0: ZA
  1: A
- 2: 
- 3: 
+ 2:
+ 3:
 
 /(.*)[0-9]+\1/
     abc123abc
  0: abc123abc
  1: abc
-    abc123bc 
+    abc123bc
  0: bc123bc
  1: bc
 
@@ -2361,7 +2361,7 @@ No match
  0: abc123abc
  1: abc
  2: abc
-    abc123bc  
+    abc123bc
  0: bc123bc
  1: bc
  2: bc
