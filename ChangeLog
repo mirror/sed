@@ -1,3 +1,10 @@
+2014-09-06  Jim Meyering  <meyering@fb.com>
+
+	maint: correct failing "version" test
+	* configure.ac (COPYRIGHT_YEAR): Update to 2014, so
+	the "version" test passes once again.
+	* doc/sed.1: Also commit this auto-generated-yet-VC'd file.
+
 2014-09-04  Jim Meyering  <meyering@fb.com>
 
 	fix "y" to work with NUL in the RHS
