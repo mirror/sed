@@ -1,3 +1,4 @@
+acl-errno-valid.c
 acl-internal.h
 acl.h
 acl_entries.c
@@ -96,6 +97,8 @@ obstack.h
 pathmax.h
 propername.c
 propername.h
+qcopy-acl.c
+qset-acl.c
 quote.c
 quote.h
 quotearg.c
@@ -121,6 +124,8 @@ se-context.in.h
 se-selinux.c
 se-selinux.h
 se-selinux.in.h
+secure_getenv.c
+set-acl.c
 set-mode-acl.c
 stat-macros.h
 stat.c

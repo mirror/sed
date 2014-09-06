@@ -17,3 +17,6 @@ depcomp
 m4
 mdate-sh
 missing
+/GNUmakefile
+/README-release
+/maint.mk
