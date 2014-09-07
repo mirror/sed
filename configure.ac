@@ -186,7 +186,13 @@ esac
 AC_SUBST([XFAIL_TESTS])
 
 AC_CONFIG_FILES([testsuite/version.good:testsuite/version.gin])
-AC_CONFIG_FILES([Makefile doc/Makefile \
-lib/Makefile sed/Makefile testsuite/Makefile \
-po/Makefile.in])
+AC_CONFIG_FILES([
+  Makefile
+  doc/Makefile
+  lib/Makefile
+  sed/Makefile
+  testsuite/Makefile
+  gnulib-tests/Makefile
+  po/Makefile.in
+])
 AC_OUTPUT

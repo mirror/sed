@@ -4,6 +4,8 @@
 */.deps/
 *~
 +*
+/gnulib-tests/*
+!/gnulib-tests/Makefile.am
 /ChangeLog
 /GNUmakefile
 /README-release

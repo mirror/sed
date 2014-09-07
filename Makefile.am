@@ -15,7 +15,7 @@
 
 PACKAGE = sed
 
-SUBDIRS = lib po sed doc testsuite
+SUBDIRS = lib po sed doc testsuite gnulib-tests
 
 noinst_DATA =
 noinst_HEADERS = basicdefs.h
