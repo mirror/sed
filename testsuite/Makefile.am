@@ -95,7 +95,7 @@ EXTRA_DIST = \
 	xbxcx3.good xbxcx3.inp xbxcx3.sed \
 	xemacs.good xemacs.inp xemacs.sed \
 	y-bracket.good y-bracket.sed y-bracket.inp \
-	y-NUL.good y-NUL.sed y-NUL.inp \
+	y-zero.good y-zero.sed y-zero.inp \
 	y-newline.good y-newline.sed y-newline.inp
 
 # automake makes `check' depend on $(TESTS).  Declare

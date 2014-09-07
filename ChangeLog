@@ -1,5 +1,9 @@
 2014-09-06  Jim Meyering  <meyering@fb.com>
 
+	fixup: add the properly-named new test files
+	* testsuite/Makefile.am (EXTRA_DIST): Add y-zero.*,
+	not y-NUL.* here.
+
 	maint: correct failing "version" test
 	* configure.ac (COPYRIGHT_YEAR): Update to 2014, so
 	the "version" test passes once again.
