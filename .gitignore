@@ -20,3 +20,6 @@ missing
 /GNUmakefile
 /README-release
 /maint.mk
+doc/sed.1
+po/sed.pot
+/po/Makevars
