@@ -1,10 +1,13 @@
 dnl Process this file with -*- autoconf -*- to produce a configure script.
-AC_INIT([GNU sed], 4.2.2, bug-sed@gnu.org, sed)
+AC_INIT([GNU sed],
+        m4_esyscmd([build-aux/git-version-gen .tarball-version]),
+        [bug-sed@gnu.org])
 AC_CONFIG_AUX_DIR(build-aux)
 AC_CONFIG_SRCDIR([sed/sed.c])
 AM_CONFIG_HEADER(config.h:config_h.in)
 AC_PREREQ(2.62)
-AM_INIT_AUTOMAKE([1.11.1 parallel-tests])
+AM_INIT_AUTOMAKE([1.11.1 no-dist-gzip dist-xz color-tests parallel-tests])
+AM_SILENT_RULES([yes]) # make --enable-silent-rules the default.
 
 SED_FEATURE_VERSION=4.2.2
 AC_DEFINE_UNQUOTED(SED_FEATURE_VERSION, "$SED_FEATURE_VERSION",

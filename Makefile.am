@@ -14,7 +14,6 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 # Automake requirements
-AUTOMAKE_OPTIONS = gnits 1.10 dist-bzip2
 ACLOCAL_AMFLAGS = -I m4
 
 PACKAGE = sed
