@@ -8,6 +8,7 @@ AM_CONFIG_HEADER(config.h:config_h.in)
 AC_PREREQ(2.62)
 AM_INIT_AUTOMAKE([1.11.1 no-dist-gzip dist-xz color-tests parallel-tests])
 AM_SILENT_RULES([yes]) # make --enable-silent-rules the default.
+AC_CONFIG_MACRO_DIRS([m4])
 
 SED_FEATURE_VERSION=4.2.2
 AC_DEFINE_UNQUOTED(SED_FEATURE_VERSION, "$SED_FEATURE_VERSION",

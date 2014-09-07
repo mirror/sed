@@ -13,9 +13,6 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-# Automake requirements
-ACLOCAL_AMFLAGS = -I m4
-
 PACKAGE = sed
 
 SUBDIRS = lib po sed doc testsuite
