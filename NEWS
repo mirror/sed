@@ -136,7 +136,7 @@ Sed 4.1.1
 
 * yield an error when running -i on terminals or other non regular files
 
-* do not interpret - as stdin when running in in-place editing mode
+* do not interpret - as stdin when using in-place editing mode
 
 * fix bug that prevented 's' command modifiers from working
 
