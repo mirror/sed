@@ -206,3 +206,5 @@ xstriconv.c
 xstriconv.h
 xstrndup.c
 xstrndup.h
+/progname.c
+/progname.h

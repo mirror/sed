@@ -33,7 +33,6 @@ local-checks-to-skip =			\
   sc_m4_quote_check			\
   sc_makefile_at_at_check		\
   sc_po_check				\
-  sc_program_name			\
   sc_prohibit_always_true_header_tests	\
   sc_prohibit_atoi_atof			\
   sc_prohibit_empty_lines_at_EOF	\
@@ -139,3 +138,5 @@ config_h_header ?= (<config\.h>|"sed\.h")
 exclude_file_name_regexp--sc_long_lines = ^tests/.*$$
 exclude_file_name_regexp--sc_prohibit_doubled_word = \
   ^testsuite/(mac-mf|uniq)\.(good|inp)$$
+
+exclude_file_name_regexp--sc_program_name = ^testsuite/.*\.c$$

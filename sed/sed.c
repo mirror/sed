@@ -26,6 +26,7 @@
 #include <stdlib.h>
 #include <sys/types.h>
 #include "getopt.h"
+#include "progname.h"
 
 #include "version-etc.h"
 
@@ -34,8 +35,6 @@
    _("Tom Lord"), \
    _("Ken Pizzini"), \
    _("Paolo Bonzini")
-
-char *program_name;
 
 int extended_regexp_flags = 0;
 
@@ -200,6 +199,7 @@ main(argc, argv)
   /* Set locale according to user's wishes.  */
   setlocale (LC_ALL, "");
 #endif
+  set_program_name (argv[0]);
   initialize_mbcs ();
 
 #if ENABLE_NLS
