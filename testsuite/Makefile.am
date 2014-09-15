@@ -3,7 +3,7 @@ CLEANFILES = tmp* core *.core $(EXTRA_PROGRAMS) *.*out *.log eval.in2
 TESTS = $(check_PROGRAMS) $(SEDTESTS)
 SEDTESTS =
 
-LDADD = ../lib/libsed.a @INTLLIBS@
+LDADD = ../lib/libsed.a $(INTLLIBS)
 noinst_HEADERS = testcases.h ptestcases.h
 AM_CPPFLAGS = -I$(top_srcdir)/lib -I$(top_builddir)/lib
 
@@ -29,7 +29,7 @@ SEDTESTS += \
 	factor binary3 binary2 binary dc
 
 TESTS_ENVIRONMENT = MAKE="$(MAKE)" VERSION="$(VERSION)" \
-	@LOCALCHARSET_TESTS_ENVIRONMENT@
+	$(LOCALCHARSET_TESTS_ENVIRONMENT)
 
 LOG_COMPILER = $(srcdir)/runtest
 
