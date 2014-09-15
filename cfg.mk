@@ -39,7 +39,6 @@ local-checks-to-skip =			\
   sc_prohibit_magic_number_exit		\
   sc_prohibit_strcmp			\
   sc_prohibit_strncpy			\
-  sc_space_tab				\
   sc_prohibit_tab_based_indentation	\
   sc_texinfo_acronym			\
   sc_unmarked_diagnostics		\
@@ -140,3 +139,5 @@ exclude_file_name_regexp--sc_prohibit_doubled_word = \
   ^testsuite/(mac-mf|uniq)\.(good|inp)$$
 
 exclude_file_name_regexp--sc_program_name = ^testsuite/.*\.c$$
+
+exclude_file_name_regexp--sc_space_tab = ^testsuite/.*$$

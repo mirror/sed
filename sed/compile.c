@@ -1280,7 +1280,7 @@ compile_program(vector)
 	    len = normalize_text(src_buf, size_buffer (b), TEXT_BUFFER);
 
             if ( !(b2 = match_slash(slash, false)) )
- 	      bad_prog(_(UNTERM_Y_CMD));
+	      bad_prog(_(UNTERM_Y_CMD));
             dest_buf = get_buffer(b2);
 	    dest_len = normalize_text(dest_buf, size_buffer (b2), TEXT_BUFFER);
 

@@ -1027,7 +1027,7 @@ static void append_replacement (struct line *buf, struct replacement *p,
       if (p->prefix_length)
         {
           str_append_modified(buf, p->prefix, p->prefix_length,
-    			      curr_type);
+			      curr_type);
           curr_type &= ~REPL_MODIFIERS;
         }
 
