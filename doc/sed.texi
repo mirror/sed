@@ -60,7 +60,7 @@ with its equivalent in the printed manual, constitutes the Title Page.
 
 @page
 @vskip 0pt plus 1filll
-Copyright @copyright{} 1998, 1999 Free Software Foundation, Inc.
+Copyright @copyright{} 1998, 1999, 2014 Free Software Foundation, Inc.
 
 @insertcopying
 
@@ -2705,7 +2705,7 @@ tx
 This removes leading and trailing blank lines.  It is also the
 fastest.  Note that loops are completely done with @code{n} and
 @code{b}, without relying on @command{sed} to restart the
-the script automatically at the end of a line.
+script automatically at the end of a line.
 
 @c start-------------------------------------------
 @example
