@@ -165,7 +165,7 @@ main(argc, argv)
 #define SHORTOPTS "bsnrzuEe:f:l:i::V:"
 #endif
 
-  static struct option longopts[] = {
+  const static struct option longopts[] = {
     {"binary", 0, NULL, 'b'},
     {"regexp-extended", 0, NULL, 'r'},
 #ifdef REG_PERL

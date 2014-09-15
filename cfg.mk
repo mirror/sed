@@ -27,7 +27,6 @@ local-checks-to-skip =			\
   sc_bindtextdomain			\
   sc_cast_of_alloca_return_value	\
   sc_cast_of_argument_to_free		\
-  sc_const_long_option			\
   sc_error_message_uppercase		\
   sc_file_system			\
   sc_immutable_NEWS			\
