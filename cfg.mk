@@ -38,7 +38,6 @@ local-checks-to-skip =			\
   sc_program_name			\
   sc_prohibit_always_true_header_tests	\
   sc_prohibit_atoi_atof			\
-  sc_prohibit_doubled_word		\
   sc_prohibit_empty_lines_at_EOF	\
   sc_prohibit_magic_number_exit		\
   sc_prohibit_strcmp			\
@@ -140,3 +139,5 @@ update-copyright-env = \
   UPDATE_COPYRIGHT_MAX_LINE_LENGTH=79
 
 exclude_file_name_regexp--sc_long_lines = ^tests/.*$$
+exclude_file_name_regexp--sc_prohibit_doubled_word = \
+  ^testsuite/(mac-mf|uniq)\.(good|inp)$$
