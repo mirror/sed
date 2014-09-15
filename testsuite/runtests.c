@@ -22,19 +22,13 @@ PERFORMANCE OF THIS SOFTWARE.
 
 ******************************************************************/
 
-
-
-#ifdef HAVE_CONFIG_H
 #include "config.h"
-#endif
 
 #include <sys/types.h>
 #include <regex.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-
-
 
 struct a_test
 {

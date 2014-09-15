@@ -40,7 +40,6 @@ local-checks-to-skip =			\
   sc_prohibit_atoi_atof			\
   sc_prohibit_doubled_word		\
   sc_prohibit_empty_lines_at_EOF	\
-  sc_prohibit_have_config_h		\
   sc_prohibit_magic_number_exit		\
   sc_prohibit_strcmp			\
   sc_prohibit_strncpy			\
