@@ -1,6 +1,6 @@
 /* Test for memory/CPU leak in regcomp.  */
 
-#include "config.h"
+#include <config.h>
 
 #include <sys/types.h>
 #include <sys/time.h>

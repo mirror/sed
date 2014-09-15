@@ -22,7 +22,7 @@ PERFORMANCE OF THIS SOFTWARE.
 
 ******************************************************************/
 
-#include "config.h"
+#include <config.h>
 
 #include <sys/types.h>
 #include <regex.h>

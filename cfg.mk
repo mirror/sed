@@ -29,7 +29,6 @@ local-checks-to-skip =			\
   sc_cast_of_argument_to_free		\
   sc_error_message_uppercase		\
   sc_file_system			\
-  sc_immutable_NEWS			\
   sc_long_lines				\
   sc_m4_quote_check			\
   sc_makefile_at_at_check		\
@@ -41,8 +40,6 @@ local-checks-to-skip =			\
   sc_prohibit_magic_number_exit		\
   sc_prohibit_strcmp			\
   sc_prohibit_strncpy			\
-  sc_require_config_h			\
-  sc_require_config_h_first		\
   sc_space_tab				\
   sc_prohibit_tab_based_indentation	\
   sc_texinfo_acronym			\
@@ -74,7 +71,7 @@ export VERBOSE = yes
 # 836832 6e
 export XZ_OPT = -6e
 
-old_NEWS_hash = d41d8cd98f00b204e9800998ecf8427e
+old_NEWS_hash = b6210de3e57d22c04f064eb481282e11
 
 # Many m4 macros names once began with 'jm_'.
 # Make sure that none are inadvertently reintroduced.
@@ -136,6 +133,8 @@ sc_THANKS_in_duplicates:
 update-copyright-env = \
   UPDATE_COPYRIGHT_USE_INTERVALS=1 \
   UPDATE_COPYRIGHT_MAX_LINE_LENGTH=79
+
+config_h_header ?= (<config\.h>|"sed\.h")
 
 exclude_file_name_regexp--sc_long_lines = ^tests/.*$$
 exclude_file_name_regexp--sc_prohibit_doubled_word = \

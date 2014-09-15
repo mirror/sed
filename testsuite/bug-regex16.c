@@ -1,6 +1,6 @@
 /* Test re_compile_pattern error messages.  */
 
-#include "config.h"
+#include <config.h>
 
 #include <stdio.h>
 #include <string.h>
