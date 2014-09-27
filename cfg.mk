@@ -32,7 +32,6 @@ local-checks-to-skip =			\
   sc_long_lines				\
   sc_m4_quote_check			\
   sc_po_check				\
-  sc_prohibit_always_true_header_tests	\
   sc_prohibit_atoi_atof			\
   sc_prohibit_empty_lines_at_EOF	\
   sc_prohibit_magic_number_exit		\
@@ -140,3 +139,5 @@ exclude_file_name_regexp--sc_prohibit_doubled_word = \
 exclude_file_name_regexp--sc_program_name = ^testsuite/.*\.c$$
 
 exclude_file_name_regexp--sc_space_tab = ^testsuite/.*$$
+exclude_file_name_regexp--sc_prohibit_always_true_header_tests = \
+  ^configure\.ac$$
