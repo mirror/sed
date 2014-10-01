@@ -338,7 +338,7 @@ mb_test (const char *pattern, int cflags, const char *string, int eflags,
   free (matches_mb);
   free (expect_mb);
   if (string_mb != string)
-    free ((char *) string_mb);
+    free (string_mb);
   free (pattern_mb);
   return ret;
 }
