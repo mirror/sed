@@ -25,7 +25,6 @@ url_dir_list = http://ftp.gnu.org/gnu/$(PACKAGE)
 local-checks-to-skip =			\
   sc_GPL_version			\
   sc_bindtextdomain			\
-  sc_cast_of_alloca_return_value	\
   sc_cast_of_argument_to_free		\
   sc_error_message_uppercase		\
   sc_file_system			\

@@ -217,7 +217,7 @@ match_regex(regex, buf, buflen, buf_start_offset, regarray, regsize)
 #ifdef REG_PERL
   regmatch_t rm[10], *regmatch = rm;
   if (regsize > 10)
-    regmatch = (regmatch_t *) alloca (sizeof (regmatch_t) * regsize);
+    regmatch = alloca (sizeof (regmatch_t) * regsize);
 #endif
 
   /* printf ("Matching from %d/%d\n", buf_start_offset, buflen); */
