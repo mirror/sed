@@ -31,7 +31,6 @@ local-checks-to-skip =			\
   sc_file_system			\
   sc_long_lines				\
   sc_m4_quote_check			\
-  sc_po_check				\
   sc_prohibit_atoi_atof			\
   sc_prohibit_empty_lines_at_EOF	\
   sc_prohibit_magic_number_exit		\

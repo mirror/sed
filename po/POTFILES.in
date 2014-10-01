@@ -1,8 +1,14 @@
+lib/copy-acl.c
+lib/error.c
+lib/getopt.c
+lib/obstack.c
+lib/quotearg.c
+lib/regcomp.c
+lib/set-acl.c
+lib/version-etc.c
+lib/xalloc-die.c
 sed/compile.c
 sed/execute.c
 sed/regexp.c
 sed/sed.c
 sed/utils.c
-lib/regcomp.c
-lib/regexec.c
-lib/regex_internal.c
