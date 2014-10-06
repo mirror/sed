@@ -11,7 +11,7 @@ AM_SILENT_RULES([yes]) # make --enable-silent-rules the default.
 AC_CONFIG_MACRO_DIRS([m4])
 
 SED_FEATURE_VERSION=4.2.2
-AC_DEFINE_UNQUOTED(SED_FEATURE_VERSION, "$SED_FEATURE_VERSION",
+AC_DEFINE_UNQUOTED([SED_FEATURE_VERSION], "$SED_FEATURE_VERSION",
   [Define to the version of GNU sed whose features are supported by this sed.])
 AC_SUBST(SED_FEATURE_VERSION)
 
@@ -82,7 +82,7 @@ AC_CHECK_FUNCS_ONCE(isatty isascii memcpy strchr strtoul lstat readlink
 
 # Check whether we are able to follow symlinks
 if test "$ac_cv_func_lstat:$ac_cv_func_readlink" = yes:yes; then
-   AC_DEFINE(ENABLE_FOLLOW_SYMLINKS, ,[Follow symlinks when processing in place])
+   AC_DEFINE([ENABLE_FOLLOW_SYMLINKS], ,[Follow symlinks when processing in place])
 fi
 
 AC_ARG_ENABLE(i18n,
@@ -101,7 +101,7 @@ enable_regex_tests=$with_included_regex)
 
 AM_CONDITIONAL(TEST_REGEX, test "x$enable_regex_tests" = xyes)
 if test "x$enable_regex_tests" = xyes; then
-  AC_DEFINE_UNQUOTED(_REGEX_RE_COMP, 1,
+  AC_DEFINE_UNQUOTED([_REGEX_RE_COMP], 1,
     [Include BSD functions in regex, used by the testsuite])
 fi
 
