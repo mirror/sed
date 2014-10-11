@@ -235,10 +235,10 @@ get_paragraph ()
     {
       c = copy_rest (c);
       if (c == EOF)
-	{
-	  next_char = EOF;
-	  return false;
-	}
+        {
+          next_char = EOF;
+          return false;
+        }
       putc ('\n', outfile);
       c = GETC();
     }
@@ -308,7 +308,7 @@ get_line (register int c)
 
       word_limit->text = parabuf - 1;
       do
-	c = GETC();
+        c = GETC();
       while (c != EOF && !ISSPACE (c));
       word_limit->length = parabuf - word_limit->text - (c != EOF);
       in_column += word_limit->length;
@@ -321,18 +321,18 @@ get_line (register int c)
       c = get_space (c);
       word_limit->space = in_column - start;
       word_limit->final = (c == EOF
-			   || (word_limit->period
-			       && (c == '\n' || word_limit->space > 1)));
+                           || (word_limit->period
+                               && (c == '\n' || word_limit->space > 1)));
       if (c == '\n' || c == EOF)
-	word_limit->space = word_limit->final ? 2 : 1;
+        word_limit->space = word_limit->final ? 2 : 1;
       if (word_limit == end_of_word)
-	flush_paragraph ();
+        flush_paragraph ();
       word_limit++;
       if (c == EOF)
-	{
-	  in_column = first_indent;
-	  return EOF;
-	}
+        {
+          in_column = first_indent;
+          return EOF;
+        }
     }
   while (c != '\n');
 
@@ -350,11 +350,11 @@ get_space (register int c)
   for (;;)
     {
       if (c == ' ')
-	in_column++;
+        in_column++;
       else if (c == '\t')
-	in_column = (in_column / TABWIDTH + 1) * TABWIDTH;
+        in_column = (in_column / TABWIDTH + 1) * TABWIDTH;
       else
-	return c;
+        return c;
       c = GETC();
     }
 }
@@ -399,12 +399,12 @@ flush_paragraph (void)
   for (w = words->next_break; w != word_limit; w = w->next_break)
     {
       if (w->best_cost - w->next_break->best_cost < best_break)
-	{
-	  split_point = w;
-	  best_break = w->best_cost - w->next_break->best_cost;
-	}
+        {
+          split_point = w;
+          best_break = w->best_cost - w->next_break->best_cost;
+        }
       if (best_break <= MAXCOST - LINE_CREDIT)
-	best_break += LINE_CREDIT;
+        best_break += LINE_CREDIT;
     }
   put_paragraph (split_point);
 
@@ -412,7 +412,7 @@ flush_paragraph (void)
      the source and target may overlap.  */
 
   memmove ((char *) words, (char *) split_point,
-	 (word_limit - split_point + 1) * sizeof (WORD));
+         (word_limit - split_point + 1) * sizeof (WORD));
   word_limit -= split_point - words;
 }
 
@@ -442,22 +442,22 @@ fmt_paragraph (void)
       w = start;
       len += w->length;
       do
-	{
-	  w++;
+        {
+          w++;
 
-	  /* Consider breaking before w.  */
+          /* Consider breaking before w.  */
 
-	  wcost = line_cost (w, len) + w->best_cost;
-	  if (start == words && last_line_length > 0)
-	    wcost += RAGGED_COST (len - last_line_length);
-	  if (wcost < best)
-	    {
-	      best = wcost;
-	      start->next_break = w;
-	      start->line_length = len;
-	    }
-	  len += (w - 1)->space + w->length;	/* w > start >= words */
-	}
+          wcost = line_cost (w, len) + w->best_cost;
+          if (start == words && last_line_length > 0)
+            wcost += RAGGED_COST (len - last_line_length);
+          if (wcost < best)
+            {
+              best = wcost;
+              start->next_break = w;
+              start->line_length = len;
+            }
+          len += (w - 1)->space + w->length;	/* w > start >= words */
+        }
       while (len < max_width);
       start->best_cost = best + base_cost (start);
     }
@@ -478,16 +478,16 @@ base_cost (register WORD *this)
   if (this > words)
     {
       if ((this - 1)->period)
-	{
-	  if ((this - 1)->final)
-	    cost -= SENTENCE_BONUS;
-	  else
-	    cost += NOBREAK_COST;
-	}
+        {
+          if ((this - 1)->final)
+            cost -= SENTENCE_BONUS;
+          else
+            cost += NOBREAK_COST;
+        }
       else if ((this - 1)->punct)
-	cost -= PUNCT_BONUS;
+        cost -= PUNCT_BONUS;
       else if (this > words + 1 && (this - 2)->final)
-	cost += WIDOW_COST ((this - 1)->length);
+        cost += WIDOW_COST ((this - 1)->length);
     }
 
   if (this->paren)

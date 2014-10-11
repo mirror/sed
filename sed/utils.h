@@ -31,7 +31,7 @@ void ck_fclose (FILE *stream);
 const char *follow_symlink (const char *path);
 size_t ck_getdelim (char **text, size_t *buflen, char buffer_delimiter, FILE *stream);
 FILE * ck_mkstemp (char **p_filename, const char *tmpdir, const char *base,
-		   const char *mode);
+                   const char *mode);
 void ck_rename (const char *from, const char *to, const char *unlink_if_fail);
 
 void *ck_malloc (size_t size);

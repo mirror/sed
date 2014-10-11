@@ -191,8 +191,8 @@ void finish_program (struct vector *);
 
 struct regex *compile_regex (struct buffer *b, int flags, int needed_sub);
 int match_regex (struct regex *regex,
-		 char *buf, size_t buflen, size_t buf_start_offset,
-		 struct re_registers *regarray, int regsize);
+                 char *buf, size_t buflen, size_t buf_start_offset,
+                 struct re_registers *regarray, int regsize);
 #ifdef DEBUG_LEAKS
 void release_regex (struct regex *);
 #endif

@@ -85,7 +85,7 @@ General help using GNU software: <http://www.gnu.org/gethelp/>.\n"));
   if (!errmsg)
     fprintf(out, _("E-mail bug reports to: <%s>.\n\
 Be sure to include the word ``%s'' somewhere in the ``Subject:'' field.\n"),
-	  PACKAGE_BUGREPORT, PACKAGE);
+          PACKAGE_BUGREPORT, PACKAGE);
 }
 
 static void usage (int);
@@ -222,108 +222,108 @@ main(argc, argv)
     {
       countT t = atoi(cols);
       if (t > 1)
-	lcmd_out_line_len = t-1;
+        lcmd_out_line_len = t-1;
     }
 
   myname = *argv;
   while ((opt = getopt_long(argc, argv, SHORTOPTS, longopts, NULL)) != EOF)
     {
       switch (opt)
-	{
-	case 'n':
-	  no_default_output = true;
-	  break;
-	case 'e':
-	  the_program = compile_string(the_program, optarg, strlen(optarg));
-	  break;
-	case 'f':
-	  the_program = compile_file(the_program, optarg);
-	  break;
+        {
+        case 'n':
+          no_default_output = true;
+          break;
+        case 'e':
+          the_program = compile_string(the_program, optarg, strlen(optarg));
+          break;
+        case 'f':
+          the_program = compile_file(the_program, optarg);
+          break;
 
-	case 'z':
-	  buffer_delimiter = 0;
-	  break;
+        case 'z':
+          buffer_delimiter = 0;
+          break;
 
-	case 'F':
-	  follow_symlinks = true;
-	  break;
+        case 'F':
+          follow_symlinks = true;
+          break;
 
-	case 'i':
-	  separate_files = true;
-	  if (optarg == NULL)
-	    /* use no backups */
-	    in_place_extension = ck_strdup ("*");
+        case 'i':
+          separate_files = true;
+          if (optarg == NULL)
+            /* use no backups */
+            in_place_extension = ck_strdup ("*");
 
-	  else if (strchr(optarg, '*') != NULL)
-	    in_place_extension = ck_strdup(optarg);
+          else if (strchr(optarg, '*') != NULL)
+            in_place_extension = ck_strdup(optarg);
 
-	  else
-	    {
-	      in_place_extension = MALLOC (strlen(optarg) + 2, char);
-	      in_place_extension[0] = '*';
-	      strcpy (in_place_extension + 1, optarg);
-	    }
+          else
+            {
+              in_place_extension = MALLOC (strlen(optarg) + 2, char);
+              in_place_extension[0] = '*';
+              strcpy (in_place_extension + 1, optarg);
+            }
 
-	  break;
+          break;
 
-	case 'l':
-	  lcmd_out_line_len = atoi(optarg);
-	  break;
+        case 'l':
+          lcmd_out_line_len = atoi(optarg);
+          break;
 
-	case 'p':
-	  posixicity = POSIXLY_BASIC;
-	  break;
+        case 'p':
+          posixicity = POSIXLY_BASIC;
+          break;
 
         case 'b':
-	  read_mode = "rb";
-	  write_mode = "wb";
-	  break;
+          read_mode = "rb";
+          write_mode = "wb";
+          break;
 
-	case 'E':
-	case 'r':
-	  if (extended_regexp_flags)
-	    usage(4);
-	  extended_regexp_flags = REG_EXTENDED;
-	  break;
+        case 'E':
+        case 'r':
+          if (extended_regexp_flags)
+            usage(4);
+          extended_regexp_flags = REG_EXTENDED;
+          break;
 
 #ifdef REG_PERL
-	case 'R':
-	  if (extended_regexp_flags)
-	    usage(4);
-	  extended_regexp_flags = REG_PERL;
-	  break;
+        case 'R':
+          if (extended_regexp_flags)
+            usage(4);
+          extended_regexp_flags = REG_PERL;
+          break;
 #endif
 
-	case 's':
-	  separate_files = true;
-	  break;
+        case 's':
+          separate_files = true;
+          break;
 
-	case 'u':
-	  unbuffered = true;
-	  break;
+        case 'u':
+          unbuffered = true;
+          break;
 
-	case 'v':
+        case 'v':
           version_etc(stdout, program_name, PACKAGE_NAME, VERSION,
                       AUTHORS, (char *) NULL);
-	  contact(false);
-	  ck_fclose (NULL);
-	  exit (0);
-	case 'h':
-	  usage(0);
-	default:
-	  usage(4);
-	}
+          contact(false);
+          ck_fclose (NULL);
+          exit (0);
+        case 'h':
+          usage(0);
+        default:
+          usage(4);
+        }
     }
 
   if (!the_program)
     {
       if (optind < argc)
-	{
-	  char *arg = argv[optind++];
-	  the_program = compile_string(the_program, arg, strlen(arg));
-	}
+        {
+          char *arg = argv[optind++];
+          the_program = compile_string(the_program, arg, strlen(arg));
+        }
       else
-	usage(4);
+        usage(4);
     }
   check_final_program(the_program);
 

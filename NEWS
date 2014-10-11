@@ -442,15 +442,15 @@ NUL character.  Had the glibc folk fix a bug in lib/regex.c where
 
 * The s/// command now understands the following escapes
 (in both halves):
-	\a	an "alert" (BEL)
-	\f	a form-feed
-	\n	a newline
-	\r	a carriage-return
-	\t	a horizontal tab
-	\v	a vertical tab
-	\oNNN	a character with the octal value NNN
-	\dNNN	a character with the decimal value NNN
-	\xNN	a character with the hexadecimal value NN
+        \a	an "alert" (BEL)
+        \f	a form-feed
+        \n	a newline
+        \r	a carriage-return
+        \t	a horizontal tab
+        \v	a vertical tab
+        \oNNN	a character with the octal value NNN
+        \dNNN	a character with the decimal value NNN
+        \xNN	a character with the hexadecimal value NN
 This behavior is disabled if POSIXLY_CORRECT is set, at least for the
 time being (until I can be convinced that this behavior does not violate
 the POSIX standard).  (Incidentally, \b (backspace) was omitted because

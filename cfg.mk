@@ -33,7 +33,6 @@ local-checks-to-skip =			\
   sc_prohibit_magic_number_exit		\
   sc_prohibit_strcmp			\
   sc_prohibit_strncpy			\
-  sc_prohibit_tab_based_indentation	\
   sc_texinfo_acronym			\
   sc_unmarked_diagnostics		\
   sc_useless_cpp_parens
@@ -63,7 +62,7 @@ export VERBOSE = yes
 # 836832 6e
 export XZ_OPT = -6e
 
-old_NEWS_hash = b6210de3e57d22c04f064eb481282e11
+old_NEWS_hash = 4c8b8c2fef372b60da66269683f768d7
 
 # Many m4 macros names once began with 'jm_'.
 # Make sure that none are inadvertently reintroduced.
@@ -137,3 +136,8 @@ exclude_file_name_regexp--sc_program_name = ^testsuite/.*\.c$$
 exclude_file_name_regexp--sc_space_tab = ^testsuite/.*$$
 exclude_file_name_regexp--sc_prohibit_always_true_header_tests = \
   ^configure\.ac$$
+
+tbi_1 = (^testsuite/.*|^gl/lib/reg.*\.c\.diff|\.mk|/help2man)$$
+tbi_2 = (GNU)?[Mm]akefile(\.am)?$$
+exclude_file_name_regexp--sc_prohibit_tab_based_indentation = \
+  $(tbi_1)|$(tbi_2)

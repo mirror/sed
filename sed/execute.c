@@ -152,7 +152,7 @@ resize_line(lb, len)
       inactive = 0;
 
       if (lb->alloc > len)
-	return;
+        return;
     }
 
   lb->alloc *= 2;
@@ -187,24 +187,24 @@ str_append(to, string, length)
 
         /* An invalid or imcomplete sequence is treated like a singlebyte character. */
         if (n == (size_t) -1 || n == (size_t) -2)
-	  {
-	    memset (&to->mbstate, 0, sizeof (to->mbstate));
-	    n = 1;
-	  }
+          {
+            memset (&to->mbstate, 0, sizeof (to->mbstate));
+            n = 1;
+          }
 
         if (n > 0)
-	  {
-	    string += n;
-	    length -= n;
-	  }
+          {
+            string += n;
+            length -= n;
+          }
         else
-	  break;
+          break;
       }
 }
 
 static void
 str_append_modified(struct line *to, const char *string, size_t length,
-		    enum replacement_types type)
+                    enum replacement_types type)
 {
   mbstate_t from_stat;
 
@@ -233,28 +233,28 @@ str_append_modified(struct line *to, const char *string, size_t length,
       if (n > 0)
         string += n, length -= n;
       else
-	{
-	  /* Incomplete sequence, copy it manually.  */
-	  str_append(to, string, length);
-	  return;
-	}
+        {
+          /* Incomplete sequence, copy it manually.  */
+          str_append(to, string, length);
+          return;
+        }
 
       /* Convert the first character specially... */
       if (type & (REPL_UPPERCASE_FIRST | REPL_LOWERCASE_FIRST))
-	{
+        {
           if (type & REPL_UPPERCASE_FIRST)
             wc = towupper(wc);
           else
             wc = towlower(wc);
 
           type &= ~(REPL_LOWERCASE_FIRST | REPL_UPPERCASE_FIRST);
-	  if (type == REPL_ASIS)
-	    {
-	      n = WCRTOMB (to->active + to->length, wc, &to->mbstate);
-	      to->length += n;
-	      str_append(to, string, length);
-	      return;
-	    }
+          if (type == REPL_ASIS)
+            {
+              n = WCRTOMB (to->active + to->length, wc, &to->mbstate);
+              to->length += n;
+              str_append(to, string, length);
+              return;
+            }
         }
 
       else if (type & REPL_UPPERCASE)
@@ -266,10 +266,10 @@ str_append_modified(struct line *to, const char *string, size_t length,
       n = WCRTOMB (to->active + to->length, wc, &to->mbstate);
       to->length += n;
       if (n == -1 || n == -2)
-	{
-	  fprintf (stderr, "Case conversion produced an invalid character!");
-	  abort ();
-	}
+        {
+          fprintf (stderr, "Case conversion produced an invalid character!");
+          abort ();
+        }
     }
 }
 
@@ -330,11 +330,11 @@ line_copy(from, to, state)
     {
       to->alloc *= 2;
       if (to->alloc < from->length)
-	to->alloc = from->length;
+        to->alloc = from->length;
       if (to->alloc < INITIAL_BUFFER_SIZE)
-	to->alloc = INITIAL_BUFFER_SIZE;
+        to->alloc = INITIAL_BUFFER_SIZE;
       /* Use free()+MALLOC() instead of REALLOC() to
-	 avoid unnecessary copying of old text. */
+         avoid unnecessary copying of old text. */
       free(to->text);
       to->text = MALLOC(to->alloc, char);
     }
@@ -515,23 +515,23 @@ dump_append_queue()
         ck_fwrite(p->text, 1, p->textlen, output_file.fp);
 
       if (p->fname)
-	{
-	  char buf[FREAD_BUFFER_SIZE];
-	  size_t cnt;
-	  FILE *fp;
+        {
+          char buf[FREAD_BUFFER_SIZE];
+          size_t cnt;
+          FILE *fp;
 
-	  /* "If _fname_ does not exist or cannot be read, it shall
-	     be treated as if it were an empty file, causing no error
-	     condition."  IEEE Std 1003.2-1992
-	     So, don't fail. */
-	  fp = ck_fopen(p->fname, read_mode, false);
-	  if (fp)
-	    {
-	      while ((cnt = ck_fread(buf, 1, sizeof buf, fp)) > 0)
-		ck_fwrite(buf, 1, cnt, output_file.fp);
-	      ck_fclose(fp);
-	    }
-	}
+          /* "If _fname_ does not exist or cannot be read, it shall
+             be treated as if it were an empty file, causing no error
+             condition."  IEEE Std 1003.2-1992
+             So, don't fail. */
+          fp = ck_fopen(p->fname, read_mode, false);
+          if (fp)
+            {
+              while ((cnt = ck_fread(buf, 1, sizeof buf, fp)) > 0)
+                ck_fwrite(buf, 1, cnt, output_file.fp);
+              ck_fclose(fp);
+            }
+        }
     }
 
   flush_output(output_file.fp);
@@ -617,9 +617,9 @@ open_next_file(name, input)
       /* get the base name */
       tmpdir = ck_strdup(input->in_file_name);
       if ((p = strrchr(tmpdir, '/')))
-	*p = 0;
+        *p = 0;
       else
-	strcpy(tmpdir, ".");
+        strcpy(tmpdir, ".");
 
       if (isatty (fileno (input->fp)))
         panic(_("couldn't edit %s: is a terminal"), input->in_file_name);
@@ -630,36 +630,36 @@ open_next_file(name, input)
         panic(_("couldn't edit %s: not a regular file"), input->in_file_name);
 
       if (is_selinux_enabled () > 0)
-	{
+        {
           security_context_t con;
-	  if (getfilecon (input->in_file_name, &con) != -1)
-	    {
-	      /* Save and restore the old context for the sake of w and W
-		 commands.  */
-	      reset_fscreatecon = getfscreatecon (&old_fscreatecon) >= 0;
-	      if (setfscreatecon (con) < 0)
-		fprintf (stderr, _("%s: warning: failed to set default file creation context to %s: %s"),
-			 myname, con, strerror (errno));
-	      freecon (con);
-	    }
-	  else
-	    {
-	      if (errno != ENOSYS)
-		fprintf (stderr, _("%s: warning: failed to get security context of %s: %s"),
-			 myname, input->in_file_name, strerror (errno));
-	    }
-	}
+          if (getfilecon (input->in_file_name, &con) != -1)
+            {
+              /* Save and restore the old context for the sake of w and W
+                 commands.  */
+              reset_fscreatecon = getfscreatecon (&old_fscreatecon) >= 0;
+              if (setfscreatecon (con) < 0)
+                fprintf (stderr, _("%s: warning: failed to set default file creation context to %s: %s"),
+                         myname, con, strerror (errno));
+              freecon (con);
+            }
+          else
+            {
+              if (errno != ENOSYS)
+                fprintf (stderr, _("%s: warning: failed to get security context of %s: %s"),
+                         myname, input->in_file_name, strerror (errno));
+            }
+        }
 
       output_file.fp = ck_mkstemp (&input->out_file_name, tmpdir, "sed",
-				   write_mode);
+                                   write_mode);
       output_file.missing_newline = false;
       free (tmpdir);
 
       if (reset_fscreatecon)
-	{
-	  setfscreatecon (old_fscreatecon);
-	  freecon (old_fscreatecon);
-	}
+        {
+          setfscreatecon (old_fscreatecon);
+          freecon (old_fscreatecon);
+        }
 
       if (!output_file.fp)
         panic(_("couldn't open temporary file %s: %s"), input->out_file_name, strerror(errno));
@@ -696,17 +696,17 @@ closedown(input)
         fchown (output_fd, -1, input->st.st_gid);
 #endif
       copy_acl (input->in_file_name, input_fd,
-		input->out_file_name, output_fd,
-		input->st.st_mode);
+                input->out_file_name, output_fd,
+                input->st.st_mode);
 
       ck_fclose (input->fp);
       ck_fclose (output_file.fp);
       if (strcmp(in_place_extension, "*") != 0)
         {
           char *backup_file_name = get_backup_file_name(target_name);
-	  ck_rename (target_name, backup_file_name, input->out_file_name);
+          ck_rename (target_name, backup_file_name, input->out_file_name);
           free (backup_file_name);
-	}
+        }
 
       ck_rename (input->out_file_name, target_name, input->out_file_name);
       free (input->out_file_name);
@@ -728,8 +728,8 @@ reset_addresses(vec)
 
   for (cur_cmd = vec->v, n = vec->v_length; n--; cur_cmd++)
     if (cur_cmd->a1
-	&& cur_cmd->a1->addr_type == ADDR_IS_NUM
-	&& cur_cmd->a1->addr_number == 0)
+        && cur_cmd->a1->addr_type == ADDR_IS_NUM
+        && cur_cmd->a1->addr_number == 0)
       cur_cmd->range_state = RANGE_ACTIVE;
     else
       cur_cmd->range_state = RANGE_INACTIVE;
@@ -756,23 +756,23 @@ read_pattern_space(input, the_program, append)
       closedown(input);
 
       if (!*input->file_list)
-	return false;
+        return false;
 
       if (input->reset_at_next_file)
-	{
-	  input->line_number = 0;
-	  hold.length = 0;
-	  reset_addresses (the_program);
-	  rewind_read_files ();
+        {
+          input->line_number = 0;
+          hold.length = 0;
+          reset_addresses (the_program);
+          rewind_read_files ();
 
-	  /* If doing in-place editing, we will never append the
-	     new-line to this file; but if the output goes to stdout,
-	     we might still have to output the missing new-line.  */
-	  if (in_place_extension)
-	    output_file.missing_newline = false;
+          /* If doing in-place editing, we will never append the
+             new-line to this file; but if the output goes to stdout,
+             we might still have to output the missing new-line.  */
+          if (in_place_extension)
+            output_file.missing_newline = false;
 
-	  input->reset_at_next_file = separate_files;
-	}
+          input->reset_at_next_file = separate_files;
+        }
 
       open_next_file (*input->file_list++, input);
     }
@@ -793,16 +793,16 @@ last_file_with_data_p(input)
 
       closedown(input);
       if (!*input->file_list)
-	return true;
+        return true;
       open_next_file(*input->file_list++, input);
       if (input->fp)
-	{
-	  if ((ch = getc(input->fp)) != EOF)
-	    {
-	      ungetc(ch, input->fp);
-	      return false;
-	    }
-	}
+        {
+          if ((ch = getc(input->fp)) != EOF)
+            {
+              ungetc(ch, input->fp);
+              return false;
+            }
+        }
     }
 }
 
@@ -844,7 +844,7 @@ match_an_address_p(addr, input)
 
     case ADDR_IS_NUM_MOD:
       return (input->line_number >= addr->addr_number
-	      && ((input->line_number - addr->addr_number) % addr->addr_step) == 0);
+              && ((input->line_number - addr->addr_number) % addr->addr_step) == 0);
 
     case ADDR_IS_STEP:
     case ADDR_IS_STEP_MOD:
@@ -878,47 +878,47 @@ match_address_p(cmd, input)
   if (cmd->range_state != RANGE_ACTIVE)
     {
       /* Find if we are going to activate a range.  Handle ADDR_IS_NUM
-	 specially: it represent an "absolute" state, it should not
-	 be computed like regexes.  */
+         specially: it represent an "absolute" state, it should not
+         be computed like regexes.  */
       if (cmd->a1->addr_type == ADDR_IS_NUM)
-	{
-	  if (!cmd->a2)
-	    return (input->line_number == cmd->a1->addr_number);
-
-	  if (cmd->range_state == RANGE_CLOSED
-	      || input->line_number < cmd->a1->addr_number)
-	    return false;
-	}
-      else
-	{
+        {
           if (!cmd->a2)
-	    return match_an_address_p(cmd->a1, input);
+            return (input->line_number == cmd->a1->addr_number);
 
-	  if (!match_an_address_p(cmd->a1, input))
+          if (cmd->range_state == RANGE_CLOSED
+              || input->line_number < cmd->a1->addr_number)
             return false;
-	}
+        }
+      else
+        {
+          if (!cmd->a2)
+            return match_an_address_p(cmd->a1, input);
+
+          if (!match_an_address_p(cmd->a1, input))
+            return false;
+        }
 
       /* Ok, start a new range.  */
       cmd->range_state = RANGE_ACTIVE;
       switch (cmd->a2->addr_type)
-	{
-	case ADDR_IS_REGEX:
-	  /* Always include at least two lines.  */
-	  return true;
-	case ADDR_IS_NUM:
-	  /* Same handling as below, but always include at least one line.  */
-          if (input->line_number >= cmd->a2->addr_number)
-	    cmd->range_state = RANGE_CLOSED;
+        {
+        case ADDR_IS_REGEX:
+          /* Always include at least two lines.  */
           return true;
-	case ADDR_IS_STEP:
-	  cmd->a2->addr_number = input->line_number + cmd->a2->addr_step;
-	  return true;
-	case ADDR_IS_STEP_MOD:
-	  cmd->a2->addr_number = input->line_number + cmd->a2->addr_step
-				 - (input->line_number%cmd->a2->addr_step);
-	  return true;
-	default:
-	  break;
+        case ADDR_IS_NUM:
+          /* Same handling as below, but always include at least one line.  */
+          if (input->line_number >= cmd->a2->addr_number)
+            cmd->range_state = RANGE_CLOSED;
+          return true;
+        case ADDR_IS_STEP:
+          cmd->a2->addr_number = input->line_number + cmd->a2->addr_step;
+          return true;
+        case ADDR_IS_STEP_MOD:
+          cmd->a2->addr_number = input->line_number + cmd->a2->addr_step
+                                 - (input->line_number%cmd->a2->addr_step);
+          return true;
+        default:
+          break;
         }
     }
 
@@ -929,10 +929,10 @@ match_address_p(cmd, input)
     {
       /* If the second address is a line number, and if we got past
          that line, fail to match (it can happen when you jump
-	 over such addresses with `b' and `t'.  Use RANGE_CLOSED
+         over such addresses with `b' and `t'.  Use RANGE_CLOSED
          so that the range is not re-enabled anymore.  */
       if (input->line_number >= cmd->a2->addr_number)
-	cmd->range_state = RANGE_CLOSED;
+        cmd->range_state = RANGE_CLOSED;
 
       return (input->line_number <= cmd->a2->addr_number);
    }
@@ -963,40 +963,40 @@ do_list(line_len)
       o = obuf;
 
       /* Some locales define 8-bit characters as printable.  This makes the
-	 testsuite fail at 8to7.sed because the `l' command in fact will not
-	 convert the 8-bit characters. */
+         testsuite fail at 8to7.sed because the `l' command in fact will not
+         convert the 8-bit characters. */
 #if defined isascii || defined HAVE_ISASCII
       if (isascii(*p) && ISPRINT(*p)) {
 #else
       if (ISPRINT(*p)) {
 #endif
-	  *o++ = *p;
-	  if (*p == '\\')
-	    *o++ = '\\';
+          *o++ = *p;
+          if (*p == '\\')
+            *o++ = '\\';
       } else {
-	  *o++ = '\\';
-	  switch (*p) {
+          *o++ = '\\';
+          switch (*p) {
 #if defined __STDC__ && __STDC__-0
-	    case '\a': *o++ = 'a'; break;
+            case '\a': *o++ = 'a'; break;
 #else /* Not STDC; we'll just assume ASCII */
-	    case 007:  *o++ = 'a'; break;
+            case 007:  *o++ = 'a'; break;
 #endif
-	    case '\b': *o++ = 'b'; break;
-	    case '\f': *o++ = 'f'; break;
-	    case '\n': *o++ = 'n'; break;
-	    case '\r': *o++ = 'r'; break;
-	    case '\t': *o++ = 't'; break;
-	    case '\v': *o++ = 'v'; break;
-	    default:
-	      sprintf(o, "%03o", *p);
-	      o += strlen(o);
-	      break;
-	    }
+            case '\b': *o++ = 'b'; break;
+            case '\f': *o++ = 'f'; break;
+            case '\n': *o++ = 'n'; break;
+            case '\r': *o++ = 'r'; break;
+            case '\t': *o++ = 't'; break;
+            case '\v': *o++ = 'v'; break;
+            default:
+              sprintf(o, "%03o", *p);
+              o += strlen(o);
+              break;
+            }
       }
       olen = o - obuf;
       if (width+olen >= line_len && line_len > 0) {
-	  ck_fwrite("\\\n", 1, 2, fp);
-	  width = 0;
+          ck_fwrite("\\\n", 1, 2, fp);
+          width = 0;
       }
       ck_fwrite(obuf, 1, olen, fp);
       width += olen;
@@ -1007,7 +1007,7 @@ do_list(line_len)
 
 
 static void append_replacement (struct line *buf, struct replacement *p,
-				struct re_registers *regs)
+                                struct re_registers *regs)
 {
   enum replacement_types repl_mod = 0;
 
@@ -1027,23 +1027,23 @@ static void append_replacement (struct line *buf, struct replacement *p,
       if (p->prefix_length)
         {
           str_append_modified(buf, p->prefix, p->prefix_length,
-			      curr_type);
+                              curr_type);
           curr_type &= ~REPL_MODIFIERS;
         }
 
       if (0 <= i)
-	{
+        {
           if (regs->end[i] == regs->start[i] && p->repl_type & REPL_MODIFIERS)
             /* Save this modifier, we shall apply it later.
-	       e.g. in s/()([a-z])/\u\1\2/
-	       the \u modifier is applied to \2, not \1 */
-	    repl_mod = curr_type & REPL_MODIFIERS;
+               e.g. in s/()([a-z])/\u\1\2/
+               the \u modifier is applied to \2, not \1 */
+            repl_mod = curr_type & REPL_MODIFIERS;
 
-	  else if (regs->end[i] != regs->start[i])
-	    str_append_modified(buf, line.active + regs->start[i],
-			        (size_t)(regs->end[i] - regs->start[i]),
-			        curr_type);
-	}
+          else if (regs->end[i] != regs->start[i])
+            str_append_modified(buf, line.active + regs->start[i],
+                                (size_t)(regs->end[i] - regs->start[i]),
+                                curr_type);
+        }
     }
 }
 
@@ -1064,28 +1064,28 @@ do_subst(sub)
   /* The first part of the loop optimizes s/xxx// when xxx is at the
      start, and s/xxx$// */
   if (!match_regex(sub->regx, line.active, line.length, start,
-		   &regs, sub->max_id + 1))
+                   &regs, sub->max_id + 1))
     return;
 
   if (!sub->replacement && sub->numb <= 1)
     {
       if (regs.start[0] == 0 && !sub->global)
         {
-	  /* We found a match, set the `replaced' flag. */
-	  replaced = true;
+          /* We found a match, set the `replaced' flag. */
+          replaced = true;
 
-	  line.active += regs.end[0];
-	  line.length -= regs.end[0];
-	  line.alloc -= regs.end[0];
-	  goto post_subst;
+          line.active += regs.end[0];
+          line.length -= regs.end[0];
+          line.alloc -= regs.end[0];
+          goto post_subst;
         }
       else if (regs.end[0] == line.length)
         {
-	  /* We found a match, set the `replaced' flag. */
-	  replaced = true;
+          /* We found a match, set the `replaced' flag. */
+          replaced = true;
 
-	  line.length = regs.start[0];
-	  goto post_subst;
+          line.length = regs.start[0];
+          goto post_subst;
         }
     }
 
@@ -1096,11 +1096,11 @@ do_subst(sub)
 
       /* Copy stuff to the left of this match into the output string. */
       if (start < offset)
-	str_append(&s_accum, line.active + start, offset - start);
+        str_append(&s_accum, line.active + start, offset - start);
 
       /* If we're counting up to the Nth match, are we there yet?
          And even if we are there, there is another case we have to
-	 skip: are we matching an empty string immediately following
+         skip: are we matching an empty string immediately following
          another match?
 
          This latter case avoids that baaaac, when passed through
@@ -1108,41 +1108,41 @@ do_subst(sub)
          unacceptable because it is not consistently applied (for
          example, `baaaa' gives `xbx', not `xbxx'). */
       if ((matched > 0 || count == 0 || offset > last_end)
-	  && ++count >= sub->numb)
+          && ++count >= sub->numb)
         {
           /* We found a match, set the `replaced' flag. */
           replaced = true;
 
           /* Now expand the replacement string into the output string. */
           append_replacement (&s_accum, sub->replacement, &regs);
-	  again = sub->global;
+          again = sub->global;
         }
       else
-	{
+        {
           /* The match was not replaced.  Copy the text until its
              end; if it was vacuous, skip over one character and
-	     add that character to the output.  */
-	  if (matched == 0)
-	    {
-	      if (start < line.length)
-	        matched = 1;
-	      else
-	        break;
-	    }
+             add that character to the output.  */
+          if (matched == 0)
+            {
+              if (start < line.length)
+                matched = 1;
+              else
+                break;
+            }
 
-	  str_append(&s_accum, line.active + offset, matched);
+          str_append(&s_accum, line.active + offset, matched);
         }
 
       /* Start after the match.  last_end is the real end of the matched
-	 substring, excluding characters that were skipped in case the RE
-	 matched the empty string.  */
+         substring, excluding characters that were skipped in case the RE
+         matched the empty string.  */
       start = offset + matched;
       last_end = regs.end[0];
     }
   while (again
-	 && start <= line.length
-	 && match_regex(sub->regx, line.active, line.length, start,
-			&regs, sub->max_id + 1));
+         && start <= line.length
+         && match_regex(sub->regx, line.active, line.length, start,
+                        &regs, sub->max_id + 1));
 
   /* Copy stuff to the right of the last match into the output string. */
   if (start < line.length)
@@ -1171,27 +1171,27 @@ do_subst(sub)
       pipe_fp = popen(line.active, "r");
 
       if (pipe_fp != NULL)
-	{
-	  while (!feof (pipe_fp))
-	    {
-	      char buf[4096];
-	      int n = fread (buf, sizeof(char), 4096, pipe_fp);
-	      if (n > 0)
-		str_append(&s_accum, buf, n);
-	    }
+        {
+          while (!feof (pipe_fp))
+            {
+              char buf[4096];
+              int n = fread (buf, sizeof(char), 4096, pipe_fp);
+              if (n > 0)
+                str_append(&s_accum, buf, n);
+            }
 
-	  pclose (pipe_fp);
+          pclose (pipe_fp);
 
-	  /* Exchange line and s_accum.  This can be much cheaper than copying
-	     s_accum.active into line.text (for huge lines).  See comment above
-	     for 'g' as to while the third argument is incorrect anyway.  */
-	  line_exchange(&line, &s_accum, true);
-	  if (line.length &&
-	      line.active[line.length - 1] == buffer_delimiter)
-	    line.length--;
-	}
+          /* Exchange line and s_accum.  This can be much cheaper than copying
+             s_accum.active into line.text (for huge lines).  See comment above
+             for 'g' as to while the third argument is incorrect anyway.  */
+          line_exchange(&line, &s_accum, true);
+          if (line.length &&
+              line.active[line.length - 1] == buffer_delimiter)
+            line.length--;
+        }
       else
-	panic(_("error in subprocess"));
+        panic(_("error in subprocess"));
 #else
       panic(_("option `e' not supported"));
 #endif
@@ -1220,13 +1220,13 @@ count_branches(program)
   while (isn_cnt-- > 0)
     {
       switch (cur_cmd->cmd)
-	{
-	case 'b':
-	case 't':
-	case 'T':
-	case '{':
-	  ++cnt;
-	}
+        {
+        case 'b':
+        case 't':
+        case 'T':
+        case '{':
+          ++cnt;
+        }
     }
   return cnt;
 }
@@ -1272,173 +1272,173 @@ execute_program(vec, input)
   while (cur_cmd < end_cmd)
     {
       if (match_address_p(cur_cmd, input) != cur_cmd->addr_bang)
-	{
-	  switch (cur_cmd->cmd)
-	    {
-	    case 'a':
-	      {
-		struct append_queue *aq = next_append_slot();
-		aq->text = cur_cmd->x.cmd_txt.text;
-		aq->textlen = cur_cmd->x.cmd_txt.text_length;
-	      }
-	      break;
+        {
+          switch (cur_cmd->cmd)
+            {
+            case 'a':
+              {
+                struct append_queue *aq = next_append_slot();
+                aq->text = cur_cmd->x.cmd_txt.text;
+                aq->textlen = cur_cmd->x.cmd_txt.text_length;
+              }
+              break;
 
-	    case '{':
-	    case 'b':
-	      cur_cmd = vec->v + cur_cmd->x.jump_index;
-	      continue;
+            case '{':
+            case 'b':
+              cur_cmd = vec->v + cur_cmd->x.jump_index;
+              continue;
 
-	    case '}':
-	    case '#':
-	    case ':':
-	      /* Executing labels and block-ends are easy. */
-	      break;
+            case '}':
+            case '#':
+            case ':':
+              /* Executing labels and block-ends are easy. */
+              break;
 
-	    case 'c':
-	      if (cur_cmd->range_state != RANGE_ACTIVE)
-		output_line(cur_cmd->x.cmd_txt.text,
-			    cur_cmd->x.cmd_txt.text_length - 1, true,
-			    &output_file);
-	      /* POSIX.2 is silent about c starting a new cycle,
-		 but it seems to be expected (and make sense). */
-	      /* Fall Through */
-	    case 'd':
-	      return -1;
+            case 'c':
+              if (cur_cmd->range_state != RANGE_ACTIVE)
+                output_line(cur_cmd->x.cmd_txt.text,
+                            cur_cmd->x.cmd_txt.text_length - 1, true,
+                            &output_file);
+              /* POSIX.2 is silent about c starting a new cycle,
+                 but it seems to be expected (and make sense). */
+              /* Fall Through */
+            case 'd':
+              return -1;
 
-	    case 'D':
-	      {
-		char *p = memchr(line.active, buffer_delimiter, line.length);
-		if (!p)
-		  return -1;
+            case 'D':
+              {
+                char *p = memchr(line.active, buffer_delimiter, line.length);
+                if (!p)
+                  return -1;
 
-		++p;
-		line.alloc -= p - line.active;
-		line.length -= p - line.active;
-		line.active += p - line.active;
+                ++p;
+                line.alloc -= p - line.active;
+                line.length -= p - line.active;
+                line.active += p - line.active;
 
-		/* reset to start next cycle without reading a new line: */
-		cur_cmd = vec->v;
-		continue;
-	      }
+                /* reset to start next cycle without reading a new line: */
+                cur_cmd = vec->v;
+                continue;
+              }
 
-	    case 'e': {
+            case 'e': {
 #ifdef HAVE_POPEN
-	      FILE *pipe_fp;
-	      int cmd_length = cur_cmd->x.cmd_txt.text_length;
-	      line_reset(&s_accum, NULL);
+              FILE *pipe_fp;
+              int cmd_length = cur_cmd->x.cmd_txt.text_length;
+              line_reset(&s_accum, NULL);
 
-	      if (!cmd_length)
-		{
-		  str_append (&line, "", 1);
-		  pipe_fp = popen(line.active, "r");
-		}
-	      else
-		{
-		  cur_cmd->x.cmd_txt.text[cmd_length - 1] = 0;
-		  pipe_fp = popen(cur_cmd->x.cmd_txt.text, "r");
+              if (!cmd_length)
+                {
+                  str_append (&line, "", 1);
+                  pipe_fp = popen(line.active, "r");
+                }
+              else
+                {
+                  cur_cmd->x.cmd_txt.text[cmd_length - 1] = 0;
+                  pipe_fp = popen(cur_cmd->x.cmd_txt.text, "r");
                   output_missing_newline(&output_file);
-		}
+                }
 
-	      if (pipe_fp != NULL)
-		{
-		  char buf[4096];
-		  int n;
-		  while (!feof (pipe_fp))
-		    if ((n = fread (buf, sizeof(char), 4096, pipe_fp)) > 0)
-		      {
-			if (!cmd_length)
-			  str_append(&s_accum, buf, n);
-			else
-			  ck_fwrite(buf, 1, n, output_file.fp);
-		      }
+              if (pipe_fp != NULL)
+                {
+                  char buf[4096];
+                  int n;
+                  while (!feof (pipe_fp))
+                    if ((n = fread (buf, sizeof(char), 4096, pipe_fp)) > 0)
+                      {
+                        if (!cmd_length)
+                          str_append(&s_accum, buf, n);
+                        else
+                          ck_fwrite(buf, 1, n, output_file.fp);
+                      }
 
-		  pclose (pipe_fp);
-		  if (!cmd_length)
-		    {
-		      /* Store into pattern space for plain `e' commands */
-		      if (s_accum.length &&
-			  s_accum.active[s_accum.length - 1] == buffer_delimiter)
-			s_accum.length--;
+                  pclose (pipe_fp);
+                  if (!cmd_length)
+                    {
+                      /* Store into pattern space for plain `e' commands */
+                      if (s_accum.length &&
+                          s_accum.active[s_accum.length - 1] == buffer_delimiter)
+                        s_accum.length--;
 
-		      /* Exchange line and s_accum.  This can be much
-			 cheaper than copying s_accum.active into line.text
-			 (for huge lines).  See comment above for 'g' as
-			 to while the third argument is incorrect anyway.  */
-		      line_exchange(&line, &s_accum, true);
-		    }
+                      /* Exchange line and s_accum.  This can be much
+                         cheaper than copying s_accum.active into line.text
+                         (for huge lines).  See comment above for 'g' as
+                         to while the third argument is incorrect anyway.  */
+                      line_exchange(&line, &s_accum, true);
+                    }
                   else
                     flush_output(output_file.fp);
 
-		}
-	      else
-		panic(_("error in subprocess"));
+                }
+              else
+                panic(_("error in subprocess"));
 #else
-	      panic(_("`e' command not supported"));
+              panic(_("`e' command not supported"));
 #endif
-	      break;
-	    }
+              break;
+            }
 
-	    case 'g':
-	      /* We do not have a really good choice for the third parameter.
-		 The problem is that hold space and the input file might as
-		 well have different states; copying it from hold space means
-		 that subsequent input might be read incorrectly, while
-		 keeping it as in pattern space means that commands operating
-		 on the moved buffer might consider a wrong character set.
-		 We keep it true because it's what sed <= 4.1.5 did.  */
-	      line_copy(&hold, &line, true);
-	      break;
+            case 'g':
+              /* We do not have a really good choice for the third parameter.
+                 The problem is that hold space and the input file might as
+                 well have different states; copying it from hold space means
+                 that subsequent input might be read incorrectly, while
+                 keeping it as in pattern space means that commands operating
+                 on the moved buffer might consider a wrong character set.
+                 We keep it true because it's what sed <= 4.1.5 did.  */
+              line_copy(&hold, &line, true);
+              break;
 
-	    case 'G':
-	      /* We do not have a really good choice for the third parameter.
-		 The problem is that hold space and pattern space might as
-		 well have different states.  So, true is as wrong as false.
-		 We keep it true because it's what sed <= 4.1.5 did, but
-		 we could consider having line_ap.  */
-	      line_append(&hold, &line, true);
-	      break;
+            case 'G':
+              /* We do not have a really good choice for the third parameter.
+                 The problem is that hold space and pattern space might as
+                 well have different states.  So, true is as wrong as false.
+                 We keep it true because it's what sed <= 4.1.5 did, but
+                 we could consider having line_ap.  */
+              line_append(&hold, &line, true);
+              break;
 
-	    case 'h':
-	      /* Here, it is ok to have true.  */
-	      line_copy(&line, &hold, true);
-	      break;
+            case 'h':
+              /* Here, it is ok to have true.  */
+              line_copy(&line, &hold, true);
+              break;
 
-	    case 'H':
-	      /* See comment above for 'G' regarding the third parameter.  */
-	      line_append(&line, &hold, true);
-	      break;
+            case 'H':
+              /* See comment above for 'G' regarding the third parameter.  */
+              line_append(&line, &hold, true);
+              break;
 
-	    case 'i':
-	      output_line(cur_cmd->x.cmd_txt.text,
-			  cur_cmd->x.cmd_txt.text_length - 1,
-			  true, &output_file);
-	      break;
+            case 'i':
+              output_line(cur_cmd->x.cmd_txt.text,
+                          cur_cmd->x.cmd_txt.text_length - 1,
+                          true, &output_file);
+              break;
 
-	    case 'l':
-	      do_list(cur_cmd->x.int_arg == -1
-		      ? lcmd_out_line_len
-		      : cur_cmd->x.int_arg);
-	      break;
+            case 'l':
+              do_list(cur_cmd->x.int_arg == -1
+                      ? lcmd_out_line_len
+                      : cur_cmd->x.int_arg);
+              break;
 
-	    case 'L':
+            case 'L':
               output_missing_newline(&output_file);
-	      fmt(line.active, line.active + line.length,
-		  cur_cmd->x.int_arg == -1
-		  ? lcmd_out_line_len
-		  : cur_cmd->x.int_arg,
-		  output_file.fp);
+              fmt(line.active, line.active + line.length,
+                  cur_cmd->x.int_arg == -1
+                  ? lcmd_out_line_len
+                  : cur_cmd->x.int_arg,
+                  output_file.fp);
               flush_output(output_file.fp);
-	      break;
+              break;
 
-	    case 'n':
-	      if (!no_default_output)
-		output_line(line.active, line.length, line.chomped, &output_file);
-	      if (test_eof(input) || !read_pattern_space(input, vec, false))
-		return -1;
-	      break;
+            case 'n':
+              if (!no_default_output)
+                output_line(line.active, line.length, line.chomped, &output_file);
+              if (test_eof(input) || !read_pattern_space(input, vec, false))
+                return -1;
+              break;
 
-	    case 'N':
-	      str_append(&line, &buffer_delimiter, 1);
+            case 'N':
+              str_append(&line, &buffer_delimiter, 1);
 
               if (test_eof(input) || !read_pattern_space(input, vec, true))
                 {
@@ -1448,101 +1448,101 @@ execute_program(vec, input)
                                  &output_file);
                   return -1;
                 }
-	      break;
+              break;
 
-	    case 'p':
-	      output_line(line.active, line.length, line.chomped, &output_file);
-	      break;
+            case 'p':
+              output_line(line.active, line.length, line.chomped, &output_file);
+              break;
 
-	    case 'P':
-	      {
-		char *p = memchr(line.active, buffer_delimiter, line.length);
-		output_line(line.active, p ? p - line.active : line.length,
-			    p ? true : line.chomped, &output_file);
-	      }
-	      break;
+            case 'P':
+              {
+                char *p = memchr(line.active, buffer_delimiter, line.length);
+                output_line(line.active, p ? p - line.active : line.length,
+                            p ? true : line.chomped, &output_file);
+              }
+              break;
 
             case 'q':
               if (!no_default_output)
                 output_line(line.active, line.length, line.chomped, &output_file);
-	      dump_append_queue();
+              dump_append_queue();
 
-	    case 'Q':
-	      return cur_cmd->x.int_arg == -1 ? 0 : cur_cmd->x.int_arg;
+            case 'Q':
+              return cur_cmd->x.int_arg == -1 ? 0 : cur_cmd->x.int_arg;
 
-	    case 'r':
-	      if (cur_cmd->x.fname)
-		{
-		  struct append_queue *aq = next_append_slot();
-		  aq->fname = cur_cmd->x.fname;
-		}
-	      break;
+            case 'r':
+              if (cur_cmd->x.fname)
+                {
+                  struct append_queue *aq = next_append_slot();
+                  aq->fname = cur_cmd->x.fname;
+                }
+              break;
 
-	    case 'R':
-	      if (cur_cmd->x.fp && !feof (cur_cmd->x.fp))
-		{
-		  struct append_queue *aq;
-		  size_t buflen;
-		  char *text = NULL;
-		  int result;
+            case 'R':
+              if (cur_cmd->x.fp && !feof (cur_cmd->x.fp))
+                {
+                  struct append_queue *aq;
+                  size_t buflen;
+                  char *text = NULL;
+                  int result;
 
-		  result = ck_getdelim (&text, &buflen, buffer_delimiter,
-				        cur_cmd->x.fp);
-		  if (result != EOF)
-		    {
-		      aq = next_append_slot();
-		      aq->free = true;
-		      aq->text = text;
-		      aq->textlen = result;
-		    }
-		}
-	      break;
+                  result = ck_getdelim (&text, &buflen, buffer_delimiter,
+                                        cur_cmd->x.fp);
+                  if (result != EOF)
+                    {
+                      aq = next_append_slot();
+                      aq->free = true;
+                      aq->text = text;
+                      aq->textlen = result;
+                    }
+                }
+              break;
 
-	    case 's':
-	      do_subst(cur_cmd->x.cmd_subst);
-	      break;
+            case 's':
+              do_subst(cur_cmd->x.cmd_subst);
+              break;
 
-	    case 't':
-	      if (replaced)
-		{
-		  replaced = false;
-		  cur_cmd = vec->v + cur_cmd->x.jump_index;
-		  continue;
-		}
-	      break;
+            case 't':
+              if (replaced)
+                {
+                  replaced = false;
+                  cur_cmd = vec->v + cur_cmd->x.jump_index;
+                  continue;
+                }
+              break;
 
-	    case 'T':
-	      if (!replaced)
-		{
-		  cur_cmd = vec->v + cur_cmd->x.jump_index;
-		  continue;
-		}
-	      else
-		replaced = false;
-	      break;
+            case 'T':
+              if (!replaced)
+                {
+                  cur_cmd = vec->v + cur_cmd->x.jump_index;
+                  continue;
+                }
+              else
+                replaced = false;
+              break;
 
-	    case 'w':
-	      if (cur_cmd->x.fp)
-		output_line(line.active, line.length,
-			    line.chomped, cur_cmd->x.outf);
-	      break;
+            case 'w':
+              if (cur_cmd->x.fp)
+                output_line(line.active, line.length,
+                            line.chomped, cur_cmd->x.outf);
+              break;
 
-	    case 'W':
-	      if (cur_cmd->x.fp)
-	        {
-		  char *p = memchr(line.active, buffer_delimiter, line.length);
-		  output_line(line.active, p ? p - line.active : line.length,
-			      p ? true : line.chomped, cur_cmd->x.outf);
-	        }
-	      break;
+            case 'W':
+              if (cur_cmd->x.fp)
+                {
+                  char *p = memchr(line.active, buffer_delimiter, line.length);
+                  output_line(line.active, p ? p - line.active : line.length,
+                              p ? true : line.chomped, cur_cmd->x.outf);
+                }
+              break;
 
-	    case 'x':
-	      /* See comment above for 'g' regarding the third parameter.  */
-	      line_exchange(&line, &hold, false);
-	      break;
+            case 'x':
+              /* See comment above for 'g' regarding the third parameter.  */
+              line_exchange(&line, &hold, false);
+              break;
 
-	    case 'y':
-	      {
+            case 'y':
+              {
                if (mb_cur_max > 1)
                  {
                    int idx, prev_idx; /* index in the input line.  */
@@ -1617,14 +1617,14 @@ execute_program(vec, input)
                    for (e=p+line.length; p<e; ++p)
                      *p = cur_cmd->x.translate[*p];
                  }
-	      }
-	      break;
+              }
+              break;
 
-	    case 'z':
-	      line.length = 0;
-	      break;
+            case 'z':
+              line.length = 0;
+              break;
 
-	    case '=':
+            case '=':
               output_missing_newline(&output_file);
               fprintf(output_file.fp, "%lu\n",
                       (unsigned long)input->line_number);
@@ -1641,7 +1641,7 @@ execute_program(vec, input)
            default:
              panic("INTERNAL ERROR: Bad cmd %c", cur_cmd->cmd);
            }
-	}
+        }
 
 #ifdef EXPERIMENTAL_DASH_N_OPTIMIZATION
       /* If our top-level program consists solely of commands with
@@ -1658,37 +1658,37 @@ execute_program(vec, input)
          Don't use this when in-place editing is active, because line
          numbers restart each time then. */
       else if (!separate_files)
-	{
-	  if (cur_cmd->a1->addr_type == ADDR_IS_NUM
-	      && (cur_cmd->a2
-		  ? cur_cmd->range_state == RANGE_CLOSED
-		  : cur_cmd->a1->addr_number < input->line_number))
-	    {
-	      /* Skip this address next time */
-	      cur_cmd->addr_bang = !cur_cmd->addr_bang;
-	      cur_cmd->a1->addr_type = ADDR_IS_NULL;
-	      if (cur_cmd->a2)
-		cur_cmd->a2->addr_type = ADDR_IS_NULL;
+        {
+          if (cur_cmd->a1->addr_type == ADDR_IS_NUM
+              && (cur_cmd->a2
+                  ? cur_cmd->range_state == RANGE_CLOSED
+                  : cur_cmd->a1->addr_number < input->line_number))
+            {
+              /* Skip this address next time */
+              cur_cmd->addr_bang = !cur_cmd->addr_bang;
+              cur_cmd->a1->addr_type = ADDR_IS_NULL;
+              if (cur_cmd->a2)
+                cur_cmd->a2->addr_type = ADDR_IS_NULL;
 
-	      /* can we make an optimization? */
-	      if (cur_cmd->addr_bang)
-		{
-		  if (cur_cmd->cmd == 'b' || cur_cmd->cmd == 't'
-		      || cur_cmd->cmd == 'T' || cur_cmd->cmd == '}')
-		    branches--;
+              /* can we make an optimization? */
+              if (cur_cmd->addr_bang)
+                {
+                  if (cur_cmd->cmd == 'b' || cur_cmd->cmd == 't'
+                      || cur_cmd->cmd == 'T' || cur_cmd->cmd == '}')
+                    branches--;
 
-		  cur_cmd->cmd = '#';	/* replace with no-op */
-	          if (branches == 0)
-		    cur_cmd = shrink_program(vec, cur_cmd);
-		  if (!cur_cmd && no_default_output)
-		    return 0;
-		  end_cmd = vec->v + vec->v_length;
-		  if (!cur_cmd)
-		    cur_cmd = end_cmd;
-		  continue;
-		}
-	    }
-	}
+                  cur_cmd->cmd = '#';	/* replace with no-op */
+                  if (branches == 0)
+                    cur_cmd = shrink_program(vec, cur_cmd);
+                  if (!cur_cmd && no_default_output)
+                    return 0;
+                  end_cmd = vec->v + vec->v_length;
+                  if (!cur_cmd)
+                    cur_cmd = end_cmd;
+                  continue;
+                }
+            }
+        }
 #endif /*EXPERIMENTAL_DASH_N_OPTIMIZATION*/
 
       /* this is buried down here so that a "continue" statement can skip it */
@@ -1738,9 +1738,9 @@ process_files(the_program, argv)
     {
       status = execute_program(the_program, &input);
       if (status == -1)
-	status = EXIT_SUCCESS;
+        status = EXIT_SUCCESS;
       else
-	break;
+        break;
     }
   closedown(&input);
 

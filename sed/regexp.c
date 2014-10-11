@@ -49,9 +49,9 @@ compile_regex_1 (new_regex, needed_sub)
 #ifdef REG_PERL
   int errcode;
   errcode = regncomp(&new_regex->pattern, new_regex->re, new_regex->sz,
-		     (needed_sub ? 0 : REG_NOSUB)
-		     | new_regex->flags
-		     | extended_regexp_flags);
+                     (needed_sub ? 0 : REG_NOSUB)
+                     | new_regex->flags
+                     | extended_regexp_flags);
 
   if (errcode)
     {
@@ -62,7 +62,7 @@ compile_regex_1 (new_regex, needed_sub)
 #else
   const char *error;
   int syntax = ((extended_regexp_flags & REG_EXTENDED)
-		 ? RE_SYNTAX_POSIX_EXTENDED
+                 ? RE_SYNTAX_POSIX_EXTENDED
                  : RE_SYNTAX_POSIX_BASIC);
 
   syntax &= ~RE_DOT_NOT_NULL;
@@ -100,7 +100,7 @@ compile_regex_1 (new_regex, needed_sub)
 
   re_set_syntax (syntax);
   error = re_compile_pattern (new_regex->re, new_regex->sz,
-			      &new_regex->pattern);
+                              &new_regex->pattern);
   new_regex->pattern.newline_anchor = (new_regex->flags & REG_NEWLINE) != 0;
 
   new_regex->pattern.translate = NULL;
@@ -110,7 +110,7 @@ compile_regex_1 (new_regex, needed_sub)
       static char translate[1 << (sizeof(char) * 8)];
       int i;
       for (i = 0; i < sizeof(translate) / sizeof(char); i++)
-	translate[i] = tolower (i);
+        translate[i] = tolower (i);
 
       new_regex->pattern.translate = translate;
     }
@@ -127,7 +127,7 @@ compile_regex_1 (new_regex, needed_sub)
     {
       char buf[200];
       sprintf(buf, _("invalid reference \\%d on `s' command's RHS"),
-	      needed_sub - 1);
+              needed_sub - 1);
       bad_prog(buf);
     }
 }
@@ -145,7 +145,7 @@ compile_regex(b, flags, needed_sub)
   if (size_buffer(b) == 0)
     {
       if (flags > 0)
-	bad_prog(_(BAD_MODIF));
+        bad_prog(_(BAD_MODIF));
       return NULL;
     }
 
@@ -227,7 +227,7 @@ match_regex(regex, buf, buflen, buf_start_offset, regarray, regsize)
     {
       regex = regex_last;
       if (!regex_last)
-	bad_prog(_(NO_REGEX));
+        bad_prog(_(NO_REGEX));
     }
   else
     regex_last = regex;
@@ -248,8 +248,8 @@ match_regex(regex, buf, buflen, buf_start_offset, regarray, regsize)
   regex->pattern.regs_allocated = REGS_REALLOCATE;
 
   ret = re_search (&regex->pattern, buf, buflen, buf_start_offset,
-		   buflen - buf_start_offset,
-		   regsize ? regarray : NULL);
+                   buflen - buf_start_offset,
+                   regsize ? regarray : NULL);
 
   return (ret > -1);
 #endif

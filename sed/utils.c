@@ -65,13 +65,13 @@ panic(const char *str, ...)
   while (open_files)
     {
       if (open_files->temp)
-	{
-	  fclose (open_files->fp);
-	  errno = 0;
-	  unlink (open_files->name);
+        {
+          fclose (open_files->fp);
+          errno = 0;
+          unlink (open_files->name);
           if (errno != 0)
             fprintf (stderr, _("cannot remove %s: %s"), open_files->name, strerror (errno));
-	}
+        }
 
       open_files = open_files->link;
     }
@@ -111,10 +111,10 @@ register_open_file (fp, name, temp)
   for (p=open_files; p; p=p->link)
     {
       if (fp == p->fp)
-	{
-	  free(p->name);
-	  break;
-	}
+        {
+          free(p->name);
+          break;
+        }
     }
   if (!p)
     {
@@ -190,9 +190,9 @@ ck_mkstemp (p_filename, tmpdir, base, mode)
       tmpdir = getenv("TMP");
       if (tmpdir == NULL)
 #ifdef P_tmpdir
-	tmpdir = P_tmpdir;
+        tmpdir = P_tmpdir;
 #else
-	tmpdir = "/tmp";
+        tmpdir = "/tmp";
 #endif
     }
 
@@ -226,8 +226,8 @@ ck_fwrite(ptr, size, nmemb, stream)
   clearerr(stream);
   if (size && fwrite(ptr, size, nmemb, stream) != nmemb)
     panic(ngettext("couldn't write %d item to %s: %s",
-		   "couldn't write %d items to %s: %s", nmemb),
-		nmemb, utils_fp_name(stream), strerror(errno));
+                   "couldn't write %d items to %s: %s", nmemb),
+                nmemb, utils_fp_name(stream), strerror(errno));
 }
 
 /* Panic on failing fread */
@@ -296,14 +296,14 @@ ck_fclose(stream)
   while ( (cur = prev->link) )
     {
       if (!stream || stream == cur->fp)
-	{
-	  do_ck_fclose (cur->fp);
-	  prev->link = cur->link;
-	  free(cur->name);
-	  free(cur);
-	}
+        {
+          do_ck_fclose (cur->fp);
+          prev->link = cur->link;
+          free(cur->name);
+          free(cur);
+        }
       else
-	prev = cur;
+        prev = cur;
     }
 
   open_files = r.link;
@@ -368,37 +368,37 @@ follow_symlink(const char *fname)
           buf2 = ck_realloc (buf2, buf_size);
         }
       if (rc < 0)
-	panic (_("couldn't follow symlink %s: %s"), buf, strerror(errno));
+        panic (_("couldn't follow symlink %s: %s"), buf, strerror(errno));
       else
-	buf2 [rc] = '\0';
+        buf2 [rc] = '\0';
 
       if (buf2[0] != '/' && (c = strrchr (buf, '/')) != NULL)
-	{
-	  /* Need to handle relative paths with care.  Reallocate buf1 and
-	     buf2 to be big enough.  */
-	  int len = c - buf + 1;
-	  if (len + rc + 1 > buf_size)
-	    {
-	      buf_size = len + rc + 1;
-	      buf1 = ck_realloc (buf1, buf_size);
-	      buf2 = ck_realloc (buf2, buf_size);
-	    }
+        {
+          /* Need to handle relative paths with care.  Reallocate buf1 and
+             buf2 to be big enough.  */
+          int len = c - buf + 1;
+          if (len + rc + 1 > buf_size)
+            {
+              buf_size = len + rc + 1;
+              buf1 = ck_realloc (buf1, buf_size);
+              buf2 = ck_realloc (buf2, buf_size);
+            }
 
-	  /* Always store the new path in buf1.  */
-	  if (buf != buf1)
+          /* Always store the new path in buf1.  */
+          if (buf != buf1)
             memcpy (buf1, buf, len);
 
           /* Tack the relative symlink at the end of buf1.  */
           memcpy (buf1 + len, buf2, rc + 1);
-	  buf = buf1;
-	}
+          buf = buf1;
+        }
       else
-	{
-	  /* Use buf2 as the buffer, it saves a strcpy if it is not pointing to
-	     another link.  It works for absolute symlinks, and as long as
-	     symlinks do not leave the current directory.  */
-	   buf = buf2;
-	}
+        {
+          /* Use buf2 as the buffer, it saves a strcpy if it is not pointing to
+             another link.  It works for absolute symlinks, and as long as
+             symlinks do not leave the current directory.  */
+           buf = buf2;
+        }
     }
 
   if (rc < 0)
@@ -579,7 +579,7 @@ add1_buffer(b, c)
     {
       char *result;
       if (b->allocated - b->length < 1)
-	resize_buffer(b, b->length+1);
+        resize_buffer(b, b->length+1);
       result = b->b + b->length++;
       *result = c;
       return result;
