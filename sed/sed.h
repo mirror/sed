@@ -262,4 +262,3 @@ extern bool is_utf8;
 
 extern int brlen (int ch, mbstate_t *ps);
 extern void initialize_mbcs (void);
-

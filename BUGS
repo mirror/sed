@@ -130,4 +130,3 @@ regex syntax clashes (problems with backslashes)
   in shell scripts, you can set the LC_ALL environment variable to `C',
   or set the locale on a more fine-grained basis with the other LC_*
   environment variables.
-

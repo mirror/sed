@@ -29,7 +29,6 @@ local-checks-to-skip =			\
   sc_file_system			\
   sc_long_lines				\
   sc_prohibit_atoi_atof			\
-  sc_prohibit_empty_lines_at_EOF	\
   sc_prohibit_magic_number_exit		\
   sc_prohibit_strcmp			\
   sc_prohibit_strncpy			\
@@ -141,3 +140,6 @@ tbi_1 = (^testsuite/.*|^gl/lib/reg.*\.c\.diff|\.mk|/help2man)$$
 tbi_2 = (GNU)?[Mm]akefile(\.am)?$$
 exclude_file_name_regexp--sc_prohibit_tab_based_indentation = \
   $(tbi_1)|$(tbi_2)
+
+exclude_file_name_regexp--sc_prohibit_empty_lines_at_EOF = \
+  ^testsuite/(bkslashes.good|(noeolw?|empty)\.(2?good|inp))$$

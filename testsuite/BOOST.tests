@@ -826,4 +826,3 @@ a(bbb+|bb+|b)b abbb 0 4
 a(bbb+|bb+|b)bb abbb 0 4
 (.*).* abcdef 0 6
 (a*)* bc 0 0
-

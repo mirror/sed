@@ -57,4 +57,3 @@ initialize_mbcs ()
 
   mb_cur_max = MB_CUR_MAX;
 }
-
