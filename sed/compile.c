@@ -1286,7 +1286,7 @@ compile_program(vector)
 
             if (mb_cur_max > 1)
               {
-                int i, j, idx, src_char_num;
+                size_t i, j, idx, src_char_num;
                 size_t *src_lens = MALLOC(len, size_t);
                 char **trans_pairs;
                 size_t mbclen;
