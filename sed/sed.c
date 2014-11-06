@@ -57,8 +57,8 @@ bool follow_symlinks = false;
 char *in_place_extension = NULL;
 
 /* The mode to use to read/write files, either "r"/"w" or "rb"/"wb".  */
-char *read_mode = "r";
-char *write_mode = "w";
+char const *read_mode = "r";
+char const *write_mode = "w";
 
 /* Do we need to be pedantically POSIX compliant? */
 enum posixicity_types posixicity;
@@ -71,8 +71,7 @@ static struct vector *the_program = NULL;
 
 static void usage (int);
 static void
-contact(errmsg)
-  int errmsg;
+contact(int errmsg)
 {
   FILE *out = errmsg ? stderr : stdout;
 #ifndef REG_PERL
@@ -88,17 +87,13 @@ Be sure to include the word ``%s'' somewhere in the ``Subject:'' field.\n"),
           PACKAGE_BUGREPORT, PACKAGE);
 }
 
-static void usage (int);
 static void
-usage(status)
-  int status;
+usage(int status)
 {
   FILE *out = status ? stderr : stdout;
 
 #ifdef REG_PERL
 #define PERL_HELP _("  -R, --regexp-perl\n                 use Perl 5's regular expressions syntax in the script.\n")
-#else
-#define PERL_HELP ""
 #endif
 
   fprintf(out, _("\
@@ -154,9 +149,7 @@ specified, then the standard input is read.\n\
 }
 
 int
-main(argc, argv)
-  int argc;
-  char **argv;
+main(int argc, char **argv)
 {
 #ifdef REG_PERL
 #define SHORTOPTS "bsnrzRuEe:f:l:i::V:"
@@ -164,7 +157,7 @@ main(argc, argv)
 #define SHORTOPTS "bsnrzuEe:f:l:i::V:"
 #endif
 
-  const static struct option longopts[] = {
+  static const struct option longopts[] = {
     {"binary", 0, NULL, 'b'},
     {"regexp-extended", 0, NULL, 'r'},
 #ifdef REG_PERL

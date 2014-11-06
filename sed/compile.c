@@ -79,8 +79,8 @@ struct special_files {
   FILE **pfp;
 };
 
-FILE *my_stdin, *my_stdout, *my_stderr;
-struct special_files special_files[] = {
+static FILE *my_stdin, *my_stdout, *my_stderr;
+static const struct special_files special_files[] = {
   { { "/dev/stdin", false, NULL, NULL }, &my_stdin },
   { { "/dev/stdout", false, NULL, NULL }, &my_stdout },
   { { "/dev/stderr", false, NULL, NULL }, &my_stderr },
@@ -174,9 +174,8 @@ static struct output *file_write = NULL;
 
 
 /* Complain about an unknown command and exit. */
-void
-bad_command(ch)
-  char ch;
+static void
+bad_command(char ch)
 {
   const char *msg = _(UNKNOWN_CMD);
   char *unknown_cmd = xmalloc(strlen(msg));
@@ -186,8 +185,7 @@ bad_command(ch)
 
 /* Complain about a programming error and exit. */
 void
-bad_prog(why)
-  const char *why;
+bad_prog(const char *why)
 {
   if (cur_input.name)
     fprintf(stderr, _("%s: file %s line %lu: %s\n"),
@@ -205,9 +203,8 @@ bad_prog(why)
 /* Read the next character from the program.  Return EOF if there isn't
    anything to read.  Keep cur_input.line up to date, so error messages
    can be meaningful. */
-static int inchar (void);
 static int
-inchar()
+inchar(void)
 {
   int ch = EOF;
 
@@ -227,10 +224,8 @@ inchar()
 }
 
 /* unget `ch' so the next call to inchar will return it.   */
-static void savchar (int ch);
 static void
-savchar(ch)
-  int ch;
+savchar(int ch)
 {
   if (ch == EOF)
     return;
@@ -247,9 +242,8 @@ savchar(ch)
 }
 
 /* Read the next non-blank character from the program.  */
-static int in_nonblank (void);
 static int
-in_nonblank()
+in_nonblank(void)
 {
   int ch;
   do
@@ -259,10 +253,8 @@ in_nonblank()
 }
 
 /* Read an integer value from the program.  */
-static countT in_integer (int ch);
 static countT
-in_integer(ch)
-  int ch;
+in_integer (int ch)
 {
   countT num = 0;
 
@@ -275,23 +267,15 @@ in_integer(ch)
   return num;
 }
 
-static int add_then_next (struct buffer *b, int ch);
 static int
-add_then_next(b, ch)
-  struct buffer *b;
-  int ch;
+add_then_next(struct buffer *b, int ch)
 {
   add1_buffer(b, ch);
   return inchar();
 }
 
-static char * convert_number (char *, char *, const char *, int);
 static char *
-convert_number(result, buf, bufend, base)
-  char *result;
-  char *buf;
-  const char *bufend;
-  int base;
+convert_number(char *result, char *buf, const char *bufend, int base)
 {
   int n = 0;
   int max = 1;
@@ -332,9 +316,8 @@ convert_number(result, buf, bufend, base)
 
 
 /* Read in a filename for a `r', `w', or `s///w' command. */
-static struct buffer *read_filename (void);
 static struct buffer *
-read_filename()
+read_filename(void)
 {
   struct buffer *b;
   int ch;
@@ -357,12 +340,8 @@ read_filename()
   return b;
 }
 
-static struct output *get_openfile (struct output **file_ptrs, const char *mode, int fail);
 static struct output *
-get_openfile(file_ptrs, mode, fail)
-     struct output **file_ptrs;
-     const char *mode;
-     int fail;
+get_openfile (struct output **file_ptrs, const char *mode, int fail)
 {
   struct buffer *b;
   char *file_name;
@@ -405,10 +384,8 @@ get_openfile(file_ptrs, mode, fail)
 }
 
 
-static struct sed_cmd *next_cmd_entry (struct vector **vectorp);
 static struct sed_cmd *
-next_cmd_entry(vectorp)
-  struct vector **vectorp;
+next_cmd_entry (struct vector **vectorp)
 {
   struct sed_cmd *cmd;
   struct vector *v;
@@ -431,11 +408,8 @@ next_cmd_entry(vectorp)
   return cmd;
 }
 
-static int snarf_char_class (struct buffer *b, mbstate_t *cur_stat);
 static int
-snarf_char_class(b, cur_stat)
-  struct buffer *b;
-  mbstate_t *cur_stat;
+snarf_char_class (struct buffer *b, mbstate_t *cur_stat)
 {
   int ch;
   int state = 0;
@@ -512,11 +486,8 @@ snarf_char_class(b, cur_stat)
     }
 }
 
-static struct buffer *match_slash (int slash, int regex);
 static struct buffer *
-match_slash(slash, regex)
-  int slash;
-  int regex;
+match_slash (int slash, int regex)
 {
   struct buffer *b;
   int ch;
@@ -568,10 +539,8 @@ match_slash(slash, regex)
   return NULL;
 }
 
-static int mark_subst_opts (struct subst *cmd);
 static int
-mark_subst_opts(cmd)
-  struct subst *cmd;
+mark_subst_opts (struct subst *cmd)
 {
   int flags = 0;
   int ch;
@@ -668,9 +637,8 @@ mark_subst_opts(cmd)
 
 
 /* read in a label for a `:', `b', or `t' command */
-static char *read_label (void);
 static char *
-read_label()
+read_label (void)
 {
   struct buffer *b;
   int ch;
@@ -694,14 +662,9 @@ read_label()
    command so that the jump to/from the label can be backpatched after
    compilation is complete, or a reference created by a `{' to be
    backpatched when the corresponding `}' is found.  */
-static struct sed_label *setup_label
-  (struct sed_label *, countT, char *, const struct error_info *);
 static struct sed_label *
-setup_label(list, idx, name, err_info)
-  struct sed_label *list;
-  countT idx;
-  char *name;
-  const struct error_info *err_info;
+setup_label(struct sed_label *list, countT idx, char *name,
+            const struct error_info *err_info)
 {
   struct sed_label *ret = OB_MALLOC(&obs, 1, struct sed_label);
   ret->v_index = idx;
@@ -712,10 +675,8 @@ setup_label(list, idx, name, err_info)
   return ret;
 }
 
-static struct sed_label *release_label (struct sed_label *list_head);
 static struct sed_label *
-release_label(list_head)
-  struct sed_label *list_head;
+release_label (struct sed_label *list_head)
 {
   struct sed_label *ret;
 
@@ -746,12 +707,8 @@ new_replacement(char *text, size_t length, enum replacement_types type)
   return r;
 }
 
-static void setup_replacement (struct subst *, const char *, size_t);
 static void
-setup_replacement(sub, text, length)
-     struct subst *sub;
-     const char *text;
-     size_t length;
+setup_replacement (struct subst *sub, const char *text, size_t length)
 {
   char *base;
   char *p;
@@ -851,11 +808,8 @@ setup_replacement(sub, text, length)
   sub->replacement = root.next;
 }
 
-static void read_text (struct text_buf *buf, int leadin_ch);
 static void
-read_text(buf, leadin_ch)
-  struct text_buf *buf;
-  int leadin_ch;
+read_text (struct text_buf *buf, int leadin_ch)
 {
   int ch;
 
@@ -911,11 +865,8 @@ read_text(buf, leadin_ch)
    return non-zero and store the resulting address in `*addr'.
    If the input doesn't look like an address read nothing
    and return zero.  */
-static bool compile_address (struct addr *addr, int ch);
 static bool
-compile_address(addr, ch)
-  struct addr *addr;
-  int ch;
+compile_address (struct addr *addr, int ch)
 {
   addr->addr_type = ADDR_IS_NULL;
   addr->addr_step = 0;
@@ -1009,10 +960,8 @@ compile_address(addr, ch)
 
 /* Read a program (or a subprogram within `{' `}' pairs) in and store
    the compiled form in `*vector'.  Return a pointer to the new vector.  */
-static struct vector *compile_program (struct vector *);
 static struct vector *
-compile_program(vector)
-  struct vector *vector;
+compile_program(struct vector *vector)
 {
   struct sed_cmd *cur_cmd;
   struct buffer *b;
@@ -1391,10 +1340,7 @@ compile_program(vector)
 
 /* deal with \X escapes */
 size_t
-normalize_text(buf, len, buftype)
-  char *buf;
-  size_t len;
-  enum text_types buftype;
+normalize_text(char *buf, size_t len, enum text_types buftype)
 {
   const char *bufend = buf + len;
   char *p = buf;
@@ -1555,10 +1501,7 @@ convert:
 /* `str' is a string (from the command line) that contains a sed command.
    Compile the command, and add it to the end of `cur_program'. */
 struct vector *
-compile_string(cur_program, str, len)
-  struct vector *cur_program;
-  char *str;
-  size_t len;
+compile_string(struct vector *cur_program, char *str, size_t len)
 {
   static countT string_expr_count = 0;
   struct vector *ret;
@@ -1585,9 +1528,7 @@ compile_string(cur_program, str, len)
    Read them in and add them to the end of `cur_program'.
  */
 struct vector *
-compile_file(cur_program, cmdfile)
-  struct vector *cur_program;
-  const char *cmdfile;
+compile_file(struct vector *cur_program, const char *cmdfile)
 {
   struct vector *ret;
 
@@ -1618,8 +1559,7 @@ compile_file(cur_program, cmdfile)
    In particular: this backpatches the jump targets.
    Any cleanup which can be done after these checks is done here also.  */
 void
-check_final_program(program)
-  struct vector *program;
+check_final_program(struct vector *program)
 {
   struct sed_label *go;
   struct sed_label *lbl;
@@ -1687,7 +1627,7 @@ check_final_program(program)
 
 /* Rewind all resources which were allocated in this module. */
 void
-rewind_read_files()
+rewind_read_files(void)
 {
   struct output *p;
 
@@ -1698,8 +1638,7 @@ rewind_read_files()
 
 /* Release all resources which were allocated in this module. */
 void
-finish_program(program)
-  struct vector *program;
+finish_program(struct vector *program)
 {
   /* close all files... */
   {

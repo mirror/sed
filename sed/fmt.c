@@ -222,7 +222,7 @@ fmt (const char *line, const char *line_end, int max_length, FILE *output_file)
    paragraph, else true.  */
 
 static bool
-get_paragraph ()
+get_paragraph (void)
 {
   register int c;
 

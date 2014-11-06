@@ -41,9 +41,7 @@ static const char errors[] =
 
 
 static void
-compile_regex_1 (new_regex, needed_sub)
-  struct regex *new_regex;
-  int needed_sub;
+compile_regex_1 (struct regex *new_regex, int needed_sub)
 {
 #ifdef REG_PERL
   int errcode;
@@ -132,10 +130,7 @@ compile_regex_1 (new_regex, needed_sub)
 }
 
 struct regex *
-compile_regex(b, flags, needed_sub)
-  struct buffer *b;
-  int flags;
-  int needed_sub;
+compile_regex(struct buffer *b, int flags, int needed_sub)
 {
   struct regex *new_regex;
   size_t re_len;
@@ -203,13 +198,9 @@ copy_regs (regs, pmatch, nregs)
 #endif
 
 int
-match_regex(regex, buf, buflen, buf_start_offset, regarray, regsize)
-  struct regex *regex;
-  char *buf;
-  size_t buflen;
-  size_t buf_start_offset;
-  struct re_registers *regarray;
-  int regsize;
+match_regex(struct regex *regex, char *buf, size_t buflen,
+            size_t buf_start_offset, struct re_registers *regarray,
+            int regsize)
 {
   int ret;
   static struct regex *regex_last;

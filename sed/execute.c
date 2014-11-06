@@ -133,11 +133,8 @@ static struct append_queue *append_tail = NULL;
 
 /* increase a struct line's length, making some attempt at
    keeping realloc() calls under control by padding for future growth.  */
-static void resize_line (struct line *, size_t);
 static void
-resize_line(lb, len)
-  struct line *lb;
-  size_t len;
+resize_line (struct line *lb, size_t len)
 {
   int inactive;
   inactive = lb->active - lb->text;
@@ -166,12 +163,8 @@ resize_line(lb, len)
 }
 
 /* Append `length' bytes from `string' to the line `to'. */
-static void str_append (struct line *, const char *, size_t);
 static void
-str_append(to, string, length)
-  struct line *to;
-  const char *string;
-  size_t length;
+str_append(struct line *to, const char *string, size_t length)
 {
   size_t new_length = to->length + length;
 
@@ -277,10 +270,7 @@ str_append_modified(struct line *to, const char *string, size_t length,
    if not null.  */
 static void line_init (struct line *, struct line *, size_t initial_size);
 static void
-line_init(buf, state, initial_size)
-  struct line *buf;
-  struct line *state;
-  size_t initial_size;
+line_init(struct line *buf, struct line *state, size_t initial_size)
 {
   buf->text = MALLOC(initial_size, char);
   buf->active = buf->text;
@@ -296,10 +286,8 @@ line_init(buf, state, initial_size)
 
 /* Reset a "struct line" buffer to length zero.  Copy multibyte state from
    `state' if not null.  */
-static void line_reset (struct line *, struct line *);
 static void
-line_reset(buf, state)
-  struct line *buf, *state;
+line_reset(struct line *buf, struct line *state)
 {
   if (buf->alloc == 0)
     line_init(buf, state, INITIAL_BUFFER_SIZE);
@@ -316,12 +304,8 @@ line_reset(buf, state)
 /* Copy the contents of the line `from' into the line `to'.
    This destroys the old contents of `to'.
    Copy the multibyte state if `state' is true. */
-static void line_copy (struct line *from, struct line *to, int state);
 static void
-line_copy(from, to, state)
-  struct line *from;
-  struct line *to;
-  int state;
+line_copy(struct line *from, struct line *to, int state)
 {
   /* Remove the inactive portion in the destination buffer. */
   to->alloc += to->active - to->text;
@@ -350,12 +334,8 @@ line_copy(from, to, state)
 
 /* Append the contents of the line `from' to the line `to'.
    Copy the multibyte state if `state' is true. */
-static void line_append (struct line *from, struct line *to, int state);
 static void
-line_append(from, to, state)
-  struct line *from;
-  struct line *to;
-  int state;
+line_append (struct line *from, struct line *to, int state)
 {
   str_append(to, &buffer_delimiter, 1);
   str_append(to, from->active, from->length);
@@ -367,12 +347,8 @@ line_append(from, to, state)
 
 /* Exchange two "struct line" buffers.
    Copy the multibyte state if `state' is true. */
-static void line_exchange (struct line *a, struct line *b, int state);
 static void
-line_exchange(a, b, state)
-  struct line *a;
-  struct line *b;
-  int state;
+line_exchange (struct line *a, struct line *b, int state)
 {
   struct line t;
 
@@ -392,18 +368,14 @@ line_exchange(a, b, state)
 
 
 /* dummy function to simplify read_pattern_space() */
-static bool read_always_fail (struct input *);
 static bool
-read_always_fail(input)
-  struct input *input UNUSED;
+read_always_fail(struct input *input UNUSED)
 {
   return false;
 }
 
-static bool read_file_line (struct input *);
 static bool
-read_file_line(input)
-  struct input *input;
+read_file_line(struct input *input)
 {
   static char *b;
   static size_t blen;
@@ -423,10 +395,8 @@ read_file_line(input)
 }
 
 
-static inline void output_missing_newline (struct output *);
 static inline void
-output_missing_newline(outf)
-  struct output *outf;
+output_missing_newline(struct output *outf)
 {
   if (outf->missing_newline)
     {
@@ -435,22 +405,15 @@ output_missing_newline(outf)
     }
 }
 
-static inline void flush_output (FILE *);
 static inline void
-flush_output(fp)
-  FILE *fp;
+flush_output(FILE *fp)
 {
   if (fp != stdout || unbuffered)
     ck_fflush(fp);
 }
 
-static void output_line (const char *, size_t, int, struct output *);
 static void
-output_line(text, length, nl, outf)
-  const char *text;
-  size_t length;
-  int nl;
-  struct output *outf;
+output_line(const char *text, size_t length, int nl, struct output *outf)
 {
   if (!text)
     return;
@@ -466,9 +429,8 @@ output_line(text, length, nl, outf)
   flush_output(outf->fp);
 }
 
-static struct append_queue *next_append_slot (void);
 static struct append_queue *
-next_append_slot()
+next_append_slot(void)
 {
   struct append_queue *n = MALLOC(1, struct append_queue);
 
@@ -485,9 +447,8 @@ next_append_slot()
   return append_tail = n;
 }
 
-static void release_append_queue (void);
 static void
-release_append_queue()
+release_append_queue(void)
 {
   struct append_queue *p, *q;
 
@@ -502,9 +463,8 @@ release_append_queue()
   append_head = append_tail = NULL;
 }
 
-static void dump_append_queue (void);
 static void
-dump_append_queue()
+dump_append_queue(void)
 {
   struct append_queue *p;
 
@@ -540,10 +500,8 @@ dump_append_queue()
 
 
 /* Compute the name of the backup file for in-place editing */
-static char *get_backup_file_name (const char *);
 static char *
-get_backup_file_name(name)
-  const char *name;
+get_backup_file_name(const char *name)
 {
   char *old_asterisk, *asterisk, *backup, *p;
   int name_length = strlen(name), backup_length = strlen(in_place_extension);
@@ -573,11 +531,8 @@ get_backup_file_name(name)
 }
 
 /* Initialize a struct input for the named file. */
-static void open_next_file (const char *name, struct input *);
 static void
-open_next_file(name, input)
-  const char *name;
-  struct input *input;
+open_next_file(const char *name, struct input *input)
 {
   buffer.length = 0;
 
@@ -674,10 +629,8 @@ open_next_file(name, input)
 
 
 /* Clean up an input stream that we are done with. */
-static void closedown (struct input *);
 static void
-closedown(input)
-  struct input *input;
+closedown(struct input *input)
 {
   input->read_fn = read_always_fail;
   if (!input->fp)
@@ -718,10 +671,8 @@ closedown(input)
 }
 
 /* Reset range commands so that they are marked as non-matching */
-static void reset_addresses (struct vector *);
 static void
-reset_addresses(vec)
-     struct vector *vec;
+reset_addresses(struct vector *vec)
 {
   struct sed_cmd *cur_cmd;
   int n;
@@ -737,12 +688,8 @@ reset_addresses(vec)
 
 /* Read in the next line of input, and store it in the pattern space.
    Return zero if there is nothing left to input. */
-static bool read_pattern_space (struct input *, struct vector *, int);
 static bool
-read_pattern_space(input, the_program, append)
-  struct input *input;
-  struct vector *the_program;
-  int append;
+read_pattern_space(struct input *input, struct vector *the_program, int append)
 {
   if (append_head) /* redundant test to optimize for common case */
     dump_append_queue();
@@ -782,10 +729,8 @@ read_pattern_space(input, the_program, append)
 }
 
 
-static bool last_file_with_data_p (struct input *);
 static bool
-last_file_with_data_p(input)
-  struct input *input;
+last_file_with_data_p(struct input *input)
 {
   for (;;)
     {
@@ -807,10 +752,8 @@ last_file_with_data_p(input)
 }
 
 /* Determine if we match the `$' address. */
-static bool test_eof (struct input *);
 static bool
-test_eof(input)
-  struct input *input;
+test_eof(struct input *input)
 {
   int ch;
 
@@ -828,11 +771,8 @@ test_eof(input)
 
 /* Return non-zero if the current line matches the address
    pointed to by `addr'. */
-static bool match_an_address_p (struct addr *, struct input *);
 static bool
-match_an_address_p(addr, input)
-  struct addr *addr;
-  struct input *input;
+match_an_address_p(struct addr *addr, struct input *input)
 {
   switch (addr->addr_type)
     {
@@ -866,11 +806,8 @@ match_an_address_p(addr, input)
 }
 
 /* return non-zero if current address is valid for cmd */
-static bool match_address_p (struct sed_cmd *, struct input *);
 static bool
-match_address_p(cmd, input)
-  struct sed_cmd *cmd;
-  struct input *input;
+match_address_p(struct sed_cmd *cmd, struct input *input)
 {
   if (!cmd->a1)
     return true;
@@ -945,10 +882,8 @@ match_address_p(cmd, input)
 }
 
 
-static void do_list (int line_len);
 static void
-do_list(line_len)
-     int line_len;
+do_list(int line_len)
 {
   unsigned char *p = (unsigned char *)line.active;
   countT len = line.length;
@@ -1047,10 +982,8 @@ static void append_replacement (struct line *buf, struct replacement *p,
     }
 }
 
-static void do_subst (struct subst *);
 static void
-do_subst(sub)
-  struct subst *sub;
+do_subst(struct subst *sub)
 {
   size_t start = 0;	/* where to start scan for (next) match in LINE */
   size_t last_end = 0;  /* where did the last successful match end in LINE */
@@ -1258,11 +1191,8 @@ shrink_program(vec, cur_cmd)
 
 /* Execute the program `vec' on the current input line.
    Return exit status if caller should quit, -1 otherwise. */
-static int execute_program (struct vector *, struct input *);
 static int
-execute_program(vec, input)
-  struct vector *vec;
-  struct input *input;
+execute_program(struct vector *vec, struct input *input)
 {
   struct sed_cmd *cur_cmd;
   struct sed_cmd *end_cmd;
@@ -1704,9 +1634,7 @@ execute_program(vec, input)
 
 /* Apply the compiled script to all the named files. */
 int
-process_files(the_program, argv)
-  struct vector *the_program;
-  char **argv;
+process_files(struct vector *the_program, char **argv)
 {
   static char dash[] = "-";
   static char *stdin_argv[2] = { dash, NULL };

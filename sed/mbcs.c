@@ -27,9 +27,7 @@ bool is_utf8;
 /* Add a byte to the multibyte character represented by the state
    CUR_STAT, and answer its length if a character is completed,
    or -2 if it is yet to be completed.  */
-int brlen (ch, cur_stat)
-     int ch;
-     mbstate_t *cur_stat;
+int brlen (int ch, mbstate_t *cur_stat)
 {
   char c = ch;
 
@@ -47,7 +45,7 @@ int brlen (ch, cur_stat)
 }
 
 void
-initialize_mbcs ()
+initialize_mbcs (void)
 {
   /* For UTF-8, we know that the encoding is stateless.  */
   const char *codeset_name;
