@@ -4,6 +4,11 @@ GNU sed NEWS                                    -*- outline -*-
 
 ** Bug fixes
 
+  sed no longer accesses uninitialized memory when processing certain
+  invalid multibyte sequences. Demonstrate with this:
+    echo a | LC_ALL=ja_JP.eucJP valgrind sed/sed 's/a/b\U\xb2c/'
+  The error appears to have been introduced with the sed-4.0a release.
+
   The 'y' (transliterate) operator once again works with a NUL byte
   on the RHS.  E.g., sed 'y/b/\x00/' now works like tr b '\0'.  GNU sed
   has never before recognized \x00 in this context.  However, sed-3.02

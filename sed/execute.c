@@ -215,13 +215,22 @@ str_append_modified(struct line *to, const char *string, size_t length,
   while (length)
     {
       wchar_t wc;
-      int n = MBRTOWC (&wc, string, length, &from_stat);
+      size_t n = MBRTOWC (&wc, string, length, &from_stat);
 
       /* An invalid sequence is treated like a singlebyte character. */
-      if (n == -1)
+      if (n == (size_t) -1)
         {
+          type &= ~(REPL_LOWERCASE_FIRST | REPL_UPPERCASE_FIRST);
+          if (type == REPL_ASIS)
+            {
+              str_append(to, string, length);
+              return;
+            }
+
           memset (&to->mbstate, 0, sizeof (from_stat));
           n = 1;
+          string += n, length -= n;
+          continue;
         }
 
       if (n > 0)
@@ -244,13 +253,19 @@ str_append_modified(struct line *to, const char *string, size_t length,
           type &= ~(REPL_LOWERCASE_FIRST | REPL_UPPERCASE_FIRST);
           if (type == REPL_ASIS)
             {
+              /* Copy the new wide character to the end of the string. */
               n = WCRTOMB (to->active + to->length, wc, &to->mbstate);
               to->length += n;
+              if (n == (size_t) -1 || n == (size_t) -2)
+                {
+                  fprintf (stderr,
+                           _("case conversion produced an invalid character"));
+                  abort ();
+                }
               str_append(to, string, length);
               return;
             }
         }
-
       else if (type & REPL_UPPERCASE)
         wc = towupper(wc);
       else
@@ -261,7 +276,7 @@ str_append_modified(struct line *to, const char *string, size_t length,
       to->length += n;
       if (n == -1 || n == -2)
         {
-          fprintf (stderr, "Case conversion produced an invalid character!");
+          fprintf (stderr, _("case conversion produced an invalid character"));
           abort ();
         }
     }
