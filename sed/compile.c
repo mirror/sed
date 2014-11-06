@@ -439,7 +439,7 @@ snarf_char_class(b, cur_stat)
 {
   int ch;
   int state = 0;
-  int delim;
+  int delim IF_LINT ( = 0) ;
   bool pending_mb = 0;
 
   ch = inchar();

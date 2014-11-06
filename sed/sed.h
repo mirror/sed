@@ -262,3 +262,10 @@ extern bool is_utf8;
 
 extern int brlen (int ch, mbstate_t *ps);
 extern void initialize_mbcs (void);
+
+/* Use this to suppress gcc's '...may be used before initialized' warnings. */
+#ifdef lint
+# define IF_LINT(Code) Code
+#else
+# define IF_LINT(Code) /* empty */
+#endif
