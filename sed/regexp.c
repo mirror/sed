@@ -37,7 +37,6 @@ static const char errors[] =
 
 #define NO_REGEX (errors)
 #define BAD_MODIF (NO_REGEX + sizeof(N_("no previous regular expression")))
-#define END_ERRORS (BAD_MODIF + sizeof(N_("cannot specify modifiers on empty regexp")))
 
 
 
