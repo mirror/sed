@@ -176,3 +176,5 @@ xstrndup.m4
 /strdup.m4
 /symlink.m4
 /ungetc.m4
+/manywarnings.m4
+/warnings.m4

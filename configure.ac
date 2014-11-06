@@ -18,10 +18,30 @@ AC_SUBST(SED_FEATURE_VERSION)
 COPYRIGHT_YEAR=2014
 AC_SUBST(COPYRIGHT_YEAR)
 
-AC_PROG_CC
+AC_PROG_CC_STDC
+AM_PROG_CC_C_O
 gl_EARLY
 gl_INIT
 gl_DISABLE_THREADS
+
+# gl_GCC_VERSION_IFELSE([major], [minor], [run-if-found], [run-if-not-found])
+# ------------------------------------------------
+# If $CPP is gcc-MAJOR.MINOR or newer, then run RUN-IF-FOUND.
+# Otherwise, run RUN-IF-NOT-FOUND.
+AC_DEFUN([gl_GCC_VERSION_IFELSE],
+  [AC_PREPROC_IFELSE(
+    [AC_LANG_PROGRAM(
+      [[
+#if ($1) < __GNUC__ || (($1) == __GNUC__ && ($2) <= __GNUC_MINOR__)
+/* ok */
+#else
+# error "your version of gcc is older than $1.$2"
+#endif
+      ]]),
+    ], [$3], [$4])
+  ]
+)
+
 AC_CACHE_CHECK([whether "rt" can be used with fopen], [sed_cv_fopen_rt], [
 AC_TRY_RUN([
 #include <stdio.h>
@@ -184,6 +204,134 @@ case $host in
   *) ;;
 esac
 AC_SUBST([XFAIL_TESTS])
+
+AC_ARG_ENABLE([gcc-warnings],
+  [AS_HELP_STRING([--enable-gcc-warnings],
+     [turn on many GCC warnings (for developers; best with GNU make)])],
+  [case $enableval in
+     yes|no) ;;
+     *)      AC_MSG_ERROR([bad value $enableval for gcc-warnings option]) ;;
+   esac
+   gl_gcc_warnings=$enableval],
+  [
+   # GCC provides fine-grained control over diagnostics which
+   # is used in gnulib for example to suppress warnings from
+   # certain sections of code.  So if this is available and
+   # we're running from a git repo, then auto enable the warnings.
+   gl_gcc_warnings=no
+   gl_GCC_VERSION_IFELSE([4], [6],
+                         [test -d "$srcdir"/.git \
+                          && ! test -f "$srcdir"/.tarball-version \
+                          && gl_gcc_warnings=yes])]
+)
+
+if test "$gl_gcc_warnings" = yes; then
+  gl_WARN_ADD([-Werror], [WERROR_CFLAGS])
+  AC_SUBST([WERROR_CFLAGS])
+
+  nw=
+  # This, $nw, is the list of warnings we disable.
+  nw="$nw -Wdeclaration-after-statement" # too useful to forbid
+  nw="$nw -Waggregate-return"       # anachronistic
+  nw="$nw -Wlong-long"              # C90 is anachronistic (lib/gethrxtime.h)
+  nw="$nw -Wc++-compat"             # We don't care about C++ compilers
+  nw="$nw -Wundef"                  # Warns on '#if GNULIB_FOO' etc in gnulib
+  nw="$nw -Wtraditional"            # Warns on #elif which we use often
+  nw="$nw -Wcast-qual"              # Too many warnings for now
+  nw="$nw -Wconversion"             # Too many warnings for now
+  nw="$nw -Wsystem-headers"         # Don't let system headers trigger warnings
+  nw="$nw -Wsign-conversion"        # Too many warnings for now
+  nw="$nw -Wtraditional-conversion" # Too many warnings for now
+  nw="$nw -Wunreachable-code"       # Too many warnings for now
+  nw="$nw -Wpadded"                 # Our structs are not padded
+  nw="$nw -Wredundant-decls"        # openat.h declares e.g., mkdirat
+  nw="$nw -Wlogical-op"             # Too many warnings until GCC 4.8.0
+  nw="$nw -Wformat-nonliteral"      # who.c and pinky.c strftime uses
+  nw="$nw -Wvla"                    # warnings in gettext.h
+  nw="$nw -Wnested-externs"         # use of XARGMATCH/verify_function__
+  nw="$nw -Wswitch-enum"            # Too many warnings for now
+  nw="$nw -Wswitch-default"         # Too many warnings for now
+  nw="$nw -Wstack-protector"        # not worth working around
+  # things I might fix soon:
+  nw="$nw -Wfloat-equal"            # sort.c, seq.c
+  nw="$nw -Wmissing-format-attribute" # copy.c
+  nw="$nw -Wunsafe-loop-optimizations" # a few src/*.c
+  nw="$nw -Winline"                 # system.h's readdir_ignoring_dot_and_dotdot
+  nw="$nw -Wsuggest-attribute=format" # warns about copy.c and factor.c
+
+  # Using -Wstrict-overflow is a pain, but the alternative is worse.
+  # For an example, see the code that provoked this report:
+  # http://gcc.gnu.org/bugzilla/show_bug.cgi?id=33498
+  # Code like that still infloops with gcc-4.6.0 and -O2.  Scary indeed.
+
+  gl_MANYWARN_ALL_GCC([ws])
+  gl_MANYWARN_COMPLEMENT([ws], [$ws], [$nw])
+  for w in $ws; do
+    gl_WARN_ADD([$w])
+  done
+  gl_WARN_ADD([-Wno-sign-compare])     # Too many warnings for now
+  gl_WARN_ADD([-Wno-unused-parameter]) # Too many warnings for now
+  gl_WARN_ADD([-Wno-format-nonliteral])
+
+  # Enable this warning only with gcc-4.8 and newer.  Before that
+  # bounds checking as done in truncate.c was incorrectly flagged.
+  # See: https://gcc.gnu.org/bugzilla/show_bug.cgi?id=43772
+  gl_GCC_VERSION_IFELSE([4], [8], [gl_WARN_ADD([-Wlogical-op])])
+
+  # clang is unduly picky about some things.
+  AC_CACHE_CHECK([whether the compiler is clang], [utils_cv_clang],
+    [AC_COMPILE_IFELSE(
+       [AC_LANG_PROGRAM([[
+            #ifndef __clang__
+              #error "not clang"
+            #endif
+          ]])],
+       [utils_cv_clang=yes],
+       [utils_cv_clang=no])])
+  if test $utils_cv_clang = yes; then
+    gl_WARN_ADD([-Wno-format-extra-args])
+    gl_WARN_ADD([-Wno-tautological-constant-out-of-range-compare])
+  fi
+
+  gl_WARN_ADD([-fdiagnostics-show-option])
+  gl_WARN_ADD([-funit-at-a-time])
+
+  AC_SUBST([WARN_CFLAGS])
+
+  AC_DEFINE([lint], [1], [Define to 1 if the compiler is checking for lint.])
+  AH_VERBATIM([FORTIFY_SOURCE],
+  [/* Enable compile-time and run-time bounds-checking, and some warnings,
+      without upsetting glibc 2.15+. */
+   #if !defined _FORTIFY_SOURCE && defined __OPTIMIZE__ && __OPTIMIZE__
+   # define _FORTIFY_SOURCE 2
+   #endif
+  ])
+  AC_DEFINE([GNULIB_PORTCHECK], [1], [enable some gnulib portability checks])
+
+  # We use a slightly smaller set of warning options for lib/.
+  # Remove the following and save the result in GNULIB_WARN_CFLAGS.
+  nw=
+  nw="$nw -Wstrict-overflow"
+  nw="$nw -Wuninitialized"
+  nw="$nw -Wunused-macros"
+  nw="$nw -Wmissing-prototypes"
+  nw="$nw -Wold-style-definition"
+  # FIXME: it may be easy to remove this, since it affects only one file:
+  # the snprintf call at ftoastr.c:132.
+  nw="$nw -Wdouble-promotion"
+  gl_MANYWARN_COMPLEMENT([GNULIB_WARN_CFLAGS], [$WARN_CFLAGS], [$nw])
+  AC_SUBST([GNULIB_WARN_CFLAGS])
+
+  # For gnulib-tests, the set is slightly smaller still.
+  nw=
+  nw="$nw -Wstrict-prototypes"
+  # It's not worth being this picky about test programs.
+  nw="$nw -Wsuggest-attribute=const"
+  nw="$nw -Wsuggest-attribute=pure"
+  gl_MANYWARN_COMPLEMENT([GNULIB_TEST_WARN_CFLAGS],
+                         [$GNULIB_WARN_CFLAGS], [$nw])
+  AC_SUBST([GNULIB_TEST_WARN_CFLAGS])
+fi
 
 AC_CONFIG_FILES([testsuite/version.good:testsuite/version.gin])
 AC_CONFIG_FILES([
