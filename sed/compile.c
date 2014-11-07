@@ -80,10 +80,10 @@ struct special_files {
 };
 
 static FILE *my_stdin, *my_stdout, *my_stderr;
-static const struct special_files special_files[] = {
-  { { "/dev/stdin", false, NULL, NULL }, &my_stdin },
-  { { "/dev/stdout", false, NULL, NULL }, &my_stdout },
-  { { "/dev/stderr", false, NULL, NULL }, &my_stderr },
+static struct special_files special_files[] = {
+  { { (char *) "/dev/stdin", false, NULL, NULL }, &my_stdin },
+  { { (char *) "/dev/stdout", false, NULL, NULL }, &my_stdout },
+  { { (char *) "/dev/stderr", false, NULL, NULL }, &my_stderr },
   { { NULL, false, NULL, NULL }, NULL }
 };
 
