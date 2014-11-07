@@ -41,8 +41,8 @@ char *ck_strdup (const char *str);
 void *ck_memdup (const void *buf, size_t len);
 
 struct buffer *init_buffer (void);
-char *get_buffer (struct buffer *b);
-size_t size_buffer (struct buffer *b);
+char *get_buffer (struct buffer const *b) _GL_ATTRIBUTE_PURE;
+size_t size_buffer (struct buffer const *b) _GL_ATTRIBUTE_PURE;
 char *add_buffer (struct buffer *b, const char *p, size_t n);
 char *add1_buffer (struct buffer *b, int ch);
 void free_buffer (struct buffer *b);

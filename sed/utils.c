@@ -81,7 +81,7 @@ panic(const char *str, ...)
 
 
 /* Internal routine to get a filename from open_files */
-static const char *
+static const char * _GL_ATTRIBUTE_PURE
 utils_fp_name(FILE *fp)
 {
   struct open_file *p;
@@ -477,13 +477,13 @@ init_buffer(void)
 }
 
 char *
-get_buffer(struct buffer *b)
+get_buffer(struct buffer const *b)
 {
   return b->b;
 }
 
 size_t
-size_buffer(struct buffer *b)
+size_buffer(struct buffer const *b)
 {
   return b->length;
 }
