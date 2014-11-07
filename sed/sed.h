@@ -181,7 +181,7 @@ struct sed_cmd {
 
 
 
-void bad_prog (const char *why);
+_Noreturn void bad_prog (const char *why);
 size_t normalize_text (char *text, size_t len, enum text_types buftype);
 struct vector *compile_string (struct vector *, char *str, size_t len);
 struct vector *compile_file (struct vector *, const char *cmdfile);
