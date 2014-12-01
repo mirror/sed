@@ -13,6 +13,13 @@ GNU sed NEWS                                    -*- outline -*-
   is what stopped working. [bug introduced some time after sed-3.02 and
   prior to the first sed-4* test release]
 
+** Build-related
+
+  "make dist" now builds .tar.xz files, rather than .tar.gz ones.
+  xz is portable enough and in wide-enough use that distributing
+  only .tar.xz files is enough.  It has been fine for coreutils, grep,
+  diffutils and parted for a few years.
+
 
 * Noteworthy changes in release 4.2.2 (2012-12-22) [stable]
 
