@@ -37,6 +37,7 @@
 #include <selinux/selinux.h>
 #include <selinux/context.h>
 #include "acl.h"
+#include "ignore-value.h"
 
 #ifdef __GNUC__
 # if __GNUC__ > 2 || (__GNUC__ == 2 && __GNUC_MINOR__-0 >= 7)
@@ -645,8 +646,10 @@ closedown(struct input *input)
       input_fd = fileno (input->fp);
       output_fd = fileno (output_file.fp);
 #ifdef HAVE_FCHOWN
+      /* Try to set both UID and GID, but if that fails,
+         try to set only the GID.  Ignore failure.  */
       if (fchown (output_fd, input->st.st_uid, input->st.st_gid) == -1)
-        fchown (output_fd, -1, input->st.st_gid);
+        ignore_value (fchown (output_fd, -1, input->st.st_gid));
 #endif
       copy_acl (input->in_file_name, input_fd,
                 input->out_file_name, output_fd,

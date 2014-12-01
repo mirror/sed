@@ -2,7 +2,7 @@
 *.exe
 *.o
 */.deps/
-*~
+**~
 +*
 /gnulib-tests/*
 !/gnulib-tests/Makefile.am

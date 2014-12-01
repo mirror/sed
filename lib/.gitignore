@@ -208,3 +208,4 @@ xstrndup.c
 xstrndup.h
 /progname.c
 /progname.h
+/ignore-value.h
