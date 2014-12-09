@@ -1496,8 +1496,8 @@ execute_program(struct vector *vec, struct input *input)
 
                                if (mbclen < trans_len)
                                  {
-                                   int new_len;
-                                   new_len = line.length + 1 + trans_len - mbclen;
+                                   size_t new_len = (line.length + 1
+                                                     + trans_len - mbclen);
                                    /* We must extend the line buffer.  */
                                    if (line.alloc < new_len)
                                      {
@@ -1514,13 +1514,11 @@ execute_program(struct vector *vec, struct input *input)
                                prev_idx = idx;
                                if (move_remain_buffer)
                                  {
-                                   int move_len, move_offset;
-                                   char *move_from, *move_to;
                                    /* Move the remaining with \0.  */
-                                   move_from = line.active + idx + mbclen;
-                                   move_to = line.active + idx + trans_len;
-                                   move_len = line.length + 1 - idx - mbclen;
-                                   move_offset = trans_len - mbclen;
+                                   char const *move_from = line.active + idx + mbclen;
+                                   char *move_to = line.active + idx + trans_len;
+                                   size_t move_len = line.length + 1 - idx - mbclen;
+                                   size_t move_offset = trans_len - mbclen;
                                    memmove(move_to, move_from, move_len);
                                    line.length += move_offset;
                                    idx += move_offset;
