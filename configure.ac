@@ -102,7 +102,8 @@ AC_CHECK_FUNCS_ONCE(isatty isascii memcpy strchr strtoul lstat readlink
 
 # Check whether we are able to follow symlinks
 if test "$ac_cv_func_lstat:$ac_cv_func_readlink" = yes:yes; then
-   AC_DEFINE([ENABLE_FOLLOW_SYMLINKS], ,[Follow symlinks when processing in place])
+   AC_DEFINE([ENABLE_FOLLOW_SYMLINKS], ,
+             [Follow symlinks when processing in place])
 fi
 
 AC_ARG_ENABLE(i18n,

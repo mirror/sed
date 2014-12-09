@@ -178,7 +178,8 @@ str_append(struct line *to, const char *string, size_t length)
       {
         size_t n = MBRLEN (string, length, &to->mbstate);
 
-        /* An invalid or imcomplete sequence is treated like a singlebyte character. */
+        /* Treat an invalid or incomplete sequence like a
+           single-byte character.  */
         if (n == (size_t) -1 || n == (size_t) -2)
           {
             memset (&to->mbstate, 0, sizeof (to->mbstate));
@@ -538,7 +539,8 @@ open_next_file(const char *name, struct input *input)
   if (name[0] == '-' && name[1] == '\0' && !in_place_extension)
     {
       clearerr(stdin);	/* clear any stale EOF indication */
-#if defined(WIN32) || defined(_WIN32) || defined(__CYGWIN__) || defined(MSDOS) || defined(__EMX__)
+#if defined WIN32 || defined _WIN32 || defined __CYGWIN__ \
+  || defined MSDOS || defined __EMX__
       input->fp = ck_fdopen (fileno (stdin), "stdin", read_mode, false);
 #else
       input->fp = stdin;
@@ -592,14 +594,16 @@ open_next_file(const char *name, struct input *input)
                  commands.  */
               reset_fscreatecon = getfscreatecon (&old_fscreatecon) >= 0;
               if (setfscreatecon (con) < 0)
-                fprintf (stderr, _("%s: warning: failed to set default file creation context to %s: %s"),
+                fprintf (stderr, _("%s: warning: failed to set default" \
+                                   " file creation context to %s: %s"),
                          myname, con, strerror (errno));
               freecon (con);
             }
           else
             {
               if (errno != ENOSYS)
-                fprintf (stderr, _("%s: warning: failed to get security context of %s: %s"),
+                fprintf (stderr, _("%s: warning: failed to get" \
+                                   " security context of %s: %s"),
                          myname, input->in_file_name, strerror (errno));
             }
         }
@@ -616,7 +620,8 @@ open_next_file(const char *name, struct input *input)
         }
 
       if (!output_file.fp)
-        panic(_("couldn't open temporary file %s: %s"), input->out_file_name, strerror(errno));
+        panic(_("couldn't open temporary file %s: %s"), input->out_file_name,
+              strerror(errno));
     }
   else
     {
@@ -781,11 +786,13 @@ match_an_address_p(struct addr *addr, struct input *input)
       return true;
 
     case ADDR_IS_REGEX:
-      return match_regex(addr->addr_regex, line.active, line.length, 0, NULL, 0);
+      return match_regex(addr->addr_regex, line.active, line.length, 0,
+                         NULL, 0);
 
     case ADDR_IS_NUM_MOD:
       return (input->line_number >= addr->addr_number
-              && ((input->line_number - addr->addr_number) % addr->addr_step) == 0);
+              && ((input->line_number - addr->addr_number)
+                  % addr->addr_step) == 0);
 
     case ADDR_IS_STEP:
     case ADDR_IS_STEP_MOD:
@@ -1316,7 +1323,9 @@ execute_program(struct vector *vec, struct input *input)
               }
 
             case 'e': {
-#ifdef HAVE_POPEN
+#ifndef HAVE_POPEN
+              panic(_("`e' command not supported"));
+#else
               FILE *pipe_fp;
               int cmd_length = cur_cmd->x.cmd_txt.text_length;
               line_reset(&s_accum, NULL);
@@ -1333,41 +1342,38 @@ execute_program(struct vector *vec, struct input *input)
                   output_missing_newline(&output_file);
                 }
 
-              if (pipe_fp != NULL)
-                {
-                  char buf[4096];
-                  int n;
-                  while (!feof (pipe_fp))
-                    if ((n = fread (buf, sizeof(char), 4096, pipe_fp)) > 0)
-                      {
-                        if (!cmd_length)
-                          str_append(&s_accum, buf, n);
-                        else
-                          ck_fwrite(buf, 1, n, output_file.fp);
-                      }
-
-                  pclose (pipe_fp);
-                  if (!cmd_length)
-                    {
-                      /* Store into pattern space for plain `e' commands */
-                      if (s_accum.length &&
-                          s_accum.active[s_accum.length - 1] == buffer_delimiter)
-                        s_accum.length--;
-
-                      /* Exchange line and s_accum.  This can be much
-                         cheaper than copying s_accum.active into line.text
-                         (for huge lines).  See comment above for 'g' as
-                         to while the third argument is incorrect anyway.  */
-                      line_exchange(&line, &s_accum, true);
-                    }
-                  else
-                    flush_output(output_file.fp);
-
-                }
-              else
+              if (pipe_fp == NULL)
                 panic(_("error in subprocess"));
-#else
-              panic(_("`e' command not supported"));
+
+              {
+                char buf[4096];
+                int n;
+                while (!feof (pipe_fp))
+                  if ((n = fread (buf, sizeof(char), 4096, pipe_fp)) > 0)
+                    {
+                      if (!cmd_length)
+                        str_append(&s_accum, buf, n);
+                      else
+                        ck_fwrite(buf, 1, n, output_file.fp);
+                    }
+
+                pclose (pipe_fp);
+                if (!cmd_length)
+                  {
+                    /* Store into pattern space for plain `e' commands */
+                    if (s_accum.length &&
+                        s_accum.active[s_accum.length - 1] == buffer_delimiter)
+                      s_accum.length--;
+
+                    /* Exchange line and s_accum.  This can be much
+                       cheaper than copying s_accum.active into line.text
+                       (for huge lines).  See comment above for 'g' as
+                       to while the third argument is incorrect anyway.  */
+                    line_exchange(&line, &s_accum, true);
+                  }
+                else
+                  flush_output(output_file.fp);
+              }
 #endif
               break;
             }
@@ -1416,7 +1422,8 @@ execute_program(struct vector *vec, struct input *input)
 
             case 'n':
               if (!no_default_output)
-                output_line(line.active, line.length, line.chomped, &output_file);
+                output_line(line.active, line.length, line.chomped,
+                            &output_file);
               if (test_eof(input) || !read_pattern_space(input, vec, false))
                 return -1;
               break;
@@ -1448,7 +1455,8 @@ execute_program(struct vector *vec, struct input *input)
 
             case 'q':
               if (!no_default_output)
-                output_line(line.active, line.length, line.chomped, &output_file);
+                output_line(line.active, line.length, line.chomped,
+                            &output_file);
               dump_append_queue();
 
             case 'Q':

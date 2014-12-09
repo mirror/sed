@@ -92,7 +92,9 @@ usage(int status)
   FILE *out = status ? stderr : stdout;
 
 #ifdef REG_PERL
-#define PERL_HELP _("  -R, --regexp-perl\n                 use Perl 5's regular expressions syntax in the script.\n")
+#define PERL_HELP _("  -R, --regexp-perl" \
+                    "\n                 use Perl 5's regular expressions" \
+                    " syntax in the script.\n")
 #endif
 
   fprintf(out, _("\
@@ -104,16 +106,19 @@ Usage: %s [OPTION]... {script-only-if-no-other-script} [input-file]...\n\
   fprintf(out, _("  -e script, --expression=script\n\
                  add the script to the commands to be executed\n"));
   fprintf(out, _("  -f script-file, --file=script-file\n\
-                 add the contents of script-file to the commands to be executed\n"));
+                 add the contents of script-file to the commands" \
+                 " to be executed\n"));
 #ifdef ENABLE_FOLLOW_SYMLINKS
   fprintf(out, _("  --follow-symlinks\n\
                  follow symlinks when processing in place\n"));
 #endif
   fprintf(out, _("  -i[SUFFIX], --in-place[=SUFFIX]\n\
                  edit files in place (makes backup if SUFFIX supplied)\n"));
-#if defined(WIN32) || defined(_WIN32) || defined(__CYGWIN__) || defined(MSDOS) || defined(__EMX__)
+#if defined WIN32 || defined _WIN32 || defined __CYGWIN__ \
+  || defined MSDOS || defined __EMX__
   fprintf(out, _("  -b, --binary\n\
-                 open files in binary mode (CR+LFs are not processed specially)\n"));
+                 open files in binary mode (CR+LFs are not" \
+                 " processed specially)\n"));
 #endif
   fprintf(out, _("  -l N, --line-length=N\n\
                  specify the desired line-wrap length for the `l' command\n"));
@@ -126,8 +131,8 @@ Usage: %s [OPTION]... {script-only-if-no-other-script} [input-file]...\n\
   fprintf(out, PERL_HELP);
 #endif
   fprintf(out, _("  -s, --separate\n\
-                 consider files as separate rather than as a single continuous\n\
-                 long stream.\n"));
+                 consider files as separate rather than as a single,\n\
+                 continuous long stream.\n"));
   fprintf(out, _("  -u, --unbuffered\n\
                  load minimal amounts of data from the input files and flush\n\
                  the output buffers more often\n"));

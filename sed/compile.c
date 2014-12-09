@@ -143,28 +143,42 @@ static const char errors[] =
 #define BAD_BANG (errors)
 #define BAD_COMMA (BAD_BANG + sizeof(N_("multiple `!'s")))
 #define BAD_STEP (BAD_COMMA + sizeof(N_("unexpected `,'")))
-#define EXCESS_OPEN_BRACE (BAD_STEP + sizeof(N_("invalid usage of +N or ~N as first address")))
+#define EXCESS_OPEN_BRACE (BAD_STEP \
+  + sizeof(N_("invalid usage of +N or ~N as first address")))
 #define EXCESS_CLOSE_BRACE (EXCESS_OPEN_BRACE + sizeof(N_("unmatched `{'")))
 #define EXCESS_JUNK (EXCESS_CLOSE_BRACE + sizeof(N_("unexpected `}'")))
-#define EXPECTED_SLASH (EXCESS_JUNK + sizeof(N_("extra characters after command")))
-#define NO_CLOSE_BRACE_ADDR (EXPECTED_SLASH + sizeof(N_("expected \\ after `a', `c' or `i'")))
-#define NO_COLON_ADDR (NO_CLOSE_BRACE_ADDR + sizeof(N_("`}' doesn't want any addresses")))
-#define NO_SHARP_ADDR (NO_COLON_ADDR + sizeof(N_(": doesn't want any addresses")))
-#define NO_COMMAND (NO_SHARP_ADDR + sizeof(N_("comments don't accept any addresses")))
+#define EXPECTED_SLASH (EXCESS_JUNK \
+  + sizeof(N_("extra characters after command")))
+#define NO_CLOSE_BRACE_ADDR (EXPECTED_SLASH \
+  + sizeof(N_("expected \\ after `a', `c' or `i'")))
+#define NO_COLON_ADDR (NO_CLOSE_BRACE_ADDR \
+  + sizeof(N_("`}' doesn't want any addresses")))
+#define NO_SHARP_ADDR (NO_COLON_ADDR \
+  + sizeof(N_(": doesn't want any addresses")))
+#define NO_COMMAND (NO_SHARP_ADDR \
+  + sizeof(N_("comments don't accept any addresses")))
 #define ONE_ADDR (NO_COMMAND + sizeof(N_("missing command")))
 #define UNTERM_ADDR_RE (ONE_ADDR + sizeof(N_("command only uses one address")))
 #define UNTERM_S_CMD (UNTERM_ADDR_RE + sizeof(N_("unterminated address regex")))
 #define UNTERM_Y_CMD (UNTERM_S_CMD + sizeof(N_("unterminated `s' command")))
 #define UNKNOWN_S_OPT (UNTERM_Y_CMD + sizeof(N_("unterminated `y' command")))
 #define EXCESS_P_OPT (UNKNOWN_S_OPT + sizeof(N_("unknown option to `s'")))
-#define EXCESS_G_OPT (EXCESS_P_OPT + sizeof(N_("multiple `p' options to `s' command")))
-#define EXCESS_N_OPT (EXCESS_G_OPT + sizeof(N_("multiple `g' options to `s' command")))
-#define ZERO_N_OPT (EXCESS_N_OPT + sizeof(N_("multiple number options to `s' command")))
-#define Y_CMD_LEN (ZERO_N_OPT + sizeof(N_("number option to `s' command may not be zero")))
-#define BAD_DELIM (Y_CMD_LEN + sizeof(N_("strings for `y' command are different lengths")))
-#define ANCIENT_VERSION (BAD_DELIM + sizeof(N_("delimiter character is not a single-byte character")))
-#define INVALID_LINE_0 (ANCIENT_VERSION + sizeof(N_("expected newer version of sed")))
-#define UNKNOWN_CMD (INVALID_LINE_0 + sizeof(N_("invalid usage of line address 0")))
+#define EXCESS_G_OPT (EXCESS_P_OPT \
+  + sizeof(N_("multiple `p' options to `s' command")))
+#define EXCESS_N_OPT (EXCESS_G_OPT \
+  + sizeof(N_("multiple `g' options to `s' command")))
+#define ZERO_N_OPT (EXCESS_N_OPT \
+  + sizeof(N_("multiple number options to `s' command")))
+#define Y_CMD_LEN (ZERO_N_OPT \
+  + sizeof(N_("number option to `s' command may not be zero")))
+#define BAD_DELIM (Y_CMD_LEN \
+  + sizeof(N_("strings for `y' command are different lengths")))
+#define ANCIENT_VERSION (BAD_DELIM \
+  + sizeof(N_("delimiter character is not a single-byte character")))
+#define INVALID_LINE_0 (ANCIENT_VERSION \
+  + sizeof(N_("expected newer version of sed")))
+#define UNKNOWN_CMD (INVALID_LINE_0 \
+  + sizeof(N_("invalid usage of line address 0")))
 #define INCOMPLETE_CMD (UNKNOWN_CMD + sizeof(N_("unknown command: `%c'")))
 #define END_ERRORS (INCOMPLETE_CMD + sizeof(N_("incomplete command")))
 

@@ -1087,7 +1087,8 @@ not just the first.
 @cindex Replacing only @var{n}th match of regexp in a line
 Only replace the @var{number}th match of the @var{regexp}.
 
-@cindex @acronym{GNU} extensions, @code{g} and @var{number} modifier interaction in @code{s} command
+@cindex @acronym{GNU} extensions, @code{g} and @var{number} modifier
+interaction in @code{s} command
 @cindex Mixing @code{g} and @var{number} modifiers in the @code{s} command
 Note: the @sc{posix} standard does not specify what should happen
 when you mix the @code{g} and @var{number} modifiers,
@@ -3069,7 +3070,8 @@ becomes @samp{a|b} when using extended regular expressions.  It matches
 @cindex Perl-style regular expressions, syntax
 
 @emph{This part is taken from the @file{pcre.txt} file distributed together
-with the free @sc{pcre} regular expression matcher; it was written by Philip Hazel.}
+with the free @sc{pcre} regular expression matcher; it was written
+by Philip Hazel.}
 
 Perl introduced several extensions to regular expressions, some
 of them incompatible with the syntax of regular expressions

@@ -27,7 +27,6 @@ local-checks-to-skip =			\
   sc_bindtextdomain			\
   sc_error_message_uppercase		\
   sc_file_system			\
-  sc_long_lines				\
   sc_prohibit_atoi_atof			\
   sc_prohibit_magic_number_exit		\
   sc_prohibit_strcmp			\
@@ -45,7 +44,8 @@ export VERBOSE = yes
 # that -6e adds only 60 bytes to the size of the tarball, yet reduces
 # (from -9) the decompression memory requirement from 64 MiB to 9 MiB.
 # Don't be tempted by -5e, since -6 and -5 use the same dictionary size.
-# $ for i in {4,5,6,7,8,9}{e,}; do (n=$(xz -$i < sed-4.2.2.tar |wc -c);echo $n $i) & done |sort -nr
+# $ for i in {4,5,6,7,8,9}{e,}; do
+#   (n=$(xz -$i < sed-4.2.2.tar |wc -c);echo $n $i) & done |sort -nr
 # 900032 4
 # 854932 5
 # 844572 4e
@@ -142,3 +142,6 @@ exclude_file_name_regexp--sc_prohibit_tab_based_indentation = \
 
 exclude_file_name_regexp--sc_prohibit_empty_lines_at_EOF = \
   ^testsuite/(bkslashes.good|(noeolw?|empty)\.(2?good|inp))$$
+
+# Exempt test-related files from our 80-column limitation, for now.
+exclude_file_name_regexp--sc_long_lines = ^testsuite/

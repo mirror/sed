@@ -70,7 +70,8 @@ panic(const char *str, ...)
           errno = 0;
           unlink (open_files->name);
           if (errno != 0)
-            fprintf (stderr, _("cannot remove %s: %s"), open_files->name, strerror (errno));
+            fprintf (stderr, _("cannot remove %s: %s"), open_files->name,
+                     strerror (errno));
         }
 
       open_files = open_files->link;
@@ -395,7 +396,8 @@ ck_rename (const char *from, const char *to, const char *unlink_if_fail)
       errno = 0;
       unlink (unlink_if_fail);
 
-      /* Failure to remove the temporary file is more severe, so trigger it first.  */
+      /* Failure to remove the temporary file is more severe,
+         so trigger it first.  */
       if (errno != 0)
         panic (_("cannot remove %s: %s"), unlink_if_fail, strerror (errno));
 
