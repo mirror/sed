@@ -1272,7 +1272,7 @@ compile_program(struct vector *vector)
 
                     /* Set the i-th source character.  */
                     trans_pairs[2 * i] = MALLOC(src_lens[i] + 1, char);
-                    strncpy(trans_pairs[2 * i], src_buf, src_lens[i]);
+                    memcpy(trans_pairs[2 * i], src_buf, src_lens[i]);
                     trans_pairs[2 * i][src_lens[i]] = '\0';
                     src_buf += src_lens[i]; /* Forward to next character.  */
 
@@ -1286,7 +1286,7 @@ compile_program(struct vector *vector)
 
                     /* Set the i-th destination character.  */
                     trans_pairs[2 * i + 1] = MALLOC(mbclen + 1, char);
-                    strncpy(trans_pairs[2 * i + 1], dest_buf + idx, mbclen);
+                    memcpy(trans_pairs[2 * i + 1], dest_buf + idx, mbclen);
                     trans_pairs[2 * i + 1][mbclen] = '\0';
                     idx += mbclen; /* Forward to next character.  */
                   }

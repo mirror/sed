@@ -1523,8 +1523,8 @@ execute_program(struct vector *vec, struct input *input)
                                    line.length += move_offset;
                                    idx += move_offset;
                                  }
-                               strncpy(line.active + prev_idx, trans[2*i+1],
-                                       trans_len);
+                               memcpy(line.active + prev_idx, trans[2*i+1],
+                                      trans_len);
                                break;
                              }
                          }
