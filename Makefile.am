@@ -22,7 +22,7 @@ noinst_HEADERS = basicdefs.h
 
 EXTRA_DIST = BUGS THANKS COPYING.DOC \
   ChangeLog-2014 po/ChangeLog-2014 \
-  bootstrap bootstrap.conf build-aux/texi2dvi build-aux/help2man \
+  bootstrap bootstrap.conf build-aux/help2man \
   thanks-gen
 
 # Arrange so that .tarball-version appears only in the distribution

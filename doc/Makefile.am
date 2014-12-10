@@ -4,7 +4,6 @@ sed_TEXINFOS = config.texi version.texi
 dist_man_MANS = sed.1
 dist_noinst_DATA = sed.x sed-in.texi s-texi
 dist_noinst_SCRIPTS = groupify.sed
-TEXI2DVI = $(top_srcdir)/build-aux/texi2dvi --expand
 HELP2MAN = $(top_srcdir)/build-aux/help2man
 SED = $(top_builddir)/sed/sed
 
