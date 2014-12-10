@@ -20,8 +20,8 @@ SUBDIRS = lib po sed doc testsuite gnulib-tests
 noinst_DATA =
 noinst_HEADERS = basicdefs.h
 
-EXTRA_DIST = BUGS THANKS COPYING.DOC \
-  ChangeLog-2014 po/ChangeLog-2014 \
+EXTRA_DIST = BUGS THANKS.in COPYING.DOC \
+  .mailmap ChangeLog-2014 po/ChangeLog-2014 \
   bootstrap bootstrap.conf build-aux/help2man \
   thanks-gen
 
