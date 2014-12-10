@@ -1468,33 +1468,6 @@ to the end of the current cycle.
 Print out the file name of the current input file (with a trailing
 newline).
 
-@item L @var{n}
-@findex L (fLow paragraphs) command
-@cindex Reformat pattern space
-@cindex Reformatting paragraphs
-@cindex @value{SSEDEXT}, reformatting paragraphs
-@cindex @value{SSEDEXT}, @code{L} command
-This @value{SSED} extension fills and joins lines in pattern space
-to produce output lines of (at most) @var{n} characters, like
-@code{fmt} does; if @var{n} is omitted, the default as specified
-on the command line is used.  This command is considered a failed
-experiment and unless there is enough request (which seems unlikely)
-will be removed in future versions.
-
-@ignore
-Blank lines, spaces between words, and indentation are
-preserved in the output; successive input lines with different
-indentation are not joined; tabs are expanded to 8 columns.
-
-If the pattern space contains multiple lines, they are joined, but
-since the pattern space usually contains a single line, the behavior
-of a simple @code{L;d} script is the same as @samp{fmt -s} (i.e.,
-it does not join short lines to form longer ones).
-
-@var{n} specifies the desired line-wrap length; if omitted,
-the default as specified on the command line is used.
-@end ignore
-
 @item Q [@var{exit-code}]
 This command only accepts a single address.
 

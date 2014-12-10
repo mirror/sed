@@ -1353,16 +1353,6 @@ execute_program(struct vector *vec, struct input *input)
                       : cur_cmd->x.int_arg);
               break;
 
-            case 'L':
-              output_missing_newline(&output_file);
-              fmt(line.active, line.active + line.length,
-                  cur_cmd->x.int_arg == -1
-                  ? lcmd_out_line_len
-                  : cur_cmd->x.int_arg,
-                  output_file.fp);
-              flush_output(output_file.fp);
-              break;
-
             case 'n':
               if (!no_default_output)
                 output_line(line.active, line.length, line.chomped, &output_file);

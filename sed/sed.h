@@ -201,8 +201,6 @@ int process_files (struct vector *, char **argv);
 
 int main (int, char **);
 
-extern void fmt (const char *line, const char *line_end, int max_length, FILE *output_file);
-
 extern int extended_regexp_flags;
 
 /* one-byte buffer delimiter */

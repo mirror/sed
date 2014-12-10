@@ -13,6 +13,12 @@ GNU sed NEWS                                    -*- outline -*-
   is what stopped working. [bug introduced some time after sed-3.02 and
   prior to the first sed-4* test release]
 
+** Feature removal
+
+  The "L" command (format a paragraph like the fmt(1) command would)
+  has been listed in the documentation as a failed experiment for at
+  least 10 years.  That command is now removed.
+
 ** Build-related
 
   "make dist" now builds .tar.xz files, rather than .tar.gz ones.
