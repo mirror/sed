@@ -268,7 +268,6 @@ str_append_modified(struct line *to, const char *string, size_t length,
 
 /* Initialize a "struct line" buffer.  Copy multibyte state from `state'
    if not null.  */
-static void line_init (struct line *, struct line *, size_t initial_size);
 static void
 line_init(struct line *buf, struct line *state, size_t initial_size)
 {
@@ -1143,7 +1142,6 @@ do_subst(struct subst *sub)
 
 static countT branches;
 
-static countT count_branches (struct vector *);
 static countT
 count_branches(program)
   struct vector *program;
@@ -1166,7 +1164,6 @@ count_branches(program)
   return cnt;
 }
 
-static struct sed_cmd *shrink_program (struct vector *, struct sed_cmd *);
 static struct sed_cmd *
 shrink_program(vec, cur_cmd)
   struct vector *vec;
