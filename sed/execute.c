@@ -1201,8 +1201,7 @@ static void
 translate_mb (char *const *trans)
 {
   size_t idx; /* index in the input line.  */
-  mbstate_t mbstate;
-  memset(&mbstate, 0, sizeof(mbstate_t));
+  mbstate_t mbstate = { 0, };
   for (idx = 0; idx < line.length;)
     {
       unsigned int i;

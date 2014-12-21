@@ -504,15 +504,13 @@ match_slash (int slash, int regex)
 {
   struct buffer *b;
   int ch;
-  mbstate_t cur_stat;
-
-  memset (&cur_stat, 0, sizeof (mbstate_t));
+  mbstate_t cur_stat = { 0, };
 
   /* We allow only 1 byte characters for a slash.  */
   if (BRLEN (slash, &cur_stat) == -2)
     bad_prog (BAD_DELIM);
 
-  memset (&cur_stat, 0, sizeof (mbstate_t));
+  memset (&cur_stat, 0, sizeof cur_stat);
 
   b = init_buffer();
   while ((ch = inchar()) != EOF && ch != '\n')
@@ -1252,10 +1250,9 @@ compile_program(struct vector *vector)
                 size_t *src_lens = MALLOC(len, size_t);
                 char **trans_pairs;
                 size_t mbclen;
-                mbstate_t cur_stat;
+                mbstate_t cur_stat = { 0, };
 
                 /* Enumerate how many character the source buffer has.  */
-                memset(&cur_stat, 0, sizeof(mbstate_t));
                 for (i = 0, j = 0; i < len;)
                   {
                     mbclen = MBRLEN (src_buf + i, len - i, &cur_stat);
@@ -1269,7 +1266,7 @@ compile_program(struct vector *vector)
                   }
                 src_char_num = j;
 
-                memset(&cur_stat, 0, sizeof(mbstate_t));
+                memset(&cur_stat, 0, sizeof cur_stat);
                 idx = 0;
 
                 /* trans_pairs = {src(0), dest(0), src(1), dest(1), ..., NULL}
@@ -1370,8 +1367,7 @@ normalize_text(char *buf, size_t len, enum text_types buftype)
   int bracket_state = 0;
 
   int mbclen;
-  mbstate_t cur_stat;
-  memset(&cur_stat, 0, sizeof(mbstate_t));
+  mbstate_t cur_stat = { 0, };
 
   while (p < bufend)
     {
