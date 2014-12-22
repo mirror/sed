@@ -25,7 +25,7 @@ SEDTESTS += \
 	y-newline y-zero allsub cv-vars classes middle bsd stdin flipcase \
 	insens subwrite writeout readin insert utf8-1 utf8-2 utf8-3 utf8-4 \
 	badenc inplace-hold brackets amp-escape \
-	help version file quiet \
+	help file quiet \
 	factor binary3 binary2 binary dc
 
 TESTS_ENVIRONMENT = MAKE="$(MAKE)" VERSION="$(VERSION)" \
@@ -88,7 +88,6 @@ EXTRA_DIST = \
 	utf8-3.good utf8-3.inp utf8-3.sed \
 	utf8-4.good utf8-4.inp utf8-4.sed \
 	badenc.good badenc.inp badenc.sed \
-	version.gin \
 	writeout.inp writeout.sed wrtout1.good wrtout2.good \
 	xabcx.good xabcx.inp xabcx.sed \
 	xbxcx.good xbxcx.inp xbxcx.sed \

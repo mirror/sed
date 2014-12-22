@@ -29,9 +29,6 @@ EXTRA_DIST = BUGS THANKS.in COPYING.DOC \
 # tarball, and never in a checked-out repository.
 dist-hook: gen-ChangeLog
 	$(AM_V_GEN)echo $(VERSION) > $(distdir)/.tarball-version
-	test $(COPYRIGHT_YEAR) = `date +%Y` || \
-	  { echo Copyright year not updated; exit 1; }
-
 
 gen_start_date = 2014-09-06
 .PHONY: gen-ChangeLog

@@ -15,9 +15,6 @@ AC_DEFINE_UNQUOTED([SED_FEATURE_VERSION], "$SED_FEATURE_VERSION",
   [Define to the version of GNU sed whose features are supported by this sed.])
 AC_SUBST(SED_FEATURE_VERSION)
 
-COPYRIGHT_YEAR=2014
-AC_SUBST(COPYRIGHT_YEAR)
-
 AC_PROG_CC_STDC
 AM_PROG_CC_C_O
 gl_EARLY
@@ -334,7 +331,6 @@ if test "$gl_gcc_warnings" = yes; then
   AC_SUBST([GNULIB_TEST_WARN_CFLAGS])
 fi
 
-AC_CONFIG_FILES([testsuite/version.good:testsuite/version.gin])
 AC_CONFIG_FILES([
   Makefile
   doc/Makefile

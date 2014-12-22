@@ -60,6 +60,5 @@
 /testsuite/Makefile
 /testsuite/eval.in2
 /testsuite/utf8-[1-4].out
-/testsuite/version.good
 Makefile
 Makefile.in
