@@ -1188,6 +1188,71 @@ shrink_program(vec, cur_cmd)
 }
 #endif /*EXPERIMENTAL_DASH_N_OPTIMIZATION*/
 
+/* Translate the global input LINE via TRANS.
+   This function handles the multi-byte case.  */
+static void
+translate_mb (char *const *trans)
+{
+  size_t idx; /* index in the input line.  */
+  mbstate_t mbstate;
+  memset(&mbstate, 0, sizeof(mbstate_t));
+  for (idx = 0; idx < line.length;)
+    {
+      unsigned int i;
+      size_t mbclen = MBRLEN (line.active + idx,
+                              line.length - idx, &mbstate);
+      /* An invalid sequence, or a truncated multibyte
+         character.  Treat it as a single-byte character.  */
+      if (mbclen == (size_t) -1 || mbclen == (size_t) -2 || mbclen == 0)
+        mbclen = 1;
+
+      /* `i' indicate i-th translate pair.  */
+      for (i = 0; trans[2*i] != NULL; i++)
+        {
+          if (strncmp(line.active + idx, trans[2*i], mbclen) == 0)
+            {
+              bool move_remain_buffer = false;
+              const char *tr = trans[2*i+1];
+              size_t trans_len = *tr == '\0' ? 1 : strlen (tr);
+
+              if (mbclen < trans_len)
+                {
+                  size_t new_len = (line.length + 1
+                                    + trans_len - mbclen);
+                  /* We must extend the line buffer.  */
+                  if (line.alloc < new_len)
+                    {
+                      /* And we must resize the buffer.  */
+                      resize_line(&line, new_len);
+                    }
+                  move_remain_buffer = true;
+                }
+              else if (mbclen > trans_len)
+                {
+                  /* We must truncate the line buffer.  */
+                  move_remain_buffer = true;
+                }
+              size_t prev_idx = idx;
+              if (move_remain_buffer)
+                {
+                  /* Move the remaining with \0.  */
+                  char const *move_from = (line.active + idx + mbclen);
+                  char *move_to = line.active + idx + trans_len;
+                  size_t move_len = line.length + 1 - idx - mbclen;
+                  size_t move_offset = trans_len - mbclen;
+                  memmove(move_to, move_from, move_len);
+                  line.length += move_offset;
+                  idx += move_offset;
+                }
+              memcpy(line.active + prev_idx, trans[2*i+1],
+                     trans_len);
+              break;
+            }
+        }
+      idx += mbclen;
+    }
+}
+
 /* Execute the program `vec' on the current input line.
    Return exit status if caller should quit, -1 otherwise. */
 static int
@@ -1461,80 +1526,15 @@ execute_program(struct vector *vec, struct input *input)
               break;
 
             case 'y':
-              {
-               if (mb_cur_max > 1)
-                 {
-                   int idx, prev_idx; /* index in the input line.  */
-                   char **trans;
-                   mbstate_t mbstate;
-                   memset(&mbstate, 0, sizeof(mbstate_t));
-                   for (idx = 0; idx < line.length;)
-                     {
-                       int mbclen, i;
-                       mbclen = MBRLEN (line.active + idx, line.length - idx,
-                                          &mbstate);
-                       /* An invalid sequence, or a truncated multibyte
-                          character.  We treat it as a singlebyte character.
-                       */
-                       if (mbclen == (size_t) -1 || mbclen == (size_t) -2
-                           || mbclen == 0)
-                         mbclen = 1;
-
-                       trans = cur_cmd->x.translatemb;
-                       /* `i' indicate i-th translate pair.  */
-                       for (i = 0; trans[2*i] != NULL; i++)
-                         {
-                           if (strncmp(line.active + idx, trans[2*i], mbclen) == 0)
-                             {
-                               bool move_remain_buffer = false;
-                               const char *tr = trans[2*i+1];
-                               size_t trans_len = *tr == '\0' ? 1 : strlen (tr);
-
-                               if (mbclen < trans_len)
-                                 {
-                                   size_t new_len = (line.length + 1
-                                                     + trans_len - mbclen);
-                                   /* We must extend the line buffer.  */
-                                   if (line.alloc < new_len)
-                                     {
-                                       /* And we must resize the buffer.  */
-                                       resize_line(&line, new_len);
-                                     }
-                                   move_remain_buffer = true;
-                                 }
-                               else if (mbclen > trans_len)
-                                 {
-                                   /* We must truncate the line buffer.  */
-                                   move_remain_buffer = true;
-                                 }
-                               prev_idx = idx;
-                               if (move_remain_buffer)
-                                 {
-                                   /* Move the remaining with \0.  */
-                                   char const *move_from = line.active + idx + mbclen;
-                                   char *move_to = line.active + idx + trans_len;
-                                   size_t move_len = line.length + 1 - idx - mbclen;
-                                   size_t move_offset = trans_len - mbclen;
-                                   memmove(move_to, move_from, move_len);
-                                   line.length += move_offset;
-                                   idx += move_offset;
-                                 }
-                               memcpy(line.active + prev_idx, trans[2*i+1],
-                                      trans_len);
-                               break;
-                             }
-                         }
-                       idx += mbclen;
-                     }
-                 }
-               else
-                 {
-                   unsigned char *p, *e;
-                   p = (unsigned char *)line.active;
-                   for (e=p+line.length; p<e; ++p)
-                     *p = cur_cmd->x.translate[*p];
-                 }
-              }
+              if (mb_cur_max > 1)
+                translate_mb (cur_cmd->x.translatemb);
+              else
+                {
+                  unsigned char *p, *e;
+                  p = (unsigned char *)line.active;
+                  for (e=p+line.length; p<e; ++p)
+                    *p = cur_cmd->x.translate[*p];
+                }
               break;
 
             case 'z':
