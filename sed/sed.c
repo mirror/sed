@@ -26,6 +26,7 @@
 #include <sys/types.h>
 #include "getopt.h"
 #include "progname.h"
+#include "version.h"
 
 #include "version-etc.h"
 
@@ -300,7 +301,7 @@ main(int argc, char **argv)
           break;
 
         case 'v':
-          version_etc(stdout, program_name, PACKAGE_NAME, VERSION,
+          version_etc(stdout, program_name, PACKAGE_NAME, Version,
                       AUTHORS, (char *) NULL);
           contact(false);
           ck_fclose (NULL);

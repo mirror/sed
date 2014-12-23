@@ -19,11 +19,17 @@ SUBDIRS = lib po sed doc testsuite gnulib-tests
 
 noinst_DATA =
 noinst_HEADERS = basicdefs.h
+DISTCLEANFILES =
 
 EXTRA_DIST = BUGS THANKS.in COPYING.DOC \
+  .version				\
   .mailmap ChangeLog-2014 po/ChangeLog-2014 \
   bootstrap bootstrap.conf build-aux/help2man \
   thanks-gen
+
+BUILT_SOURCES = .version
+.version:
+	$(AM_V_GEN)echo $(VERSION) > $@-t && mv $@-t $@
 
 # Arrange so that .tarball-version appears only in the distribution
 # tarball, and never in a checked-out repository.
@@ -52,7 +58,7 @@ ASSORT = LC_ALL=C sort
 # Extract all lines up to the first one starting with "##".
 prologue = perl -ne '/^\#\#/ and exit; print' $(srcdir)/THANKS.in
 
-THANKS: THANKS.in Makefile.am .mailmap thanks-gen
+THANKS: THANKS.in Makefile.am .mailmap thanks-gen .version
 	$(AM_V_GEN)rm -f $@-t $@;					\
 	{								\
 	  $(prologue); echo;						\

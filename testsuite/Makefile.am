@@ -1,6 +1,9 @@
 CLEANFILES = tmp* core *.core $(EXTRA_PROGRAMS) *.*out *.log eval.in2
 
-TESTS = $(check_PROGRAMS) $(SEDTESTS)
+TEST_EXTENSIONS = .sh
+SH_LOG_COMPILER = $(SHELL)
+
+TESTS = $(check_PROGRAMS) $(SEDTESTS) help-version.sh
 SEDTESTS =
 
 LDADD = ../lib/libsed.a $(INTLLIBS)
@@ -28,12 +31,17 @@ SEDTESTS += \
 	help file quiet \
 	factor binary3 binary2 binary dc
 
-TESTS_ENVIRONMENT = MAKE="$(MAKE)" VERSION="$(VERSION)" \
-	$(LOCALCHARSET_TESTS_ENVIRONMENT)
+TESTS_ENVIRONMENT =				\
+  VERSION='$(VERSION)'				\
+  MAKE="$(MAKE)"				\
+  VERSION="$(VERSION)"				\
+  built_programs=sed				\
+  $(LOCALCHARSET_TESTS_ENVIRONMENT)
 
 LOG_COMPILER = $(srcdir)/runtest
 
 EXTRA_DIST = \
+	help-version.sh init.sh \
 	PCRE.tests BOOST.tests SPENCER.tests \
 	runtest Makefile.tests \
 	0range.good 0range.inp 0range.sed \

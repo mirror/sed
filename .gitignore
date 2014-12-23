@@ -6,6 +6,7 @@
 +*
 /gnulib-tests/*
 !/gnulib-tests/Makefile.am
+/.version
 /ABOUT-NLS
 /ChangeLog
 /GNUmakefile
@@ -54,6 +55,7 @@
 /sed-[4-9]*
 /sed/Makefile
 /sed/sed
+/sed/version.[ch]
 /stamp-h1
 /testsuite/*.log
 /testsuite/*.trs
