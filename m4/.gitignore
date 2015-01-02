@@ -178,3 +178,5 @@ xstrndup.m4
 /ungetc.m4
 /manywarnings.m4
 /warnings.m4
+/obstack.m4
+/stdalign.m4

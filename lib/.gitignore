@@ -209,3 +209,4 @@ xstrndup.h
 /progname.c
 /progname.h
 /ignore-value.h
+/alignof.h
