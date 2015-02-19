@@ -18,6 +18,21 @@ GNU sed NEWS                                    -*- outline -*-
   is what stopped working. [bug introduced some time after sed-3.02 and
   prior to the first sed-4* test release]
 
+  When the closed-above line number ranges of N editing commands
+  overlap (N>1), sed would apply commands 2..N to the line just
+  beyond the largest range endpoint.
+  [bug introduced some time after sed-4.09 and prior to release in sed-4.1]
+  Before, this command would mistakenly modify line 5:
+    $ seq 6|sed '2,4d;2,3s/^/x/;3,4s/^/y/'
+    1
+    yx5
+    6
+  Now, it does not:
+    $ seq 6|sed '2,4d;2,3s/^/x/;3,4s/^/y/'
+    1
+    5
+    6
+
 ** Feature removal
 
   The "L" command (format a paragraph like the fmt(1) command would)

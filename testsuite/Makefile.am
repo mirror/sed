@@ -7,7 +7,8 @@ SH_LOG_COMPILER = $(SHELL)
 # is listed in only one place.
 T =			\
   help-version.sh	\
-  invalid-mb-seq-UMR.sh
+  invalid-mb-seq-UMR.sh	\
+  range-overlap.sh
 
 TESTS = $(check_PROGRAMS) $(SEDTESTS) $(T)
 

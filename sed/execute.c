@@ -817,8 +817,10 @@ match_an_address_p(struct addr *addr, struct input *input)
     case ADDR_IS_LAST:
       return test_eof(input);
 
-      /* ADDR_IS_NUM is handled in match_address_p.  */
     case ADDR_IS_NUM:
+      /* reminder: these are only meaningful for a1 addresses */
+      return (addr->addr_number == input->line_number);
+
     default:
       panic("INTERNAL ERROR: bad address type");
     }
@@ -835,23 +837,20 @@ match_address_p(struct sed_cmd *cmd, struct input *input)
 
   if (cmd->range_state != RANGE_ACTIVE)
     {
+      if (!cmd->a2)
+        return match_an_address_p(cmd->a1, input);
+
       /* Find if we are going to activate a range.  Handle ADDR_IS_NUM
          specially: it represent an "absolute" state, it should not
          be computed like regexes.  */
       if (cmd->a1->addr_type == ADDR_IS_NUM)
         {
-          if (!cmd->a2)
-            return (input->line_number == cmd->a1->addr_number);
-
           if (cmd->range_state == RANGE_CLOSED
               || input->line_number < cmd->a1->addr_number)
             return false;
         }
       else
         {
-          if (!cmd->a2)
-            return match_an_address_p(cmd->a1, input);
-
           if (!match_an_address_p(cmd->a1, input))
             return false;
         }
@@ -867,7 +866,8 @@ match_address_p(struct sed_cmd *cmd, struct input *input)
           /* Same handling as below, but always include at least one line.  */
           if (input->line_number >= cmd->a2->addr_number)
             cmd->range_state = RANGE_CLOSED;
-          return true;
+          return (input->line_number <= cmd->a2->addr_number
+                  || match_an_address_p(cmd->a1, input));
         case ADDR_IS_STEP:
           cmd->a2->addr_number = input->line_number + cmd->a2->addr_step;
           return true;
