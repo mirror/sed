@@ -73,21 +73,22 @@ THANKS: THANKS.in Makefile.am .mailmap thanks-gen .version
 	} > $@-t && chmod a-w $@-t && mv $@-t $@
 
 html:
-	cd doc && make html
+	cd doc && $(MAKE) html
 
 DISTCHECK_CONFIGURE_FLAGS = XGETTEXT='$(SHELL) -c : dummy' $(EXTRA_DC_FLAGS)
 EXTRA_DC_FLAGS =
 
 full-distcheck:
-	make distcheck EXTRA_DC_FLAGS='--enable-regex-tests'
-	make distcheck EXTRA_DC_FLAGS='--enable-html'
-	make distcheck EXTRA_DC_FLAGS='--disable-i18n'
-	make distcheck EXTRA_DC_FLAGS='--disable-nls'
-	make distcheck EXTRA_DC_FLAGS='--without-included-gettext'
+	$(MAKE) distcheck EXTRA_DC_FLAGS='--enable-regex-tests'
+	$(MAKE) distcheck EXTRA_DC_FLAGS='--enable-html'
+	$(MAKE) distcheck EXTRA_DC_FLAGS='--disable-i18n'
+	$(MAKE) distcheck EXTRA_DC_FLAGS='--disable-nls'
+	$(MAKE) distcheck EXTRA_DC_FLAGS='--without-included-gettext'
 	@case "$(host)" in \
 	  *-linux*|*-gnu*) \
-	    echo make distcheck EXTRA_DC_FLAGS=\'--without-included-regex\'; \
-	    make distcheck EXTRA_DC_FLAGS='--without-included-regex' \
+	    echo $(MAKE) distcheck \
+              EXTRA_DC_FLAGS=\'--without-included-regex\'; \
+	    $(MAKE) distcheck EXTRA_DC_FLAGS='--without-included-regex' \
 	    ;; \
 	  *) \
 	    echo Skipping check --without-included-regex \
