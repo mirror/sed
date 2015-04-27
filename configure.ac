@@ -91,7 +91,7 @@ AC_CHECK_HEADERS_ONCE(locale.h errno.h wchar.h wctype.h mcheck.h,
 AC_C_CONST
 AC_TYPE_SIZE_T
 
-AM_GNU_GETTEXT_VERSION(0.17)
+AM_GNU_GETTEXT_VERSION([0.19.2])
 AM_GNU_GETTEXT([external])
 
 AC_CHECK_FUNCS_ONCE(isatty isascii memcpy strchr strtoul lstat readlink
