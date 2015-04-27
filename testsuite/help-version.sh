@@ -2,7 +2,7 @@
 # Make sure all of these programs work properly
 # when invoked with --help or --version.
 
-# Copyright (C) 2000-2014 Free Software Foundation, Inc.
+# Copyright (C) 2000-2015 Free Software Foundation, Inc.
 
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -53,6 +53,8 @@ expected_failure_status_zfgrep=2
 expected_failure_status_grep=2
 expected_failure_status_egrep=2
 expected_failure_status_fgrep=2
+
+expected_failure_status_sed=4
 
 test "$built_programs" \
   || fail_ "built_programs not specified!?!"
