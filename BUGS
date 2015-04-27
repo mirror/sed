@@ -76,7 +76,7 @@ regex syntax clashes (problems with backslashes)
   In short, `sed d -i' will let one delete the contents of
   a read-only file, and in general the `-i' option will let
   one clobber protected files.  This is not a bug, but rather a
-  consequence of how the Unix filesystem works.
+  consequence of how the Unix file system works.
 
   The permissions on a file say what can happen to the data
   in that file, while the permissions on a directory say what can

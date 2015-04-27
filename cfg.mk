@@ -26,7 +26,6 @@ local-checks-to-skip =			\
   sc_GPL_version			\
   sc_bindtextdomain			\
   sc_error_message_uppercase		\
-  sc_file_system			\
   sc_prohibit_atoi_atof			\
   sc_prohibit_magic_number_exit		\
   sc_prohibit_strcmp			\

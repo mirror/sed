@@ -2564,7 +2564,7 @@ Sat May 30 04:02:29 PDT 1998  Ken Pizzini <ken@gnu.org>
 
 	* configure.in: specify that config.h is to be derived
 	from config_h.in in order to avoid the braindead
-	DOS filesystem limitations.
+	DOS file system limitations.
 
 Fri May 29 21:56:30 PDT 1998  Ken Pizzini <ken@gnu.org>
 

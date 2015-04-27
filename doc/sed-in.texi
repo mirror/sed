@@ -2786,7 +2786,7 @@ In short, @samp{sed -i} will let you delete the contents of
 a read-only file, and in general the @option{-i} option
 (@pxref{Invoking sed, , Invocation}) lets you clobber
 protected files.  This is not a bug, but rather a consequence
-of how the Unix filesystem works.
+of how the Unix file system works.
 
 The permissions on a file say what can happen to the data
 in that file, while the permissions on a directory say what can
