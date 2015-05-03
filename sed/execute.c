@@ -162,7 +162,7 @@ resize_line (struct line *lb, size_t len)
   lb->active = lb->text + inactive;
 }
 
-/* Append `length' bytes from `string' to the line `to'. */
+/* Append LENGTH bytes from STRING to the line, TO.  */
 static void
 str_append(struct line *to, const char *string, size_t length)
 {
@@ -186,13 +186,11 @@ str_append(struct line *to, const char *string, size_t length)
             n = 1;
           }
 
-        if (n > 0)
-          {
-            string += n;
-            length -= n;
-          }
-        else
+        if (n == 0)
           break;
+
+        string += n;
+        length -= n;
       }
 }
 
@@ -217,7 +215,7 @@ str_append_modified(struct line *to, const char *string, size_t length,
       wchar_t wc;
       size_t n = MBRTOWC (&wc, string, length, &from_stat);
 
-      /* An invalid sequence is treated like a singlebyte character. */
+      /* Treat an invalid sequence like a single-byte character.  */
       if (n == (size_t) -1)
         {
           type &= ~(REPL_LOWERCASE_FIRST | REPL_UPPERCASE_FIRST);
