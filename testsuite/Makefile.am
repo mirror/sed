@@ -3,7 +3,14 @@ CLEANFILES = tmp* core *.core $(EXTRA_PROGRAMS) *.*out *.log eval.in2
 TEST_EXTENSIONS = .sh
 SH_LOG_COMPILER = $(SHELL)
 
-TESTS = $(check_PROGRAMS) $(SEDTESTS) help-version.sh
+# Put new, init.sh-using tests here, so that each name
+# is listed in only one place.
+T =			\
+  help-version.sh	\
+  invalid-mb-seq-UMR.sh
+
+TESTS = $(check_PROGRAMS) $(SEDTESTS) $(T)
+
 SEDTESTS =
 
 LDADD = ../lib/libsed.a $(INTLLIBS)
@@ -31,17 +38,23 @@ SEDTESTS += \
 	help file quiet \
 	factor binary3 binary2 binary dc
 
+# Note that the first lines are statements.  They ensure that environment
+# variables that can perturb tests are unset or set to expected values.
+# The rest are envvar settings that propagate build-related Makefile
+# variables to test scripts.
 TESTS_ENVIRONMENT =				\
+  export					\
   VERSION='$(VERSION)'				\
   MAKE="$(MAKE)"				\
   VERSION="$(VERSION)"				\
   built_programs=sed				\
-  $(LOCALCHARSET_TESTS_ENVIRONMENT)
+  $(LOCALCHARSET_TESTS_ENVIRONMENT)		\
+  ; 9>&2
 
 LOG_COMPILER = $(srcdir)/runtest
 
 EXTRA_DIST = \
-	help-version.sh init.sh \
+	$(T) init.sh init.cfg \
 	PCRE.tests BOOST.tests SPENCER.tests \
 	runtest Makefile.tests \
 	0range.good 0range.inp 0range.sed \

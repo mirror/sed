@@ -1,0 +1,32 @@
+#!/bin/sh
+# Inserting an invalid multibyte sequence could lead to
+# reading uninitialized memory.
+
+# Copyright (C) 2015 Free Software Foundation, Inc.
+
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+
+# You should have received a copy of the GNU General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+. "${srcdir=.}/init.sh"; path_prepend_ ../sed
+print_ver_ sed
+
+require_valgrind_
+
+echo a > in || framework_failure_
+echo bC > exp || framework_failure_
+LC_ALL=ja_JP.eucJP valgrind --quiet --error-exitcode=1 \
+  sed -e 's/a/b\U\xb2c/' in > out 2> err || fail=1
+
+compare exp out || fail=1
+compare /dev/null err || fail=1
+
+Exit $fail
