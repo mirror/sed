@@ -1070,7 +1070,7 @@ compile_program(struct vector *vector)
             char *version = read_label ();
             char const *compared_version;
             compared_version = (*version == '\0') ? "4.0" : version;
-            if (strverscmp (compared_version, SED_FEATURE_VERSION) > 0)
+            if (strverscmp (compared_version, PACKAGE_VERSION) > 0)
               bad_prog(_(ANCIENT_VERSION));
 
             free (version);

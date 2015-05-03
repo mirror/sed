@@ -10,11 +10,6 @@ AM_INIT_AUTOMAKE([1.11.1 no-dist-gzip dist-xz color-tests parallel-tests])
 AM_SILENT_RULES([yes]) # make --enable-silent-rules the default.
 AC_CONFIG_MACRO_DIRS([m4])
 
-SED_FEATURE_VERSION=4.2.2
-AC_DEFINE_UNQUOTED([SED_FEATURE_VERSION], "$SED_FEATURE_VERSION",
-  [Define to the version of GNU sed whose features are supported by this sed.])
-AC_SUBST(SED_FEATURE_VERSION)
-
 AC_PROG_CC_STDC
 AM_PROG_CC_C_O
 gl_EARLY
