@@ -26,6 +26,7 @@ local-checks-to-skip =			\
   sc_GPL_version			\
   sc_bindtextdomain			\
   sc_error_message_uppercase		\
+  sc_preprocessor_indentation		\
   sc_prohibit_atoi_atof			\
   sc_prohibit_magic_number_exit		\
   sc_prohibit_strcmp			\
@@ -35,6 +36,9 @@ local-checks-to-skip =			\
 
 # Tools used to bootstrap this package, used for "announcement".
 bootstrap-tools = autoconf,automake,gnulib
+
+# Override the default Cc: used in generating an announcement.
+announcement_Cc_ = $(translation_project_), sed-devel@gnu.org
 
 # Now that we have better tests, make this the default.
 export VERBOSE = yes
@@ -105,6 +109,16 @@ sc_prohibit_emacs__indent_tabs_mode__setting:
 	halt='use of emacs indent-tabs-mode: setting'			\
 	  $(_sc_search_regexp)
 
+# Enforce recommended preprocessor indentation style.
+sc_preprocessor_indentation:
+	@if cppi --version >/dev/null 2>&1; then			\
+	  $(VC_LIST_EXCEPT) | grep '\.[ch]$$' | xargs cppi -a -c	\
+	    || { echo '$(ME): incorrect preprocessor indentation' 1>&2;	\
+		exit 1; };						\
+	else								\
+	  echo '$(ME): skipping test $@: cppi not installed' 1>&2;	\
+	fi
+
 # THANKS.in is a list of name/email pairs for people who are mentioned in
 # commit logs (and generated ChangeLog), but who are not also listed as an
 # author of a commit.  Name/email pairs of commit authors are automatically
@@ -118,8 +132,18 @@ sc_THANKS_in_duplicates:
 	    && { echo '$(ME): remove the above names from THANKS.in'	\
 		  1>&2; exit 1; } || :
 
+# Ensure the contributor list stays sorted.  Use our sort as other
+# implementations may result in a different order.
+sc_THANKS_in_sorted:
+	@sed '/^$$/,/^$$/!d;/^$$/d' THANKS.in > $@.1;			\
+	LC_ALL=en_US.UTF-8 sort -f -k1,1 $@.1 > $@.2
+	@diff -u $@.1 $@.2; diff=$$?;					\
+	rm -f $@.1 $@.2;						\
+	test "$$diff" = 0						\
+	  || { echo '$(ME): THANKS.in is unsorted' 1>&2; exit 1; }
+
 update-copyright-env = \
-  UPDATE_COPYRIGHT_USE_INTERVALS=1 \
+  UPDATE_COPYRIGHT_USE_INTERVALS=2 \
   UPDATE_COPYRIGHT_MAX_LINE_LENGTH=79
 
 config_h_header ?= (<config\.h>|"sed\.h")
