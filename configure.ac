@@ -8,7 +8,7 @@ AM_CONFIG_HEADER(config.h:config_h.in)
 AC_PREREQ(2.62)
 AM_INIT_AUTOMAKE([1.11.1 no-dist-gzip dist-xz color-tests parallel-tests])
 AM_SILENT_RULES([yes]) # make --enable-silent-rules the default.
-AC_CONFIG_MACRO_DIRS([m4])
+AC_CONFIG_MACRO_DIR([m4])
 
 AC_PROG_CC_STDC
 AM_PROG_CC_C_O
