@@ -188,7 +188,6 @@ ck_mkstemp (char **p_filename, const char *tmpdir,
 
    /* The ownership might change, so omit some permissions at first
       so unauthorized users cannot nip in before the file is ready.
-
       mkstemp forces O_BINARY on cygwin, so use mkostemp instead.  */
   save_umask = umask (0700);
   fd = mkostemp (template, 0);
