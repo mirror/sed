@@ -26,6 +26,11 @@ echo bC > exp || framework_failure_
 LC_ALL=ja_JP.eucJP valgrind --quiet --error-exitcode=1 \
   sed -e 's/a/b\U\xb2c/' in > out 2> err || fail=1
 
+# Work around a bug in CentOS 5.10's valgrind
+# FIXME: remove in 2018 or when CentOS 5 is no longer officially supported
+grep 'valgrind: .*Assertion.*failed' err > /dev/null \
+  && skip_ 'you seem to have a buggy version of valgrind'
+
 compare exp out || fail=1
 compare /dev/null err || fail=1
 
