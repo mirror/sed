@@ -8,7 +8,8 @@ SH_LOG_COMPILER = $(SHELL)
 T =			\
   help-version.sh	\
   invalid-mb-seq-UMR.sh	\
-  range-overlap.sh
+  range-overlap.sh	\
+  temp-file-cleanup.sh
 
 TESTS = $(check_PROGRAMS) $(SEDTESTS) $(T)
 

@@ -260,6 +260,8 @@ extern bool is_utf8;
 
 extern int brlen (int ch, mbstate_t *ps);
 extern void initialize_mbcs (void);
+extern void register_cleanup_file (char const *file);
+extern void cancel_cleanup (void);
 
 /* Use this to suppress gcc's '...may be used before initialized' warnings. */
 #ifdef lint

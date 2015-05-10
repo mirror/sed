@@ -69,6 +69,35 @@ countT lcmd_out_line_len = 70;
 /* The complete compiled SED program that we are going to run: */
 static struct vector *the_program = NULL;
 
+/* When we've created a temporary for an in-place update,
+   we may have to exit before the rename.  This is the name
+   of the temporary that we'll have to unlink via an atexit-
+   registered cleanup function.  */
+static char const *G_file_to_unlink;
+
+/* When exiting between temporary file creation and the rename
+   associated with a sed -i invocation, remove that file.  */
+static void
+cleanup (void)
+{
+  if (G_file_to_unlink)
+    unlink (G_file_to_unlink);
+}
+
+/* Note that FILE must be removed upon exit.  */
+void
+register_cleanup_file (char const *file)
+{
+  G_file_to_unlink = file;
+}
+
+/* Clear the global file-to-unlink global.  */
+void
+cancel_cleanup (void)
+{
+  G_file_to_unlink = NULL;
+}
+
 static void usage (int);
 static void
 contact(int errmsg)
@@ -154,7 +183,7 @@ specified, then the standard input is read.\n\
 }
 
 int
-main(int argc, char **argv)
+main (int argc, char **argv)
 {
 #ifdef REG_PERL
 #define SHORTOPTS "bsnrzRuEe:f:l:i::V:"
@@ -199,6 +228,10 @@ main(int argc, char **argv)
 #endif
   set_program_name (argv[0]);
   initialize_mbcs ();
+
+  /* Arrange to remove any un-renamed temporary file,
+     upon premature exit.  */
+  atexit (cleanup);
 
 #if ENABLE_NLS
 

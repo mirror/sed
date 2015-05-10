@@ -623,6 +623,7 @@ open_next_file(const char *name, struct input *input)
 
       output_file.fp = ck_mkstemp (&input->out_file_name, tmpdir, "sed",
                                    write_mode);
+      register_cleanup_file (input->out_file_name);
       output_file.missing_newline = false;
       free (tmpdir);
 
@@ -681,6 +682,7 @@ closedown(struct input *input)
         }
 
       ck_rename (input->out_file_name, target_name, input->out_file_name);
+      cancel_cleanup ();
       free (input->out_file_name);
     }
   else
