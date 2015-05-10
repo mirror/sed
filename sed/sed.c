@@ -24,6 +24,7 @@
 #include <string.h>
 #include <stdlib.h>
 #include <sys/types.h>
+#include <unistd.h>
 #include "getopt.h"
 #include "progname.h"
 #include "version.h"
