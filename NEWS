@@ -43,6 +43,9 @@ GNU sed NEWS                                    -*- outline -*-
   has been listed in the documentation as a failed experiment for at
   least 10 years.  That command is now removed.
 
+  sed -i s/a/b/ - now evokes an error, rather than attempting to operate
+  on the file named ./-
+
 ** Build-related
 
   "make dist" now builds .tar.xz files, rather than .tar.gz ones.

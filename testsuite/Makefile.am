@@ -7,6 +7,7 @@ SH_LOG_COMPILER = $(SHELL)
 # is listed in only one place.
 T =			\
   help-version.sh	\
+  in-place-hyphen.sh	\
   invalid-mb-seq-UMR.sh	\
   range-overlap.sh	\
   temp-file-cleanup.sh
