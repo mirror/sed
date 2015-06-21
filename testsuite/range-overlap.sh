@@ -28,6 +28,7 @@ printf '%s\n' 1 5 6 > exp || framework_failure_
 # 6
 sed '2,4d;2,3s/^/x/;3,4s/^/y/' in > out 2> err || framework_failure_
 
+fail=0
 compare exp out || fail=1
 compare /dev/null err || fail=1
 
