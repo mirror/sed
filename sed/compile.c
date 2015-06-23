@@ -1257,7 +1257,7 @@ compile_program(struct vector *vector)
                   {
                     mbclen = MBRLEN (src_buf + i, len - i, &cur_stat);
                     /* An invalid sequence, or a truncated multibyte character.
-                       We treat it as a singlebyte character.  */
+                       We treat it as a single-byte character.  */
                     if (mbclen == (size_t) -1 || mbclen == (size_t) -2
                         || mbclen == 0)
                       mbclen = 1;
@@ -1289,7 +1289,7 @@ compile_program(struct vector *vector)
                     /* Fetch the i-th destination character.  */
                     mbclen = MBRLEN (dest_buf + idx, dest_len - idx, &cur_stat);
                     /* An invalid sequence, or a truncated multibyte character.
-                       We treat it as a singlebyte character.  */
+                       We treat it as a single-byte character.  */
                     if (mbclen == (size_t) -1 || mbclen == (size_t) -2
                         || mbclen == 0)
                       mbclen = 1;
@@ -1375,7 +1375,7 @@ normalize_text(char *buf, size_t len, enum text_types buftype)
       if (mbclen != 1)
         {
           /* An invalid sequence, or a truncated multibyte character.
-             We treat it as a singlebyte character.  */
+             We treat it as a single-byte character.  */
           if (mbclen == (size_t) -1 || mbclen == (size_t) -2 || mbclen == 0)
             mbclen = 1;
 

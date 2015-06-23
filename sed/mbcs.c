@@ -34,7 +34,7 @@ int brlen (int ch, mbstate_t *cur_stat)
   /* If we use the generic brlen, then MBRLEN == mbrlen.  */
   int result = mbrtowc(NULL, &c, 1, cur_stat);
 
-  /* An invalid sequence is treated like a singlebyte character. */
+  /* An invalid sequence is treated like a single-byte character. */
   if (result == -1)
     {
       memset (cur_stat, 0, sizeof (mbstate_t));
