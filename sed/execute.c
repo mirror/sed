@@ -549,6 +549,7 @@ open_next_file(const char *name, struct input *input)
 {
   buffer.length = 0;
 
+  input->in_file_name = name;
   if (name[0] == '-' && name[1] == '\0')
     {
       if (in_place_extension)
@@ -562,21 +563,22 @@ open_next_file(const char *name, struct input *input)
       input->fp = stdin;
 #endif
     }
-  else if ( ! (input->fp = ck_fopen(name, read_mode, false)) )
+  else
     {
-      const char *ptr = strerror(errno);
-      fprintf(stderr, _("%s: can't read %s: %s\n"), myname, name, ptr);
-      input->read_fn = read_always_fail; /* a redundancy */
-      ++input->bad_count;
-      return;
+      if (follow_symlinks)
+        input->in_file_name = follow_symlink (name);
+
+      if ( ! (input->fp = ck_fopen (name, read_mode, false)) )
+        {
+          const char *ptr = strerror (errno);
+          fprintf (stderr, _("%s: can't read %s: %s\n"), myname, name, ptr);
+          input->read_fn = read_always_fail; /* a redundancy */
+          ++input->bad_count;
+          return;
+        }
     }
 
   input->read_fn = read_file_line;
-
-  if (follow_symlinks)
-    input->in_file_name = follow_symlink (name);
-  else
-    input->in_file_name = name;
 
   if (in_place_extension)
     {

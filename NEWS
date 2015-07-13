@@ -37,6 +37,9 @@ GNU sed NEWS                                    -*- outline -*-
   leaves behind a temporary file.  Before, that command would create a file
   alongside F with a name matching /^sed......$/ and fail to remove it.
 
+  sed --follow-symlinks now works again for stdin.
+  [bug introduced in sed-4.2.2]
+
 ** Feature removal
 
   The "L" command (format a paragraph like the fmt(1) command would)
