@@ -33,7 +33,7 @@
 /* let's not confuse text editors that have only dumb bracket-matching... */
 #define OPEN_BRACKET	'['
 #define CLOSE_BRACKET	']'
-#define OPEN_BRACE	'{'
+/* #define OPEN_BRACE	'{' */
 #define CLOSE_BRACE	'}'
 
 struct prog_info {
@@ -180,7 +180,7 @@ static const char errors[] =
 #define UNKNOWN_CMD (INVALID_LINE_0 \
   + sizeof(N_("invalid usage of line address 0")))
 #define INCOMPLETE_CMD (UNKNOWN_CMD + sizeof(N_("unknown command: `%c'")))
-#define END_ERRORS (INCOMPLETE_CMD + sizeof(N_("incomplete command")))
+/* #define END_ERRORS (INCOMPLETE_CMD + sizeof(N_("incomplete command"))) */
 
 static struct output *file_read = NULL;
 static struct output *file_write = NULL;
