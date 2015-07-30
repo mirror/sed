@@ -21,9 +21,11 @@ print_ver_ sed
 
 require_valgrind_
 
+test "$LOCALE_JA" = none && skip_ found no Japanese EUC locale
+
 echo a > in || framework_failure_
 echo bC > exp || framework_failure_
-LC_ALL=ja_JP.eucJP valgrind --quiet --error-exitcode=1 \
+LC_ALL=$LOCALE_JA valgrind --quiet --error-exitcode=1 \
   sed -e 's/a/b\U\xb2c/' in > out 2> err || fail=1
 
 # Work around a bug in CentOS 5.10's valgrind
