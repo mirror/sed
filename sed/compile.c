@@ -138,7 +138,8 @@ static const char errors[] =
   "expected newer version of sed\0"
   "invalid usage of line address 0\0"
   "unknown command: `%c'\0"
-  "incomplete command";
+  "incomplete command\0"
+  "\":\" lacks a label";
 
 #define BAD_BANG (errors)
 #define BAD_COMMA (BAD_BANG + sizeof(N_("multiple `!'s")))
@@ -180,7 +181,9 @@ static const char errors[] =
 #define UNKNOWN_CMD (INVALID_LINE_0 \
   + sizeof(N_("invalid usage of line address 0")))
 #define INCOMPLETE_CMD (UNKNOWN_CMD + sizeof(N_("unknown command: `%c'")))
-/* #define END_ERRORS (INCOMPLETE_CMD + sizeof(N_("incomplete command"))) */
+#define COLON_LACKS_LABEL (INCOMPLETE_CMD \
+  + sizeof(N_("incomplete command")))
+/* #define END_ERRORS (COLON_LACKS_LABEL + sizeof(N_("\":\" lacks a label"))) */
 
 static struct output *file_read = NULL;
 static struct output *file_write = NULL;
@@ -1133,7 +1136,12 @@ compile_program(struct vector *vector)
         case ':':
           if (cur_cmd->a1)
             bad_prog(_(NO_COLON_ADDR));
-          labels = setup_label(labels, vector->v_length, read_label(), NULL);
+          {
+            char *label = read_label ();
+            if (!*label)
+              bad_prog(_(COLON_LACKS_LABEL));
+            labels = setup_label(labels, vector->v_length, label, NULL);
+          }
           break;
 
         case 'T':
