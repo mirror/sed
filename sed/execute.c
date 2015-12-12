@@ -231,14 +231,14 @@ str_append_modified(struct line *to, const char *string, size_t length,
           continue;
         }
 
-      if (n > 0)
-        string += n, length -= n;
-      else
+      if (n == 0 || n == (size_t) -2)
         {
-          /* Incomplete sequence, copy it manually.  */
+          /* L'\0' or an incomplete sequence: copy it manually.  */
           str_append(to, string, length);
           return;
         }
+
+      string += n, length -= n;
 
       /* Convert the first character specially... */
       if (type & (REPL_UPPERCASE_FIRST | REPL_LOWERCASE_FIRST))

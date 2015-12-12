@@ -12,6 +12,7 @@ T =				\
   in-place-hyphen.sh		\
   invalid-mb-seq-UMR.sh		\
   range-overlap.sh		\
+  subst-mb-incomplete.sh	\
   temp-file-cleanup.sh
 
 TESTS = $(check_PROGRAMS) $(SEDTESTS) $(T)
