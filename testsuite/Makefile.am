@@ -22,12 +22,13 @@ LDADD = ../lib/libsed.a $(INTLLIBS)
 noinst_HEADERS = testcases.h ptestcases.h
 AM_CPPFLAGS = -I$(top_srcdir)/lib -I$(top_builddir)/lib
 
+check_PROGRAMS = get-mb-cur-max
 if TEST_REGEX
-check_PROGRAMS = bug-regex7 \
-                 bug-regex8 bug-regex9 bug-regex10 bug-regex11 bug-regex12 \
-                 bug-regex13 bug-regex14 bug-regex15 bug-regex16 bug-regex21 \
-		 bug-regex27 bug-regex28 \
-                 tst-pcre tst-boost runtests runptests tst-rxspencer tst-regex2
+check_PROGRAMS += bug-regex7 \
+  bug-regex8 bug-regex9 bug-regex10 bug-regex11 bug-regex12 \
+  bug-regex13 bug-regex14 bug-regex15 bug-regex16 bug-regex21 \
+  bug-regex27 bug-regex28 \
+  tst-pcre tst-boost runtests runptests tst-rxspencer tst-regex2
 
 SEDTESTS += space
 endif
