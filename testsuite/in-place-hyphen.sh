@@ -1,5 +1,5 @@
 #!/bin/sh
-# Verify that "-" is no longer treated as a file name with --in-place.
+# Verify that "-" is treated as a file name with --in-place.
 
 # Copyright (C) 2015-2016 Free Software Foundation, Inc.
 
@@ -18,12 +18,13 @@
 . "${srcdir=.}/init.sh"; path_prepend_ ../sed
 print_ver_ sed
 
-echo "sed: couldn't edit -: is a terminal" > exp-err || framework_failure_
+echo abc > ./- || framework_failure_
+echo aXc > exp-out || framework_failure_
 
 fail=0
-sed -i 's/a/b/' - > out 2> err && fail=1
+sed -i 's/b/X/' - > out 2> err || fail=1
 
-compare /dev/null out || fail=1
-compare exp-err err || fail=1
+compare exp-out ./- || fail=1
+compare /dev/null err || fail=1
 
 Exit $fail

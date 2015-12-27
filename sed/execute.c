@@ -550,11 +550,8 @@ open_next_file(const char *name, struct input *input)
   buffer.length = 0;
 
   input->in_file_name = name;
-  if (name[0] == '-' && name[1] == '\0')
+  if (name[0] == '-' && name[1] == '\0' && !in_place_extension)
     {
-      if (in_place_extension)
-        panic(_("couldn't edit %s: is a terminal"), name);
-
       clearerr(stdin);	/* clear any stale EOF indication */
 #if defined WIN32 || defined _WIN32 || defined __CYGWIN__ \
   || defined MSDOS || defined __EMX__
