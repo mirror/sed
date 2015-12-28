@@ -45,6 +45,10 @@ GNU sed NEWS                                    -*- outline -*-
   sed --follow-symlinks now works again for stdin.
   [bug introduced in sed-4.2.2]
 
+  sed no longer elides invalid bytes in a substitution RHS.
+  Now, sed copies such bytes into the output, just as Perl does.
+  [bug introduced in sed-4.1 -- it was also present prior to 4.0.6]
+
 ** Feature removal
 
   The "L" command (format a paragraph like the fmt(1) command would)

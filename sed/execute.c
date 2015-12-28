@@ -225,6 +225,7 @@ str_append_modified(struct line *to, const char *string, size_t length,
               return;
             }
 
+          str_append (to, string, 1);
           memset (&to->mbstate, 0, sizeof (from_stat));
           n = 1;
           string += n, length -= n;
