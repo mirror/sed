@@ -1,7 +1,7 @@
 #!/bin/sh
 # Verify that "-" is no longer treated as a file name with --in-place.
 
-# Copyright (C) 2015 Free Software Foundation, Inc.
+# Copyright (C) 2015-2016 Free Software Foundation, Inc.
 
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by

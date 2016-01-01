@@ -1,6 +1,5 @@
 /*  GNU SED, a batch stream editor.
-    Copyright (C) 1989-1995, 1998-1999, 2002-2006, 2008-2009, 2014-2015 Free
-    Software Foundation, Inc.
+    Copyright (C) 1989-2016 Free Software Foundation, Inc.
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
