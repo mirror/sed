@@ -20,7 +20,8 @@ T =				\
   range-overlap.sh		\
   recursive-escape-c.sh		\
   subst-mb-incomplete.sh	\
-  temp-file-cleanup.sh
+  temp-file-cleanup.sh		\
+  unbuffered.sh
 
 TESTS = $(check_PROGRAMS) $(SEDTESTS) $(T)
 
