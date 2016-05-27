@@ -11,6 +11,7 @@ T =				\
   help-version.sh		\
   in-place-hyphen.sh		\
   invalid-mb-seq-UMR.sh		\
+  posix-mode-addr.sh		\
   posix-mode-bad-ref.sh		\
   posix-mode-s.sh		\
   posix-mode-N.sh		\
