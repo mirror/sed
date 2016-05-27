@@ -11,6 +11,7 @@ T =				\
   help-version.sh		\
   in-place-hyphen.sh		\
   invalid-mb-seq-UMR.sh		\
+  posix-mode-bad-ref.sh		\
   posix-mode-N.sh		\
   range-overlap.sh		\
   recursive-escape-c.sh		\
