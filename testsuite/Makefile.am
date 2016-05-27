@@ -14,6 +14,7 @@ T =				\
   in-place-suffix-backup.sh	\
   invalid-mb-seq-UMR.sh		\
   nulldata.sh			\
+  panic-tests.sh		\
   posix-mode-addr.sh		\
   posix-mode-bad-ref.sh		\
   posix-mode-s.sh		\
