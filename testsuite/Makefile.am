@@ -12,6 +12,7 @@ T =				\
   in-place-hyphen.sh		\
   invalid-mb-seq-UMR.sh		\
   posix-mode-bad-ref.sh		\
+  posix-mode-s.sh		\
   posix-mode-N.sh		\
   range-overlap.sh		\
   recursive-escape-c.sh		\
