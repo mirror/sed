@@ -6,6 +6,7 @@ SH_LOG_COMPILER = $(SHELL)
 # Put new, init.sh-using tests here, so that each name
 # is listed in only one place.
 T =				\
+  cmd-l.sh			\
   colon-with-no-label.sh	\
   follow-symlinks-stdin.sh	\
   help-version.sh		\
