@@ -11,6 +11,7 @@ T =				\
   follow-symlinks-stdin.sh	\
   help-version.sh		\
   in-place-hyphen.sh		\
+  in-place-suffix-backup.sh	\
   invalid-mb-seq-UMR.sh		\
   nulldata.sh			\
   posix-mode-addr.sh		\
