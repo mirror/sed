@@ -21,6 +21,7 @@ T =				\
   posix-mode-N.sh		\
   range-overlap.sh		\
   recursive-escape-c.sh		\
+  regex-errors.sh		\
   subst-mb-incomplete.sh	\
   temp-file-cleanup.sh		\
   unbuffered.sh
