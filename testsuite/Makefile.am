@@ -23,6 +23,7 @@ T =				\
   range-overlap.sh		\
   recursive-escape-c.sh		\
   regex-errors.sh		\
+  subst-options.sh		\
   subst-mb-incomplete.sh	\
   temp-file-cleanup.sh		\
   unbuffered.sh
