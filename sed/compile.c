@@ -138,7 +138,8 @@ static const char errors[] =
   "invalid usage of line address 0\0"
   "unknown command: `%c'\0"
   "incomplete command\0"
-  "\":\" lacks a label";
+  "\":\" lacks a label\0"
+  "recursive escaping after \\c not allowed";
 
 #define BAD_BANG (errors)
 #define BAD_COMMA (BAD_BANG + sizeof(N_("multiple `!'s")))
@@ -182,6 +183,8 @@ static const char errors[] =
 #define INCOMPLETE_CMD (UNKNOWN_CMD + sizeof(N_("unknown command: `%c'")))
 #define COLON_LACKS_LABEL (INCOMPLETE_CMD \
   + sizeof(N_("incomplete command")))
+#define RECURSIVE_ESCAPE_C (COLON_LACKS_LABEL \
+  + sizeof(N_("\":\" lacks a label")))
 /* #define END_ERRORS (COLON_LACKS_LABEL + sizeof(N_("\":\" lacks a label"))) */
 
 static struct output *file_read = NULL;
@@ -1466,6 +1469,12 @@ convert:
             if (++p < bufend)
               {
                 *q++ = toupper((unsigned char) *p) ^ 0x40;
+                if (*p == '\\')
+                  {
+                    p++;
+                    if (*p != '\\')
+                      bad_prog(RECURSIVE_ESCAPE_C);
+                  }
                 p++;
                 continue;
               }

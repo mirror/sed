@@ -49,6 +49,11 @@ GNU sed NEWS                                    -*- outline -*-
   Now, sed copies such bytes into the output, just as Perl does.
   [bug introduced in sed-4.1 -- it was also present prior to 4.0.6]
 
+  sed no longer prints extraneous character when a backslash follows \c.
+  '\c\\'  generates control character ^\ (ASCII 0x1C).
+  Other characters after the second backslash are rejected (e.g. '\c\d').
+  [bug introduced in the sed-4.0.* releases]
+
 ** Feature removal
 
   The "L" command (format a paragraph like the fmt(1) command would)
