@@ -8,6 +8,7 @@ SH_LOG_COMPILER = $(SHELL)
 T =				\
   cmd-l.sh			\
   colon-with-no-label.sh	\
+  comment-n.sh			\
   compile-errors.sh		\
   follow-symlinks-stdin.sh	\
   help-version.sh		\
