@@ -25,6 +25,7 @@ T =				\
   range-overlap.sh		\
   recursive-escape-c.sh		\
   regex-errors.sh		\
+  stdin-prog.sh			\
   subst-options.sh		\
   subst-mb-incomplete.sh	\
   subst-replacement.sh		\
