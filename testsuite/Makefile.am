@@ -25,6 +25,7 @@ T =				\
   regex-errors.sh		\
   subst-options.sh		\
   subst-mb-incomplete.sh	\
+  subst-replacement.sh		\
   temp-file-cleanup.sh		\
   unbuffered.sh
 
