@@ -16,6 +16,7 @@ T =				\
   invalid-mb-seq-UMR.sh		\
   nulldata.sh			\
   panic-tests.sh		\
+  posix-char-class.sh           \
   posix-mode-addr.sh		\
   posix-mode-bad-ref.sh		\
   posix-mode-s.sh		\
