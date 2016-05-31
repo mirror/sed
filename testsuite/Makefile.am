@@ -51,11 +51,48 @@ SEDTESTS += \
 # The rest are envvar settings that propagate build-related Makefile
 # variables to test scripts.
 TESTS_ENVIRONMENT =				\
-  export					\
+  tmp__=$${TMPDIR-/tmp};			\
+  test -d "$$tmp__" && test -w "$$tmp__" || tmp__=.;	\
+  . $(srcdir)/envvar-check;			\
+  TMPDIR=$$tmp__; export TMPDIR;		\
+						\
+  if test -n "$$BASH_VERSION" || (eval "export v=x") 2>/dev/null; then \
+    export_with_values () { export "$$@"; };		\
+  else							\
+    export_with_values ()				\
+    {							\
+      sed_extract_var='s/=.*//';			\
+      sed_quote_value="s/'/'\\\\''/g;s/=\\(.*\\)/='\\1'/";\
+      for arg in "$$@"; do				\
+        var=`echo "$$arg" | sed "$$sed_extract_var"`;	\
+        arg=`echo "$$arg" | sed "$$sed_quote_value"`;	\
+        eval "$$arg";					\
+        export "$$var";					\
+      done;						\
+    };							\
+  fi;							\
+						\
+  export_with_values				\
   VERSION='$(VERSION)'				\
-  MAKE="$(MAKE)"				\
-  VERSION="$(VERSION)"				\
-  built_programs=sed				\
+  LOCALE_FR='$(LOCALE_FR)'			\
+  LOCALE_FR_UTF8='$(LOCALE_FR_UTF8)'		\
+  AWK=$(AWK)					\
+  LC_ALL=C					\
+  abs_top_builddir='$(abs_top_builddir)'	\
+  abs_top_srcdir='$(abs_top_srcdir)'		\
+  abs_srcdir='$(abs_srcdir)'			\
+  built_programs=sed;				\
+  srcdir='$(srcdir)'				\
+  top_srcdir='$(top_srcdir)'			\
+  CC='$(CC)'					\
+  SED_TEST_NAME=`echo $$tst|sed 's,^\./,,;s,/,-,g'` \
+  MAKE=$(MAKE)					\
+  MALLOC_PERTURB_=$(MALLOC_PERTURB_)		\
+  PACKAGE_BUGREPORT='$(PACKAGE_BUGREPORT)'	\
+  PACKAGE_VERSION=$(PACKAGE_VERSION)		\
+  PERL='$(PERL)'				\
+  SHELL='$(SHELL)'				\
+  PATH='$(abs_top_builddir)/src$(PATH_SEPARATOR)'"$$PATH" \
   $(LOCALCHARSET_TESTS_ENVIRONMENT)		\
   ; 9>&2
 
@@ -63,6 +100,7 @@ LOG_COMPILER = $(srcdir)/runtest
 
 EXTRA_DIST = \
 	$(T) init.sh init.cfg \
+	envvar-check \
 	PCRE.tests BOOST.tests SPENCER.tests \
 	runtest Makefile.tests \
 	0range.good 0range.inp 0range.sed \
