@@ -7,6 +7,7 @@ SH_LOG_COMPILER = $(SHELL)
 # is listed in only one place.
 T =				\
   cmd-l.sh			\
+  cmd-R.sh			\
   colon-with-no-label.sh	\
   comment-n.sh			\
   compile-errors.sh		\
