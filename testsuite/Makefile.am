@@ -12,6 +12,7 @@ T =				\
   comment-n.sh			\
   compile-errors.sh		\
   compile-tests.sh		\
+  convert-number.sh		\
   execute-tests.sh		\
   follow-symlinks-stdin.sh	\
   help-version.sh		\
