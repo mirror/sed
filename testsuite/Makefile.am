@@ -11,6 +11,7 @@ T =				\
   colon-with-no-label.sh	\
   comment-n.sh			\
   compile-errors.sh		\
+  compile-tests.sh		\
   execute-tests.sh		\
   follow-symlinks-stdin.sh	\
   help-version.sh		\
