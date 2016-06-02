@@ -19,6 +19,7 @@ T =				\
   in-place-hyphen.sh		\
   in-place-suffix-backup.sh	\
   invalid-mb-seq-UMR.sh		\
+  normalize-text.sh		\
   nulldata.sh			\
   panic-tests.sh		\
   posix-char-class.sh           \
