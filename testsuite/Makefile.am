@@ -22,6 +22,7 @@ T =				\
   mb-charclass-non-utf8.sh	\
   mb-match-slash.sh		\
   mb-bad-delim.sh		\
+  mb-y-translate.sh		\
   normalize-text.sh		\
   nulldata.sh			\
   panic-tests.sh		\
