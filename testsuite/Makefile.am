@@ -19,6 +19,8 @@ T =				\
   in-place-hyphen.sh		\
   in-place-suffix-backup.sh	\
   invalid-mb-seq-UMR.sh		\
+  mb-charclass-non-utf8.sh	\
+  mb-match-slash.sh		\
   normalize-text.sh		\
   nulldata.sh			\
   panic-tests.sh		\

@@ -54,6 +54,13 @@ GNU sed NEWS                                    -*- outline -*-
   Other characters after the second backslash are rejected (e.g. '\c\d').
   [bug introduced in the sed-4.0.* releases]
 
+  sed no longer mishandles incomplete multibyte sequences in s,y commands
+  and valid multibyte SHIFT-JIS characters in character classes.
+  Previously, the following commands would fail:
+    LC_ALL=en_US.UTF-8 sed $'s/\316/X/'
+    LC_ALL=ja_JP.shiftjis sed $'/[\203]/]/p'
+  [bug introduced some time after sed-4.1.5 and before sed-4.2.1]
+
 ** Feature removal
 
   The "L" command (format a paragraph like the fmt(1) command would)

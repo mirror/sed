@@ -432,7 +432,6 @@ snarf_char_class (struct buffer *b, mbstate_t *cur_stat)
   int ch;
   int state = 0;
   int delim IF_LINT ( = 0) ;
-  bool pending_mb = 0;
 
   ch = inchar();
   if (ch == '^')
@@ -448,7 +447,7 @@ snarf_char_class (struct buffer *b, mbstate_t *cur_stat)
 
   for (;; ch = add_then_next (b, ch))
     {
-      pending_mb = BRLEN (ch, cur_stat) != 1;
+      const int mb_char = IS_MB_CHAR (ch, cur_stat);
 
       switch (ch)
         {
@@ -459,7 +458,7 @@ snarf_char_class (struct buffer *b, mbstate_t *cur_stat)
         case '.':
         case ':':
         case '=':
-          if (pending_mb)
+          if (mb_char)
             continue;
 
           if (state == 1)
@@ -475,7 +474,7 @@ snarf_char_class (struct buffer *b, mbstate_t *cur_stat)
           continue;
 
         case OPEN_BRACKET:
-          if (pending_mb)
+          if (mb_char)
             continue;
 
           if (state == 0)
@@ -483,7 +482,7 @@ snarf_char_class (struct buffer *b, mbstate_t *cur_stat)
           continue;
 
         case CLOSE_BRACKET:
-          if (pending_mb)
+          if (mb_char)
             continue;
 
           if (state == 0 || state == 1)
@@ -512,7 +511,7 @@ match_slash (int slash, int regex)
   mbstate_t cur_stat = { 0, };
 
   /* We allow only 1 byte characters for a slash.  */
-  if (BRLEN (slash, &cur_stat) == -2)
+  if (IS_MB_CHAR (slash, &cur_stat))
     bad_prog (BAD_DELIM);
 
   memset (&cur_stat, 0, sizeof cur_stat);
@@ -520,8 +519,9 @@ match_slash (int slash, int regex)
   b = init_buffer();
   while ((ch = inchar()) != EOF && ch != '\n')
     {
-      bool pending_mb = !MBSINIT (&cur_stat);
-      if (BRLEN (ch, &cur_stat) == 1 && !pending_mb)
+      const int mb_char = IS_MB_CHAR (ch, &cur_stat);
+
+      if (!mb_char)
         {
           if (ch == slash)
             return b;

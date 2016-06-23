@@ -254,10 +254,10 @@ extern bool is_utf8;
 #define MBRLEN(s, n, ps) \
   (mb_cur_max == 1 ? 1 : mbrtowc (NULL, s, n, ps))
 
-#define BRLEN(ch, ps) \
-  (mb_cur_max == 1 ? 1 : brlen (ch, ps))
+#define IS_MB_CHAR(ch, ps)                \
+  (mb_cur_max == 1 ? 0 : is_mb_char (ch, ps))
 
-extern int brlen (int ch, mbstate_t *ps);
+extern int is_mb_char (int ch, mbstate_t *ps);
 extern void initialize_mbcs (void);
 extern void register_cleanup_file (char const *file);
 extern void cancel_cleanup (void);
