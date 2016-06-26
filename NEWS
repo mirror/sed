@@ -67,6 +67,10 @@ GNU sed NEWS                                    -*- outline -*-
   only .tar.xz files is enough.  It has been fine for coreutils, grep,
   diffutils and parted for a few years.
 
+** Improvements
+
+  sed now uses unlocked-io where available, resulting in faster I/O
+  operations.
 
 * Noteworthy changes in release 4.2.2 (2012-12-22) [stable]
 

@@ -27,6 +27,7 @@
 #include <unistd.h>
 #include <limits.h>
 
+#include "unlocked-io.h"
 #include "utils.h"
 #include "fwriting.h"
 
