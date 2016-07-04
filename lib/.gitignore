@@ -210,3 +210,9 @@ xstrndup.h
 /progname.h
 /ignore-value.h
 /alignof.h
+/close-stream.c
+/close-stream.h
+/closeout.c
+/closeout.h
+/fpending.c
+/fpending.h

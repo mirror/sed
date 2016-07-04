@@ -1,3 +1,4 @@
+lib/closeout.c
 lib/copy-acl.c
 lib/error.c
 lib/getopt.c

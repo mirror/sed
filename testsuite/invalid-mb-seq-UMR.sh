@@ -23,6 +23,9 @@ require_valgrind_
 
 test "$LOCALE_JA" = none && skip_ found no Japanese EUC locale
 
+# Ensure the implementation is not buggy (skip otherwise)
+require_valid_ja_eucjp_locale_ "$LOCALE_JA"
+
 echo a > in || framework_failure_
 printf 'b\262C\n' > exp || framework_failure_
 LC_ALL=$LOCALE_JA valgrind --quiet --error-exitcode=1 \

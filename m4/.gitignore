@@ -181,3 +181,6 @@ xstrndup.m4
 /warnings.m4
 /obstack.m4
 /stdalign.m4
+/close-stream.m4
+/closeout.m4
+/fpending.m4

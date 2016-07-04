@@ -24,6 +24,9 @@ print_ver_ sed
 # If found, LOCALE_JA_SJIS will contain the locale name.
 require_ja_shiftjis_locale_
 
+# Ensure the implementation is not buggy (skip otherwise)
+require_valid_ja_shiftjis_locale_ "$LOCALE_JA_SJIS"
+
 fail=0
 
 # This test uses two characters:

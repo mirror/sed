@@ -47,7 +47,7 @@ LDADD = ../lib/libsed.a $(INTLLIBS)
 noinst_HEADERS = testcases.h ptestcases.h
 AM_CPPFLAGS = -I$(top_srcdir)/lib -I$(top_builddir)/lib
 
-check_PROGRAMS = get-mb-cur-max
+check_PROGRAMS = get-mb-cur-max test-mbrtowc
 if TEST_REGEX
 check_PROGRAMS += bug-regex7 \
   bug-regex8 bug-regex9 bug-regex10 bug-regex11 bug-regex12 \
