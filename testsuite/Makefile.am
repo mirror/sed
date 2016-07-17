@@ -14,7 +14,6 @@ T =				\
   compile-tests.sh		\
   convert-number.sh		\
   execute-tests.sh		\
-  follow-symlinks-stdin.sh	\
   help-version.sh		\
   in-place-hyphen.sh		\
   in-place-suffix-backup.sh	\
@@ -40,6 +39,11 @@ T =				\
   subst-replacement.sh		\
   temp-file-cleanup.sh		\
   unbuffered.sh
+
+if TEST_SYMLINKS
+T += follow-symlinks.sh		\
+     follow-symlinks-stdin.sh
+endif
 
 TESTS = $(check_PROGRAMS) $(SEDTESTS) $(T)
 

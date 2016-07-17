@@ -97,6 +97,8 @@ if test "$ac_cv_func_lstat:$ac_cv_func_readlink" = yes:yes; then
    AC_DEFINE([ENABLE_FOLLOW_SYMLINKS], ,
              [Follow symlinks when processing in place])
 fi
+AM_CONDITIONAL([TEST_SYMLINKS],
+          [test "$ac_cv_func_lstat:$ac_cv_func_readlink" = yes:yes])
 
 AC_ARG_ENABLE(i18n,
 [  --disable-i18n          disable internationalization (default=enabled)], ,
