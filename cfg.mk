@@ -132,15 +132,21 @@ sc_THANKS_in_duplicates:
 	    && { echo '$(ME): remove the above names from THANKS.in'	\
 		  1>&2; exit 1; } || :
 
-# Ensure the contributor list stays sorted.  Use our sort as other
-# implementations may result in a different order.
+# Ensure the contributor list stays sorted.  However, if the system's
+# en_US.UTF-8 locale data is erroneous, give a diagnostic and skip
+# this test.  This affects OS X up to at least 10.11.6.
 sc_THANKS_in_sorted:
-	@sed '/^$$/,/^$$/!d;/^$$/d' THANKS.in > $@.1;			\
-	LC_ALL=en_US.UTF-8 sort -f -k1,1 $@.1 > $@.2
-	@diff -u $@.1 $@.2; diff=$$?;					\
-	rm -f $@.1 $@.2;						\
-	test "$$diff" = 0						\
-	  || { echo '$(ME): THANKS.in is unsorted' 1>&2; exit 1; }
+	@printf '%s\n' ja j.b| LC_ALL=en_US.UTF-8 sort -c 2> /dev/null	\
+	  && {								\
+	    sed '/^$$/,/^$$/!d;/^$$/d' $(srcdir)/THANKS.in > $@.1 &&	\
+	    LC_ALL=en_US.UTF-8 sort -f -k1,1 $@.1 > $@.2 &&		\
+	    diff -u $@.1 $@.2; diff=$$?;				\
+	    rm -f $@.1 $@.2;						\
+	    test "$$diff" = 0						\
+	      || { echo '$(ME): THANKS.in is unsorted' 1>&2; exit 1; };	\
+	    }								\
+	  || { echo '$(ME): this system has erroneous locale data;'	\
+		    'skipping $@' 1>&2; }
 
 update-copyright-env = \
   UPDATE_COPYRIGHT_USE_INTERVALS=2 \
