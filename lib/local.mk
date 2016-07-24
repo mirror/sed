@@ -14,20 +14,11 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 
-AM_CFLAGS =
-AM_CPPFLAGS =
-BUILT_SOURCES =
-CLEANFILES =
-EXTRA_DIST =
-MAINTAINERCLEANFILES =
-MOSTLYCLEANDIRS =
-MOSTLYCLEANFILES =
-SUFFIXES =
-noinst_LIBRARIES =
+include lib/gnulib.mk
 
-include gnulib.mk
+lib_libsed_a_CPPFLAGS = $(AM_CPPFLAGS) -I$(top_srcdir)/lib/ \
+                        -I$(top_builddir)/lib
+lib_libsed_a_CFLAGS = $(AM_CFLAGS) $(GNULIB_WARN_CFLAGS) $(WERROR_CFLAGS)
 
-AM_CFLAGS += $(GNULIB_WARN_CFLAGS) $(WERROR_CFLAGS)
-
-libsed_a_LIBADD += $(LIBOBJS) $(ALLOCA)
-libsed_a_DEPENDENCIES += $(LIBOBJS) $(ALLOCA)
+lib_libsed_a_LIBADD += $(LIBOBJS) $(ALLOCA)
+lib_libsed_a_DEPENDENCIES += $(LIBOBJS) $(ALLOCA)

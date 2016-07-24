@@ -15,25 +15,42 @@
 
 PACKAGE = sed
 
-SUBDIRS = lib po sed doc testsuite gnulib-tests
+SUBDIRS = po . gnulib-tests
 
+
+# This applies to all parts: gnulib, sed, testsuites
+AM_CPPFLAGS =  -I$(top_srcdir) \
+               -I$(top_srcdir)/lib \
+               -I$(top_builddir)/lib \
+               -I$(top_builddir)/sed
+
+AM_CFLAGS =
+BUILT_SOURCES =
+CLEANFILES =
+EXTRA_DIST =
+MAINTAINERCLEANFILES =
+MOSTLYCLEANDIRS =
+MOSTLYCLEANFILES =
+SUFFIXES =
+bin_PROGRAMS =
+noinst_LIBRARIES =
 noinst_DATA =
 noinst_HEADERS = basicdefs.h
 DISTCLEANFILES =
 
-EXTRA_DIST = BUGS THANKS.in COPYING.DOC \
+EXTRA_DIST += BUGS THANKS.in COPYING.DOC \
   .version				\
   .mailmap ChangeLog-2014 po/ChangeLog-2014 \
   bootstrap bootstrap.conf build-aux/help2man \
   thanks-gen
 
-BUILT_SOURCES = .version
+BUILT_SOURCES += .version
 .version:
 	$(AM_V_GEN)echo $(VERSION) > $@-t && mv $@-t $@
 
 # Arrange so that .tarball-version appears only in the distribution
 # tarball, and never in a checked-out repository.
-dist-hook: gen-ChangeLog
+dist-hook: gen-ChangeLog dist-hook-man-page
 	$(AM_V_GEN)echo $(VERSION) > $(distdir)/.tarball-version
 
 gen_start_date = 2014-09-06
@@ -108,3 +125,9 @@ full-distcheck:
 ##	wget -O testsuite/BOOST.tests "$$BASEURL/BOOST.tests?$$QUERY" && \
 ##	wget -O testsuite/PCRE.tests "$$BASEURL/PCRE.tests?$$QUERY" && \
 ##	wget -O testsuite/SPENCER.tests "$$BASEURL/rxspencer/tests?$$QUERY"
+
+
+include $(top_srcdir)/lib/local.mk
+include $(top_srcdir)/sed/local.mk
+include $(top_srcdir)/doc/local.mk
+include $(top_srcdir)/testsuite/local.mk

@@ -184,3 +184,4 @@ xstrndup.m4
 /close-stream.m4
 /closeout.m4
 /fpending.m4
+/non-recursive-gnulib-prefix-hack.m4

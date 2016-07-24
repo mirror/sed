@@ -4,7 +4,7 @@ SHELL = /bin/sh
 
 # These are only fallback values. They are usually overridden by runtest.
 srcdir = .
-SED = ../sed/sed
+SED = ./sed/sed
 
 TIME=
 #TIME=time

@@ -6,7 +6,8 @@ AC_CONFIG_AUX_DIR(build-aux)
 AC_CONFIG_SRCDIR([sed/sed.c])
 AM_CONFIG_HEADER(config.h:config_h.in)
 AC_PREREQ(2.62)
-AM_INIT_AUTOMAKE([1.11.1 no-dist-gzip dist-xz color-tests parallel-tests])
+AM_INIT_AUTOMAKE([1.11.1 no-dist-gzip dist-xz color-tests parallel-tests
+                  subdir-objects])
 AM_SILENT_RULES([yes]) # make --enable-silent-rules the default.
 AC_CONFIG_MACRO_DIR([m4])
 
@@ -190,7 +191,8 @@ int main()
   exit (!test ());
 }
 ], [AC_MSG_RESULT([yes]); XFAIL_TESTS=],
-   [AC_MSG_RESULT([no]); XFAIL_TESTS='utf8-1 utf8-2 utf8-3 utf8-4'],
+   [AC_MSG_RESULT([no]); XFAIL_TESTS='testsuite/utf8-1 testsuite/utf8-2 \
+                                      testsuite/utf8-3 testsuite/utf8-4'],
    [AC_MSG_RESULT([don't care (cross compiling)]); XFAIL_TESTS=])
 
 # Under MinGW, the bsd.sh test fails because of the EOF character (^Z).
@@ -330,11 +332,7 @@ fi
 
 AC_CONFIG_FILES([
   Makefile
-  doc/Makefile
-  lib/Makefile
-  sed/Makefile
-  testsuite/Makefile
-  gnulib-tests/Makefile
   po/Makefile.in
+  gnulib-tests/Makefile
 ])
 AC_OUTPUT

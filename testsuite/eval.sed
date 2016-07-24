@@ -2,7 +2,7 @@
 
 	#Try eval command
 	/cpu/!b2
-	e../sed/sed 1q eval.in2
+	e./sed/sed 1q eval.in2
 
 :2
 p
@@ -10,7 +10,7 @@ i---
 h
 
 	#Try eval option
-	s,.* *cpu *,../sed/sed 1q eval.in2; echo "&",e
+	s,.* *cpu *,./sed/sed 1q eval.in2; echo "&",e
 
 :3
 p
@@ -19,7 +19,7 @@ i---
 
 	h
 	#Try eval option with print
-	s,.* *cpu.*,../sed/sed 1q eval.in2,ep
+	s,.* *cpu.*,./sed/sed 1q eval.in2,ep
 	g
 
 
@@ -31,11 +31,11 @@ $!d
 
 #Do some more tests
 s/.*/Doing some more tests -----------------------/p
-s,.*,../sed/sed 1q eval.in2,ep
+s,.*,./sed/sed 1q eval.in2,ep
 i---
-s,.*,../sed/sed 1q eval.in2,pe
+s,.*,./sed/sed 1q eval.in2,pe
 i---
-s,.*,../sed/sed 1q eval.in2,
+s,.*,./sed/sed 1q eval.in2,
 h
 e
 p

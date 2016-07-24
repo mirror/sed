@@ -31,7 +31,7 @@
 # in posix mode (compile.c:normalize_text() implementation).
 
 
-. "${srcdir=.}/init.sh"; path_prepend_ ../sed
+. "${srcdir=.}/testsuite/init.sh"; path_prepend_ ./sed
 print_ver_ sed
 
 fail=0

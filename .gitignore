@@ -64,3 +64,4 @@
 /testsuite/utf8-[1-4].out
 Makefile
 Makefile.in
+.dirstamp

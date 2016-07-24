@@ -216,3 +216,4 @@ xstrndup.h
 /closeout.h
 /fpending.c
 /fpending.h
+/stdalign.in.h

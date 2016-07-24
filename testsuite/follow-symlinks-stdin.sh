@@ -15,7 +15,7 @@
 
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
-. "${srcdir=.}/init.sh"; path_prepend_ ../sed
+. "${srcdir=.}/testsuite/init.sh"; path_prepend_ ./sed
 print_ver_ sed
 
 echo dbc > exp-out || framework_failure_

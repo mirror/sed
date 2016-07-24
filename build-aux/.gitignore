@@ -17,3 +17,4 @@ warn-on-use.h
 /useless-if-before-free
 /vc-list-files
 /update-copyright
+/prefix-gnulib-mk
