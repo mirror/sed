@@ -34,7 +34,9 @@
 /doc/sed.1
 /doc/sed.info
 /doc/stamp-vti
+/doc/.dirstamp
 /doc/version.texi
+/doc/coverage/
 /lib/Makefile
 /lib/arg-nonnull.h
 /lib/c++defs.h
@@ -44,6 +46,7 @@
 /lib/selinux/
 /lib/unused-parameter.h
 /lib/warn-on-use.h
+/lib/.dirstamp
 /m4
 /maint.mk
 /po/Makefile
@@ -56,12 +59,18 @@
 /sed/Makefile
 /sed/sed
 /sed/version.[ch]
+/sed/.dirstamp
 /stamp-h1
 /testsuite/*.log
 /testsuite/*.trs
 /testsuite/Makefile
 /testsuite/eval.in2
 /testsuite/utf8-[1-4].out
+/testsuite/test-mbrtowc
+/testsuite/get-mb-cur-max
+test-suite.log
 Makefile
 Makefile.in
 .dirstamp
+*.gcda
+*.gcno
