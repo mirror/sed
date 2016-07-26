@@ -174,3 +174,27 @@ exclude_file_name_regexp--sc_prohibit_empty_lines_at_EOF = \
 
 # Exempt test-related files from our 80-column limitation, for now.
 exclude_file_name_regexp--sc_long_lines = ^testsuite/
+
+
+# static analysis
+STAN_CFLAGS ?= "-g -O0"
+
+.PHONY: static-analysis-init
+static-analysis-init:
+	type scan-build 1>/dev/null 2>&1 || \
+	    { echo "scan-build program not found" >&2; exit 1; }
+	$(MAKE) clean
+
+.PHONY: static-analysis-config
+static-analysis-config:
+	test -x ./configure || \
+	    { echo "./configure script not found" >&2; exit 1; }
+	scan-build ./configure CFLAGS=$(STAN_CFLAGS)
+
+.PHONY: static-analysis-make
+static-analysis-make:
+	scan-build $(MAKE)
+
+.PHONY: static-analysis
+static-analysis: static-analysis-init static-analysis-config \
+                 static-analysis-make
