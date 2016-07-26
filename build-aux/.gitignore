@@ -1,3 +1,4 @@
+/config.rpath
 /*~
 arg-nonnull.h
 c++defs.h
@@ -18,3 +19,4 @@ warn-on-use.h
 /vc-list-files
 /update-copyright
 /prefix-gnulib-mk
+/git-version-gen
