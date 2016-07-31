@@ -312,14 +312,16 @@ main (int argc, char **argv)
 
         case 'E':
         case 'r':
-          if (extended_regexp_flags)
+#ifdef REG_PERL
+          if (extended_regexp_flags && (extended_regexp_flags!=REG_EXTENDED))
             usage(4);
+#endif
           extended_regexp_flags = REG_EXTENDED;
           break;
 
 #ifdef REG_PERL
         case 'R':
-          if (extended_regexp_flags)
+          if (extended_regexp_flags && (extended_regexp_flags!=REG_PERL)))
             usage(4);
           extended_regexp_flags = REG_PERL;
           break;
