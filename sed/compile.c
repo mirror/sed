@@ -603,6 +603,8 @@ mark_subst_opts (struct subst *cmd)
         break;
 
       case 'e':
+        if (posixicity == POSIXLY_BASIC)
+          bad_prog(_(UNKNOWN_S_OPT));
         cmd->eval = true;
         break;
 
