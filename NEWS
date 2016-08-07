@@ -2,6 +2,13 @@ GNU sed NEWS                                    -*- outline -*-
 
 * Noteworthy changes in release ?.? (????-??-??) [?]
 
+** Improvements
+
+  sed's regular expression matching is now typically 10x faster
+
+  sed now uses unlocked-io where available, resulting in faster I/O
+  operations.
+
 ** Bug fixes
 
   sed no longer accepts a ":" command without a label; before, it would
@@ -74,10 +81,6 @@ GNU sed NEWS                                    -*- outline -*-
   only .tar.xz files is enough.  It has been fine for coreutils, grep,
   diffutils and parted for a few years.
 
-** Improvements
-
-  sed now uses unlocked-io where available, resulting in faster I/O
-  operations.
 
 * Noteworthy changes in release 4.2.2 (2012-12-22) [stable]
 

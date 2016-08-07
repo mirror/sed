@@ -18,6 +18,7 @@
 #include <config.h>
 #include "basicdefs.h"
 #include "regex.h"
+#include "dfa.h"
 #include <stdio.h>
 #include "unlocked-io.h"
 
@@ -50,6 +51,7 @@ struct regex {
   regex_t pattern;
   int flags;
   size_t sz;
+  struct dfa *dfa;
   char re[1];
 };
 

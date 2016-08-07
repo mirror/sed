@@ -9,6 +9,7 @@ lib/set-acl.c
 lib/version-etc.c
 lib/xalloc-die.c
 sed/compile.c
+sed/dfa.c
 sed/execute.c
 sed/regexp.c
 sed/sed.c

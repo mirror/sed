@@ -17,15 +17,19 @@ bin_PROGRAMS += sed/sed
 
 localedir = $(datadir)/locale
 
-sed_sed_SOURCES = sed/sed.c \
-                  sed/compile.c \
-                  sed/execute.c \
-                  sed/regexp.c \
-                  sed/mbcs.c \
-                  sed/utils.c
+sed_sed_SOURCES =	\
+  sed/compile.c		\
+  sed/dfa.c		\
+  sed/execute.c		\
+  sed/mbcs.c		\
+  sed/regexp.c		\
+  sed/sed.c		\
+  sed/utils.c
 
-noinst_HEADERS += sed/sed.h \
-                  sed/utils.h
+noinst_HEADERS +=	\
+  sed/dfa.h		\
+  sed/sed.h		\
+  sed/utils.h
 
 sed_sed_CPPFLAGS = $(AM_CPPFLAGS)  -DLOCALEDIR=\"$(localedir)\"
 sed_sed_CFLAGS = $(AM_CFLAGS) $(WARN_CFLAGS) $(WERROR_CFLAGS)

@@ -39,6 +39,21 @@ static const char errors[] =
 
 
 
+void
+dfaerror (char const *mesg)
+{
+  panic ("%s", mesg);
+}
+
+void
+dfawarn (char const *mesg)
+{
+  if (!getenv ("POSIXLY_CORRECT"))
+    dfaerror (mesg);
+}
+
+
+
 static void
 compile_regex_1 (struct regex *new_regex, int needed_sub)
 {
@@ -126,6 +141,10 @@ compile_regex_1 (struct regex *new_regex, int needed_sub)
               needed_sub - 1);
       bad_prog(buf);
     }
+
+  dfasyntax (syntax, (new_regex->flags & REG_ICASE) != 0, '\n');
+  new_regex->dfa = dfaalloc ();
+  dfacomp (new_regex->re, new_regex->sz, new_regex->dfa, 1);
 }
 
 struct regex *
@@ -235,6 +254,26 @@ match_regex(struct regex *regex, char *buf, size_t buflen,
     compile_regex_1 (regex, regsize);
 
   regex->pattern.regs_allocated = REGS_REALLOCATE;
+
+  if (buf_start_offset == 0)
+    {
+      struct dfa *superset = dfasuperset (regex->dfa);
+
+      if (superset && !dfaexec (superset, buf, buf + buflen, true, NULL, NULL))
+        return 0;
+
+      if ((!regsize && regex->pattern.newline_anchor)
+          || (!superset && dfaisfast (regex->dfa)))
+        {
+          bool backref = false;
+
+          if (!dfaexec (regex->dfa, buf, buf + buflen, true, NULL, &backref))
+            return 0;
+
+          if (!regsize && regex->pattern.newline_anchor && !backref)
+            return 1;
+        }
+    }
 
   ret = re_search (&regex->pattern, buf, buflen, buf_start_offset,
                    buflen - buf_start_offset,
