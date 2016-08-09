@@ -47,7 +47,11 @@
 # define UNUSED
 #endif
 
-
+/* The number of extra bytes that must be allocated/usable, beyond
+   the declared "end" of each line buffer that may be passed to
+   match_regex.  This is imposed by its use of dfaexec.  */
+#define DFA_SLOP 1
+
 /* Sed operates a line at a time. */
 struct line {
   char *text;		/* Pointer to line allocated by malloc. */
@@ -157,7 +161,7 @@ resize_line (struct line *lb, size_t len)
   if (lb->alloc < INITIAL_BUFFER_SIZE)
     lb->alloc = INITIAL_BUFFER_SIZE;
 
-  lb->text = REALLOC(lb->text, inactive + lb->alloc, char);
+  lb->text = REALLOC(lb->text, inactive + lb->alloc + DFA_SLOP, char);
   lb->active = lb->text + inactive;
 }
 
@@ -285,7 +289,7 @@ str_append_modified(struct line *to, const char *string, size_t length,
 static void
 line_init(struct line *buf, struct line *state, size_t initial_size)
 {
-  buf->text = MALLOC(initial_size, char);
+  buf->text = MALLOC(initial_size + DFA_SLOP, char);
   buf->active = buf->text;
   buf->alloc = initial_size;
   buf->length = 0;
@@ -333,7 +337,7 @@ line_copy(struct line *from, struct line *to, int state)
       /* Use free()+MALLOC() instead of REALLOC() to
          avoid unnecessary copying of old text. */
       free(to->text);
-      to->text = MALLOC(to->alloc, char);
+      to->text = MALLOC(to->alloc + DFA_SLOP, char);
     }
 
   to->active = to->text;
