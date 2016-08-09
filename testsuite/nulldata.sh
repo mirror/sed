@@ -30,8 +30,7 @@ printf "xB\000xD\nEF\n\000" > exp-s-z || framework_failure_
 printf "1\nAB\000CD\n2\nEF\n3\n\000" > exp-=-nl || framework_failure_
 
 # '=' cmd processed with EOF=\0
-# NOTE: currenly the line numbers are printed with \n, regardless of -z
-printf "1\nAB\0002\nCD\nEF\n\000" > exp-=-z || framework_failure_
+printf "1\000AB\0002\000CD\nEF\n\000" > exp-=-z || framework_failure_
 
 
 # 'l' cmd processed with EOF=\n
@@ -42,11 +41,13 @@ EF$
 EOF
 
 # 'l' cmd processed with EOF=\0
-# NOTE: currently the line-endings of 'l' are always \n, regardless of -z
-cat <<\EOF >exp-l-z || framework_failure_
-AB$
-CD\nEF\n$
-EOF
+printf 'AB$\000CD\\nEF\\n$\000' >exp-l-z || framework_failure_
+
+# 'F' cmd with EOL=\n
+printf "in1\n" > exp-F-nl || framework_failure_
+
+# 'F' cmd with EOL=\0
+printf "in1\000" > exp-F-z || framework_failure_
 
 
 # Test substitution
@@ -74,6 +75,13 @@ compare_ exp-l-nl out-l-nl || fail=1
 sed -zn l in1 > out-l-z || fail=1
 compare_ exp-l-z out-l-z || fail=1
 
+
+# Test 'F' command
+sed -n 1F in1 > out-F-nl || fail=1
+compare_ exp-F-nl out-F-nl || fail=1
+
+sed -zn 1F in1 > out-F-z || fail=1
+compare_ exp-F-z out-F-z || fail=1
 
 
 Exit $fail

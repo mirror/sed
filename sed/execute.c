@@ -955,13 +955,15 @@ do_list(int line_len)
       }
       olen = o - obuf;
       if (width+olen >= line_len && line_len > 0) {
-          ck_fwrite("\\\n", 1, 2, fp);
+          ck_fwrite("\\", 1, 1, fp);
+          ck_fwrite(&buffer_delimiter, 1, 1, fp);
           width = 0;
       }
       ck_fwrite(obuf, 1, olen, fp);
       width += olen;
   }
-  ck_fwrite("$\n", 1, 2, fp);
+  ck_fwrite("$", 1, 1, fp);
+  ck_fwrite(&buffer_delimiter, 1, 1, fp);
   flush_output (fp);
 }
 
@@ -1567,15 +1569,17 @@ execute_program(struct vector *vec, struct input *input)
 
             case '=':
               output_missing_newline(&output_file);
-              fprintf(output_file.fp, "%lu\n",
-                      (unsigned long)input->line_number);
+              fprintf(output_file.fp, "%lu%c",
+                      (unsigned long)input->line_number,
+                      buffer_delimiter);
               flush_output(output_file.fp);
              break;
 
            case 'F':
               output_missing_newline(&output_file);
-              fprintf(output_file.fp, "%s\n",
-                      input->in_file_name);
+              fprintf(output_file.fp, "%s%c",
+                      input->in_file_name,
+                      buffer_delimiter);
               flush_output(output_file.fp);
              break;
 
