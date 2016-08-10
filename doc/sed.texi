@@ -1660,6 +1660,18 @@ if the character to the left and the character to the right
 are either both ``word'' characters or both ``non-word''
 characters.
 
+@item \s
+Matches whitespace characters (spaces and tabs).
+Newlines embedded in the pattern/hold spaces will also match:
+@example
+$ printf "a b\nc\nd\n" | sed 'N;s/\s/X/g'
+aXbXc
+d
+@end example
+
+@item \S
+Matches non-whitespace characrers.
+
 @item \`
 Matches only at the start of pattern space.  This is different
 from @code{^} in multi-line mode.
@@ -1667,6 +1679,12 @@ from @code{^} in multi-line mode.
 @item \'
 Matches only at the end of pattern space.  This is different
 from @code{$} in multi-line mode.
+
+@item \<
+Matches the beginning of a word.
+
+@item \>
+Matches the end of a word.
 
 @ifset PERL
 @item \G
