@@ -111,9 +111,7 @@ General help using GNU software: <http://www.gnu.org/gethelp/>.\n"));
   /* Only print the bug report address for `sed --help', otherwise we'll
      get reports for other people's bugs.  */
   if (!errmsg)
-    fprintf(out, _("E-mail bug reports to: <%s>.\n\
-Be sure to include the word ``%s'' somewhere in the ``Subject:'' field.\n"),
-          PACKAGE_BUGREPORT, PACKAGE);
+    fprintf(out, _("E-mail bug reports to: <%s>.\n"), PACKAGE_BUGREPORT);
 }
 
 static void
