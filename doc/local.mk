@@ -19,7 +19,7 @@ dist_man_MANS = doc/sed.1
 dist_noinst_DATA = doc/config.texi doc/sed.x doc/sed-in.texi doc/s-texi
 dist_noinst_SCRIPTS = doc/groupify.sed
 HELP2MAN = $(top_srcdir)/build-aux/help2man
-SEDBIN = $(top_builddir)/sed/sed
+SEDBIN = sed/sed
 
 AM_MAKEINFOHTMLFLAGS = --no-split
 
@@ -27,22 +27,28 @@ AM_MAKEINFOHTMLFLAGS = --no-split
 # scripts we group comments with lines following them;
 # since mantaining the "@group...@end group" manually
 # is a burden, we do this automatically
-$(top_srcdir)/doc/sed.texi: $(top_srcdir)/doc/s-texi
-$(top_srcdir)/doc/s-texi: doc/sed-in.texi $(top_srcdir)/doc/groupify.sed
-	sed -nf $(top_srcdir)/doc/groupify.sed \
-	  < $(top_srcdir)/doc/sed-in.texi > $(top_srcdir)/doc/sed-tmp.texi
-	if cmp $(top_srcdir)/doc/sed.texi $(top_srcdir)/doc/sed-tmp.texi; then \
-	  rm -f $(top_srcdir)/doc/sed-tmp.texi; \
+doc/sed.texi: $(srcdir)/doc/s-texi
+doc/s-texi: doc/sed-in.texi $(srcdir)/doc/groupify.sed
+	sed -nf $(srcdir)/doc/groupify.sed \
+	  < $(srcdir)/doc/sed-in.texi > $(srcdir)/doc/sed-tmp.texi
+	if cmp $(srcdir)/doc/sed.texi $(srcdir)/doc/sed-tmp.texi; then \
+	  rm -f $(srcdir)/doc/sed-tmp.texi; \
 	else \
-	  mv -f $(top_srcdir)/doc/sed-tmp.texi $(top_srcdir)/doc/sed.texi; \
+	  mv -f $(srcdir)/doc/sed-tmp.texi $(srcdir)/doc/sed.texi; \
 	fi
-	echo stamp > $(top_srcdir)/doc/s-texi
+	echo stamp > $(srcdir)/doc/s-texi
 
-doc/sed.1: $(top_srcdir)/sed/sed.c $(top_srcdir)/configure.ac \
-           $(top_srcdir)/doc/sed.x
-	$(HELP2MAN) --name "stream editor for filtering and transforming text" \
-	  -p sed --include $(top_srcdir)/doc/sed.x \
-	  -o $(top_srcdir)/doc/sed.1 $(SEDBIN)
+doc/sed.1: sed/sed .version $(srcdir)/doc/sed.x
+	$(AM_V_GEN)$(MKDIR_P) doc
+	$(AM_V_at)rm -rf $@-t
+	$(AM_V_at)$(HELP2MAN)						\
+	    --name 'stream editor for filtering and transforming text'	\
+	    -p sed --include $(srcdir)/doc/sed.x			\
+	    -o $@-t $(SEDBIN)						\
+	  && chmod a-w $@-t						\
+	  && mv $@-t $@
 
-dist-hook-man-page:
-	touch $(distdir)/doc/sed.1
+# Remove the generated sed.1 file, but only for a non-srcdir build.
+# Without this, 'make distcheck's final comparison would fail.
+distclean-local:
+	test x$(srcdir) = x$(builddir) || rm -f $(dist_man_MANS)

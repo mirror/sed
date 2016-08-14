@@ -50,7 +50,7 @@ BUILT_SOURCES += .version
 
 # Arrange so that .tarball-version appears only in the distribution
 # tarball, and never in a checked-out repository.
-dist-hook: gen-ChangeLog dist-hook-man-page
+dist-hook: gen-ChangeLog
 	$(AM_V_GEN)echo $(VERSION) > $(distdir)/.tarball-version
 
 gen_start_date = 2014-09-06
