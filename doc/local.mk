@@ -40,7 +40,7 @@ doc/s-texi: doc/sed-in.texi $(srcdir)/doc/groupify.sed
 
 doc/sed.1: sed/sed .version $(srcdir)/doc/sed.x
 	$(AM_V_GEN)$(MKDIR_P) doc
-	$(AM_V_at)rm -rf $@-t
+	$(AM_V_at)rm -rf $@ $@-t
 	$(AM_V_at)$(HELP2MAN)						\
 	    --name 'stream editor for filtering and transforming text'	\
 	    -p sed --include $(srcdir)/doc/sed.x			\
