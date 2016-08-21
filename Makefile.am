@@ -131,3 +131,12 @@ include $(top_srcdir)/lib/local.mk
 include $(top_srcdir)/sed/local.mk
 include $(top_srcdir)/doc/local.mk
 include $(top_srcdir)/testsuite/local.mk
+
+# Remove the generated sed.1 file, but only for a non-srcdir build.
+# Without this, 'make distcheck's final comparison would fail.
+# Also remove lib/.deps/{getfilecon,obstack}.Po,
+# which are left behind by bleeding edge automake.
+# Without this, 'make distcheck's final comparison would fail.
+distclean-local:
+	test x$(srcdir) = x$(builddir) || rm -f $(dist_man_MANS)
+	rm -f lib/.deps/getfilecon.Po lib/.deps/obstack.Po

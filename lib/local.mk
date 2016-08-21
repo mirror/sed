@@ -22,8 +22,3 @@ lib_libsed_a_CFLAGS = $(AM_CFLAGS) $(GNULIB_WARN_CFLAGS) $(WERROR_CFLAGS)
 
 lib_libsed_a_LIBADD += $(LIBOBJS) $(ALLOCA)
 lib_libsed_a_DEPENDENCIES += $(LIBOBJS) $(ALLOCA)
-
-# This is a kludge to remove lib/.deps/{getfilecon,obstack}.Po,
-# which are left behind by bleeding edge automake.
-# Without this, 'make distcheck's final comparison would fail.
-MOSTLYCLEANFILES += lib/.deps/*.Po

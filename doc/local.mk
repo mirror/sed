@@ -47,8 +47,3 @@ doc/sed.1: sed/sed .version $(srcdir)/doc/sed.x
 	    -o $@-t $(SEDBIN)						\
 	  && chmod a-w $@-t						\
 	  && mv $@-t $@
-
-# Remove the generated sed.1 file, but only for a non-srcdir build.
-# Without this, 'make distcheck's final comparison would fail.
-distclean-local:
-	test x$(srcdir) = x$(builddir) || rm -f $(dist_man_MANS)
