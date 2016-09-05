@@ -368,6 +368,15 @@ of each file, @code{$} refers to the last line of each file,
 and files invoked from the @code{R} commands are rewound at the
 start of each file.
 
+@item --sandbox
+@opindex --sandbox
+@cindex Sandbox mode
+In sandbox mode,  @code{e/w/r} commands are rejected - programs containing
+them will be aborted without being run. Sandbox mode ensures @command{sed}
+operates only on the input files designated on the command line, and
+cannot run external programs.
+
+
 @item -u
 @itemx --unbuffered
 @opindex -u

@@ -19,6 +19,7 @@
 #include "sed.h"
 
 
+#include <limits.h>
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
@@ -52,6 +53,9 @@ bool separate_files = false;
 
 /* If set, follow symlinks when processing in place */
 bool follow_symlinks = false;
+
+/* If set, opearate in 'sandbox' mode */
+bool sandbox = false;
 
 /* How do we edit files in-place? (we don't if NULL) */
 char *in_place_extension = NULL;
@@ -161,6 +165,8 @@ Usage: %s [OPTION]... {script-only-if-no-other-script} [input-file]...\n\
   fprintf(out, _("  -s, --separate\n\
                  consider files as separate rather than as a single,\n\
                  continuous long stream.\n"));
+  fprintf(out, _("      --sandbox\n\
+                 operate in sandbox mode.\n"));
   fprintf(out, _("  -u, --unbuffered\n\
                  load minimal amounts of data from the input files and flush\n\
                  the output buffers more often\n"));
@@ -189,6 +195,8 @@ main (int argc, char **argv)
 #define SHORTOPTS "bsnrzuEe:f:l:i::V:"
 #endif
 
+  enum { SANDBOX_OPTION = CHAR_MAX+1 };
+
   static const struct option longopts[] = {
     {"binary", 0, NULL, 'b'},
     {"regexp-extended", 0, NULL, 'r'},
@@ -204,6 +212,7 @@ main (int argc, char **argv)
     {"quiet", 0, NULL, 'n'},
     {"posix", 0, NULL, 'p'},
     {"silent", 0, NULL, 'n'},
+    {"sandbox", 0, NULL, SANDBOX_OPTION},
     {"separate", 0, NULL, 's'},
     {"unbuffered", 0, NULL, 'u'},
     {"version", 0, NULL, 'v'},
@@ -327,6 +336,10 @@ main (int argc, char **argv)
 
         case 's':
           separate_files = true;
+          break;
+
+        case SANDBOX_OPTION:
+          sandbox = true;
           break;
 
         case 'u':

@@ -139,7 +139,8 @@ static const char errors[] =
   "unknown command: `%c'\0"
   "incomplete command\0"
   "\":\" lacks a label\0"
-  "recursive escaping after \\c not allowed";
+  "recursive escaping after \\c not allowed\0"
+  "e/r/w commands disabled in sandbox mode";
 
 #define BAD_BANG (errors)
 #define BAD_COMMA (BAD_BANG + sizeof(N_("multiple `!'s")))
@@ -185,7 +186,10 @@ static const char errors[] =
   + sizeof(N_("incomplete command")))
 #define RECURSIVE_ESCAPE_C (COLON_LACKS_LABEL \
   + sizeof(N_("\":\" lacks a label")))
-/* #define END_ERRORS (COLON_LACKS_LABEL + sizeof(N_("\":\" lacks a label"))) */
+#define DISALLOWED_CMD (RECURSIVE_ESCAPE_C \
+  + sizeof(N_("recursive escaping after \\c not allowed")))
+/* #define END_ERRORS (DISALLOWED_CMD \
+     + sizeof(N_( "e/r/w commands disabled in sandbox mode"))) */
 
 static struct output *file_read = NULL;
 static struct output *file_write = NULL;
@@ -339,6 +343,9 @@ read_filename(void)
 {
   struct buffer *b;
   int ch;
+
+  if (sandbox)
+    bad_prog(_(DISALLOWED_CMD));
 
   b = init_buffer();
   ch = in_nonblank();
@@ -1106,6 +1113,9 @@ compile_program(struct vector *vector)
           break;
 
         case 'e':
+          if (sandbox)
+            bad_prog(_(DISALLOWED_CMD));
+
           ch = in_nonblank();
           if (ch == EOF || ch == '\n')
             {
@@ -1235,6 +1245,9 @@ compile_program(struct vector *vector)
             cur_cmd->x.cmd_subst->regx =
               compile_regex(b, flags, cur_cmd->x.cmd_subst->max_id + 1);
             free_buffer(b);
+
+            if (cur_cmd->x.cmd_subst->eval && sandbox)
+              bad_prog(_(DISALLOWED_CMD));
           }
           break;
 

@@ -240,6 +240,9 @@ extern bool use_extended_syntax_p;
 extern int mb_cur_max;
 extern bool is_utf8;
 
+/* If set, operate in 'sandbox' mode - disable e/r/w commands */
+extern bool sandbox;
+
 #define MBRTOWC(pwc, s, n, ps) \
   (mb_cur_max == 1 ? \
    (*(pwc) = btowc (*(unsigned char *) (s)), 1) : \

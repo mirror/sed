@@ -49,6 +49,7 @@ T =					\
   testsuite/range-overlap.sh		\
   testsuite/recursive-escape-c.sh	\
   testsuite/regex-errors.sh		\
+  testsuite/sandbox.sh			\
   testsuite/stdin-prog.sh		\
   testsuite/subst-options.sh		\
   testsuite/subst-mb-incomplete.sh	\

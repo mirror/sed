@@ -82,6 +82,11 @@ GNU sed NEWS                                    -*- outline -*-
   diffutils and parted for a few years.
 
 
+** New Features
+
+  new --sandbox option rejects programs with r/w/e commands.
+
+
 * Noteworthy changes in release 4.2.2 (2012-12-22) [stable]
 
 * don't misbehave (truncate input) for lines of length 2^31 and longer
