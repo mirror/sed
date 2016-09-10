@@ -142,8 +142,9 @@ compile_regex_1 (struct regex *new_regex, int needed_sub)
       bad_prog(buf);
     }
 
-  dfasyntax (syntax, (new_regex->flags & REG_ICASE) != 0, '\n');
+  int dfaopts = (new_regex->flags & REG_ICASE) ? DFA_CASE_FOLD : 0;
   new_regex->dfa = dfaalloc ();
+  dfasyntax (new_regex->dfa, &localeinfo, syntax, dfaopts);
   dfacomp (new_regex->re, new_regex->sz, new_regex->dfa, 1);
 }
 

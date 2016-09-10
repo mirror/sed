@@ -79,6 +79,8 @@ static struct vector *the_program = NULL;
    registered cleanup function.  */
 static char const *G_file_to_unlink;
 
+struct localeinfo localeinfo;
+
 /* When exiting between temporary file creation and the rename
    associated with a sed -i invocation, remove that file.  */
 static void
@@ -235,6 +237,7 @@ main (int argc, char **argv)
 #endif
   set_program_name (argv[0]);
   initialize_mbcs ();
+  init_localeinfo (&localeinfo);
 
   /* Arrange to remove any un-renamed temporary file,
      upon premature exit.  */

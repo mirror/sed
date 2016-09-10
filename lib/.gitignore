@@ -220,3 +220,11 @@ xstrndup.h
 /acl-internal.c
 /get-permissions.c
 /set-permissions.c
+/ctype.in.h
+/dfa.c
+/dfa.h
+/getprogname.c
+/getprogname.h
+/localeinfo.c
+/localeinfo.h
+/isblank.c

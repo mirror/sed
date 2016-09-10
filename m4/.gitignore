@@ -218,3 +218,7 @@ xstrndup.m4
 /fpending.m4
 /non-recursive-gnulib-prefix-hack.m4
 /ctype.m4
+/assert.m4
+/flexmember.m4
+/getprogname.m4
+/isblank.m4

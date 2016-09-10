@@ -17,8 +17,9 @@
 
 #include <config.h>
 #include "basicdefs.h"
-#include "regex.h"
 #include "dfa.h"
+#include "localeinfo.h"
+#include "regex.h"
 #include <stdio.h>
 #include "unlocked-io.h"
 
@@ -201,6 +202,8 @@ void release_regex (struct regex *);
 int process_files (struct vector *, char **argv);
 
 int main (int, char **);
+
+extern struct localeinfo localeinfo;
 
 extern int extended_regexp_flags;
 

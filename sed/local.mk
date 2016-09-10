@@ -19,7 +19,6 @@ localedir = $(datadir)/locale
 
 sed_sed_SOURCES =	\
   sed/compile.c		\
-  sed/dfa.c		\
   sed/execute.c		\
   sed/mbcs.c		\
   sed/regexp.c		\
@@ -27,7 +26,6 @@ sed_sed_SOURCES =	\
   sed/utils.c
 
 noinst_HEADERS +=	\
-  sed/dfa.h		\
   sed/sed.h		\
   sed/utils.h
 
