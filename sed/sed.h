@@ -53,6 +53,8 @@ struct regex {
   int flags;
   size_t sz;
   struct dfa *dfa;
+  bool begline;
+  bool endline;
   char re[1];
 };
 

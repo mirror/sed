@@ -108,7 +108,8 @@ SEDTESTS += testsuite/appquit testsuite/enable testsuite/sep		\
         testsuite/badenc testsuite/inplace-hold testsuite/brackets	\
         testsuite/amp-escape testsuite/help testsuite/file		\
         testsuite/quiet testsuite/factor testsuite/binary3		\
-        testsuite/binary2 testsuite/binary testsuite/dc
+        testsuite/binary2 testsuite/binary testsuite/dc			\
+        testsuite/newline-anchor
 
 # Note that the first lines are statements.  They ensure that environment
 # variables that can perturb tests are unset or set to expected values.
@@ -274,6 +275,9 @@ EXTRA_DIST += \
 	testsuite/newjis.good \
 	testsuite/newjis.inp \
 	testsuite/newjis.sed \
+	testsuite/newline-anchor.good \
+	testsuite/newline-anchor.inp \
+	testsuite/newline-anchor.sed \
 	testsuite/noeol.good \
 	testsuite/noeol.inp \
 	testsuite/noeol.sed \

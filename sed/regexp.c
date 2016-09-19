@@ -147,6 +147,18 @@ compile_regex_1 (struct regex *new_regex, int needed_sub)
   new_regex->dfa = dfaalloc ();
   dfasyntax (new_regex->dfa, &localeinfo, syntax, dfaopts);
   dfacomp (new_regex->re, new_regex->sz, new_regex->dfa, 1);
+
+  /* The patterns which consist of only ^ or $ often appear in
+     substitution, but regex and dfa are not good at them, as regex does
+     not build fastmap, and as all in buffer must be scanned for $.  So
+     we mark them to handle manually.  */
+  if (new_regex->sz == 1)
+    {
+      if (new_regex->re[0] == '^')
+        new_regex->begline = true;
+      if (new_regex->re[0] == '$')
+        new_regex->endline = true;
+    }
 }
 
 struct regex *
@@ -256,6 +268,70 @@ match_regex(struct regex *regex, char *buf, size_t buflen,
     compile_regex_1 (regex, regsize);
 
   regex->pattern.regs_allocated = REGS_REALLOCATE;
+
+  /* Optimized handling for '^' and '$' patterns */
+  if (regex->begline || regex->endline)
+    {
+      size_t offset;
+
+      if (regex->endline)
+        {
+          const char *p = NULL;
+
+          if (regex->flags & REG_NEWLINE)
+            p = memchr (buf + buf_start_offset, buffer_delimiter, buflen);
+
+          offset = p ? p - buf : buflen;
+        }
+      else if (buf_start_offset == 0)
+        /* begline anchor, starting at beginning of the buffer. */
+        offset = 0;
+      else if (!(regex->flags & REG_NEWLINE))
+        /* begline anchor, starting in the middle of the text buffer,
+           and multiline regex is not specified - will never match.
+           Example: seq 2 | sed 'N;s/^/X/g' */
+        return 0;
+      else if (buf[buf_start_offset - 1] == buffer_delimiter)
+        /* begline anchor, starting in the middle of the text buffer,
+           with multiline match, and the current character
+           is the line delimiter - start here.
+           Example: seq 2 | sed 'N;s/^/X/mg' */
+        offset = buf_start_offset;
+      else
+        {
+          /* begline anchor, starting in the middle of the search buffer,
+             all previous optimizions didn't work: search
+             for the next line delimiter character in the buffer,
+             and start from there if found. */
+          const char *p = memchr (buf + buf_start_offset, buffer_delimiter,
+                                  buflen - buf_start_offset);
+
+          if (p == NULL)
+            return 0;
+
+          offset = p - buf + 1;
+        }
+
+      if (regsize)
+        {
+          size_t i;
+
+          if (!regarray->start)
+            {
+              regarray->start = MALLOC (1, regoff_t);
+              regarray->end = MALLOC (1, regoff_t);
+              regarray->num_regs = 1;
+            }
+
+          regarray->start[0] = offset;
+          regarray->end[0] = offset;
+
+          for (i = 1 ; i < regarray->num_regs; ++i)
+            regarray->start[i] = regarray->end[i] = -1;
+        }
+
+      return 1;
+    }
 
   if (buf_start_offset == 0)
     {
