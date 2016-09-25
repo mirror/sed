@@ -93,13 +93,14 @@ compile_regex_1 (struct regex *new_regex, int needed_sub)
     }
 
 #ifdef RE_ICASE
-  syntax |= (new_regex->flags & REG_ICASE) ? RE_ICASE : 0;
+  if (new_regex->flags & REG_ICASE)
+    syntax |= RE_ICASE;
+  else
 #endif
+    new_regex->pattern.fastmap = malloc (1 << (sizeof (char) * 8));
 #ifdef RE_NO_SUB
   syntax |= needed_sub ? 0 : RE_NO_SUB;
 #endif
-
-  new_regex->pattern.fastmap = malloc (1 << (sizeof (char) * 8));
 
   /* If REG_NEWLINE is set, newlines are treated differently.  */
   if (new_regex->flags & REG_NEWLINE)

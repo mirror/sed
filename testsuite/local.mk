@@ -34,9 +34,9 @@ T =					\
   testsuite/in-place-hyphen.sh		\
   testsuite/in-place-suffix-backup.sh	\
   testsuite/invalid-mb-seq-UMR.sh	\
+  testsuite/mb-bad-delim.sh		\
   testsuite/mb-charclass-non-utf8.sh	\
   testsuite/mb-match-slash.sh		\
-  testsuite/mb-bad-delim.sh		\
   testsuite/mb-y-translate.sh		\
   testsuite/normalize-text.sh		\
   testsuite/nulldata.sh			\
@@ -55,6 +55,7 @@ T =					\
   testsuite/subst-mb-incomplete.sh	\
   testsuite/subst-replacement.sh	\
   testsuite/temp-file-cleanup.sh	\
+  testsuite/title-case.sh		\
   testsuite/unbuffered.sh
 
 if TEST_SYMLINKS
