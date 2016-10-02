@@ -289,7 +289,7 @@ including additional commands.
 Most of the extensions accept @command{sed} programs that
 are outside the syntax mandated by @acronym{POSIX}, but some
 of them (such as the behavior of the @command{N} command
-described in @pxref{Reporting Bugs}) actually violate the
+described in @ref{Reporting Bugs}) actually violate the
 standard.  If you want to disable only the latter kind of
 extension, you can set the @code{POSIXLY_CORRECT} variable
 to a non-empty value.
@@ -1363,7 +1363,7 @@ added between the lines (instead of a new line).
 
 By default @command{sed} does not terminate if there is no 'next' input line.
 This is a GNU extension which can be disabled with @option{--posix}.
-@pxref{N_command_last_line,,N command on the last line}.
+@xref{N_command_last_line,,N command on the last line}.
 
 
 @item P
@@ -3520,7 +3520,7 @@ a character class
 a back reference (see next section)
 
 @item
-a parenthesized subpattern (unless it is an assertion; @pxref{Assertions})
+a parenthesized subpattern, unless it is an assertion (@pxref{Assertions}).
 @end itemize
 
 The general repetition quantifier specifies a minimum and
