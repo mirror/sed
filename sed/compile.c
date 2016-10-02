@@ -1053,6 +1053,7 @@ compile_program(struct vector *vector)
            case 'e': case 'F': case 'v': case 'z': case 'L':
            case 'Q': case 'T': case 'R': case 'W':
              bad_command(ch);
+             /* FALLTHROUGH */
 
             case 'a': case 'i': case 'l':
             case '=': case 'r':

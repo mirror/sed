@@ -120,7 +120,7 @@ General help using GNU software: <http://www.gnu.org/gethelp/>.\n"));
     fprintf(out, _("E-mail bug reports to: <%s>.\n"), PACKAGE_BUGREPORT);
 }
 
-static void
+_Noreturn static void
 usage(int status)
 {
   FILE *out = status ? stderr : stdout;

@@ -1480,6 +1480,7 @@ execute_program(struct vector *vec, struct input *input)
                 output_line(line.active, line.length, line.chomped,
                             &output_file);
               dump_append_queue();
+              /* FALLTHROUGH */
 
             case 'Q':
               return cur_cmd->x.int_arg == -1 ? 0 : cur_cmd->x.int_arg;
