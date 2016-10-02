@@ -221,6 +221,7 @@ xstrndup.h
 /get-permissions.c
 /set-permissions.c
 /ctype.in.h
+/ctype.h
 /dfa.c
 /dfa.h
 /getprogname.c
@@ -228,3 +229,7 @@ xstrndup.h
 /localeinfo.c
 /localeinfo.h
 /isblank.c
+/limits.in.h
+/limits.h
+/hard-locale.c
+/hard-locale.h

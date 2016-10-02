@@ -15,6 +15,7 @@
 /THANKS
 /aclocal.m4
 /autom4te.cache
+/build-aux/ar-lib
 /build-aux/compile
 /build-aux/config.guess
 /build-aux/config.sub
@@ -30,6 +31,7 @@
 /config.status
 /config_h.in
 /configure
+/doc/.gitignore
 /doc/Makefile
 /doc/sed.1
 /doc/sed.info
