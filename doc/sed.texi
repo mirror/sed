@@ -37,114 +37,52 @@ This file documents version @value{VERSION} of
 
 Copyright @copyright{} 1998-2016 Free Software Foundation, Inc.
 
-This document is released under the terms of the @acronym{GNU} Free
-Documentation License as published by the Free Software Foundation;
-either version 1.1, or (at your option) any later version.
-
-You should have received a copy of the @acronym{GNU} Free Documentation
-License along with @value{SSED}; see the file @file{COPYING.DOC}.
-If not, write to the Free Software Foundation, 59 Temple Place - Suite
-330, Boston, MA 02110-1301, USA.
-
-There are no Cover Texts and no Invariant Sections; this text, along
-with its equivalent in the printed manual, constitutes the Title Page.
+@quotation
+Permission is granted to copy, distribute and/or modify this document
+under the terms of the GNU Free Documentation License, Version 1.3
+or any later version published by the Free Software Foundation;
+with no Invariant Sections, no Front-Cover Texts, and no
+Back-Cover Texts.  A copy of the license is included in the
+section entitled ``GNU Free Documentation License''.
+@end quotation
 @end copying
 
 @setchapternewpage off
 
 @titlepage
-@title @command{sed}, a stream editor
+@title @value{SSED}, a stream editor
 @subtitle version @value{VERSION}, @value{UPDATED}
 @author by Ken Pizzini, Paolo Bonzini
 
 @page
 @vskip 0pt plus 1filll
-Copyright @copyright{} 1998, 1999, 2014 Free Software Foundation, Inc.
-
 @insertcopying
-
-Published by the Free Software Foundation, @*
-51 Franklin Street, Fifth Floor @*
-Boston, MA 02110-1301, USA
 @end titlepage
 
-
-@node Top
-@top
+@contents
 
 @ifnottex
+@node Top
+@top @value{SSED}
+
 @insertcopying
 @end ifnottex
 
 @menu
 * Introduction::               Introduction
 * Invoking sed::               Invocation
-* Exit status::                Exit status
-* sed Programs::               @command{sed} programs
+* sed scripts::                @command{sed} scripts
+* sed addresses::              Addresses: selecting lines
+* sed regular expressions::    Regular expressions: selecting text
+* advanced sed::               Advanced @command{sed}: cycles and buffers
 * Examples::                   Some sample scripts
 * Limitations::                Limitations and (non-)limitations of @value{SSED}
 * Other Resources::            Other resources for learning about @command{sed}
 * Reporting Bugs::             Reporting bugs
-
-* Extended regexps::           @command{egrep}-style regular expressions
-@ifset PERL
-* Perl regexps::               Perl-style regular expressions
-@end ifset
-
+* GNU Free Documentation License:: Copying and sharing this manual
 * Concept Index::              A menu with all the topics in this manual.
 * Command and Option Index::   A menu with all @command{sed} commands and
                                command-line options.
-
-@detailmenu
---- The detailed node listing ---
-
-sed Programs:
-* Execution Cycle::                 How @command{sed} works
-* Addresses::                       Selecting lines with @command{sed}
-* Regular Expressions::             Overview of regular expression syntax
-* Common Commands::                 Often used commands
-* The "s" Command::                 @command{sed}'s Swiss Army Knife
-* Other Commands::                  Less frequently used commands
-* Programming Commands::            Commands for @command{sed} gurus
-* Extended Commands::               Commands specific of @value{SSED}
-* Escapes::                         Specifying special characters
-
-Examples:
-* Centering lines::
-* Increment a number::
-* Rename files to lower case::
-* Print bash environment::
-* Reverse chars of lines::
-* tac::                             Reverse lines of files
-* cat -n::                          Numbering lines
-* cat -b::                          Numbering non-blank lines
-* wc -c::                           Counting chars
-* wc -w::                           Counting words
-* wc -l::                           Counting lines
-* head::                            Printing the first lines
-* tail::                            Printing the last lines
-* uniq::                            Make duplicate lines unique
-* uniq -d::                         Print duplicated lines of input
-* uniq -u::                         Remove all duplicated lines
-* cat -s::                          Squeezing blank lines
-
-@ifset PERL
-Perl regexps::                      Perl-style regular expressions
-* Backslash::                       Introduces special sequences
-* Circumflex/dollar sign/period::   Behave specially with regard to new lines
-* Square brackets::                 Are a bit different in strange cases
-* Options setting::                 Toggle modifiers in the middle of a regexp
-* Non-capturing subpatterns::       Are not counted when backreferencing
-* Repetition::                      Allows for non-greedy matching
-* Backreferences::                  Allows for more than 10 back references
-* Assertions::                      Allows for complex look ahead matches
-* Non-backtracking subpatterns::    Often gives more performance
-* Conditional subpatterns::         Allows if/then/else branches
-* Recursive patterns::              For example to match parentheses
-* Comments::                        Because things can get complex...
-@end ifset
-
-@end detailmenu
 @end menu
 
 
@@ -166,26 +104,119 @@ editors.
 
 
 @node Invoking sed
-@chapter Invocation
+@chapter Running sed
 
+This chapter covers how to run @command{sed}. Details of @command{sed}
+scripts and individual @command{sed} commands are discussed in the
+next chapter.
+
+
+@node Overview
+@section Overview
 Normally @command{sed} is invoked like this:
 
 @example
 sed SCRIPT INPUTFILE...
 @end example
 
+For example, to replace all occurrences of @samp{hello} to @samp{world}
+in the file @file{input.txt}:
+
+@example
+sed 's/hello/world/' input.txt > output.txt
+@end example
+
+@cindex stdin
+@cindex standard input
+If you do not specify @var{INPUTFILE}, or if @var{INPUTFILE} is @file{-},
+@command{sed} filters the contents of the standard input. The following
+commands are equivalent:
+
+@example
+sed 's/hello/world/' input.txt > output.txt
+sed 's/hello/world/' < input.txt > output.txt
+cat input.txt | sed 's/hello/world/' - > output.txt
+@end example
+
+@cindex stdout
+@cindex output
+@cindex standard output
+@cindex -i, example
+@command{sed} writes output to standard output. Use @option{-i} to edit
+files in-place instead of printing to standard output.
+See also the @code{W} and @code{s///w} commands for writing output to
+other files. The following command modifies @file{file.txt} and
+does not produce any output:
+
+@example
+sed -i 's/hello/world' file.txt
+@end example
+
+@cindex -n, example
+@cindex p, example
+@cindex suppressing output
+@cindex output, suppressing
+By default @command{sed} prints all processed input (except input
+that has been modified/deleted by commands such as @command{d}).
+Use @option{-n} to suppress output, and the @code{p} command
+to print specific lines. The following command prints only line 45
+of the input file:
+
+@example
+sed -n '45p' file.txt
+@end example
+
+
+
+@cindex multiple files
+@cindex -s, example
+@command{sed} treats multiple input files as one long stream.
+The following example prints the first line of the first file
+(@file{one.txt}) and the last line of the last file (@file{three.txt}).
+Use @option{-s} to reverse this behavior.
+
+@example
+sed -n  '1p ; $p' one.txt two.txt three.txt
+@end example
+
+
+@cindex -e, example
+@cindex --expression, example
+@cindex -f, example
+@cindex --file, example
+@cindex script parameter
+@cindex parameters, script
+Without @option{-e} or @option{-f} options, @command{sed} uses
+the first non-option parameter as the @var{script}, and the following
+non-option parameters as input files.
+If @option{-e} or @option{-f} options are used to specify a @var{script},
+all non-option parameters are taken as input files.
+Options @option{-e} and @option{-f} can be combined, and can appear
+multiple times (in which case the final effective @var{script} will be
+concatenation of all the individual @var{script}s).
+
+The following examples are equivalent:
+
+@example
+sed 's/hello/world/' input.txt > output.txt
+
+sed -e 's/hello/world/' input.txt > output.txt
+sed --expression='s/hello/world/' input.txt > output.txt
+
+echo 's/hello/world/' > myscript.sed
+sed -f myscript.sed input.txt > output.txt
+sed --file=myscript.sed input.txt > output.txt
+@end example
+
+
+@node Command-Line Options
+@section Command-Line Options
+
 The full format for invoking @command{sed} is:
 
 @example
 sed OPTIONS... [SCRIPT] [INPUTFILE...]
 @end example
-
-If you do not specify @var{INPUTFILE}, or if @var{INPUTFILE} is @file{-},
-@command{sed} filters the contents of the standard input.  The @var{script}
-is actually the first non-option parameter, which @command{sed} specially
-considers a script and not an input file if (and only if) none of the
-other @var{options} specifies a script to be executed, that is if neither
-of the @option{-e} and @option{-f} options is specified.
 
 @command{sed} may be invoked with the following command-line options:
 
@@ -339,21 +370,8 @@ so use @option{-E} for portability.
 GNU sed has accepted @option{-E} as an undocumented option for years,
 and *BSD seds have accepted @option{-E} for years as well,
 but scripts that use @option{-E} might not port to other older systems.
-@xref{Extended regexps, , Extended regular expressions}.
+@xref{ERE syntax, , Extended regular expressions}.
 
-@ifset PERL
-@item -R
-@itemx --regexp-perl
-@opindex -R
-@opindex --regexp-perl
-@cindex Perl-style regular expressions, choosing
-@cindex @value{SSEDEXT}, Perl-style regular expressions
-Use Perl-style regular expressions rather than basic
-regular expressions.  Perl-style regexps are extremely
-powerful but are a @value{SSED} extension and hence scripts that
-use it are not portable.  @xref{Perl regexps, ,
-Perl-style regular expressions}.
-@end ifset
 
 @item -s
 @itemx --separate
@@ -414,7 +432,7 @@ A file name of @samp{-} refers to the standard input stream.
 The standard input will be processed if no file names are specified.
 
 @node Exit status
-@chapter Exit status
+@section Exit status
 @cindex exit status
 An exit status of zero indicates success, and a nonzero value
 indicates failure. @value{SSED} returns the following exit status
@@ -438,6 +456,8 @@ An I/O error, or a serious processing error during runtime,
 @value{SSED} aborted immediately.
 @end table
 
+@cindex Q, example
+@cindex exit status, example
 Additionally, the commands @code{q} and @code{Q} can be used to terminate
 @command{sed} with a custom exit code value (this is a @value{SSED} extension):
 
@@ -447,605 +467,315 @@ $ echo | sed 'Q42' ; echo $?
 @end example
 
 
-@node sed Programs
-@chapter @command{sed} Programs
+@node sed scripts
+@chapter @command{sed} scripts
 
-@cindex @command{sed} program structure
+
+@menu
+* sed script overview::      @command{sed} script overview
+* sed commands list::        @command{sed} commands summary
+* The "s" Command::          @command{sed}'s Swiss Army Knife
+* Common Commands::          Often used commands
+* Other Commands::           Less frequently used commands
+* Programming Commands::     Commands for @command{sed} gurus
+* Extended Commands::        Commands specific of @value{SSED}
+@end menu
+
+@node sed script overview
+@section @command{sed} script overview
+
+@cindex @command{sed} script structure
 @cindex Script structure
+
 A @command{sed} program consists of one or more @command{sed} commands,
 passed in by one or more of the
 @option{-e}, @option{-f}, @option{--expression}, and @option{--file}
 options, or the first non-option argument if zero of these
 options are used.
 This document will refer to ``the'' @command{sed} script;
-this is understood to mean the in-order catenation
+this is understood to mean the in-order concatenation
 of all of the @var{script}s and @var{script-file}s passed in.
+@xref{Overview} for examples.
 
+
+@cindex @command{sed} commands syntax
+@cindex syntax, @command{sed} commands
+@cindex addresses, syntax
+@cindex syntax, addresses
+@command{sed} commands follow this syntax:
+
+@example
+[addr]@var{X}[options]
+@end example
+
+@var{X} is a single-letter @command{sed} command.
+@c TODO: add @pxref{commands} when there is a command-list section.
+@code{[addr]} is an optional line address. If @code{[addr]} is specified,
+the command @var{X} will be executed only on the matched lines.
+@code{[addr]} can be a single line number, a regular expression,
+or a range of lines (@pxref{sed addresses}).
+Additional @code{[options]} are used for some @command{sed} commands.
+
+@cindex @command{d}, example
+@cindex address range, example
+@cindex example, address range
+The following example deletes  lines 30 to 35 in the input.
+@code{30,35} is an address range. @command{d} is the delete command:
+
+@example
+sed '30,35d' input.txt > output.txt
+@end example
+
+@cindex @command{q}, example
+@cindex regular expression, example
+@cindex example, regular expression
+The following example prints all input until a line
+starting with the word @samp{foo} is found. If such line is found,
+@command{sed} will terminate with exit status 42.
+If such line was not found (and no other error occurred), @command{sed}
+will exit with status 0.
+@code{/^foo/} is a regular-expression address.
+@command{q} is the quit command. @code{42} is the command option.
+
+@example
+sed '/^foo/q42' input.txt > output.txt
+@end example
+
+
+@cindex multiple @command{sed} commands
+@cindex @command{sed} commands, multiple
+@cindex newline, command separator
+@cindex semicolons, command separator
+@cindex ;, command separator
+@cindex -e, example
+@cindex -f, example
 Commands within a @var{script} or @var{script-file} can be
 separated by semicolons (@code{;}) or newlines (ASCII 10).
-Some commands, due to their syntax, cannot be followed by semicolons
-working as command separators and thus should be terminated
+Multiple scripts can be specified with @option{-e} or @option{-f}
+options.
+
+The following examples are all equivalent. They perform two @command{sed}
+operations: deleting any lines matching the regular expression @code{/^foo/},
+and replacing all occurrences of the string @samp{hello} with @samp{world}:
+
+@example
+sed '/^foo/d ; s/hello/world/' input.txt > output.txt
+
+sed -e '/^foo/d' -e 's/hello/world/' input.txt > output.txt
+
+echo '/^foo/d' > script.sed
+echo 's/hello/world/' >> script.sed
+sed -f script.sed input.txt > output.txt
+
+echo 's/hello/world/' > script2.sed
+sed -e '/^foo/d' -f script2.sed input.txt > output.txt
+@end example
+
+
+@cindex @command{a}, and semicolons
+@cindex @command{c}, and semicolons
+@cindex @command{i}, and semicolons
+Commands @command{a}, @command{c}, @command{i}, due to their syntax,
+cannot be followed by semicolons working as command separators and
+thus should be terminated
 with newlines or be placed at the end of a @var{script} or @var{script-file}.
 Commands can also be preceded with optional non-significant
 whitespace characters.
 
-Each @code{sed} command consists of an optional address or
-address range, followed by a one-character command name
-and any additional command-specific code.
-
-@menu
-* Execution Cycle::          How @command{sed} works
-* Addresses::                Selecting lines with @command{sed}
-* Regular Expressions::      Overview of regular expression syntax
-* Common Commands::          Often used commands
-* The "s" Command::          @command{sed}'s Swiss Army Knife
-* Other Commands::           Less frequently used commands
-* Programming Commands::     Commands for @command{sed} gurus
-* Extended Commands::        Commands specific of @value{SSED}
-* Escapes::                  Specifying special characters
-@end menu
 
 
-@node Execution Cycle
-@section How @command{sed} Works
+@node sed commands list
+@section @command{sed} commands summary
 
-@cindex Buffer spaces, pattern and hold
-@cindex Spaces, pattern and hold
-@cindex Pattern space, definition
-@cindex Hold space, definition
-@command{sed} maintains two data buffers: the active @emph{pattern} space,
-and the auxiliary @emph{hold} space. Both are initially empty.
-
-@command{sed} operates by performing the following cycle on each
-line of input: first, @command{sed} reads one line from the input
-stream, removes any trailing newline, and places it in the pattern space.
-Then commands are executed; each command can have an address associated
-to it: addresses are a kind of condition code, and a command is only
-executed if the condition is verified before the command is to be
-executed.
-
-When the end of the script is reached, unless the @option{-n} option
-is in use, the contents of pattern space are printed out to the output
-stream, adding back the trailing newline if it was removed.@footnote{Actually,
-if @command{sed} prints a line without the terminating newline, it will
-nevertheless print the missing newline as soon as more text is sent to
-the same output stream, which gives the ``least expected surprise''
-even though it does not make commands like @samp{sed -n p} exactly
-identical to @command{cat}.} Then the next cycle starts for the next
-input line.
-
-Unless special commands (like @samp{D}) are used, the pattern space is
-deleted between two cycles. The hold space, on the other hand, keeps
-its data between cycles (see commands @samp{h}, @samp{H}, @samp{x},
-@samp{g}, @samp{G} to move data between both buffers).
-
-
-@node Addresses
-@section Selecting lines with @command{sed}
-@cindex Addresses, in @command{sed} scripts
-@cindex Line selection
-@cindex Selecting lines to process
-
-Addresses in a @command{sed} script can be in any of the following forms:
-@table @code
-@item @var{number}
-@cindex Address, numeric
-@cindex Line, selecting by number
-Specifying a line number will match only that line in the input.
-(Note that @command{sed} counts lines continuously across all input files
-unless @option{-i} or @option{-s} options are specified.)
-
-@item @var{first}~@var{step}
-@cindex @acronym{GNU} extensions, @samp{@var{n}~@var{m}} addresses
-This @acronym{GNU} extension matches every @var{step}th line
-starting with line @var{first}.
-In particular, lines will be selected when there exists
-a non-negative @var{n} such that the current line-number equals
-@var{first} + (@var{n} * @var{step}).
-Thus, to select the odd-numbered lines,
-one would use @code{1~2};
-to pick every third line starting with the second, @samp{2~3} would be used;
-to pick every fifth line starting with the tenth, use @samp{10~5};
-and @samp{50~0} is just an obscure way of saying @code{50}.
-
-@item $
-@cindex Address, last line
-@cindex Last line, selecting
-@cindex Line, selecting last
-This address matches the last line of the last file of input, or
-the last line of each file when the @option{-i} or @option{-s} options
-are specified.
-
-@item /@var{regexp}/
-@cindex Address, as a regular expression
-@cindex Line, selecting by regular expression match
-This will select any line which matches the regular expression @var{regexp}.
-If @var{regexp} itself includes any @code{/} characters,
-each must be escaped by a backslash (@code{\}).
-
-@cindex empty regular expression
-@cindex @value{SSEDEXT}, modifiers and the empty regular expression
-The empty regular expression @samp{//} repeats the last regular
-expression match (the same holds if the empty regular expression is
-passed to the @code{s} command).  Note that modifiers to regular expressions
-are evaluated when the regular expression is compiled, thus it is invalid to
-specify them together with the empty regular expression.
-
-@item \%@var{regexp}%
-(The @code{%} may be replaced by any other single character.)
-
-@cindex Slash character, in regular expressions
-This also matches the regular expression @var{regexp},
-but allows one to use a different delimiter than @code{/}.
-This is particularly useful if the @var{regexp} itself contains
-a lot of slashes, since it avoids the tedious escaping of every @code{/}.
-If @var{regexp} itself includes any delimiter characters,
-each must be escaped by a backslash (@code{\}).
-
-@item /@var{regexp}/I
-@itemx \%@var{regexp}%I
-@cindex @acronym{GNU} extensions, @code{I} modifier
-@ifset PERL
-@cindex Perl-style regular expressions, case-insensitive
-@end ifset
-The @code{I} modifier to regular-expression matching is a @acronym{GNU}
-extension which causes the @var{regexp} to be matched in
-a case-insensitive manner.
-
-@item /@var{regexp}/M
-@itemx \%@var{regexp}%M
-@cindex @value{SSEDEXT}, @code{M} modifier
-@ifset PERL
-@cindex Perl-style regular expressions, multiline
-@end ifset
-The @code{M} modifier to regular-expression matching is a @value{SSED}
-extension which directs @value{SSED} to match the regular expression
-in @cite{multi-line} mode.  The modifier causes @code{^} and @code{$} to
-match respectively (in addition to the normal behavior) the empty string
-after a newline, and the empty string before a newline.  There are
-special character sequences
-@ifset PERL
-(@code{\A} and @code{\Z} in Perl mode, @code{\`} and @code{\'}
-in basic or extended regular expression modes)
-@end ifset
-@ifclear PERL
-(@code{\`} and @code{\'})
-@end ifclear
-which always match the beginning or the end of the buffer.
-In addition,
-@ifset PERL
-just like in Perl mode without the @code{S} modifier,
-@end ifset
-the period character does not match a new-line character in
-multi-line mode.
-
-@ifset PERL
-@item /@var{regexp}/S
-@itemx \%@var{regexp}%S
-@cindex @value{SSEDEXT}, @code{S} modifier
-@cindex Perl-style regular expressions, single line
-The @code{S} modifier to regular-expression matching is only valid
-in Perl mode and specifies that the dot character (@code{.}) will
-match the newline character too.  @code{S} stands for @cite{single-line}.
-@end ifset
-
-@ifset PERL
-@item /@var{regexp}/X
-@itemx \%@var{regexp}%X
-@cindex @value{SSEDEXT}, @code{X} modifier
-@cindex Perl-style regular expressions, extended
-The @code{X} modifier to regular-expression matching is also
-valid in Perl mode only.  If it is used, whitespace in the
-pattern (other than in a character class) and
-characters between a @kbd{#} outside a character class and the
-next newline character are ignored. An escaping backslash
-can be used to include a whitespace or @kbd{#} character as part
-of the pattern.
-@end ifset
-@end table
-
-If no addresses are given, then all lines are matched;
-if one address is given, then only lines matching that
-address are matched.
-
-@cindex Range of lines
-@cindex Several lines, selecting
-An address range can be specified by specifying two addresses
-separated by a comma (@code{,}).  An address range matches lines
-starting from where the first address matches, and continues
-until the second address matches (inclusively).
-
-If the second address is a @var{regexp}, then checking for the
-ending match will start with the line @emph{following} the
-line which matched the first address: a range will always
-span at least two lines (except of course if the input stream
-ends).
-
-If the second address is a @var{number} less than (or equal to)
-the line matching the first address, then only the one line is
-matched.
-
-@cindex Special addressing forms
-@cindex Range with start address of zero
-@cindex Zero, as range start address
-@cindex @var{addr1},+N
-@cindex @var{addr1},~N
-@cindex @acronym{GNU} extensions, special two-address forms
-@cindex @acronym{GNU} extensions, @code{0} address
-@cindex @acronym{GNU} extensions, 0,@var{addr2} addressing
-@cindex @acronym{GNU} extensions, @var{addr1},+@var{N} addressing
-@cindex @acronym{GNU} extensions, @var{addr1},~@var{N} addressing
-@value{SSED} also supports some special two-address forms; all these
-are @acronym{GNU} extensions:
-@table @code
-@item 0,/@var{regexp}/
-A line number of @code{0} can be used in an address specification like
-@code{0,/@var{regexp}/} so that @command{sed} will try to match
-@var{regexp} in the first input line too.  In other words,
-@code{0,/@var{regexp}/} is similar to @code{1,/@var{regexp}/},
-except that if @var{addr2} matches the very first line of input the
-@code{0,/@var{regexp}/} form will consider it to end the range, whereas
-the @code{1,/@var{regexp}/} form will match the beginning of its range and
-hence make the range span up to the @emph{second} occurrence of the
-regular expression.
-
-Note that this is the only place where the @code{0} address makes
-sense; there is no 0-th line and commands which are given the @code{0}
-address in any other way will give an error.
-
-@item @var{addr1},+@var{N}
-Matches @var{addr1} and the @var{N} lines following @var{addr1}.
-
-@item @var{addr1},~@var{N}
-Matches @var{addr1} and the lines following @var{addr1}
-until the next line whose input line number is a multiple of @var{N}.
-@end table
-
-@cindex Excluding lines
-@cindex Selecting non-matching lines
-Appending the @code{!} character to the end of an address
-specification negates the sense of the match.
-That is, if the @code{!} character follows an address range,
-then only lines which do @emph{not} match the address range
-will be selected.
-This also works for singleton addresses,
-and, perhaps perversely, for the null address.
-
-
-@node Regular Expressions
-@section Overview of Regular Expression Syntax
-
-To know how to use @command{sed}, people should understand regular
-expressions (@dfn{regexp} for short).  A regular expression
-is a pattern that is matched against a
-subject string from left to right.  Most characters are
-@dfn{ordinary}: they stand for
-themselves in a pattern, and match the corresponding characters
-in the subject.  As a trivial example, the pattern
-
-@example
-The quick brown fox
-@end example
-
-@noindent
-matches a portion of a subject string that is identical to
-itself.  The power of regular expressions comes from the
-ability to include alternatives and repetitions in the pattern.
-These are encoded in the pattern by the use of @dfn{special characters},
-which do not stand for themselves but instead
-are interpreted in some special way.  Here is a brief description
-of regular expression syntax as used in @command{sed}.
+The following commands are supported in @value{SSED}.
+Some are standard POSIX commands, while other are @value{SSEDEXT}.
+Details and examples for each command are in the following sections.
+(Mnemonics) are shown in parentheses.
 
 @table @code
-@item @var{char}
-A single ordinary character matches itself.
 
-@item *
-@cindex @acronym{GNU} extensions, to basic regular expressions
-Matches a sequence of zero or more instances of matches for the
-preceding regular expression, which must be an ordinary character, a
-special character preceded by @code{\}, a @code{.}, a grouped regexp
-(see below), or a bracket expression.  As a @acronym{GNU} extension, a
-postfixed regular expression can also be followed by @code{*}; for
-example, @code{a**} is equivalent to @code{a*}.  @acronym{POSIX}
-1003.1-2001 says that @code{*} stands for itself when it appears at
-the start of a regular expression or subexpression, but many
-non@acronym{GNU} implementations do not support this and portable
-scripts should instead use @code{\*} in these contexts.
+@item a\
+@itemx @var{text}
+Append @var{text} after a line.
 
-@item \+
-@cindex @acronym{GNU} extensions, to basic regular expressions
-As @code{*}, but matches one or more.  It is a @acronym{GNU} extension.
+@item a @var{text}
+Append @var{text} after a line (alternative syntax).
 
-@item \?
-@cindex @acronym{GNU} extensions, to basic regular expressions
-As @code{*}, but only matches zero or one.  It is a @acronym{GNU} extension.
+@item b @var{label}
+Branch unconditionally to @var{label}.
+The @var{label} may be omitted, in which case the next cycle is started.
 
-@item \@{@var{i}\@}
-As @code{*}, but matches exactly @var{i} sequences (@var{i} is a
-decimal integer; for portability, keep it between 0 and 255
-inclusive).
+@item c\
+@itemx @var{text}
+Replace (change) lines with @var{text}.
 
-@item \@{@var{i},@var{j}\@}
-Matches between @var{i} and @var{j}, inclusive, sequences.
-
-@item \@{@var{i},\@}
-Matches more than or equal to @var{i} sequences.
-
-@item \(@var{regexp}\)
-Groups the inner @var{regexp} as a whole, this is used to:
-
-@itemize @bullet
-@item
-@cindex @acronym{GNU} extensions, to basic regular expressions
-Apply postfix operators, like @code{\(abcd\)*}:
-this will search for zero or more whole sequences
-of @samp{abcd}, while @code{abcd*} would search
-for @samp{abc} followed by zero or more occurrences
-of @samp{d}.  Note that support for @code{\(abcd\)*} is
-required by @acronym{POSIX} 1003.1-2001, but many non-@acronym{GNU}
-implementations do not support it and hence it is not universally
-portable.
-
-@item
-Use back references (see below).
-@end itemize
-
-@item .
-Matches any character, including newline.
-
-@item ^
-Matches the null string at beginning of the pattern space, i.e. what
-appears after the circumflex must appear at the beginning of the
-pattern space.
-
-In most scripts, pattern space is initialized to the content of each
-line (@pxref{Execution Cycle, , How @code{sed} works}).  So, it is a
-useful simplification to think of @code{^#include} as matching only
-lines where @samp{#include} is the first thing on line---if there are
-spaces before, for example, the match fails.  This simplification is
-valid as long as the original content of pattern space is not modified,
-for example with an @code{s} command.
-
-@code{^} acts as a special character only at the beginning of the
-regular expression or subexpression (that is, after @code{\(} or
-@code{\|}).  Portable scripts should avoid @code{^} at the beginning of
-a subexpression, though, as @acronym{POSIX} allows implementations that
-treat @code{^} as an ordinary character in that context.
-
-@item $
-It is the same as @code{^}, but refers to end of pattern space.
-@code{$} also acts as a special character only at the end
-of the regular expression or subexpression (that is, before @code{\)}
-or @code{\|}), and its use at the end of a subexpression is not
-portable.
-
-
-@item [@var{list}]
-@itemx [^@var{list}]
-Matches any single character in @var{list}: for example,
-@code{[aeiou]} matches all vowels.  A list may include
-sequences like @code{@var{char1}-@var{char2}}, which
-matches any character between (inclusive) @var{char1}
-and @var{char2}.
-
-A leading @code{^} reverses the meaning of @var{list}, so that
-it matches any single character @emph{not} in @var{list}.  To include
-@code{]} in the list, make it the first character (after
-the @code{^} if needed), to include @code{-} in the list,
-make it the first or last; to include @code{^} put
-it after the first character.
-
-@cindex @code{POSIXLY_CORRECT} behavior, bracket expressions
-The characters @code{$}, @code{*}, @code{.}, @code{[}, and @code{\}
-are normally not special within @var{list}.  For example, @code{[\*]}
-matches either @samp{\} or @samp{*}, because the @code{\} is not
-special here.  However, strings like @code{[.ch.]}, @code{[=a=]}, and
-@code{[:space:]} are special within @var{list} and represent collating
-symbols, equivalence classes, and character classes, respectively, and
-@code{[} is therefore special within @var{list} when it is followed by
-@code{.}, @code{=}, or @code{:}.  Also, when not in
-@env{POSIXLY_CORRECT} mode, special escapes like @code{\n} and
-@code{\t} are recognized within @var{list}.  @xref{Escapes}.
-
-@item @var{regexp1}\|@var{regexp2}
-@cindex @acronym{GNU} extensions, to basic regular expressions
-Matches either @var{regexp1} or @var{regexp2}.  Use
-parentheses to use complex alternative regular expressions.
-The matching process tries each alternative in turn, from
-left to right, and the first one that succeeds is used.
-It is a @acronym{GNU} extension.
-
-@item @var{regexp1}@var{regexp2}
-Matches the concatenation of @var{regexp1} and @var{regexp2}.
-Concatenation binds more tightly than @code{\|}, @code{^}, and
-@code{$}, but less tightly than the other regular expression
-operators.
-
-@item \@var{digit}
-Matches the @var{digit}-th @code{\(@dots{}\)} parenthesized
-subexpression in the regular expression.  This is called a @dfn{back
-reference}.  Subexpressions are implicity numbered by counting
-occurrences of @code{\(} left-to-right.
-
-@item \n
-Matches the newline character.
-
-@item \@var{char}
-Matches @var{char}, where @var{char} is one of @code{$},
-@code{*}, @code{.}, @code{[}, @code{\}, or @code{^}.
-Note that the only C-like
-backslash sequences that you can portably assume to be
-interpreted are @code{\n} and @code{\\}; in particular
-@code{\t} is not portable, and matches a @samp{t} under most
-implementations of @command{sed}, rather than a tab character.
-
-@end table
-
-@cindex Greedy regular expression matching
-Note that the regular expression matcher is greedy, i.e., matches
-are attempted from left to right and, if two or more matches are
-possible starting at the same character, it selects the longest.
-
-@noindent
-Examples:
-@table @samp
-@item abcdef
-Matches @samp{abcdef}.
-
-@item a*b
-Matches zero or more @samp{a}s followed by a single
-@samp{b}.  For example, @samp{b} or @samp{aaaaab}.
-
-@item a\?b
-Matches @samp{b} or @samp{ab}.
-
-@item a\+b\+
-Matches one or more @samp{a}s followed by one or more
-@samp{b}s: @samp{ab} is the shortest possible match, but
-other examples are @samp{aaaab} or @samp{abbbbb} or
-@samp{aaaaaabbbbbbb}.
-
-@item .*
-@itemx .\+
-These two both match all the characters in a string;
-however, the first matches every string (including the empty
-string), while the second matches only strings containing
-at least one character.
-
-@item ^main.*(.*)
-This matches a string starting with @samp{main},
-followed by an opening and closing
-parenthesis.  The @samp{n}, @samp{(} and @samp{)} need not
-be adjacent.
-
-@item ^#
-This matches a string beginning with @samp{#}.
-
-@item \\$
-This matches a string ending with a single backslash.  The
-regexp contains two backslashes for escaping.
-
-@item \$
-Instead, this matches a string consisting of a single dollar sign,
-because it is escaped.
-
-@item [a-zA-Z0-9]
-In the C locale, this matches any @acronym{ASCII} letters or digits.
-
-@item [^ @kbd{tab}]\+
-(Here @kbd{tab} stands for a single tab character.)
-This matches a string of one or more
-characters, none of which is a space or a tab.
-Usually this means a word.
-
-@item ^\(.*\)\n\1$
-This matches a string consisting of two equal substrings separated by
-a newline.
-
-@item .\@{9\@}A$
-This matches nine characters followed by an @samp{A} at the end of a line.
-
-@item ^.\@{15\@}A
-This matches the start of a string that contains 16 characters,
-the last of which is an @samp{A}.
-
-@end table
-
-
-
-@node Common Commands
-@section Often-Used Commands
-
-If you use @command{sed} at all, you will quite likely want to know
-these commands.
-
-@table @code
-@item #
-[No addresses allowed.]
-
-@findex # (comments)
-@cindex Comments, in scripts
-The @code{#} character begins a comment;
-the comment continues until the next newline.
-
-@cindex Portability, comments
-If you are concerned about portability, be aware that
-some implementations of @command{sed} (which are not @sc{posix}
-conformant) may only support a single one-line comment,
-and then only when the very first character of the script is a @code{#}.
-
-@findex -n, forcing from within a script
-@cindex Caveat --- #n on first line
-Warning: if the first two characters of the @command{sed} script
-are @code{#n}, then the @option{-n} (no-autoprint) option is forced.
-If you want to put a comment in the first line of your script
-and that comment begins with the letter @samp{n}
-and you do not want this behavior,
-then be sure to either use a capital @samp{N},
-or place at least one space before the @samp{n}.
-
-@item q [@var{exit-code}]
-This command only accepts a single address.
-
-@findex q (quit) command
-@cindex @value{SSEDEXT}, returning an exit code
-@cindex Quitting
-Exit @command{sed} without processing any more commands or input.
-Note that the current pattern space is printed if auto-print is
-not disabled with the @option{-n} options.  The ability to return
-an exit code from the @command{sed} script is a @value{SSED} extension.
+@item c @var{text}
+Replace (change) lines with @var{text} (alternative syntax).
 
 @item d
-@findex d (delete) command
-@cindex Text, deleting
 Delete the pattern space;
 immediately start next cycle.
 
-@item p
-@findex p (print) command
-@cindex Text, printing
-Print out the pattern space (to the standard output).
-This command is usually only used in conjunction with the @option{-n}
-command-line option.
+@item D
+If pattern space contains newlines, delete text in the pattern
+space up to the first newline, and restart cycle with the resultant
+pattern space, without reading a new line of input.
+
+If pattern space contains no newline, start a normal new cycle as if
+the @code{d} command was issued.
+@c TODO: add a section about D+N and D+n commands
+
+@item e
+Executes the command that is found in pattern space and
+replaces the pattern space with the output; a trailing newline
+is suppressed.
+
+@item e @var{command}
+Executes @var{command} and sends its output to the output stream.
+The command can run across multiple lines, all but the last ending with
+a back-slash.
+
+@item F
+(filename) Print the file name of the current input file (with a trailing
+newline).
+
+@item g
+Replace the contents of the pattern space with the contents of the hold space.
+
+@item G
+Append a newline to the contents of the pattern space,
+and then append the contents of the hold space to that of the pattern space.
+
+@item h
+(hold) Replace the contents of the hold space with the contents of the
+pattern space.
+
+@item H
+Append a newline to the contents of the hold space,
+and then append the contents of the pattern space to that of the hold space.
+
+@item i\
+@itemx @var{text}
+insert @var{text} before a line.
+
+@item i @var{text}
+insert @var{text} before a line (alternative syntax).
+
+@item l
+Print the pattern space in an unambiguous form.
 
 @item n
-@findex n (next-line) command
-@cindex Next input line, replace pattern space with
-@cindex Read next input line
-If auto-print is not disabled, print the pattern space,
+(next) If auto-print is not disabled, print the pattern space,
 then, regardless, replace the pattern space with the next line of input.
 If there is no more input then @command{sed} exits without processing
 any more commands.
 
-@item @{ @var{commands} @}
-@findex @{@} command grouping
-@cindex Grouping commands
-@cindex Command groups
-A group of commands may be enclosed between
-@code{@{} and @code{@}} characters.
-This is particularly useful when you want a group of commands
-to be triggered by a single address (or address-range) match.
+@item N
+Add a newline to the pattern space,
+then append the next line of input to the pattern space.
+If there is no more input then @command{sed} exits without processing
+any more commands.
+
+@item p
+Print the pattern space.
+@c useful with @option{-n}
+
+@item P
+Print the pattern space, up to the first <newline>.
+
+@item q@var{[exit-code]}
+(quit) Exit @command{sed} without processing any more commands or input.
+
+@item Q@var{[exit-code]}
+(quit) This command is the same as @code{q}, but will not print the
+contents of pattern space.  Like @code{q}, it provides the
+ability to return an exit code to the caller.
+@c useful to quit on a conditional without printing
+
+@item r filename
+Reads text file a file. Example:
+
+@item R filename
+Queue a line of @var{filename} to be read and
+inserted into the output stream at the end of the current cycle,
+or when the next input line is read.
+@c useful to interleave files
+
+@item s@var{/regexp/replacement/[flags]}
+(substitute) Match the regular-expression against the content of the
+pattern space.  If found, replace matched string with
+@var{replacement}.
+
+@item t @var{label}
+(test) Branch to @var{label} only if there has been a successful
+@code{s}ubstitution since the last input line was read or conditional
+branch was taken.  The @var{label} may be omitted, in which case the
+next cycle is started.
+
+@item T @var{label}
+(test) Branch to @var{label} only if there have been no successful
+@code{s}ubstitutions since the last input line was read or
+conditional branch was taken. The @var{label} may be omitted,
+in which case the next cycle is started.
+
+@item v @var{[version]}
+(version) This command does nothing, but makes @command{sed} fail if
+@value{SSED} extensions are not supported, or if the requested version
+is not available.
+
+@item w filename
+Write the pattern space to @var{filename}.
+
+@item W filename
+Write to the given filename the portion of the pattern space up to
+the first newline
+
+@item x
+Exchange the contents of the hold and pattern spaces.
+
+
+@item y/src/dst/
+Transliterate any characters in the pattern space which match
+any of the @var{source-chars} with the corresponding character
+in @var{dest-chars}.
+
+
+@item z
+(zap) This command empties the content of pattern space.
+
+@item #
+A comment, until  the next newline.
+
+
+@item @{ @var{cmd ; cmd ...} @}
+Group several commands together.
+@c useful for multiple commands on same address
+
+@item =
+Print the current input line number (with a trailing newline).
+
+@item : @var{label}
+Specify the location of @var{label} for branch commands (@code{b},
+@code{t}, @code{T}).
 
 @end table
+
 
 @node The "s" Command
 @section The @code{s} Command
 
-The syntax of the @code{s} (as in substitute) command is
-@samp{s/@var{regexp}/@var{replacement}/@var{flags}}.  The @code{/}
-characters may be uniformly replaced by any other single
-character within any given @code{s} command.  The @code{/}
-character (or whatever other character is used in its stead)
-can appear in the @var{regexp} or @var{replacement}
-only if it is preceded by a @code{\} character.
+The @code{s} command (as in substitute) is probably the most important
+in @command{sed} and has a lot of different options.  The syntax of
+the @code{s} command is
+@samp{s/@var{regexp}/@var{replacement}/@var{flags}}.
 
-The @code{s} command is probably the most important in @command{sed}
-and has a lot of different options.  Its basic concept is simple:
-the @code{s} command attempts to match the pattern
-space against the supplied @var{regexp}; if the match is
-successful, then that portion of the pattern
-space which was matched is replaced with @var{replacement}.
+Its basic concept is simple: the @code{s} command attempts to match
+the pattern space against the supplied regular expression @var{regexp};
+if the match is successful, then that portion of the
+pattern space which was matched is replaced with @var{replacement}.
+
+For details about @var{regexp} syntax @pxref{Regexp Addresses,,Regular
+Expression Addresses}.
 
 @cindex Backreferences, in regular expressions
 @cindex Parenthesized substrings
@@ -1056,6 +786,18 @@ the portion of the match which is contained between the @var{n}th
 Also, the @var{replacement} can contain unescaped @code{&}
 characters which reference the whole matched portion
 of the pattern space.
+
+@c TODO: xref to backreference section mention @var{\'}.
+
+The @code{/}
+characters may be uniformly replaced by any other single
+character within any given @code{s} command.  The @code{/}
+character (or whatever other character is used in its stead)
+can appear in the @var{regexp} or @var{replacement}
+only if it is preceded by a @code{\} character.
+
+
+
 @cindex @value{SSEDEXT}, case modifiers in @code{s} commands
 Finally, as a @value{SSED} extension, you can include a
 special sequence made of a backslash and one of the letters
@@ -1183,9 +925,6 @@ a @sc{nul} character.  This is a @value{SSED} extension.
 @itemx i
 @cindex @acronym{GNU} extensions, @code{I} modifier
 @cindex Case-insensitive matching
-@ifset PERL
-@cindex Perl-style regular expressions, case-insensitive
-@end ifset
 The @code{I} modifier to regular-expression matching is a @acronym{GNU}
 extension which makes @command{sed} match @var{regexp} in a
 case-insensitive manner.
@@ -1193,53 +932,162 @@ case-insensitive manner.
 @item M
 @itemx m
 @cindex @value{SSEDEXT}, @code{M} modifier
-@ifset PERL
-@cindex Perl-style regular expressions, multiline
-@end ifset
 The @code{M} modifier to regular-expression matching is a @value{SSED}
 extension which directs @value{SSED} to match the regular expression
 in @cite{multi-line} mode.  The modifier causes @code{^} and @code{$} to
 match respectively (in addition to the normal behavior) the empty string
 after a newline, and the empty string before a newline.  There are
 special character sequences
-@ifset PERL
-(@code{\A} and @code{\Z} in Perl mode, @code{\`} and @code{\'}
-in basic or extended regular expression modes)
-@end ifset
 @ifclear PERL
 (@code{\`} and @code{\'})
 @end ifclear
 which always match the beginning or the end of the buffer.
 In addition,
-@ifset PERL
-just like in Perl mode without the @code{S} modifier,
-@end ifset
 the period character does not match a new-line character in
 multi-line mode.
 
-@ifset PERL
-@item S
-@itemx s
-@cindex @value{SSEDEXT}, @code{S} modifier
-@cindex Perl-style regular expressions, single line
-The @code{S} modifier to regular-expression matching is only valid
-in Perl mode and specifies that the dot character (@code{.}) will
-match the newline character too.  @code{S} stands for @cite{single-line}.
-@end ifset
 
-@ifset PERL
-@item X
-@itemx x
-@cindex @value{SSEDEXT}, @code{X} modifier
-@cindex Perl-style regular expressions, extended
-The @code{X} modifier to regular-expression matching is also
-valid in Perl mode only.  If it is used, whitespace in the
-pattern (other than in a character class) and
-characters between a @kbd{#} outside a character class and the
-next newline character are ignored. An escaping backslash
-can be used to include a whitespace or @kbd{#} character as part
-of the pattern.
-@end ifset
+@end table
+
+@node Common Commands
+@section Often-Used Commands
+
+If you use @command{sed} at all, you will quite likely want to know
+these commands.
+
+@table @code
+@item #
+[No addresses allowed.]
+
+@findex # (comments)
+@cindex Comments, in scripts
+The @code{#} character begins a comment;
+the comment continues until the next newline.
+
+@cindex Portability, comments
+If you are concerned about portability, be aware that
+some implementations of @command{sed} (which are not @sc{posix}
+conforming) may only support a single one-line comment,
+and then only when the very first character of the script is a @code{#}.
+
+@findex -n, forcing from within a script
+@cindex Caveat --- #n on first line
+Warning: if the first two characters of the @command{sed} script
+are @code{#n}, then the @option{-n} (no-autoprint) option is forced.
+If you want to put a comment in the first line of your script
+and that comment begins with the letter @samp{n}
+and you do not want this behavior,
+then be sure to either use a capital @samp{N},
+or place at least one space before the @samp{n}.
+
+@item q [@var{exit-code}]
+@findex q (quit) command
+@cindex @value{SSEDEXT}, returning an exit code
+@cindex Quitting
+Exit @command{sed} without processing any more commands or input.
+
+Example: stop after printing the second line:
+@example
+$ seq 3 | sed 2q
+1
+2
+@end example
+
+This command only accepts a single address.
+Note that the current pattern space is printed if auto-print is
+not disabled with the @option{-n} options.  The ability to return
+an exit code from the @command{sed} script is a @value{SSED} extension.
+
+See also the @value{SSED} extension @code{Q} command which quits silently
+without printing the current pattern space.
+
+@item d
+@findex d (delete) command
+@cindex Text, deleting
+Delete the pattern space;
+immediately start next cycle.
+
+Example: delete the second input line:
+@example
+$ seq 3 | sed 2d
+1
+3
+@end example
+
+@item p
+@findex p (print) command
+@cindex Text, printing
+Print out the pattern space (to the standard output).
+This command is usually only used in conjunction with the @option{-n}
+command-line option.
+
+Example: print only the second input line:
+@example
+$ seq 3 | sed -n 2p
+2
+@end example
+
+@item n
+@findex n (next-line) command
+@cindex Next input line, replace pattern space with
+@cindex Read next input line
+If auto-print is not disabled, print the pattern space,
+then, regardless, replace the pattern space with the next line of input.
+If there is no more input then @command{sed} exits without processing
+any more commands.
+
+This command is useful to skip lines (e.g. process every Nth line).
+
+Example: perform substitution on every 3rd line (i.e. two @code{n} commands
+skip two lines):
+@codequoteundirected on
+@codequotebacktick on
+@example
+$ seq 6 | sed 'n;n;s/./x/'
+1
+2
+x
+4
+5
+x
+@end example
+
+@value{SSED} provides an extension address syntax of @var{first}~@var{step}
+to achieve the same result:
+
+@example
+$ seq 6 | sed '0~3s/./x/'
+1
+2
+x
+4
+5
+x
+@end example
+
+@codequotebacktick off
+@codequoteundirected off
+
+
+@item @{ @var{commands} @}
+@findex @{@} command grouping
+@cindex Grouping commands
+@cindex Command groups
+A group of commands may be enclosed between
+@code{@{} and @code{@}} characters.
+This is particularly useful when you want a group of commands
+to be triggered by a single address (or address-range) match.
+
+Example: perform substitution then print the second input line:
+@codequoteundirected on
+@codequotebacktick on
+@example
+$ seq 3 | sed -n '2@{s/2/X/ ; p@}'
+X
+@end example
+@codequoteundirected off
+@codequotebacktick off
+
 @end table
 
 
@@ -1252,14 +1100,24 @@ these commands.
 
 @table @code
 @item y/@var{source-chars}/@var{dest-chars}/
-(The @code{/} characters may be uniformly replaced by
-any other single character within any given @code{y} command.)
-
 @findex y (transliterate) command
 @cindex Transliteration
 Transliterate any characters in the pattern space which match
 any of the @var{source-chars} with the corresponding character
 in @var{dest-chars}.
+
+Example: transliterate @samp{a-j} into @samp{0-9}:
+@codequoteundirected on
+@codequotebacktick on
+@example
+$ echo hello world | sed 'y/abcdefghij/0123456789/'
+74llo worl3
+@end example
+@codequoteundirected off
+@codequotebacktick off
+
+(The @code{/} characters may be uniformly replaced by
+any other single character within any given @code{y} command.)
 
 Instances of the @code{/} (or whatever other character is used in its stead),
 @code{\}, or newlines can appear in the @var{source-chars} or @var{dest-chars}
@@ -1267,63 +1125,283 @@ lists, provide that each instance is escaped by a @code{\}.
 The @var{source-chars} and @var{dest-chars} lists @emph{must}
 contain the same number of characters (after de-escaping).
 
+See the @command{tr} command from GNU coreutils for similar functionality.
+
+@item a @var{text}
+Appending @var{text} after a line. This is a @acronym{GNU} extension
+to the standard @code{a} command - see below for details.
+
+Example: Add the word @samp{hello} after the second line:
+@codequoteundirected on
+@codequotebacktick on
+@example
+$ seq 3 | sed '2a hello'
+1
+2
+hello
+3
+@end example
+@codequoteundirected off
+@codequotebacktick off
+
+Leading whitespaces after the @code{a} command are ignored.
+The text to add is read until the end of the line.
+
+
 @item a\
 @itemx @var{text}
-@cindex @value{SSEDEXT}, two addresses supported by most commands
-As a @acronym{GNU} extension, this command accepts two addresses.
-
 @findex a (append text lines) command
 @cindex Appending text after a line
 @cindex Text, appending
-Queue the lines of text which follow this command
+Appending @var{text} after a line.
+
+Example: Add @samp{hello} after the second line
+(@print{} indicates printed output lines):
+@codequoteundirected on
+@codequotebacktick on
+@example
+$ seq 3 | sed '2a\
+hello'
+@print{}1
+@print{}2
+@print{}hello
+@print{}3
+@end example
+@codequoteundirected off
+@codequotebacktick off
+
+The @code{a} command queues the lines of text which follow this command
 (each but the last ending with a @code{\},
 which are removed from the output)
 to be output at the end of the current cycle,
 or when the next input line is read.
 
-Escape sequences in @var{text} are processed, so you should
-use @code{\\} in @var{text} to print a single backslash.
-
-As a @acronym{GNU} extension, if between the @code{a} and the newline there is
-other than a whitespace-@code{\} sequence, then the text of this line,
-starting at the first non-whitespace character after the @code{a},
-is taken as the first line of the @var{text} block.
-(This enables a simplification in scripting a one-line add.)
-This extension also works with the @code{i} and @code{c} commands.
-
-@item i\
-@itemx @var{text}
 @cindex @value{SSEDEXT}, two addresses supported by most commands
 As a @acronym{GNU} extension, this command accepts two addresses.
 
+Escape sequences in @var{text} are processed, so you should
+use @code{\\} in @var{text} to print a single backslash.
+
+The commands resume after the last line without a backslash (@code{\}) -
+@samp{world} in the following example:
+@codequoteundirected on
+@codequotebacktick on
+@example
+$ seq 3 | sed '2a\
+hello\
+world
+3s/./X/'
+@print{}1
+@print{}2
+@print{}hello
+@print{}world
+@print{}X
+@end example
+@codequoteundirected off
+@codequotebacktick off
+
+As a @acronym{GNU} extension, the @code{a} command and @var{text} can be
+separated into two @code{-e} parameters, enabling easier scripting:
+@codequoteundirected on
+@codequotebacktick on
+@example
+$ seq 3 | sed -e '2a\' -e hello
+1
+2
+hello
+3
+
+$ sed -e '2a\' -e "$VAR"
+@end example
+@codequoteundirected off
+@codequotebacktick off
+
+@item i @var{text}
+insert @var{text} before a line. This is a @acronym{GNU} extension
+to the standard @code{i} command - see below for details.
+
+Example: Insert the word @samp{hello} before the second line:
+@codequoteundirected on
+@codequotebacktick on
+@example
+$ seq 3 | sed '2i hello'
+1
+hello
+2
+3
+@end example
+@codequoteundirected off
+@codequotebacktick off
+
+Leading whitespaces after the @code{i} command are ignored.
+The text to add is read until the end of the line.
+
+@item i\
+@itemx @var{text}
 @findex i (insert text lines) command
 @cindex Inserting text before a line
 @cindex Text, insertion
-Immediately output the lines of text which follow this command
-(each but the last ending with a @code{\},
-which are removed from the output).
+Immediately output the lines of text which follow this command.
+
+Example: Insert @samp{hello} before the second line
+(@print{} indicates printed output lines):
+@codequoteundirected on
+@codequotebacktick on
+@example
+$ seq 3 | sed '2i\
+hello'
+@print{}1
+@print{}hello
+@print{}2
+@print{}3
+@end example
+@codequoteundirected off
+@codequotebacktick off
+
+@cindex @value{SSEDEXT}, two addresses supported by most commands
+As a @acronym{GNU} extension, this command accepts two addresses.
+
+Escape sequences in @var{text} are processed, so you should
+use @code{\\} in @var{text} to print a single backslash.
+
+The commands resume after the last line without a backslash (@code{\}) -
+@samp{world} in the following example:
+@codequoteundirected on
+@codequotebacktick on
+@example
+$ seq 3 | sed '2i\
+hello\
+world
+s/./X/'
+@print{}X
+@print{}hello
+@print{}world
+@print{}X
+@print{}X
+@end example
+@codequoteundirected off
+@codequotebacktick off
+
+As a @acronym{GNU} extension, the @code{i} command and @var{text} can be
+separated into two @code{-e} parameters, enabling easier scripting:
+@codequoteundirected on
+@codequotebacktick on
+@example
+$ seq 3 | sed -e '2i\' -e hello
+1
+hello
+2
+3
+
+$ sed -e '2i\' -e "$VAR"
+@end example
+@codequoteundirected off
+@codequotebacktick off
+
+@item c @var{text}
+Replaces the line(s) with @var{text}. This is a @acronym{GNU} extension
+to the standard @code{c} command - see below for details.
+
+Example: Replace the 2nd to 9th lines with the word @samp{hello}:
+@codequoteundirected on
+@codequotebacktick on
+@example
+$ seq 10 | sed '2,9c hello'
+1
+hello
+10
+@end example
+@codequoteundirected off
+@codequotebacktick off
+
+Leading whitespaces after the @code{c} command are ignored.
+The text to add is read until the end of the line.
 
 @item c\
 @itemx @var{text}
 @findex c (change to text lines) command
 @cindex Replacing selected lines with other text
 Delete the lines matching the address or address-range,
-and output the lines of text which follow this command
-(each but the last ending with a @code{\},
-which are removed from the output)
-in place of the last line
-(or in place of each line, if no addresses were specified).
+and output the lines of text which follow this command.
+
+Example: Replace 2nd to 4th lines with the words @samp{hello} and
+@samp{world} (@print{} indicates printed output lines):
+@codequoteundirected on
+@codequotebacktick on
+@example
+$ seq 5 | sed '2,4c\
+hello\
+world'
+@print{}1
+@print{}hello
+@print{}world
+@print{}5
+@end example
+@codequoteundirected off
+@codequotebacktick off
+
+If no addresses are given, each line is replaced.
+
 A new cycle is started after this command is done,
 since the pattern space will have been deleted.
+In the following example, the @code{c} starts a
+new cycle and the substitution command is not performed
+on the replaced text:
+
+@codequoteundirected on
+@codequotebacktick on
+@example
+$ seq 3 | sed '2c\
+hello
+s/./X/'
+@print{}X
+@print{}hello
+@print{}X
+@end example
+@codequoteundirected off
+@codequotebacktick off
+
+As a @acronym{GNU} extension, the @code{c} command and @var{text} can be
+separated into two @code{-e} parameters, enabling easier scripting:
+@codequoteundirected on
+@codequotebacktick on
+@example
+$ seq 3 | sed -e '2c\' -e hello
+1
+hello
+3
+
+$ sed -e '2c\' -e "$VAR"
+@end example
+@codequoteundirected off
+@codequotebacktick off
+
 
 @item =
-@cindex @value{SSEDEXT}, two addresses supported by most commands
-As a @acronym{GNU} extension, this command accepts two addresses.
-
 @findex = (print line number) command
 @cindex Printing line number
 @cindex Line number, printing
 Print out the current input line number (with a trailing newline).
+
+@codequoteundirected on
+@codequotebacktick on
+@example
+$ printf '%s\n' aaa bbb ccc | sed =
+1
+aaa
+2
+bbb
+3
+ccc
+@end example
+@codequoteundirected off
+@codequotebacktick off
+
+@cindex @value{SSEDEXT}, two addresses supported by most commands
+As a @acronym{GNU} extension, this command accepts two addresses.
+
+
+
 
 @item l @var{n}
 @findex l (list unambiguously) command
@@ -1343,11 +1421,23 @@ the default as specified on the command line is used.  The @var{n}
 parameter is a @value{SSED} extension.
 
 @item r @var{filename}
-@cindex @value{SSEDEXT}, two addresses supported by most commands
-As a @acronym{GNU} extension, this command accepts two addresses.
 
 @findex r (read file) command
 @cindex Read text from a file
+Reads text file a file. Example:
+
+@codequoteundirected on
+@codequotebacktick on
+@example
+$ seq 3 | sed '2r/etc/hostname'
+1
+2
+fencepost.gnu.org
+3
+@end example
+@codequoteundirected off
+@codequotebacktick off
+
 @cindex @value{SSEDEXT}, @file{/dev/stdin} file
 Queue the contents of @var{filename} to be read and
 inserted into the output stream at the end of the current cycle,
@@ -1358,6 +1448,10 @@ if it were an empty file, without any error indication.
 As a @value{SSED} extension, the special value @file{/dev/stdin}
 is supported for the file name, which reads the contents of the
 standard input.
+
+@cindex @value{SSEDEXT}, two addresses supported by most commands
+As a @acronym{GNU} extension, this command accepts two addresses. The
+file will then be reread and inserted on each of the addressed lines.
 
 @item w @var{filename}
 @findex w (write file) command
@@ -1606,8 +1700,1156 @@ way to clear @command{sed}'s buffers in the middle of the
 script in most multibyte locales (including UTF-8 locales).
 @end table
 
+
+
+
+
+@node sed addresses
+@chapter Addresses: selecting lines
+
+@menu
+* Addresses overview::                Addresses overview
+* Numeric Addresses::                 selecting lines by numbers
+* Regexp Addresses::                  selecting lines by text matching
+* Range Addresses::                   selecting a range of lines
+@end menu
+
+@node Addresses overview
+@section Addresses overview
+
+@cindex addresses, numeric
+@cindex numeric addresses
+Addresses determine on which line(s) the @command{sed} command will be
+executed. The following command replaces the word @samp{hello}
+with @samp{world} only on line 144:
+
+@example
+sed '144s/hello/world/' input.txt > output.txt
+@end example
+
+
+
+If no addresses are given, the command is performed on all lines.
+The following command replaces the word @samp{hello} with @samp{world}
+on all lines in the input file:
+
+@example
+sed 's/hello/world/' input.txt > output.txt
+@end example
+
+
+
+@cindex addresses, regular expression
+@cindex regular expression addresses
+Addresses can contain regular expressions to match lines based
+on content instead of line numbers. The following command replaces
+the word @samp{hello} with @samp{world} only in lines
+containing the word @samp{apple}:
+
+@example
+sed '/apple/s/hello/world/' input.txt > output.txt
+@end example
+
+
+
+@cindex addresses, range
+@cindex range addresses
+An address range is specified with two addresses separated by a comma
+(@code{,}). Addresses can be numeric, regular expressions, or a mix of
+both.
+The following command replaces the word @samp{hello} with @samp{world}
+only in lines 4 to 17 (inclusive):
+
+@example
+sed '4,17s/hello/world/' input.txt > output.txt
+@end example
+
+
+
+@cindex Excluding lines
+@cindex Selecting non-matching lines
+@cindex addresses, negating
+@cindex addresses, excluding
+Appending the @code{!} character to the end of an address
+specification (before the command letter) negates the sense of the
+match.  That is, if the @code{!} character follows an address or an
+address range, then only lines which do @emph{not} match the addresses
+will be selected. The following command replaces the word @samp{hello}
+with @samp{world} only in lines @emph{not} containing the word
+@samp{apple}:
+
+@example
+sed '/apple/!s/hello/world/' input.txt > output.txt
+@end example
+
+The following command replaces the word @samp{hello} with
+@samp{world} only in lines 1 to 3 and 18 till the last line of the input file
+(i.e. excluding lines 4 to 17):
+
+@example
+sed '4,17!s/hello/world/' input.txt > output.txt
+@end example
+
+
+
+
+
+@node Numeric Addresses
+@section Selecting lines by numbers
+@cindex Addresses, in @command{sed} scripts
+@cindex Line selection
+@cindex Selecting lines to process
+
+Addresses in a @command{sed} script can be in any of the following forms:
+@table @code
+@item @var{number}
+@cindex Address, numeric
+@cindex Line, selecting by number
+Specifying a line number will match only that line in the input.
+(Note that @command{sed} counts lines continuously across all input files
+unless @option{-i} or @option{-s} options are specified.)
+
+@item $
+@cindex Address, last line
+@cindex Last line, selecting
+@cindex Line, selecting last
+This address matches the last line of the last file of input, or
+the last line of each file when the @option{-i} or @option{-s} options
+are specified.
+
+
+@item @var{first}~@var{step}
+@cindex @acronym{GNU} extensions, @samp{@var{n}~@var{m}} addresses
+This @acronym{GNU} extension matches every @var{step}th line
+starting with line @var{first}.
+In particular, lines will be selected when there exists
+a non-negative @var{n} such that the current line-number equals
+@var{first} + (@var{n} * @var{step}).
+Thus, one would use @code{1~2} to select the odd-numbered lines and
+@code{0~2} for even-numbered lines;
+to pick every third line starting with the second, @samp{2~3} would be used;
+to pick every fifth line starting with the tenth, use @samp{10~5};
+and @samp{50~0} is just an obscure way of saying @code{50}.
+
+The following commands demonstrate the step address usage:
+
+@example
+$ seq 10 | sed -n '0~4p'
+4
+8
+
+$ seq 10 | sed -n '1~3p'
+1
+4
+7
+10
+@end example
+
+
+@end table
+
+
+
+@node Regexp Addresses
+@section selecting lines by text matching
+
+@value{SSED} supports the following regular expression addresses.
+The default regular expression is
+@ref{BRE syntax, , Basic Regular Expression (BRE)}.
+If @option{-E} or @option{-r} options are used, The regular expression should be
+in @ref{ERE syntax, , Extended Regular Expression (ERE)} syntax.
+@xref{BRE vs ERE} to learn more.
+
+@table @code
+@item /@var{regexp}/
+@cindex Address, as a regular expression
+@cindex Line, selecting by regular expression match
+This will select any line which matches the regular expression @var{regexp}.
+If @var{regexp} itself includes any @code{/} characters,
+each must be escaped by a backslash (@code{\}).
+
+The following command prints lines in @file{/etc/passwd}
+which end with @samp{bash}@footnote{
+There are of course many other ways to do the same,
+e.g.
+@example
+grep 'bash$' /etc/passwd
+awk -F: '$7 == "/bin/bash"' /etc/passwd
+@end example
+}:
+
+@example
+sed -n '/bash$/p' /etc/passwd
+@end example
+
+@cindex empty regular expression
+@cindex @value{SSEDEXT}, modifiers and the empty regular expression
+The empty regular expression @samp{//} repeats the last regular
+expression match (the same holds if the empty regular expression is
+passed to the @code{s} command).  Note that modifiers to regular expressions
+are evaluated when the regular expression is compiled, thus it is invalid to
+specify them together with the empty regular expression.
+
+@item \%@var{regexp}%
+(The @code{%} may be replaced by any other single character.)
+
+@cindex Slash character, in regular expressions
+This also matches the regular expression @var{regexp},
+but allows one to use a different delimiter than @code{/}.
+This is particularly useful if the @var{regexp} itself contains
+a lot of slashes, since it avoids the tedious escaping of every @code{/}.
+If @var{regexp} itself includes any delimiter characters,
+each must be escaped by a backslash (@code{\}).
+
+The following two commands are equivalent. They print lines
+which start with @samp{/home/alice/documents/}:
+
+@example
+sed -n '/^\/home\/alice\/documents\//p'
+sed -n '\%^/home/alice/documents/%p'
+sed -n '\;^/home/alice/documents/;p'
+@end example
+
+
+@item /@var{regexp}/I
+@itemx \%@var{regexp}%I
+@cindex @acronym{GNU} extensions, @code{I} modifier
+@cindex case insensitive, regular expression
+The @code{I} modifier to regular-expression matching is a @acronym{GNU}
+extension which causes the @var{regexp} to be matched in
+a case-insensitive manner.
+
+In many other programming languages, a lower case @code{i} is used
+for case-insensitive regular expression matching. However, in @command{sed}
+the @code{i} is used for the insert command (TODO: add @code{pxref}).
+
+Observe the difference between the following examples.
+
+In this example, @code{/b/I} is the address: regular expression with @code{I}
+modifier. @code{d} is the delete command:
+
+@example
+$ printf "%s\n" a b c | sed '/b/Id'
+a
+c
+@end example
+
+Here, @code{/b/} is the address: a regular expression.
+@code{i} is the insert command.
+@code{d} is the value to insert.
+A line with @samp{d} is then inserted above the matched line:
+
+@example
+$ printf "%s\n" a b c | sed '/b/id'
+a
+d
+b
+c
+@end example
+
+@item /@var{regexp}/M
+@itemx \%@var{regexp}%M
+@cindex @value{SSEDEXT}, @code{M} modifier
+The @code{M} modifier to regular-expression matching is a @value{SSED}
+extension which directs @value{SSED} to match the regular expression
+in @cite{multi-line} mode.  The modifier causes @code{^} and @code{$} to
+match respectively (in addition to the normal behavior) the empty string
+after a newline, and the empty string before a newline.  There are
+special character sequences
+@ifclear PERL
+(@code{\`} and @code{\'})
+@end ifclear
+which always match the beginning or the end of the buffer.
+In addition,
+the period character does not match a new-line character in
+multi-line mode.
+@end table
+
+@node Range Addresses
+@section Range Addresses
+
+@cindex Range of lines
+@cindex Several lines, selecting
+An address range can be specified by specifying two addresses
+separated by a comma (@code{,}).  An address range matches lines
+starting from where the first address matches, and continues
+until the second address matches (inclusively):
+
+@example
+$ seq 10 | sed -n '4,6p'
+4
+5
+6
+@end example
+
+If the second address is a @var{regexp}, then checking for the
+ending match will start with the line @emph{following} the
+line which matched the first address: a range will always
+span at least two lines (except of course if the input stream
+ends).
+
+@example
+$ seq 10 | sed -n '4,/[0-9]/p'
+4
+5
+@end example
+
+If the second address is a @var{number} less than (or equal to)
+the line matching the first address, then only the one line is
+matched:
+
+@example
+$ seq 10 | sed -n '4,1p'
+4
+@end example
+
+@cindex Special addressing forms
+@cindex Range with start address of zero
+@cindex Zero, as range start address
+@cindex @var{addr1},+N
+@cindex @var{addr1},~N
+@cindex @acronym{GNU} extensions, special two-address forms
+@cindex @acronym{GNU} extensions, @code{0} address
+@cindex @acronym{GNU} extensions, 0,@var{addr2} addressing
+@cindex @acronym{GNU} extensions, @var{addr1},+@var{N} addressing
+@cindex @acronym{GNU} extensions, @var{addr1},~@var{N} addressing
+@value{SSED} also supports some special two-address forms; all these
+are @acronym{GNU} extensions:
+@table @code
+@item 0,/@var{regexp}/
+A line number of @code{0} can be used in an address specification like
+@code{0,/@var{regexp}/} so that @command{sed} will try to match
+@var{regexp} in the first input line too.  In other words,
+@code{0,/@var{regexp}/} is similar to @code{1,/@var{regexp}/},
+except that if @var{addr2} matches the very first line of input the
+@code{0,/@var{regexp}/} form will consider it to end the range, whereas
+the @code{1,/@var{regexp}/} form will match the beginning of its range and
+hence make the range span up to the @emph{second} occurrence of the
+regular expression.
+
+Note that this is the only place where the @code{0} address makes
+sense; there is no 0-th line and commands which are given the @code{0}
+address in any other way will give an error.
+
+The following examples demonstrate the difference between starting
+with address 1 and 0:
+
+@example
+$ seq 10 | sed -n '1,/[0-9]/p'
+1
+2
+
+$ seq 10 | sed -n '0,/[0-9]/p'
+1
+@end example
+
+
+@item @var{addr1},+@var{N}
+Matches @var{addr1} and the @var{N} lines following @var{addr1}.
+
+@example
+$ seq 10 | sed -n '6,+2p'
+6
+7
+8
+@end example
+
+@var{addr1} can be a line number or a regular expression.
+
+@item @var{addr1},~@var{N}
+Matches @var{addr1} and the lines following @var{addr1}
+until the next line whose input line number is a multiple of @var{N}.
+The following command prints starting at line 6, until the next line which
+is a multiple of 4 (i.e. line 8):
+
+@example
+$ seq 10 | sed -n '6,~4p'
+6
+7
+8
+@end example
+
+@var{addr1} can be a line number or a regular expression.
+
+@end table
+
+
+
+
+@node sed regular expressions
+@chapter Regular Expressions: selecting text
+
+@menu
+* Regular Expressions Overview:: Overview of Regular expression in @command{sed}
+* BRE vs ERE::               Basic (BRE) and extended (ERE) regular expression
+                             syntax
+* BRE syntax::               Overview of basic regular expression syntax
+* ERE syntax::               Overview of extended regular expression syntax
+* Character Classes and Bracket Expressions::
+* regexp extensions::        Additional regular expression commands
+* Back-references and Subexpressions:: Back-references and Subexpressions
+* Escapes::                  Specifying special characters
+* Locale Considerations::
+@end menu
+
+@node Regular Expressions Overview
+@section Overview of regular expression in @command{sed}
+
+@c NOTE: Keep examples in the 'overview' section
+@c neutral in regards to BRE/ERE - to ease understanding.
+
+
+To know how to use @command{sed}, people should understand regular
+expressions (@dfn{regexp} for short).  A regular expression
+is a pattern that is matched against a
+subject string from left to right.  Most characters are
+@dfn{ordinary}: they stand for
+themselves in a pattern, and match the corresponding characters.
+Regular expressions in @command{sed} are specified between two
+slashes.
+
+The following command prints lines containing the word
+@samp{hello}:
+
+@example
+sed -n '/hello/p'
+@end example
+
+The above example is equivalent to this @command{grep} command:
+
+@example
+grep 'hello'
+@end example
+
+The power of regular expressions comes from the ability to include
+alternatives and repetitions in the pattern.  These are encoded in the
+pattern by the use of @dfn{special characters}, which do not stand for
+themselves but instead are interpreted in some special way.
+
+The character @code{^} (caret) in a regular expression matches the
+beginning of the line. The character @code{.} (dot) matches any single
+character. The following @command{sed} command matches and prints
+lines which start with the letter @samp{b}, followed by any single character,
+followed by the letter @samp{d}:
+
+@example
+$ printf "%s\n" abode bad bed bit bid byte body | sed -n '/^b.d/p'
+bad
+bed
+bid
+body
+@end example
+
+The following sections explain the meaning and usage of special
+characters in regular expressions.
+
+@node BRE vs ERE
+@section Basic (BRE) and extended (ERE) regular expression
+
+Basic and extended regular expressions are two variations on the
+syntax of the specified pattern. Basic Regular Expression (BRE) is the
+default in @command{sed} (and similarly in @command{grep}).  Extended
+Regular Expression syntax (ERE) is activated by using the @option{-r}
+or @option{-E} options (and similarly, @command{grep -E}).
+
+In @value{SSED} the only difference between basic and extended regular
+expressions is in the behavior of a few special characters: @samp{?},
+@samp{+}, parentheses, braces (@samp{@{@}}), and @samp{|}.
+
+With basic (BRE) syntax, these characters do not have special meaning
+unless prefixed backslash (@samp{\}); While with extended (ERE) syntax
+it is reversed: these characters are special unless they are prefixed
+with backslash (@samp{\}).
+
+@multitable @columnfractions .33 .33 .33
+
+@headitem Desired pattern
+@tab Basic (BRE) Syntax
+@tab Extended (ERE) Syntax
+
+@item literal @samp{+} (plus sign)
+
+@tab
+@example
+$ echo "a+b=c" | sed -n '/a+b/p'
+a+b=c
+@end example
+
+@tab
+@example
+$ echo "a+b=c" | sed -E -n '/a\+b/p'
+a+b=c
+@end example
+
+
+@item One or more @samp{a} characters followed by @samp{b}
+(plus sign as special meta-character)
+
+@tab
+@example
+$ echo "aab" | sed -n '/a\+b/p'
+aab
+@end example
+
+@tab
+@example
+$ echo "aab" | sed -E -n '/a+b/p'
+aab
+@end example
+
+@end multitable
+
+
+
+
+@node BRE syntax
+@section Overview of basic regular expression syntax
+
+Here is a brief description
+of regular expression syntax as used in @command{sed}.
+
+@table @code
+@item @var{char}
+A single ordinary character matches itself.
+
+@item *
+@cindex @acronym{GNU} extensions, to basic regular expressions
+Matches a sequence of zero or more instances of matches for the
+preceding regular expression, which must be an ordinary character, a
+special character preceded by @code{\}, a @code{.}, a grouped regexp
+(see below), or a bracket expression.  As a @acronym{GNU} extension, a
+postfixed regular expression can also be followed by @code{*}; for
+example, @code{a**} is equivalent to @code{a*}.  @acronym{POSIX}
+1003.1-2001 says that @code{*} stands for itself when it appears at
+the start of a regular expression or subexpression, but many
+non@acronym{GNU} implementations do not support this and portable
+scripts should instead use @code{\*} in these contexts.
+@item .
+Matches any character, including newline.
+
+@item ^
+Matches the null string at beginning of the pattern space, i.e. what
+appears after the circumflex must appear at the beginning of the
+pattern space.
+
+In most scripts, pattern space is initialized to the content of each
+line (@pxref{Execution Cycle, , How @code{sed} works}).  So, it is a
+useful simplification to think of @code{^#include} as matching only
+lines where @samp{#include} is the first thing on line---if there are
+spaces before, for example, the match fails.  This simplification is
+valid as long as the original content of pattern space is not modified,
+for example with an @code{s} command.
+
+@code{^} acts as a special character only at the beginning of the
+regular expression or subexpression (that is, after @code{\(} or
+@code{\|}).  Portable scripts should avoid @code{^} at the beginning of
+a subexpression, though, as @acronym{POSIX} allows implementations that
+treat @code{^} as an ordinary character in that context.
+
+@item $
+It is the same as @code{^}, but refers to end of pattern space.
+@code{$} also acts as a special character only at the end
+of the regular expression or subexpression (that is, before @code{\)}
+or @code{\|}), and its use at the end of a subexpression is not
+portable.
+
+
+@item [@var{list}]
+@itemx [^@var{list}]
+Matches any single character in @var{list}: for example,
+@code{[aeiou]} matches all vowels.  A list may include
+sequences like @code{@var{char1}-@var{char2}}, which
+matches any character between (inclusive) @var{char1}
+and @var{char2}.
+@xref{Character Classes and Bracket Expressions}.
+
+@item \+
+@cindex @acronym{GNU} extensions, to basic regular expressions
+As @code{*}, but matches one or more.  It is a @acronym{GNU} extension.
+
+@item \?
+@cindex @acronym{GNU} extensions, to basic regular expressions
+As @code{*}, but only matches zero or one.  It is a @acronym{GNU} extension.
+
+@item \@{@var{i}\@}
+As @code{*}, but matches exactly @var{i} sequences (@var{i} is a
+decimal integer; for portability, keep it between 0 and 255
+inclusive).
+
+@item \@{@var{i},@var{j}\@}
+Matches between @var{i} and @var{j}, inclusive, sequences.
+
+@item \@{@var{i},\@}
+Matches more than or equal to @var{i} sequences.
+
+@item \(@var{regexp}\)
+Groups the inner @var{regexp} as a whole, this is used to:
+
+@itemize @bullet
+@item
+@cindex @acronym{GNU} extensions, to basic regular expressions
+Apply postfix operators, like @code{\(abcd\)*}:
+this will search for zero or more whole sequences
+of @samp{abcd}, while @code{abcd*} would search
+for @samp{abc} followed by zero or more occurrences
+of @samp{d}.  Note that support for @code{\(abcd\)*} is
+required by @acronym{POSIX} 1003.1-2001, but many non-@acronym{GNU}
+implementations do not support it and hence it is not universally
+portable.
+
+@item
+Use back references (see below).
+@end itemize
+
+
+@item @var{regexp1}\|@var{regexp2}
+@cindex @acronym{GNU} extensions, to basic regular expressions
+Matches either @var{regexp1} or @var{regexp2}.  Use
+parentheses to use complex alternative regular expressions.
+The matching process tries each alternative in turn, from
+left to right, and the first one that succeeds is used.
+It is a @acronym{GNU} extension.
+
+@item @var{regexp1}@var{regexp2}
+Matches the concatenation of @var{regexp1} and @var{regexp2}.
+Concatenation binds more tightly than @code{\|}, @code{^}, and
+@code{$}, but less tightly than the other regular expression
+operators.
+
+@item \@var{digit}
+Matches the @var{digit}-th @code{\(@dots{}\)} parenthesized
+subexpression in the regular expression.  This is called a @dfn{back
+reference}.  Subexpressions are implicitly numbered by counting
+occurrences of @code{\(} left-to-right.
+
+@item \n
+Matches the newline character.
+
+@item \@var{char}
+Matches @var{char}, where @var{char} is one of @code{$},
+@code{*}, @code{.}, @code{[}, @code{\}, or @code{^}.
+Note that the only C-like
+backslash sequences that you can portably assume to be
+interpreted are @code{\n} and @code{\\}; in particular
+@code{\t} is not portable, and matches a @samp{t} under most
+implementations of @command{sed}, rather than a tab character.
+
+@end table
+
+@cindex Greedy regular expression matching
+Note that the regular expression matcher is greedy, i.e., matches
+are attempted from left to right and, if two or more matches are
+possible starting at the same character, it selects the longest.
+
+@noindent
+Examples:
+@table @samp
+@item abcdef
+Matches @samp{abcdef}.
+
+@item a*b
+Matches zero or more @samp{a}s followed by a single
+@samp{b}.  For example, @samp{b} or @samp{aaaaab}.
+
+@item a\?b
+Matches @samp{b} or @samp{ab}.
+
+@item a\+b\+
+Matches one or more @samp{a}s followed by one or more
+@samp{b}s: @samp{ab} is the shortest possible match, but
+other examples are @samp{aaaab} or @samp{abbbbb} or
+@samp{aaaaaabbbbbbb}.
+
+@item .*
+@itemx .\+
+These two both match all the characters in a string;
+however, the first matches every string (including the empty
+string), while the second matches only strings containing
+at least one character.
+
+@item ^main.*(.*)
+This matches a string starting with @samp{main},
+followed by an opening and closing
+parenthesis.  The @samp{n}, @samp{(} and @samp{)} need not
+be adjacent.
+
+@item ^#
+This matches a string beginning with @samp{#}.
+
+@item \\$
+This matches a string ending with a single backslash.  The
+regexp contains two backslashes for escaping.
+
+@item \$
+Instead, this matches a string consisting of a single dollar sign,
+because it is escaped.
+
+@item [a-zA-Z0-9]
+In the C locale, this matches any @acronym{ASCII} letters or digits.
+
+@item [^ @kbd{tab}]\+
+(Here @kbd{tab} stands for a single tab character.)
+This matches a string of one or more
+characters, none of which is a space or a tab.
+Usually this means a word.
+
+@item ^\(.*\)\n\1$
+This matches a string consisting of two equal substrings separated by
+a newline.
+
+@item .\@{9\@}A$
+This matches nine characters followed by an @samp{A} at the end of a line.
+
+@item ^.\@{15\@}A
+This matches the start of a string that contains 16 characters,
+the last of which is an @samp{A}.
+
+@end table
+
+
+@node ERE syntax
+@section Overview of extended regular expression syntax
+@cindex Extended regular expressions, syntax
+
+The only difference between basic and extended regular expressions is in
+the behavior of a few characters: @samp{?}, @samp{+}, parentheses,
+braces (@samp{@{@}}), and @samp{|}.  While basic regular expressions
+require these to be escaped if you want them to behave as special
+characters, when using extended regular expressions you must escape
+them if you want them @emph{to match a literal character}.  @samp{|}
+is special here because @samp{\|} is a GNU extension -- standard
+basic regular expressions do not provide its functionality.
+
+@noindent
+Examples:
+@table @code
+@item abc?
+becomes @samp{abc\?} when using extended regular expressions.  It matches
+the literal string @samp{abc?}.
+
+@item c\+
+becomes @samp{c+} when using extended regular expressions.  It matches
+one or more @samp{c}s.
+
+@item a\@{3,\@}
+becomes @samp{a@{3,@}} when using extended regular expressions.  It matches
+three or more @samp{a}s.
+
+@item \(abc\)\@{2,3\@}
+becomes @samp{(abc)@{2,3@}} when using extended regular expressions.  It
+matches either @samp{abcabc} or @samp{abcabcabc}.
+
+@item \(abc*\)\1
+becomes @samp{(abc*)\1} when using extended regular expressions.
+Backreferences must still be escaped when using extended regular
+expressions.
+
+@item a\|b
+becomes @samp{a|b} when using extended regular expressions.  It matches
+@samp{a} or @samp{b}.
+@end table
+
+@node Character Classes and Bracket Expressions
+@section Character Classes and Bracket Expressions
+
+@c The 'character class' section is shamelessly copied from grep's manual.
+
+@cindex bracket expression
+@cindex character class
+A @dfn{bracket expression} is a list of characters enclosed by @samp{[} and
+@samp{]}.
+It matches any single character in that list;
+if the first character of the list is the caret @samp{^},
+then it matches any character @strong{not} in the list.
+For example, the following command replaces the words
+@samp{gray} or @samp{grey} with @samp{blue}:
+
+@example
+sed  's/gr[ae]y/blue/'
+@end example
+
+@c TODO: fix 'ref' to look good in both HTML and PDF
+Bracket expressions can be used in both
+@ref{BRE syntax,,basic} and @ref{ERE syntax,,extended}
+regular expressions (that is, with or without the @option{-E}/@option{-r}
+options).
+
+@cindex range expression
+Within a bracket expression, a @dfn{range expression} consists of two
+characters separated by a hyphen.
+It matches any single character that
+sorts between the two characters, inclusive.
+In the default C locale, the sorting sequence is the native character
+order; for example, @samp{[a-d]} is equivalent to @samp{[abcd]}.
+
+
+Finally, certain named classes of characters are predefined within
+bracket expressions, as follows.
+
+These named classes must be used @emph{inside} brackets
+themselves. Correct usage:
+@example
+$ echo 1 | sed 's/[[:digit:]]/X/'
+X
+@end example
+
+Incorrect usage is rejected by newer @command{sed} versions.
+Older versions accepted it but treated it as a single bracket expression
+(which is equivalent to @samp{[dgit:]},
+that is, only the characters @var{d/g/i/t/:}):
+@example
+# current GNU sed versions - incorrect usage rejected
+$ echo 1 | sed 's/[:digit:]/X/'
+sed: character class syntax is [[:space:]], not [:space:]
+
+# older GNU sed versions
+$ echo 1 | sed 's/[:digit:]/X/'
+1
+@end example
+
+
+@cindex classes of characters
+@cindex character classes
+@cindex named character classes
+@table @samp
+
+@item [:alnum:]
+@opindex alnum @r{character class}
+@cindex alphanumeric characters
+Alphanumeric characters:
+@samp{[:alpha:]} and @samp{[:digit:]}; in the @samp{C} locale and ASCII
+character encoding, this is the same as @samp{[0-9A-Za-z]}.
+
+@item [:alpha:]
+@opindex alpha @r{character class}
+@cindex alphabetic characters
+Alphabetic characters:
+@samp{[:lower:]} and @samp{[:upper:]}; in the @samp{C} locale and ASCII
+character encoding, this is the same as @samp{[A-Za-z]}.
+
+@item [:blank:]
+@opindex blank @r{character class}
+@cindex blank characters
+Blank characters:
+space and tab.
+
+@item [:cntrl:]
+@opindex cntrl @r{character class}
+@cindex control characters
+Control characters.
+In ASCII, these characters have octal codes 000
+through 037, and 177 (DEL).
+In other character sets, these are
+the equivalent characters, if any.
+
+@item [:digit:]
+@opindex digit @r{character class}
+@cindex digit characters
+@cindex numeric characters
+Digits: @code{0 1 2 3 4 5 6 7 8 9}.
+
+@item [:graph:]
+@opindex graph @r{character class}
+@cindex graphic characters
+Graphical characters:
+@samp{[:alnum:]} and @samp{[:punct:]}.
+
+@item [:lower:]
+@opindex lower @r{character class}
+@cindex lower-case letters
+Lower-case letters; in the @samp{C} locale and ASCII character
+encoding, this is
+@code{a b c d e f g h i j k l m n o p q r s t u v w x y z}.
+
+@item [:print:]
+@opindex print @r{character class}
+@cindex printable characters
+Printable characters:
+@samp{[:alnum:]}, @samp{[:punct:]}, and space.
+
+@item [:punct:]
+@opindex punct @r{character class}
+@cindex punctuation characters
+Punctuation characters; in the @samp{C} locale and ASCII character
+encoding, this is
+@code{!@: " # $ % & ' ( ) * + , - .@: / : ; < = > ?@: @@ [ \ ] ^ _ ` @{ | @} ~}.
+
+@item [:space:]
+@opindex space @r{character class}
+@cindex space characters
+@cindex whitespace characters
+Space characters: in the @samp{C} locale, this is
+tab, newline, vertical tab, form feed, carriage return, and space.
+
+
+@item [:upper:]
+@opindex upper @r{character class}
+@cindex upper-case letters
+Upper-case letters: in the @samp{C} locale and ASCII character
+encoding, this is
+@code{A B C D E F G H I J K L M N O P Q R S T U V W X Y Z}.
+
+@item [:xdigit:]
+@opindex xdigit @r{character class}
+@cindex xdigit class
+@cindex hexadecimal digits
+Hexadecimal digits:
+@code{0 1 2 3 4 5 6 7 8 9 A B C D E F a b c d e f}.
+
+@end table
+Note that the brackets in these class names are
+part of the symbolic names, and must be included in addition to
+the brackets delimiting the bracket expression.
+
+Most meta-characters lose their special meaning inside bracket expressions:
+
+@table @samp
+@item ]
+ends the bracket expression if it's not the first list item.
+So, if you want to make the @samp{]} character a list item,
+you must put it first.
+
+@item -
+represents the range if it's not first or last in a list or the ending point
+of a range.
+
+@item ^
+represents the characters not in the list.
+If you want to make the @samp{^}
+character a list item, place it anywhere but first.
+@end table
+
+@c*****
+TODO: incorporate this paragraph (copied verbatim from BRE section).
+
+@cindex @code{POSIXLY_CORRECT} behavior, bracket expressions
+The characters @code{$}, @code{*}, @code{.}, @code{[}, and @code{\}
+are normally not special within @var{list}.  For example, @code{[\*]}
+matches either @samp{\} or @samp{*}, because the @code{\} is not
+special here.  However, strings like @code{[.ch.]}, @code{[=a=]}, and
+@code{[:space:]} are special within @var{list} and represent collating
+symbols, equivalence classes, and character classes, respectively, and
+@code{[} is therefore special within @var{list} when it is followed by
+@code{.}, @code{=}, or @code{:}.  Also, when not in
+@env{POSIXLY_CORRECT} mode, special escapes like @code{\n} and
+@code{\t} are recognized within @var{list}.  @xref{Escapes}.
+@c ********
+
+
+@c TODO: improve explanation about collation classes and equivalence classes
+@c       perhaps dedicate a section to Locales ??
+
+@table @samp
+@item [.
+represents the open collating symbol.
+
+@item .]
+represents the close collating symbol.
+
+@item [=
+represents the open equivalence class.
+
+@item =]
+represents the close equivalence class.
+
+@item [:
+represents the open character class symbol, and should be followed by a
+valid character class name.
+
+@item :]
+represents the close character class symbol.
+@end table
+
+
+@node regexp extensions
+@section regular expression extensions
+
+The following sequences have special meaning inside regular expressions
+(used in @ref{Regexp Addresses,,addresses} and the @code{s} command).
+
+These can be used in both
+@ref{BRE syntax,,basic} and @ref{ERE syntax,,extended}
+regular expressions (that is, with or without the @option{-E}/@option{-r}
+options).
+
+@table @code
+@item \w
+Matches any ``word'' character.  A ``word'' character is any
+letter or digit or the underscore character.
+
+@example
+$ echo "abc %-= def." | sed 's/\w/X/g'
+XXX %-= XXX.
+@end example
+
+
+@item \W
+Matches any ``non-word'' character.
+
+@example
+$ echo "abc %-= def." | sed 's/\W/X/g'
+abcXXXXXdefX
+@end example
+
+
+@item \b
+Matches a word boundary; that is it matches if the character
+to the left is a ``word'' character and the character to the
+right is a ``non-word'' character, or vice-versa.
+
+@example
+$ echo "abc %-= def." | sed 's/\b/X/g'
+XabcX %-= XdefX.
+@end example
+
+
+@item \B
+Matches everywhere but on a word boundary; that is it matches
+if the character to the left and the character to the right
+are either both ``word'' characters or both ``non-word''
+characters.
+
+@example
+$ echo "abc %-= def." | sed 's/\w/X/g'
+aXbXc X%X-X=X dXeXf.X
+@end example
+
+
+@item \s
+Matches whitespace characters (spaces and tabs).
+Newlines embedded in the pattern/hold spaces will also match:
+
+@example
+$ echo "abc %-= def." | sed 's/\s/X/g'
+abcX%-=Xdef.
+@end example
+
+
+@item \S
+Matches non-whitespace characters.
+
+@example
+$ echo "abc %-= def." | sed 's/\w/X/g'
+XXX XXX XXXX
+@end example
+
+
+@item \<
+Matches the beginning of a word.
+
+@example
+$ echo "abc %-= def." | sed 's/\</X/g'
+Xabc %-= Xdef.
+@end example
+
+
+@item \>
+Matches the end of a word.
+
+@example
+$ echo "abc %-= def." | sed 's/\>/X/g'
+abcX %-= defX.
+@end example
+
+
+@item \`
+Matches only at the start of pattern space.  This is different
+from @code{^} in multi-line mode.
+
+Compare the following two examples:
+
+@example
+$ printf "a\nb\nc\n" | sed 'N;N;s/^/X/gm'
+Xa
+Xb
+Xc
+
+$ printf "a\nb\nc\n" | sed 'N;N;s/\`/X/gm'
+Xa
+b
+c
+@end example
+
+@item \'
+Matches only at the end of pattern space.  This is different
+from @code{$} in multi-line mode.
+
+
+
+@end table
+
+
+@node Back-references and Subexpressions
+@section Back-references and Subexpressions
+@cindex subexpression
+@cindex back-reference
+
+@dfn{back-references} are regular expression commands which refer to a
+previous part of the matched regular expression.  Back-references are
+specified with backslash and a single digit (e.g. @samp{\1}).  The
+part of the regular expression they refer to is called a
+@dfn{subexpression}, and is designated with parentheses.
+
+Back-references and subexpressions are used in two cases: in the
+regular expression search pattern, and in the @var{replacement} part
+of the @command{s} command (@pxref{Regexp Addresses,,Regular
+Expression Addresses} and @ref{The "s" Command}).
+
+In a regular expression pattern, back-references are used to match
+the same content as a previously matched subexpression.  In the
+following example, the subexpression is @samp{.} - any single
+character (being surrounded by parentheses makes it a
+subexpression). The back-reference @samp{\1} asks to match the same
+content (same character) as the sub-expression.
+
+The command below matches words starting with any character,
+followed by the letter @samp{o}, followed by the same character as the
+first.
+
+@example
+$ sed -E -n '/^(.)o\1$/p' /usr/share/dict/words
+bob
+mom
+non
+pop
+sos
+tot
+wow
+@end example
+
+Multiple subexpressions are automatically numbered from
+left-to-right. This command searches for 6-letter
+palindromes (the first three letters are 3 subexpressions,
+followed by 3 back-references in reverse order):
+
+@example
+$ sed -E -n '/^(.)(.)(.)\3\2\1$/p' /usr/share/dict/words
+redder
+@end example
+
+In the @command{s} command, back-references can be
+used in the @var{replacement} part to refer back to subexpressions in
+the @var{regexp} part.
+
+The following example uses two subexpressions in the regular
+expression to match two space-separated words. The back-references in
+the @var{replacement} part prints the words in a different order:
+
+@example
+$ echo "James Bond" | sed -E 's/(.*) (.*)/The name is \2, \1 \2./'
+The name is Bond, James Bond.
+@end example
+
+
+When used with alternation, if the group does not participate in the
+match then the back-reference makes the whole match fail.  For
+example, @samp{a(.)|b\1} will not match @samp{ba}.  When multiple
+regular expressions are given with @option{-e} or from a file
+(@samp{-f @var{file}}), back-references are local to each expression.
+
+
 @node Escapes
-@section @acronym{GNU} Extensions for Escapes in Regular Expressions
+@section Escape Sequences - specifying special characters
 
 @cindex @acronym{GNU} extensions, special escapes
 Until this chapter, we have only encountered escapes of the form
@@ -1664,15 +2906,7 @@ hex 1A, but @samp{\c@{} becomes hex 3B, while @samp{\c;} becomes hex 7B.
 Produces or matches a character whose decimal @sc{ascii} value is @var{xxx}.
 
 @item \o@var{xxx}
-@ifset PERL
-@item \@var{xxx}
-@end ifset
 Produces or matches a character whose octal @sc{ascii} value is @var{xxx}.
-@ifset PERL
-The syntax without the @code{o} is active in Perl mode, while the one
-with the @code{o} is active in the normal or extended @sc{posix} regular
-expression modes.
-@end ifset
 
 @item \x@var{xx}
 Produces or matches a character whose hexadecimal @sc{ascii} value is @var{xx}.
@@ -1681,63 +2915,98 @@ Produces or matches a character whose hexadecimal @sc{ascii} value is @var{xx}.
 @samp{\b} (backspace) was omitted because of the conflict with
 the existing ``word boundary'' meaning.
 
-Other escapes match a particular character class and are valid only in
-regular expressions:
 
-@table @code
-@item \w
-Matches any ``word'' character.  A ``word'' character is any
-letter or digit or the underscore character.
+@node Locale Considerations
+@section Locale Considerations
 
-@item \W
-Matches any ``non-word'' character.
+TODO: fix following paragraphs (copied verbatim from 'bracket
+expression' section).
 
-@item \b
-Matches a word boundary; that is it matches if the character
-to the left is a ``word'' character and the character to the
-right is a ``non-word'' character, or vice-versa.
+TODO: mention locale support is heavily dependent on the OS/libc, not on sed.
 
-@item \B
-Matches everywhere but on a word boundary; that is it matches
-if the character to the left and the character to the right
-are either both ``word'' characters or both ``non-word''
-characters.
+The current locale affects the characters matched by @command{sed}'s
+regular expressions.
 
-@item \s
-Matches whitespace characters (spaces and tabs).
-Newlines embedded in the pattern/hold spaces will also match:
+
+In other locales, the sorting sequence is not specified, and
+@samp{[a-d]} might be equivalent to @samp{[abcd]} or to
+@samp{[aBbCcDd]}, or it might fail to match any character, or the set of
+characters that it matches might even be erratic.
+To obtain the traditional interpretation
+of bracket expressions, you can use the @samp{C} locale by setting the
+@env{LC_ALL} environment variable to the value @samp{C}.
+
 @example
-$ printf "a b\nc\nd\n" | sed 'N;s/\s/X/g'
-aXbXc
-d
+# TODO: is there any real-world system/locale where 'A'
+#       is replaced by '-' ?
+$ echo A | sed 's/[a-z]/-/'
+A
 @end example
 
-@item \S
-Matches non-whitespace characrers.
+Their interpretation depends on the @env{LC_CTYPE} locale;
+for example, @samp{[[:alnum:]]} means the character class of numbers and letters
+in the current locale.
 
-@item \`
-Matches only at the start of pattern space.  This is different
-from @code{^} in multi-line mode.
+TODO: show example of collation
 
-@item \'
-Matches only at the end of pattern space.  This is different
-from @code{$} in multi-line mode.
+@example
+# TODO: this works on glibc systems, not on musl-libc/freebsd/macosx.
+$ printf 'cliché\n' | LC_ALL=fr_FR.utf8 sed 's/[[=e=]]/X/g'
+clichX
+@end example
 
-@item \<
-Matches the beginning of a word.
 
-@item \>
-Matches the end of a word.
+@node advanced sed
+@chapter Advanced @command{sed}: cycles and buffers
 
-@ifset PERL
-@item \G
-Match only at the start of pattern space or, when doing a global
-substitution using the @code{s///g} command and option, at
-the end-of-match position of the prior match.  For example,
-@samp{s/\Ga/Z/g} will change an initial run of @code{a}s to
-a run of @code{Z}s
-@end ifset
-@end table
+@menu
+* Execution Cycle::          How @command{sed} works
+* Hold and Pattern Buffers::
+* Branching and flow control::
+@end menu
+
+@node Execution Cycle
+@section How @command{sed} Works
+
+@cindex Buffer spaces, pattern and hold
+@cindex Spaces, pattern and hold
+@cindex Pattern space, definition
+@cindex Hold space, definition
+@command{sed} maintains two data buffers: the active @emph{pattern} space,
+and the auxiliary @emph{hold} space. Both are initially empty.
+
+@command{sed} operates by performing the following cycle on each
+line of input: first, @command{sed} reads one line from the input
+stream, removes any trailing newline, and places it in the pattern space.
+Then commands are executed; each command can have an address associated
+to it: addresses are a kind of condition code, and a command is only
+executed if the condition is verified before the command is to be
+executed.
+
+When the end of the script is reached, unless the @option{-n} option
+is in use, the contents of pattern space are printed out to the output
+stream, adding back the trailing newline if it was removed.@footnote{Actually,
+if @command{sed} prints a line without the terminating newline, it will
+nevertheless print the missing newline as soon as more text is sent to
+the same output stream, which gives the ``least expected surprise''
+even though it does not make commands like @samp{sed -n p} exactly
+identical to @command{cat}.} Then the next cycle starts for the next
+input line.
+
+Unless special commands (like @samp{D}) are used, the pattern space is
+deleted between two cycles. The hold space, on the other hand, keeps
+its data between cycles (see commands @samp{h}, @samp{H}, @samp{x},
+@samp{g}, @samp{G} to move data between both buffers).
+
+@node Hold and Pattern Buffers
+@section Hold and Pattern Buffers
+
+TODO
+
+@node Branching and flow control
+@section Branching and Flow Control
+
+TODO
 
 @node Examples
 @chapter Some Sample Scripts
@@ -1746,6 +3015,10 @@ Here are some @command{sed} scripts to guide you in the art of mastering
 @command{sed}.
 
 @menu
+
+Useful one-liners:
+* Joining lines::
+
 Some exotic examples:
 * Centering lines::
 * Increment a number::
@@ -1767,6 +3040,45 @@ Emulating standard utilities:
 * uniq -u::                         Remove all duplicated lines
 * cat -s::                          Squeezing blank lines
 @end menu
+
+@node Joining lines
+@section Joining lines
+
+Join specific lines (e.g. if lines 2 and 3 needs to be joined):
+
+@example
+$ cat lines.txt
+hello
+hel
+lo
+hello
+
+$ sed '2@{N;s/\n//;@}' lines.txt
+hello
+hello
+hello
+@end example
+
+Join lines ending with backslashes:
+
+@example
+$ cat 1.txt
+this \
+is \
+a \
+long \
+line
+and another \
+line
+
+$ sed -e ':x /\\$/ @{ N; s/\\\n//g ; bx @}'  1.txt
+this is a long line
+and another line
+
+
+#TODO: The above requires gnu sed.
+#      non-gnu seds need newlines after ':' and 'b'
+@end example
 
 @node Centering lines
 @section Centering Lines
@@ -2144,9 +3456,6 @@ scripts emulating various Unix commands.  This, in particular,
 is a @command{tac} workalike.
 
 Note that on implementations other than @acronym{GNU} @command{sed}
-@ifset PERL
-and @value{SSED}
-@end ifset
 this script might easily overflow internal buffers.
 
 @c start-------------------------------------------
@@ -2593,7 +3902,7 @@ D
 @end example
 @c end---------------------------------------------
 
-As you can see, we mantain a 2-line window using @code{P} and @code{D}.
+As you can see, we maintain a 2-line window using @code{P} and @code{D}.
 This technique is often used in advanced @command{sed} scripts.
 
 @node uniq -d
@@ -2809,80 +4118,6 @@ However, recursion is used to handle subpatterns and indefinite
 repetition.  This means that the available stack space may limit
 the size of the buffer that can be processed by certain patterns.
 
-@ifset PERL
-There are some size limitations in the regular expression
-matcher but it is hoped that they will never in practice
-be relevant.  The maximum length of a compiled pattern
-is 65539 (sic) bytes.  All values in repeating quantifiers
-must be less than 65536.  The maximum nesting depth of
-all parenthesized subpatterns, including capturing and
-non-capturing subpatterns@footnote{The
-distinction is meaningful when referring to Perl-style
-regular expressions.}, assertions, and other types of
-subpattern, is 200.
-
-Also, @value{SSED} recognizes the @sc{posix} syntax
-@code{[.@var{ch}.]} and @code{[=@var{ch}=]}
-where @var{ch} is a ``collating element'', but these
-are not supported, and an error is given if they are
-encountered.
-
-Here are a few distinctions between the real Perl-style
-regular expressions and those that @option{-R} recognizes.
-
-@enumerate
-@item
-Lookahead assertions do not allow repeat quantifiers after them
-Perl permits them, but they do not mean what you
-might think. For example, @samp{(?!a)@{3@}} does not assert that the
-next three characters are not @samp{a}. It just asserts three times that the
-next character is not @samp{a} --- a waste of time and nothing else.
-
-@item
-Capturing subpatterns that occur inside  negative  lookahead
-head  assertions  are  counted,  but  their  entries are counted
-as empty in the second half of an @code{s} command.
-Perl sets its numerical variables from any such patterns
-that are matched before the assertion fails to match
-something (thereby succeeding), but only if the negative
-lookahead assertion contains just one branch.
-
-@item
-The following Perl escape sequences are not supported:
-@samp{\l}, @samp{\u}, @samp{\L}, @samp{\U}, @samp{\E},
-@samp{\Q}. In fact these are implemented by Perl's general
-string-handling and are not part of its pattern matching engine.
-
-@item
-The Perl @samp{\G} assertion is not supported as it is not
-relevant to single pattern matches.
-
-@item
-Fairly obviously, @value{SSED} does not support the @samp{(?@{code@})}
-and @samp{(?p@{code@})} constructions. However, there is some experimental
-support for recursive patterns using the non-Perl item @samp{(?R)}.
-
-@item
-There are at the time of writing some oddities in Perl
-5.005_02 concerned with the settings of captured strings
-when part of a pattern is repeated. For example, matching
-@samp{aba} against the pattern @samp{/^(a(b)?)+$/} sets
-@samp{$2}@footnote{@samp{$2} would be @samp{\2} in @value{SSED}.}
-to the value @samp{b}, but matching @samp{aabbaa}
-against @samp{/^(aa(bb)?)+$/} leaves @samp{$2}
-unset.  However, if the pattern is changed to
-@samp{/^(aa(b(b))?)+$/} then @samp{$2} (and @samp{$3}) are set.
-In Perl 5.004 @samp{$2} is set in both cases, and that is also
-true of @value{SSED}.
-
-@item
-Another as yet unresolved discrepancy is that in Perl
-5.005_02 the pattern @samp{/^(a)?(?(1)a|b)+$/} matches
-the string @samp{a}, whereas in @value{SSED} it does not.
-However, in both Perl and @value{SSED} @samp{/^(a)?a/} matched
-against @samp{a} leaves $1 unset.
-@end enumerate
-@end ifset
 
 @node Other Resources
 @chapter Other Resources for Learning About @command{sed}
@@ -2948,7 +4183,7 @@ the @command{N} command is issued on the last line of a file.
 the @command{-n} command switch has been specified.  This choice is
 by design.
 
-Default behaviour (gnu extension, non-POSIX conforming):
+Default behavior (gnu extension, non-POSIX conforming):
 @example
 $ seq 3 | sed N
 1
@@ -3008,9 +4243,6 @@ assumption that @code{\|} and @code{\+} match the literal characters
 @code{|} and @code{+}.  Such scripts must be modified by removing the
 spurious backslashes if they are to be used with modern implementations
 of @command{sed}, like
-@ifset PERL
-@value{SSED} or
-@end ifset
 @acronym{GNU} @command{sed}.
 
 On the other hand, some scripts use s|abc\|def||g to remove occurrences
@@ -3049,7 +4281,7 @@ Rather, it will work on a temporary file that is finally renamed
 to the original name: if you rename or delete files, you're actually
 modifying the contents of the directory, so the operation depends on
 the permissions of the directory, not of the file.  For this same
-reason, @command{sed} does not let you use @option{-i} on a writeable file
+reason, @command{sed} does not let you use @option{-i} on a writable file
 in a read-only directory, and will break hard or symbolic links when
 @option{-i} is used on such a file.
 
@@ -3106,1302 +4338,13 @@ the @env{LC_COLLATE} and @env{LC_CTYPE} environment variables to @samp{C}.
 @end table
 
 
-@node Extended regexps
-@appendix Extended regular expressions
-@cindex Extended regular expressions, syntax
 
-The only difference between basic and extended regular expressions is in
-the behavior of a few characters: @samp{?}, @samp{+}, parentheses,
-braces (@samp{@{@}}), and @samp{|}.  While basic regular expressions
-require these to be escaped if you want them to behave as special
-characters, when using extended regular expressions you must escape
-them if you want them @emph{to match a literal character}.  @samp{|}
-is special here because @samp{\|} is a GNU extension -- standard
-basic regular expressions do not provide its functionality.
 
-@noindent
-Examples:
-@table @code
-@item abc?
-becomes @samp{abc\?} when using extended regular expressions.  It matches
-the literal string @samp{abc?}.
+@page
+@node GNU Free Documentation License
+@appendix GNU Free Documentation License
 
-@item c\+
-becomes @samp{c+} when using extended regular expressions.  It matches
-one or more @samp{c}s.
-
-@item a\@{3,\@}
-becomes @samp{a@{3,@}} when using extended regular expressions.  It matches
-three or more @samp{a}s.
-
-@item \(abc\)\@{2,3\@}
-becomes @samp{(abc)@{2,3@}} when using extended regular expressions.  It
-matches either @samp{abcabc} or @samp{abcabcabc}.
-
-@item \(abc*\)\1
-becomes @samp{(abc*)\1} when using extended regular expressions.
-Backreferences must still be escaped when using extended regular
-expressions.
-
-@item a\|b
-becomes @samp{a|b} when using extended regular expressions.  It matches
-@samp{a} or @samp{b}.
-@end table
-
-@ifset PERL
-@node Perl regexps
-@appendix Perl-style regular expressions
-@cindex Perl-style regular expressions, syntax
-
-@emph{This part is taken from the @file{pcre.txt} file distributed together
-with the free @sc{pcre} regular expression matcher; it was written
-by Philip Hazel.}
-
-Perl introduced several extensions to regular expressions, some
-of them incompatible with the syntax of regular expressions
-accepted by Emacs and other @acronym{GNU} tools (whose matcher was
-based on the Emacs matcher).  @value{SSED} implements
-both kinds of extensions.
-
-@iftex
-Summarizing, we have:
-
-@itemize @bullet
-@item
-A backslash can introduce several special sequences
-
-@item
-The circumflex, dollar sign, and period characters behave specially
-with regard to new lines
-
-@item
-Strange uses of square brackets are parsed differently
-
-@item
-You can toggle modifiers in the middle of a regular expression
-
-@item
-You can specify that a subpattern does not count when numbering backreferences
-
-@item
-@cindex Greedy regular expression matching
-You can specify greedy or non-greedy matching
-
-@item
-You can have more than ten back references
-
-@item
-You can do complex look aheads and look behinds (in the spirit of
-@code{\b}, but with subpatterns).
-
-@item
-You can often improve performance by avoiding that @command{sed} wastes
-time with backtracking
-
-@item
-You can have if/then/else branches
-
-@item
-You can do recursive matches, for example to look for unbalanced parentheses
-
-@item
-You can have comments and non-significant whitespace, because things can
-get complex...
-@end itemize
-
-Most of these extensions are introduced by the special @code{(?}
-sequence, which gives special meanings to parenthesized groups.
-@end iftex
-@menu
-Other extensions can be roughly subdivided in two categories
-On one hand Perl introduces several more escaped sequences
-(that is, sequences introduced by a backslash).  On the other
-hand, it specifies that if a question mark follows an open
-parentheses it should give a special meaning to the parenthesized
-group.
-
-* Backslash::                       Introduces special sequences
-* Circumflex/dollar sign/period::   Behave specially with regard to new lines
-* Square brackets::                 Are a bit different in strange cases
-* Options setting::                 Toggle modifiers in the middle of a regexp
-* Non-capturing subpatterns::       Are not counted when backreferencing
-* Repetition::                      Allows for non-greedy matching
-* Backreferences::                  Allows for more than 10 back references
-* Assertions::                      Allows for complex look ahead matches
-* Non-backtracking subpatterns::    Often gives more performance
-* Conditional subpatterns::         Allows if/then/else branches
-* Recursive patterns::              For example to match parentheses
-* Comments::                        Because things can get complex...
-@end menu
-
-@node Backslash
-@appendixsec Backslash
-@cindex Perl-style regular expressions, escaped sequences
-
-There are a few difference in the handling of backslashed
-sequences in Perl mode.
-
-First of all, there are no @code{\o} and @code{\d} sequences.
-@sc{ascii} values for characters can be specified in octal
-with a @code{\@var{xxx}} sequence, where @var{xxx} is a
-sequence of up to three octal digits.  If the first digit
-is a zero, the treatment of the sequence is straightforward;
-just note that if the character that follows the escaped digit
-is itself an octal digit, you have to supply three octal digits
-for @var{xxx}.  For example @code{\07} is a @sc{bel} character
-rather than a @sc{nul} and a literal @code{7} (this sequence is
-instead represented by @code{\0007}).
-
-@cindex Perl-style regular expressions, backreferences
-The handling of a backslash followed by a digit other than 0
-is complicated.  Outside a character class, @command{sed} reads it
-and any following digits as a decimal number. If the number
-is less than 10, or if there have been at least that many
-previous capturing left parentheses in the expression, the
-entire sequence is taken as a back reference. A description
-of how this works is given later, following the discussion
-of parenthesized subpatterns.
-
-Inside a character class, or if the decimal number is
-greater than 9 and there have not been that many capturing
-subpatterns, @command{sed} re-reads up to three octal digits following
-the backslash, and generates a single byte from the
-least significant 8 bits of the value. Any subsequent digits
-stand for themselves.  For example:
-
-@example
-\040  @i{@r{is another way of writing a space}}
-\40   @i{@r{is the same, provided there are fewer than 40}}
-      @i{@r{previous capturing subpatterns}}
-\7    @i{@r{is always a back reference}}
-\011  @i{@r{is always a tab}}
-\11   @i{@r{might be a back reference, or another way of writing a tab}}
-\0113 @i{@r{is a tab followed by the character @samp{3}}}
-\113  @i{@r{is the character with octal code 113 (since there}}
-      @i{@r{can be no more than 99 back references)}}
-\377  @i{@r{is a byte consisting entirely of 1 bits (@sc{ascii} 255)}}
-\81   @i{@r{is either a back reference, or a binary zero}}
-      @i{@r{followed by the two characters @samp{81}}}
-@end example
-
-Note that octal values of 100 or greater must not be introduced
-by a leading zero, because no more than three octal
-digits are ever read. Note that this applies only to the LHS
-pattern; it is not possible yet to specify more than 9 backreferences
-on the RHS of the `s' command.
-
-All the sequences that define a single byte value can be
-used both inside and outside character classes. In addition,
-inside a character class, the sequence @code{\b} is interpreted
-as the backspace character (hex 08). Outside a character
-class it has a different meaning (see below).
-
-In addition, there are four additional escapes specifying
-generic character classes (like @code{\w} and @code{\W} do):
-
-@cindex Perl-style regular expressions, character classes
-@table @samp
-@item \d
-Matches any decimal digit
-
-@item \D
-Matches any character that is not a decimal digit
-@end table
-
-In Perl mode, these character type sequences can appear both inside and
-outside character classes. Instead, in @sc{posix} mode these sequences
-(as well as @code{\w} and @code{\W}) are treated as two literal characters
-(a backslash and a letter) inside square brackets.
-
-Escaped sequences specifying assertions are also different in
-Perl mode.  An assertion specifies a condition that has to be met
-at a particular point in a match, without consuming any
-characters from the subject string. The use of subpatterns
-for more complicated assertions is described below.  The
-backslashed assertions are
-
-@cindex Perl-style regular expressions, assertions
-@table @samp
-@item \b
-Asserts that the point is at a word boundary.
-A word boundary is a position in the subject string where
-the current character and the previous character do not both
-match @code{\w} or @code{\W} (i.e. one matches @code{\w} and
-the other matches @code{\W}), or the start or end of the string
-if the first or last character matches @code{\w}, respectively.
-
-@item \B
-Asserts that the point is not at a word boundary.
-
-@item \A
-Asserts the matcher is at the start of pattern space (independent
-of multiline mode).
-
-@item \Z
-Asserts the matcher is at the end of pattern space,
-or at a newline before the end of pattern space (independent of
-multiline mode)
-
-@item \z
-Asserts the matcher is at the end of pattern space (independent
-of multiline mode)
-@end table
-
-These assertions may not appear in character classes (but
-note that @code{\b} has a different meaning, namely the
-backspace character, inside a character class).
-Note that Perl mode does not support directly assertions
-for the beginning and the end of word; the @acronym{GNU} extensions
-@code{\<} and @code{\>} achieve this purpose in @sc{posix} mode
-instead.
-
-The @code{\A}, @code{\Z}, and @code{\z} assertions differ
-from the traditional circumflex and dollar sign (described below)
-in that they only ever match at the very start and end of the
-subject string, whatever options are set; in particular @code{\A}
-and @code{\z} are the same as the @acronym{GNU} extensions
-@code{\`} and @code{\'} that are active in @sc{posix} mode.
-
-@node Circumflex/dollar sign/period
-@appendixsec Circumflex, dollar sign, period
-@cindex Perl-style regular expressions, newlines
-
-Outside a character class, in the default matching mode, the
-circumflex character is an assertion which is true only if
-the current matching point is at the start of the subject
-string.  Inside a character class, the circumflex has an entirely
-different meaning (see below).
-
-The circumflex need not be the first character of the pattern if
-a number of alternatives are involved, but it should be the
-first thing in each alternative in which it appears if the
-pattern is ever to match that branch. If all possible alternatives,
-start with a circumflex, that is, if the pattern is
-constrained to match only at the start of the subject, it is
-said to be an @dfn{anchored} pattern. (There are also other constructs
-structs that can cause a pattern to be anchored.)
-
-A dollar sign is an assertion which is true only if the
-current matching point is at the end of the subject string,
-or immediately before a newline character that is the last
-character in the string (by default).  A dollar sign need not be the
-last character of the pattern if a number of alternatives
-are involved, but it should be the last item in any branch
-in which it appears.  A dollar sign has no special meaning in a
-character class.
-
-@cindex Perl-style regular expressions, multiline
-The meanings of the circumflex and dollar sign characters are
-changed if the @code{M} modifier option is used. When this is
-the case, they match immediately after and immediately
-before an internal @code{\n} character, respectively, in addition
-to matching at the start and end of the subject string.  For
-example, the pattern @code{/^abc$/} matches the subject string
-@samp{def\nabc} in multiline mode, but not otherwise.  Consequently,
-patterns that are anchored in single line mode
-because all branches start with @code{^} are not anchored in
-multiline mode.
-
-@cindex Perl-style regular expressions, multiline
-Note that the sequences @code{\A}, @code{\Z}, and @code{\z}
-can be used to match the start and end of the subject in both
-modes, and if all branches of a pattern start with @code{\A}
-is it always anchored, whether the @code{M} modifier is set or not.
-
-@cindex Perl-style regular expressions, single line
-Outside a character class, a dot in the pattern matches any
-one character in the subject, including a non-printing character,
-but not (by default) newline.  If the @code{S} modifier is used,
-dots match newlines as well.  Actually, the handling of
-dot is entirely independent of the handling of circumflex
-and dollar sign, the only relationship being that they both
-involve newline characters. Dot has no special meaning in a
-character class.
-
-@node Square brackets
-@appendixsec Square brackets
-@cindex Perl-style regular expressions, character classes
-
-An opening square bracket introduces a character class, terminated
-by a closing square bracket.  A closing square bracket on its own
-is not special.  If a closing square bracket is required as a
-member of the class, it should be the first data character in
-the class (after an initial circumflex, if present) or escaped with a backslash.
-
-A character class matches a single character in the subject;
-the character must be in the set of characters defined by
-the class, unless the first character in the class is a circumflex,
-in which case the subject character must not be in
-the set defined by the class. If a circumflex is actually
-required as a member of the class, ensure it is not the
-first character, or escape it with a backslash.
-
-For example, the character class [aeiou] matches any lower
-case vowel, while [^aeiou] matches any character that is not
-a lower case vowel. Note that a circumflex is just a convenient
-venient notation for specifying the characters which are in
-the class by enumerating those that are not. It is not an
-assertion: it still consumes a character from the subject
-string, and fails if the current pointer is at the end of
-the string.
-
-@cindex Perl-style regular expressions, case-insensitive
-When caseless matching is set, any letters in a class
-represent both their upper case and lower case versions, so
-for example, a caseless @code{[aeiou]} matches uppercase
-and lowercase @samp{A}s, and a caseless @code{[^aeiou]}
-does not match @samp{A}, whereas a case-sensitive version would.
-
-@cindex Perl-style regular expressions, single line
-@cindex Perl-style regular expressions, multiline
-The newline character is never treated in any special way in
-character classes, whatever the setting of the @code{S} and
-@code{M} options (modifiers) is.  A class such as @code{[^a]} will
-always match a newline.
-
-The minus (hyphen) character can be used to specify a range
-of characters in a character class.  For example, @code{[d-m]}
-matches any letter between d and m, inclusive.  If a minus
-character is required in a class, it must be escaped with a
-backslash or appear in a position where it cannot be interpreted
-as indicating a range, typically as the first or last
-character in the class.
-
-It is not possible to have the literal character @code{]} as the
-end character of a range.  A pattern such as @code{[W-]46]} is
-interpreted as a class of two characters (@code{W} and @code{-})
-followed by a literal string @code{46]}, so it would match
-@samp{W46]} or @samp{-46]}. However, if the @code{]} is escaped
-with a backslash it is interpreted as the end of range, so
-@code{[W-\]46]} is interpreted as a single class containing a
-range followed by two separate characters. The octal or
-hexadecimal representation of @code{]} can also be used to end a range.
-
-Ranges operate in @sc{ascii} collating sequence. They can also be
-used for characters specified numerically, for example
-@code{[\000-\037]}. If a range that includes letters is used when
-caseless matching is set, it matches the letters in either
-case. For example, a caseless @code{[W-c]} is equivalent to
-@code{[][\^_`wxyzabc]}, matched caselessly, and if character
-tables for the French locale are in use, @code{[\xc8-\xcb]}
-matches accented E characters in both cases.
-
-Unlike in @sc{posix} mode, the character types @code{\d},
-@code{\D}, @code{\s}, @code{\S}, @code{\w}, and @code{\W}
-may also appear in a character class, and add the characters
-that they match to the class. For example, @code{[\dABCDEF]} matches any
-hexadecimal digit.  A circumflex can conveniently be used
-with the upper case character types to specify a more restricted
-set of characters than the matching lower case type.
-For example, the class @code{[^\W_]} matches any letter or digit,
-but not underscore.
-
-All non-alphameric characters other than @code{\}, @code{-},
-@code{^} (at the start) and the terminating @code{]}
-are non-special in character classes, but it does no harm
-if they are escaped.
-
-Perl 5.6 supports the @sc{posix} notation for character classes, which
-uses names enclosed by @code{[:} and @code{:]} within the enclosing
-square brackets, and @value{SSED} supports this notation as well.
-For example,
-
-@example
-[01[:alpha:]%]
-@end example
-
-@noindent
-matches @samp{0}, @samp{1}, any alphabetic character, or @samp{%}.
-The supported class names are
-
-@table @code
-@item alnum
-Matches letters and digits
-
-@item alpha
-Matches letters
-
-@item ascii
-Matches character codes 0 - 127
-
-@item cntrl
-Matches control characters
-
-@item digit
-Matches decimal digits (same as \d)
-
-@item graph
-Matches printing characters, excluding space
-
-@item lower
-Matches lower case letters
-
-@item print
-Matches printing characters, including space
-
-@item punct
-Matches printing characters, excluding letters and digits
-
-@item space
-Matches white space (same as \s)
-
-@item upper
-Matches upper case letters
-
-@item word
-Matches ``word'' characters (same as \w)
-
-@item xdigit
-Matches hexadecimal digits
-@end table
-
-The names @code{ascii} and @code{word} are extensions valid only in
-Perl mode.  Another Perl extension is negation, which is
-indicated by a circumflex character after the colon. For example,
-
-@example
-[12[:^digit:]]
-@end example
-
-@noindent
-matches @samp{1}, @samp{2}, or any non-digit.
-
-@node Options setting
-@appendixsec Options setting
-@cindex Perl-style regular expressions, toggling options
-@cindex Perl-style regular expressions, case-insensitive
-@cindex Perl-style regular expressions, multiline
-@cindex Perl-style regular expressions, single line
-@cindex Perl-style regular expressions, extended
-
-The settings of the @code{I}, @code{M}, @code{S}, @code{X}
-modifiers can be changed from within the pattern by
-a sequence of Perl option letters enclosed between @code{(?}
-and @code{)}. The option letters must be lowercase.
-
-For example, @code{(?im)} sets caseless, multiline matching. It is
-also possible to unset these options by preceding the letter
-with a hyphen; you can also have combined settings and unsettings:
-@code{(?im-sx)} sets caseless and multiline matching,
-while unsets single line matching (for dots) and extended
-whitespace interpretation.  If a letter appears both before
-and after the hyphen, the option is unset.
-
-The scope of these option changes depends on where in the
-pattern the setting occurs. For settings that are outside
-any subpattern (defined below), the effect is the same as if
-the options were set or unset at the start of matching. The
-following patterns all behave in exactly the same way:
-
-@example
-(?i)abc
-a(?i)bc
-ab(?i)c
-abc(?i)
-@end example
-
-which in turn is the same as specifying the pattern abc with
-the @code{I} modifier.  In other words, ``top level'' settings
-apply to the whole pattern (unless there are other
-changes inside subpatterns). If there is more than one setting
-of the same option at top level, the rightmost setting
-is used.
-
-If an option change occurs inside a subpattern, the effect
-is different.  This is a change of behaviour in Perl 5.005.
-An option change inside a subpattern affects only that part
-of the subpattern @emph{that follows} it, so
-
-@example
-(a(?i)b)c
-@end example
-
-@noindent
-matches abc and aBc and no other  strings  (assuming
-case-sensitive matching is used).  By this means, options can
-be made to have different settings in different parts of the
-pattern.  Any changes made in one alternative do carry on
-into subsequent branches within the same subpattern.  For
-example,
-
-@example
-(a(?i)b|c)
-@end example
-
-@noindent
-matches @samp{ab}, @samp{aB}, @samp{c}, and @samp{C},
-even though when matching @samp{C} the first branch is
-abandoned before the option setting.
-This is because the effects of option settings happen at
-compile time. There would be some very weird behaviour otherwise.
-
-@ignore
-There are two PCRE-specific options PCRE_UNGREEDY and PCRE_EXTRA
-that can be changed in the same way as the Perl-compatible options by
-using the characters U and X respectively.  The (?X) flag
-setting is special in that it must always occur earlier in
-the pattern than any of the additional features it turns on,
-even when it is at top level. It is best put at the start.
-@end ignore
-
-
-@node Non-capturing subpatterns
-@appendixsec Non-capturing subpatterns
-@cindex Perl-style regular expressions, non-capturing subpatterns
-
-Marking part of a pattern as a subpattern does two things.
-On one hand, it localizes a set of alternatives; on the other
-hand, it sets up the subpattern as a capturing subpattern (as
-defined above).  The subpattern can be backreferenced and
-referenced in the right side of @code{s} commands.
-
-For example, if the string @samp{the red king} is matched against
-the pattern
-
-@example
-the ((red|white) (king|queen))
-@end example
-
-@noindent
-the captured substrings are @samp{red king}, @samp{red},
-and @samp{king}, and are numbered 1, 2, and 3.
-
-The fact that plain parentheses fulfil two functions is not
-always helpful.  There are often times when a grouping
-subpattern is required without a capturing requirement.  If an
-opening parenthesis is followed by @code{?:}, the subpattern does
-not do any capturing, and is not counted when computing the
-number of any subsequent capturing subpatterns. For example,
-if the string @samp{the white queen} is matched against the pattern
-
-@example
-the ((?:red|white) (king|queen))
-@end example
-
-@noindent
-the captured substrings are @samp{white queen} and @samp{queen},
-and are numbered 1 and 2. The maximum number of captured
-substrings is 99, while the maximum number of all subpatterns,
-both capturing and non-capturing, is 200.
-
-As a convenient shorthand, if any option settings are
-equired at the start of a non-capturing subpattern, the
-option letters may appear between the @code{?} and the
-@code{:}.  Thus the two patterns
-
-@example
-(?i:saturday|sunday)
-(?:(?i)saturday|sunday)
-@end example
-
-@noindent
-match exactly the same set of strings.  Because alternative
-branches are tried from left to right, and options are not
-reset until the end of the subpattern is reached, an option
-setting in one branch does affect subsequent branches, so
-the above patterns match @samp{SUNDAY} as well as @samp{Saturday}.
-
-
-@node Repetition
-@appendixsec Repetition
-@cindex Perl-style regular expressions, repetitions
-
-Repetition is specified by quantifiers, which can follow any
-of the following items:
-
-@itemize @bullet
-@item
-a single character, possibly escaped
-
-@item
-the @code{.} special character
-
-@item
-a character class
-
-@item
-a back reference (see next section)
-
-@item
-a parenthesized subpattern, unless it is an assertion (@pxref{Assertions}).
-@end itemize
-
-The general repetition quantifier specifies a minimum and
-maximum number of permitted matches, by giving the two
-numbers in curly brackets (braces), separated by a comma.
-The numbers must be less than 65536, and the first must be
-less than or equal to the second. For example:
-
-@example
-z@{2,4@}
-@end example
-
-@noindent
-matches @samp{zz}, @samp{zzz}, or @samp{zzzz}. A closing brace on its own
-is not a special character. If the second number is omitted,
-but the comma is present, there is no upper limit; if the
-second number and the comma are both omitted, the quantifier
-specifies an exact number of required matches. Thus
-
-@example
-[aeiou]@{3,@}
-@end example
-
-@noindent
-matches at least 3 successive vowels, but may match many
-more, while
-
-@example
-\d@{8@}
-@end example
-
-@noindent
-matches exactly 8 digits.  An opening curly bracket that
-appears in a position where a quantifier is not allowed, or
-one that does not match the syntax of a quantifier, is taken
-as a literal character. For example, @{,6@} is not a quantifier,
-but a literal string of four characters.@footnote{It
-raises an error if @option{-R} is not used.}
-
-The quantifier @samp{@{0@}} is permitted, causing the expression to
-behave as if the previous item and the quantifier were not
-present.
-
-For convenience (and historical compatibility) the three
-most common quantifiers have single-character abbreviations:
-
-@table @code
-@item *
-is equivalent to @{0,@}
-
-@item +
-is equivalent to @{1,@}
-
-@item ?
-is equivalent to @{0,1@}
-@end table
-
-It is possible to construct infinite loops by following a
-subpattern that can match no characters with a quantifier
-that has no upper limit, for example:
-
-@example
-(a?)*
-@end example
-
-Earlier versions of Perl used to give an error at
-compile time for such patterns. However, because there are
-cases where this can be useful, such patterns are now
-accepted, but if any repetition of the subpattern does in
-fact match no characters, the loop is forcibly broken.
-
-@cindex Greedy regular expression matching
-@cindex Perl-style regular expressions, stingy repetitions
-By default, the quantifiers are @dfn{greedy} like in @sc{posix}
-mode, that is, they match as much as possible (up to the maximum
-number of permitted times), without causing the rest of the
-pattern to fail. The classic example of where this gives problems
-is in trying to match comments in C programs. These appear between
-the sequences @code{/*} and @code{*/} and within the sequence, individual
-@code{*} and @code{/} characters may appear. An attempt to match C
-comments by applying the pattern
-
-@example
-/\*.*\*/
-@end example
-
-@noindent
-to the string
-
-@example
-/* first command */ not comment /* second comment */
-@end example
-
-@noindent
-
-fails, because it matches the entire string owing to the
-greediness of the @code{.*} item.
-
-However, if a quantifier is followed by a question mark, it
-ceases to be greedy, and instead matches the minimum number
-of times possible, so the pattern @code{/\*.*?\*/}
-does the right thing with the C comments. The meaning of the
-various quantifiers is not otherwise changed, just the preferred
-number of matches.  Do not confuse this use of question
-mark with its use as a quantifier in its own right.
-Because it has two uses, it can sometimes appear doubled, as in
-
-@example
-\d??\d
-@end example
-
-which matches one digit by preference, but can match two if
-that is the only way the rest of the pattern matches.
-
-Note that greediness does not matter when specifying addresses,
-but can be nevertheless used to improve performance.
-
-@ignore
-If the PCRE_UNGREEDY option is set (an option which is not
-available in Perl), the quantifiers are not greedy by
-default, but individual ones can be made greedy by following
-them with a question mark. In other words, it inverts the
-default behaviour.
-@end ignore
-
-When a parenthesized subpattern is quantified with a minimum
-repeat count that is greater than 1 or with a limited maximum,
-more store is required for the compiled pattern, in
-proportion to the size of the minimum or maximum.
-
-@cindex Perl-style regular expressions, single line
-If a pattern starts with @code{.*} or @code{.@{0,@}} and the
-@code{S} modifier is used, the pattern is implicitly anchored,
-because whatever follows will be tried against every character
-position in the subject string, so there is no point in
-retrying the overall match at any position after the first.
-PCRE treats such a pattern as though it were preceded by \A.
-
-When a capturing subpattern is repeated, the value captured
-is the substring that matched the final iteration. For example,
-after
-
-@example
-(tweedle[dume]@{3@}\s*)+
-@end example
-
-@noindent
-has matched @samp{tweedledum tweedledee} the value of the
-captured substring is @samp{tweedledee}.  However, if there are
-nested capturing subpatterns, the corresponding captured
-values may have been set in previous iterations. For example,
-after
-
-@example
-/(a|(b))+/
-@end example
-
-matches @samp{aba}, the value of the second captured substring is
-@samp{b}.
-
-@node Backreferences
-@appendixsec Backreferences
-@cindex Perl-style regular expressions, backreferences
-
-Outside a character class, a backslash followed by a digit
-greater than 0 (and possibly further digits) is a back
-reference to a capturing subpattern earlier (i.e.  to its
-left) in the pattern, provided there have been that many
-previous capturing left parentheses.
-
-However, if the decimal number following the backslash is
-less than 10, it is always taken as a back reference, and
-causes an error only if there are not that many capturing
-left parentheses in the entire pattern. In other words, the
-parentheses that are referenced need not be to the left of
-the reference for numbers less than 10. @ref{Backslash}
-for further details of the handling of digits following a backslash.
-
-A back reference matches whatever actually matched the capturing
-subpattern in the current subject string, rather than
-anything matching the subpattern itself. So the pattern
-
-@example
-(sens|respons)e and \1ibility
-@end example
-
-@noindent
-matches @samp{sense and sensibility} and @samp{response and responsibility},
-but not @samp{sense and responsibility}. If caseful
-matching is in force at the time of the back reference, the
-case of letters is relevant. For example,
-
-@example
-((?i)blah)\s+\1
-@end example
-
-@noindent
-matches @samp{blah blah} and @samp{Blah Blah}, but not
-@samp{BLAH blah}, even though the original capturing
-subpattern is matched caselessly.
-
-There may be more than one back reference to the same subpattern.
-Also, if a subpattern has not actually been used in a
-particular match, any back references to it always fail. For
-example, the pattern
-
-@example
-(a|(bc))\2
-@end example
-
-@noindent
-always fails if it starts to match @samp{a} rather than
-@samp{bc}.  Because there may be up to 99 back references, all
-digits following the backslash are taken as part of a potential
-back reference number; this is different from what happens
-in @sc{posix} mode. If the pattern continues with a digit
-character, some delimiter must be used to terminate the back
-reference.  If the @code{X} modifier option is set, this can be
-whitespace.  Otherwise an empty comment can be used, or the
-following character can be expressed in hexadecimal or octal.
-Note that this applies only to the LHS pattern; it is
-not possible yet to specify more than 9 backreferences on the
-RHS of the `s' command.
-
-A back reference that occurs inside the parentheses to which
-it refers fails when the subpattern is first used, so, for
-example, @code{(a\1)} never matches.  However, such references
-can be useful inside repeated subpatterns. For example, the
-pattern
-
-@example
-(a|b\1)+
-@end example
-
-@noindent
-matches any number of @samp{a}s and also @samp{aba}, @samp{ababbaa},
-etc. At each iteration of the subpattern, the back reference matches
-the character string corresponding to the previous iteration.  In
-order for this to work, the pattern must be such that the first
-iteration does not need to match the back reference.  This can be
-done using alternation, as in the example above, or by a
-quantifier with a minimum of zero.
-
-@node Assertions
-@appendixsec Assertions
-@cindex Perl-style regular expressions, assertions
-@cindex Perl-style regular expressions, asserting subpatterns
-
-An assertion is a test on the characters following or
-preceding the current matching point that does not actually
-consume any characters. The simple assertions coded as @code{\b},
-@code{\B}, @code{\A}, @code{\Z}, @code{\z}, @code{^} and @code{$}
-are described above. More complicated assertions are coded as
-subpatterns.  There are two kinds: those that look ahead of the
-current position in the subject string, and those that look behind it.
-
-@cindex Perl-style regular expressions, lookahead subpatterns
-An assertion subpattern is matched in the normal way, except
-that it does not cause the current matching position to be
-changed. Lookahead assertions start with @code{(?=} for positive
-assertions and @code{(?!} for negative assertions. For example,
-
-@example
-\w+(?=;)
-@end example
-
-@noindent
-matches a word followed by a semicolon, but does not include
-the semicolon in the match, and
-
-@example
-foo(?!bar)
-@end example
-
-@noindent
-matches any occurrence of @samp{foo} that is not followed by
-@samp{bar}.
-
-Note that the apparently similar pattern
-
-@example
-(?!foo)bar
-@end example
-
-@noindent
-@cindex Perl-style regular expressions, lookbehind subpatterns
-finds any occurrence of @samp{bar} even if it is preceded by
-@samp{foo}, because the assertion @code{(?!foo)} is always true
-when the next three characters are @samp{bar}. A lookbehind
-assertion is needed to achieve this effect.
-Lookbehind assertions start with @code{(?<=} for positive
-assertions and @code{(?<!} for negative assertions. So,
-
-@example
-(?<!foo)bar
-@end example
-
-achieves the required effect of finding an occurrence of
-@samp{bar} that is not preceded by @samp{foo}. The contents of a
-lookbehind assertion are restricted
-such that all the strings it matches must have a fixed
-length.  However, if there are several alternatives, they do
-not all have to have the same fixed length.  This is an extension
-compared with Perl 5.005, which requires all branches to match
-the same length of string. Thus
-
-@example
-(?<=dogs|cats|)
-@end example
-
-@noindent
-is permitted, but the apparently equivalent regular expression
-
-@example
-(?<!dogs?|cats?)
-@end example
-
-@noindent
-causes an error at compile time. Branches that match different
-length strings are permitted only at the top level of
-a lookbehind assertion: an assertion such as
-
-@example
-(?<=ab(c|de))
-@end example
-
-@noindent
-is not permitted, because its single top-level branch can
-match two different lengths, but it is acceptable if rewritten
-to use two top-level branches:
-
-@example
-(?<=abc|abde)
-@end example
-
-All this is required because lookbehind assertions simply
-move the current position back by the alternative's fixed
-width and then try to match.  If there are
-insufficient characters before the current position, the
-match is deemed to fail.  Lookbehinds, in conjunction with
-non-backtracking subpatterns can be particularly useful for
-matching at the ends of strings; an example is given at the end
-of the section on non-backtracking subpatterns.
-
-Several assertions (of any sort) may occur in succession.
-For example,
-
-@example
-(?<=\d@{3@})(?<!999)foo
-@end example
-
-@noindent
-matches @samp{foo} preceded by three digits that are not @samp{999}.
-Notice that each of the assertions is applied independently
-at the same point in the subject string. First there is a
-check that the previous three characters are all digits, and
-then there is a check that the same three characters are not
-@samp{999}.  This pattern does not match @samp{foo} preceded by six
-characters, the first of which are digits and the last three
-of which are not @samp{999}.  For example, it doesn't match
-@samp{123abcfoo}. A pattern to do that is
-
-@example
-(?<=\d@{3@}...)(?<!999)foo
-@end example
-
-@noindent
-This time the first assertion looks at the preceding six
-characters, checking that the first three are digits, and
-then the second assertion checks that the preceding three
-characters are not @samp{999}.  Actually, assertions can be
-nested in any combination, so one can write this as
-
-@example
-(?<=\d@{3@}(?!999)...)foo
-@end example
-
-or
-
-@example
-(?<=\d@{3@}...(?<!999))foo
-@end example
-
-@noindent
-both of which might be considered more readable.
-
-Assertion subpatterns are not capturing subpatterns, and may
-not be repeated, because it makes no sense to assert the
-same thing several times. If any kind of assertion contains
-capturing subpatterns within it, these are counted for the
-purposes of numbering the capturing subpatterns in the whole
-pattern.  However, substring capturing is carried out only
-for positive assertions, because it does not make sense for
-negative assertions.
-
-Assertions count towards the maximum of 200 parenthesized
-subpatterns.
-
-@node Non-backtracking subpatterns
-@appendixsec Non-backtracking subpatterns
-@cindex Perl-style regular expressions, non-backtracking subpatterns
-
-With both maximizing and minimizing repetition, failure of
-what follows normally causes the repeated item to be evaluated
-again to see if a different number of repeats allows the
-rest of the pattern to match. Sometimes it is useful to
-prevent this, either to change the nature of the match, or
-to cause it fail earlier than it otherwise might, when the
-author of the pattern knows there is no point in carrying
-on.
-
-Consider, for example, the pattern @code{\d+foo} when applied to
-the subject line
-
-@example
-123456bar
-@end example
-
-After matching all 6 digits and then failing to match @samp{foo},
-the normal action of the matcher is to try again with only 5
-digits matching the @code{\d+} item, and then with 4, and so on,
-before ultimately failing. Non-backtracking subpatterns
-provide the means for specifying that once a portion of the
-pattern has matched, it is not to be re-evaluated in this way,
-so the matcher would give up immediately on failing to match
-@samp{foo} the first time.  The notation is another kind of special
-parenthesis, starting with @code{(?>} as in this example:
-
-@example
-(?>\d+)bar
-@end example
-
-This kind of parenthesis ``locks up'' the part of the pattern
-it contains once it has matched, and a failure further into
-the pattern is prevented from backtracking into it.
-Backtracking past it to previous items, however, works as
-normal.
-
-Non-backtracking subpatterns are not capturing subpatterns.  Simple
-cases such as the above example can be thought of as a maximizing
-repeat that must swallow everything it can.  So,
-while both @code{\d+} and @code{\d+?} are prepared to adjust the number of
-digits they match in order to make the rest of the pattern
-match, @code{(?>\d+)} can only match an entire sequence of digits.
-
-This construction can of course contain arbitrarily complicated
-subpatterns, and it can be nested.
-
-@cindex Perl-style regular expressions, lookbehind subpatterns
-Non-backtracking subpatterns can be used in conjunction with look-behind
-assertions to specify efficient matching at the end
-of the subject string. Consider a simple pattern such as
-
-@example
-abcd$
-@end example
-
-@noindent
-when applied to a long string which does not match.  Because
-matching proceeds from left to right, @command{sed} will look for
-each @samp{a} in the subject and then see if what follows matches
-the rest of the pattern. If the pattern is specified as
-
-@example
-^.*abcd$
-@end example
-
-@noindent
-the initial @code{.*} matches the entire string at first, but when
-this fails (because there is no following @samp{a}), it backtracks
-to match all but the last character, then all but the
-last two characters, and so on. Once again the search for
-@samp{a} covers the entire string, from right to left, so we are
-no better off. However, if the pattern is written as
-
-@example
-^(?>.*)(?<=abcd)
-@end example
-
-there can be no backtracking for the .* item; it can match
-only the entire string. The subsequent lookbehind assertion
-does a single test on the last four characters. If it fails,
-the match fails immediately. For long strings, this approach
-makes a significant difference to the processing time.
-
-When a pattern contains an unlimited repeat inside a subpattern
-that can itself be repeated an unlimited number of
-times, the use of a once-only subpattern is the only way to
-avoid some failing matches taking a very long time
-indeed.@footnote{Actually, the matcher embedded in @value{SSED}
-tries to do something for this in the simplest cases,
-like @code{([^b]*b)*}.  These cases are actually quite
-common: they happen for example in a regular expression
-like @code{\/\*([^*]*\*)*\/} which matches C comments.}
-
-The pattern
-
-@example
-(\D+|<\d+>)*[!?]
-@end example
-
-([^0-9<]+<(\d+>)?)*[!?]
-
-@noindent
-matches an unlimited number of substrings that either consist
-of non-digits, or digits enclosed in angular brackets, followed by
-an exclamation or question mark. When it matches, it runs quickly.
-However, if it is applied to
-
-@example
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-@end example
-
-@noindent
-it takes a long time before reporting failure.  This is
-because the string can be divided between the two repeats in
-a large number of ways, and all have to be tried.@footnote{The
-example used @code{[!?]} rather than a single character at the end,
-because both @value{SSED} and Perl have an optimization that allows
-for fast failure when a single character is used. They
-remember the last single character that is required for a
-match, and fail early if it is not present in the string.}
-
-If the pattern is changed to
-
-@example
-((?>\D+)|<\d+>)*[!?]
-@end example
-
-sequences of non-digits cannot be broken, and failure happens
-quickly.
-
-@node Conditional subpatterns
-@appendixsec Conditional subpatterns
-@cindex Perl-style regular expressions, conditional subpatterns
-
-It is possible to cause the matching process to obey a subpattern
-conditionally or to choose between two alternative
-subpatterns, depending on the result of an assertion, or
-whether a previous capturing subpattern matched or not. The
-two possible forms of conditional subpattern are
-
-@example
-(?(@var{condition})@var{yes-pattern})
-(?(@var{condition})@var{yes-pattern}|@var{no-pattern})
-@end example
-
-If the condition is satisfied, the yes-pattern is used; otherwise
-the no-pattern (if present) is used. If there are more than two
-alternatives in the subpattern, a compile-time error occurs.
-
-There are two kinds of condition. If the text between the
-parentheses consists of a sequence of digits, the condition
-is satisfied if the capturing subpattern of that number has
-previously matched.  The number must be greater than zero.
-Consider the following pattern, which contains non-significant
-white space to make it more readable (assume the @code{X} modifier)
-and to divide it into three parts for ease of discussion:
-
-@example
-( \( )?   [^()]+   (?(1) \) )
-@end example
-
-The first part matches an optional opening parenthesis, and
-if that character is present, sets it as the first captured
-substring. The second part matches one or more characters
-that are not parentheses. The third part is a conditional
-subpattern that tests whether the first set of parentheses
-matched or not.  If they did, that is, if subject started
-with an opening parenthesis, the condition is true, and so
-the yes-pattern is executed and a closing parenthesis is
-required. Otherwise, since no-pattern is not present, the
-subpattern matches nothing.  In other words, this pattern
-matches a sequence of non-parentheses, optionally enclosed
-in parentheses.
-
-@cindex Perl-style regular expressions, lookahead subpatterns
-If the condition is not a sequence of digits, it must be an
-assertion.  This may be a positive or negative lookahead or
-lookbehind assertion. Consider this pattern, again containing
-non-significant white space, and with the two alternatives
-on the second line:
-
-@example
-(?(?=...[a-z])
-   \d\d-[a-z]@{3@}-\d\d |
-   \d\d-\d\d-\d\d )
-@end example
-
-The condition is a positive lookahead assertion that matches
-a letter that is three characters away from the current point.
-If a letter is found, the subject is matched against the first
-alternative @samp{@var{dd}-@var{aaa}-@var{dd}} (where @var{aaa} are
-letters and @var{dd} are digits); otherwise it is matched against
-the second alternative, @samp{@var{dd}-@var{dd}-@var{dd}}.
-
-
-@node Recursive patterns
-@appendixsec Recursive patterns
-@cindex Perl-style regular expressions, recursive patterns
-@cindex Perl-style regular expressions, recursion
-
-Consider the problem of matching a string in parentheses,
-allowing for unlimited nested parentheses. Without the use
-of recursion, the best that can be done is to use a pattern
-that matches up to some fixed depth of nesting. It is not
-possible to handle an arbitrary nesting depth. Perl 5.6 has
-provided an experimental facility that allows regular
-expressions to recurse (amongst other things). It does this
-by interpolating Perl code in the expression at run time,
-and the code can refer to the expression itself. A Perl pattern
-tern to solve the parentheses problem can be created like
-this:
-
-@example
-$re = qr@{\( (?: (?>[^()]+) | (?p@{$re@}) )* \)@}x;
-@end example
-
-The @code{(?p@{...@})} item interpolates Perl code at run time,
-and in this case refers recursively to the pattern in which it
-appears. Obviously, @command{sed} cannot support the interpolation of
-Perl code.  Instead, the special item @code{(?R)} is provided for
-the specific case of recursion. This pattern solves the
-parentheses problem (assume the @code{X} modifier option is used
-so that white space is ignored):
-
-@example
-\( ( (?>[^()]+) | (?R) )* \)
-@end example
-
-First it matches an opening parenthesis. Then it matches any
-number of substrings which can either be a sequence of
-non-parentheses, or a recursive match of the pattern itself
-(i.e. a correctly parenthesized substring). Finally there is
-a closing parenthesis.
-
-This particular example pattern contains nested unlimited
-repeats, and so the use of a non-backtracking subpattern for
-matching strings of non-parentheses is important when applying
-the pattern to strings that do not match. For example, when
-it is applied to
-
-@example
-(aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa()
-@end example
-
-it yields a ``no match'' response quickly. However, if a
-standard backtracking subpattern is not used, the match runs
-for a very long time indeed because there are so many different
-ways the @code{+} and @code{*} repeats can carve up the subject,
-and all have to be tested before failure can be reported.
-
-The values set for any capturing subpatterns are those from
-the outermost level of the recursion at which the subpattern
-value is set. If the pattern above is matched against
-
-@example
-(ab(cd)ef)
-@end example
-
-@noindent
-the value for the capturing parentheses is @samp{ef}, which is
-the last value taken on at the top level.
-
-@node Comments
-@appendixsec Comments
-@cindex Perl-style regular expressions, comments
-
-The sequence (?# marks the start of a comment which continues
-ues up to the next closing parenthesis. Nested parentheses
-are not permitted. The characters that make up a comment
-play no part in the pattern matching at all.
-
-@cindex Perl-style regular expressions, extended
-If the @code{X} modifier option is used, an unescaped @code{#} character
-outside a character class introduces a comment that continues
-up to the next newline character in the pattern.
-@end ifset
+@include fdl.texi
 
 
 @page
