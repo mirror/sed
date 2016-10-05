@@ -33,6 +33,12 @@ y-bracket y-newline y-zero insert brackets amp-escape newline-anchor::
 	$(CMP) $(srcdir)/$@.good $@.out
 	@$(RM) $@.out
 
+zero-anchor::
+	$(SEDENV) $(SED) -z -f $(srcdir)/$@.sed \
+		< $(srcdir)/$@.inp | $(TR) -d \\r > $@.out
+	$(CMP) $(srcdir)/$@.good $@.out
+	@$(RM) $@.out
+
 badenc::
 	LC_ALL=ru_RU.UTF-8 $(TIME) $(SED) -nf $(srcdir)/$@.sed \
 		< $(srcdir)/$@.inp | $(TR) -d \\r > $@.out

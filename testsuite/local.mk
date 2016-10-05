@@ -109,7 +109,7 @@ SEDTESTS += testsuite/appquit testsuite/enable testsuite/sep		\
         testsuite/amp-escape testsuite/help testsuite/file		\
         testsuite/quiet testsuite/factor testsuite/binary3		\
         testsuite/binary2 testsuite/binary testsuite/dc			\
-        testsuite/newline-anchor
+        testsuite/newline-anchor testsuite/zero-anchor
 
 # Note that the first lines are statements.  They ensure that environment
 # variables that can perturb tests are unset or set to expected values.
@@ -358,7 +358,10 @@ EXTRA_DIST += \
 	testsuite/y-zero.inp \
 	testsuite/y-newline.good \
 	testsuite/y-newline.sed \
-	testsuite/y-newline.inp
+	testsuite/y-newline.inp \
+	testsuite/zero-anchor.good \
+	testsuite/zero-anchor.sed \
+	testsuite/zero-anchor.inp
 
 # automake makes `check' depend on $(TESTS).  Declare
 # dummy targets for $(TESTS) so that make does not complain.

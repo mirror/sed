@@ -233,3 +233,4 @@ xstrndup.h
 /limits.h
 /hard-locale.c
 /hard-locale.h
+/memrchr.c

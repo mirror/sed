@@ -113,7 +113,8 @@ compile_regex_1 (struct regex *new_regex, int needed_sub)
   re_set_syntax (syntax);
   error = re_compile_pattern (new_regex->re, new_regex->sz,
                               &new_regex->pattern);
-  new_regex->pattern.newline_anchor = (new_regex->flags & REG_NEWLINE) != 0;
+  new_regex->pattern.newline_anchor =
+    buffer_delimiter == '\n' && (new_regex->flags & REG_NEWLINE) != 0;
 
   new_regex->pattern.translate = NULL;
 #ifndef RE_ICASE
@@ -144,6 +145,7 @@ compile_regex_1 (struct regex *new_regex, int needed_sub)
     }
 
   int dfaopts = (new_regex->flags & REG_ICASE) ? DFA_CASE_FOLD : 0;
+  dfaopts |= (buffer_delimiter == '\n') ? 0 : DFA_EOL_NUL;
   new_regex->dfa = dfaalloc ();
   dfasyntax (new_regex->dfa, &localeinfo, syntax, dfaopts);
   dfacomp (new_regex->re, new_regex->sz, new_regex->dfa, 1);
@@ -340,7 +342,7 @@ match_regex(struct regex *regex, char *buf, size_t buflen,
       if (superset && !dfaexec (superset, buf, buf + buflen, true, NULL, NULL))
         return 0;
 
-      if ((!regsize && regex->pattern.newline_anchor)
+      if ((!regsize && (regex->flags & REG_NEWLINE))
           || (!superset && dfaisfast (regex->dfa)))
         {
           bool backref = false;
@@ -348,14 +350,72 @@ match_regex(struct regex *regex, char *buf, size_t buflen,
           if (!dfaexec (regex->dfa, buf, buf + buflen, true, NULL, &backref))
             return 0;
 
-          if (!regsize && regex->pattern.newline_anchor && !backref)
+          if (!regsize && (regex->flags & REG_NEWLINE) && !backref)
             return 1;
         }
     }
 
-  ret = re_search (&regex->pattern, buf, buflen, buf_start_offset,
-                   buflen - buf_start_offset,
-                   regsize ? regarray : NULL);
+  /* If the buffer delimiter is not newline character, we can not use
+     newline_anchor flag of regex.  So do it line-by-line, and add offset
+     value to results.  */
+  if ((regex->flags & REG_NEWLINE) && buffer_delimiter != '\n')
+    {
+      const char *beg, *end;
+      const char *start;
+
+      beg = buf;
+
+      if (buf_start_offset > 0)
+        {
+          const char *eol = memrchr (buf, buffer_delimiter, buf_start_offset);
+
+          if (eol != NULL)
+            beg = eol + 1;
+        }
+
+      start = buf + buf_start_offset;
+
+      for (;;)
+        {
+          end = memchr (beg, buffer_delimiter, buf + buflen - beg);
+
+          if (end == NULL)
+            end = buf + buflen;
+
+          ret = re_search (&regex->pattern, beg, end - beg,
+                           start - beg, end - start,
+                           regsize ? regarray : NULL);
+
+          if (ret > -1)
+            {
+              size_t i;
+
+              ret += beg - buf;
+
+              if (regsize)
+                {
+                  for (i = 0; i < regarray->num_regs; ++i)
+                    {
+                      if (regarray->start[i] > -1)
+                        regarray->start[i] += beg - buf;
+                      if (regarray->end[i] > -1)
+                        regarray->end[i] += beg - buf;
+                    }
+                }
+
+              break;
+            }
+
+          if (end == buf + buflen)
+            break;
+
+          beg = start = end + 1;
+        }
+    }
+  else
+    ret = re_search (&regex->pattern, buf, buflen, buf_start_offset,
+                     buflen - buf_start_offset,
+                     regsize ? regarray : NULL);
 
   return (ret > -1);
 #endif
