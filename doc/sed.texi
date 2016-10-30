@@ -910,7 +910,7 @@ This matches a string consisting of two equal substrings separated by
 a newline.
 
 @item .\@{9\@}A$
-This matches nine characters followed by an @samp{A}.
+This matches nine characters followed by an @samp{A} at the end of a line.
 
 @item ^.\@{15\@}A
 This matches the start of a string that contains 16 characters,
