@@ -25,8 +25,7 @@ printf 'sed: -e expression #1, char 0: no previous regular expression\n' \
   > exp || framework_failure_
 
 # Before sed-4.3, this would create a file named sed??????
-sed -i s//b/ in > out 2> err
-test $? = 1 || fail=1
+returns_ 1 sed -i s//b/ in > out 2> err || fail=1
 
 compare /dev/null out || fail=1
 compare exp err || fail=1
