@@ -218,7 +218,7 @@ bad_prog(const char *why)
             (unsigned long)cur_input.string_expr_count,
             (unsigned long)(prog.cur-prog.base),
             why);
-  exit(EXIT_FAILURE);
+  exit(EXIT_BAD_USAGE);
 }
 
 

@@ -77,7 +77,7 @@ panic(const char *str, ...)
       open_files = open_files->link;
     }
 
-  exit(4);
+  exit(EXIT_PANIC);
 }
 
 

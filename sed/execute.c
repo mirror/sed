@@ -1706,7 +1706,7 @@ process_files(struct vector *the_program, char **argv)
 #endif /*DEBUG_LEAKS*/
 
   if (input.bad_count)
-    status = 2;
+    status = EXIT_BAD_INPUT;
 
   return status;
 }

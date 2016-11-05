@@ -324,7 +324,7 @@ main (int argc, char **argv)
         case 'r':
 #ifdef REG_PERL
           if (extended_regexp_flags && (extended_regexp_flags!=REG_EXTENDED))
-            usage(4);
+            usage(EXIT_BAD_USAGE);
 #endif
           extended_regexp_flags = REG_EXTENDED;
           break;
@@ -332,7 +332,7 @@ main (int argc, char **argv)
 #ifdef REG_PERL
         case 'R':
           if (extended_regexp_flags && (extended_regexp_flags!=REG_PERL)))
-            usage(4);
+            usage(EXIT_BAD_USAGE);
           extended_regexp_flags = REG_PERL;
           break;
 #endif
@@ -354,11 +354,11 @@ main (int argc, char **argv)
                       AUTHORS, (char *) NULL);
           contact(false);
           ck_fclose (NULL);
-          exit (0);
+          exit (EXIT_SUCCESS);
         case 'h':
-          usage(0);
+          usage(EXIT_SUCCESS);
         default:
-          usage(4);
+          usage(EXIT_BAD_USAGE);
         }
     }
 
@@ -370,7 +370,7 @@ main (int argc, char **argv)
           the_program = compile_string(the_program, arg, strlen(arg));
         }
       else
-        usage(4);
+        usage(EXIT_BAD_USAGE);
     }
   check_final_program(the_program);
 

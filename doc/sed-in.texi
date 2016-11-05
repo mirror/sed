@@ -78,6 +78,7 @@ Boston, MA 02110-1301, USA
 @menu
 * Introduction::               Introduction
 * Invoking sed::               Invocation
+* Exit status::                Exit status
 * sed Programs::               @command{sed} programs
 * Examples::                   Some sample scripts
 * Limitations::                Limitations and (non-)limitations of @value{SSED}
@@ -410,6 +411,39 @@ be processed.
 @cindex Standard input, processing as input
 A file name of @samp{-} refers to the standard input stream.
 The standard input will be processed if no file names are specified.
+
+@node Exit status
+@chapter Exit status
+@cindex exit status
+An exit status of zero indicates success, and a nonzero value
+indicates failure. @value{SSED} returns the following exit status
+error values:
+
+@table @asis
+@item 0
+Successful completion.
+
+@item 1
+Invalid command, invalid syntax, invalid regular expression or a
+@value{SSED} extension command used with @option{--posix}.
+
+@item 2
+One or more of the input file specified on the command line could not be
+opened (e.g. if a file is not found, or read permission is denied).
+Processing continued with other files.
+
+@item 4
+An I/O error, or a serious processing error during runtime,
+@value{SSED} aborted immediately.
+@end table
+
+Additionally, the commands @code{q} and @code{Q} can be used to terminate
+@command{sed} with a custom exit code value (this is a @value{SSED} extension):
+
+@example
+$ echo | sed 'Q42' ; echo $?
+42
+@end example
 
 
 @node sed Programs
