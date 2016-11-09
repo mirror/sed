@@ -89,8 +89,6 @@ THANKS: THANKS.in Makefile.am .mailmap thanks-gen .version
 	  printf ';; %s\n' 'Local Variables:' 'coding: utf-8' End:;	\
 	} > $@-t && chmod a-w $@-t && mv $@-t $@
 
-html:
-	cd doc && $(MAKE) html
 
 DISTCHECK_CONFIGURE_FLAGS = XGETTEXT='$(SHELL) -c : dummy' $(EXTRA_DC_FLAGS)
 EXTRA_DC_FLAGS =
