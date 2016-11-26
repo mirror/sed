@@ -355,7 +355,7 @@ match_regex(struct regex *regex, char *buf, size_t buflen,
         }
     }
 
-  /* If the buffer delimiter is not newline character, we can not use
+  /* If the buffer delimiter is not newline character, we cannot use
      newline_anchor flag of regex.  So do it line-by-line, and add offset
      value to results.  */
   if ((regex->flags & REG_NEWLINE) && buffer_delimiter != '\n')

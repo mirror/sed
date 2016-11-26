@@ -170,7 +170,7 @@ exclude_file_name_regexp--sc_prohibit_tab_based_indentation = \
   $(tbi_1)|$(tbi_2)
 
 exclude_file_name_regexp--sc_prohibit_empty_lines_at_EOF = \
-  ^testsuite/(bkslashes.good|(noeolw?|empty)\.(2?good|inp))$$
+  ^testsuite/(bkslashes.good|(noeolw?|empty|zero-anchor)\.(2?good|inp))$$
 
 # Exempt test-related files from our 80-column limitation, for now.
 exclude_file_name_regexp--sc_long_lines = ^testsuite/
