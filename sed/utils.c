@@ -189,9 +189,10 @@ ck_fwrite(const void *ptr, size_t size, size_t nmemb, FILE *stream)
 {
   clearerr(stream);
   if (size && fwrite(ptr, size, nmemb, stream) != nmemb)
-    panic(ngettext("couldn't write %d item to %s: %s",
-                   "couldn't write %d items to %s: %s", nmemb),
-                nmemb, utils_fp_name(stream), strerror(errno));
+    panic(ngettext("couldn't write %llu item to %s: %s",
+                   "couldn't write %llu items to %s: %s", nmemb),
+          (unsigned long long) nmemb, utils_fp_name(stream),
+          strerror(errno));
 }
 
 /* Panic on failing fread */

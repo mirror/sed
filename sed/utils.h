@@ -27,7 +27,7 @@ enum exit_codes {
 };
 
 
-_Noreturn void panic (const char *str, ...);
+_Noreturn void panic (const char *str, ...) _GL_ATTRIBUTE_FORMAT_PRINTF (1, 2);
 
 FILE *ck_fopen (const char *name, const char *mode, int fail);
 FILE *ck_fdopen (int fd, const char *name, const char *mode, int fail);

@@ -59,7 +59,8 @@ is_mb_char (int ch, mbstate_t *cur_stat)
       return 1;
 
     default: /* Should never happen, as per mbrtowc(3) documentation */
-      panic ("is_mb_char: mbrtowc (0x%x) returned %d",ch,result);
+      panic ("is_mb_char: mbrtowc (0x%x) returned %d",
+             (unsigned int) ch, result);
     }
 }
 
