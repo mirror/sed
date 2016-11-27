@@ -15,10 +15,3 @@
 #
 
 include lib/gnulib.mk
-
-lib_libsed_a_CPPFLAGS = $(AM_CPPFLAGS) -I$(top_srcdir)/lib/ \
-                        -I$(top_builddir)/lib
-lib_libsed_a_CFLAGS = $(AM_CFLAGS) $(GNULIB_WARN_CFLAGS) $(WERROR_CFLAGS)
-
-lib_libsed_a_LIBADD += $(LIBOBJS) $(ALLOCA)
-lib_libsed_a_DEPENDENCIES += $(LIBOBJS) $(ALLOCA)
