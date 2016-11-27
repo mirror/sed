@@ -1679,7 +1679,7 @@ rewind_read_files(void)
 
 /* Release all resources which were allocated in this module. */
 void
-finish_program(struct vector *program)
+finish_program(void)
 {
   /* close all files... */
   {

@@ -376,7 +376,7 @@ main (int argc, char **argv)
 
   return_code = process_files(the_program, argv+optind);
 
-  finish_program(the_program);
+  finish_program();
   ck_fclose(NULL);
 
   return return_code;

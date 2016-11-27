@@ -101,7 +101,7 @@ utils_fp_name(FILE *fp)
 }
 
 static void
-register_open_file (FILE *fp, const char *name, int temp)
+register_open_file (FILE *fp, const char *name)
 {
   struct open_file *p;
   for (p=open_files; p; p=p->link)
@@ -138,7 +138,7 @@ ck_fopen(const char *name, const char *mode, int fail)
       return NULL;
     }
 
-  register_open_file (fp, name, false);
+  register_open_file (fp, name);
   return fp;
 }
 
@@ -157,7 +157,7 @@ ck_fdopen( int fd, const char *name, const char *mode, int fail)
       return NULL;
     }
 
-  register_open_file (fp, name, false);
+  register_open_file (fp, name);
   return fp;
 }
 
@@ -179,7 +179,7 @@ ck_mkstemp (char **p_filename, const char *tmpdir,
 
   *p_filename = template;
   FILE *fp = fdopen (fd, mode);
-  register_open_file (fp, template, true);
+  register_open_file (fp, template);
   return fp;
 }
 

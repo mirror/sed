@@ -191,7 +191,7 @@ struct vector *compile_string (struct vector *, char *str, size_t len);
 struct vector *compile_file (struct vector *, const char *cmdfile);
 void check_final_program (struct vector *);
 void rewind_read_files (void);
-void finish_program (struct vector *);
+void finish_program (void);
 
 struct regex *compile_regex (struct buffer *b, int flags, int needed_sub);
 int match_regex (struct regex *regex,
