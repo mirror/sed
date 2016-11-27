@@ -25,7 +25,7 @@ fail=0
 
 # Before sed-4.3, sed would mistakenly accept a ":" with no following
 # label name.
-echo x | sed : > out 2> err && fail=1
+echo x | returns_ 1 sed : > out 2> err || fail=1
 
 compare /dev/null out || fail=1
 compare exp-err err || fail=1
