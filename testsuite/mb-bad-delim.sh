@@ -41,7 +41,7 @@ cat <<\EOF > exp-err1 || framework_failure_
 sed: file prog1 line 1: delimiter character is not a single-byte character
 EOF
 
-LC_ALL=en_US.UTF-8 returns_ 1 sed -f prog1 < /dev/null 2>err1 || fail=1
+returns_ 1 env LC_ALL=en_US.UTF-8 sed -f prog1 < /dev/null 2>err1 || fail=1
 compare_ exp-err1 err1 || fail=1
 
 
@@ -55,7 +55,7 @@ cat <<\EOF > exp-err2 || framework_failure_
 sed: file prog2 line 1: delimiter character is not a single-byte character
 EOF
 
-LC_ALL=en_US.UTF-8 returns_ 1 sed -f prog2 </dev/null 2>err2 || fail=1
+returns_ 1 env LC_ALL=en_US.UTF-8 sed -f prog2 </dev/null 2>err2 || fail=1
 compare_ exp-err2 err2 || fail=1
 
 # ... but accept octet \316 as delimiter in C locale
