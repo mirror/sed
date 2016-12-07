@@ -7,3 +7,29 @@
 @clear PERL
 @set SSEDEXT @acronym{GNU} extensions
 @set SSED @acronym{GNU} @command{sed}
+
+@c Ugly hack to enable using new texinfo commands '@codequotebacktick'
+@c and '@codequoteundirected' or define empty fallbacks if they are
+@c not available.
+
+@ifclear txicommandconditionals
+@c If we got here, this is a REALLY old texinfo (pre 5.0),
+@c and '@ifcommandnotdefined' is not defined.
+@c Assume these commands are not defined as well.
+@macro codequotebacktick
+@end macro
+@macro codequoteundirected
+@end macro
+@end ifclear
+
+@ifset txicommandconditionals
+@c if we got here, this texinfo supports checking for defined
+@c commands. If these commands aren't available - define empty
+@c fallbacks.
+@ifcommandnotdefined codequotebacktick
+@macro codequotebacktick
+@end macro
+@macro codequoteundirected
+@end macro
+@end ifcommandnotdefined
+@end ifset

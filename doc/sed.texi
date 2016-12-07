@@ -110,6 +110,12 @@ This chapter covers how to run @command{sed}. Details of @command{sed}
 scripts and individual @command{sed} commands are discussed in the
 next chapter.
 
+@menu
+* Overview::
+* Command-Line Options::
+* Exit status::
+@end menu
+
 
 @node Overview
 @section Overview
@@ -495,7 +501,7 @@ options are used.
 This document will refer to ``the'' @command{sed} script;
 this is understood to mean the in-order concatenation
 of all of the @var{script}s and @var{script-file}s passed in.
-@xref{Overview} for examples.
+@xref{Overview}.
 
 
 @cindex @command{sed} commands syntax
@@ -1723,9 +1729,13 @@ Addresses determine on which line(s) the @command{sed} command will be
 executed. The following command replaces the word @samp{hello}
 with @samp{world} only on line 144:
 
+@codequoteundirected on
+@codequotebacktick on
 @example
 sed '144s/hello/world/' input.txt > output.txt
 @end example
+@codequoteundirected off
+@codequotebacktick off
 
 
 
@@ -1733,9 +1743,13 @@ If no addresses are given, the command is performed on all lines.
 The following command replaces the word @samp{hello} with @samp{world}
 on all lines in the input file:
 
+@codequoteundirected on
+@codequotebacktick on
 @example
 sed 's/hello/world/' input.txt > output.txt
 @end example
+@codequoteundirected off
+@codequotebacktick off
 
 
 
@@ -1746,9 +1760,13 @@ on content instead of line numbers. The following command replaces
 the word @samp{hello} with @samp{world} only in lines
 containing the word @samp{apple}:
 
+@codequoteundirected on
+@codequotebacktick on
 @example
 sed '/apple/s/hello/world/' input.txt > output.txt
 @end example
+@codequoteundirected off
+@codequotebacktick off
 
 
 
@@ -1760,9 +1778,13 @@ both.
 The following command replaces the word @samp{hello} with @samp{world}
 only in lines 4 to 17 (inclusive):
 
+@codequoteundirected on
+@codequotebacktick on
 @example
 sed '4,17s/hello/world/' input.txt > output.txt
 @end example
+@codequoteundirected off
+@codequotebacktick off
 
 
 
@@ -1858,7 +1880,7 @@ The default regular expression is
 @ref{BRE syntax, , Basic Regular Expression (BRE)}.
 If @option{-E} or @option{-r} options are used, The regular expression should be
 in @ref{ERE syntax, , Extended Regular Expression (ERE)} syntax.
-@xref{BRE vs ERE} to learn more.
+@xref{BRE vs ERE}.
 
 @table @code
 @item /@var{regexp}/
@@ -2619,7 +2641,6 @@ If you want to make the @samp{^}
 character a list item, place it anywhere but first.
 @end table
 
-@c*****
 TODO: incorporate this paragraph (copied verbatim from BRE section).
 
 @cindex @code{POSIXLY_CORRECT} behavior, bracket expressions
@@ -3044,8 +3065,10 @@ Emulating standard utilities:
 @node Joining lines
 @section Joining lines
 
-Join specific lines (e.g. if lines 2 and 3 needs to be joined):
+Join specific lines (e.g. if lines 2 and 3 need to be joined):
 
+@codequoteundirected on
+@codequotebacktick on
 @example
 $ cat lines.txt
 hello
@@ -3058,9 +3081,13 @@ hello
 hello
 hello
 @end example
+@codequoteundirected off
+@codequotebacktick off
 
 Join lines ending with backslashes:
 
+@codequoteundirected on
+@codequotebacktick on
 @example
 $ cat 1.txt
 this \
@@ -3079,6 +3106,8 @@ and another line
 #TODO: The above requires gnu sed.
 #      non-gnu seds need newlines after ':' and 'b'
 @end example
+@codequoteundirected off
+@codequotebacktick off
 
 @node Centering lines
 @section Centering Lines
