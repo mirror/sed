@@ -14,9 +14,10 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 info_TEXINFOS = doc/sed.texi
-sed_TEXINFOS = doc/config.texi doc/version.texi
+sed_TEXINFOS = doc/config.texi doc/version.texi doc/fdl.texi
 dist_man_MANS = doc/sed.1
-dist_noinst_DATA = doc/config.texi doc/sed.x doc/sed-in.texi doc/s-texi
+dist_noinst_DATA = doc/config.texi doc/sed.x doc/sed-in.texi doc/s-texi \
+                   doc/fdl.texi
 dist_noinst_SCRIPTS = doc/groupify.sed
 HELP2MAN = $(top_srcdir)/build-aux/help2man
 SEDBIN = sed/sed
