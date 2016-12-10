@@ -14,30 +14,13 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 info_TEXINFOS = doc/sed.texi
-sed_TEXINFOS = doc/config.texi doc/version.texi doc/fdl.texi
+doc_sed_TEXINFOS = doc/config.texi doc/version.texi doc/fdl.texi
 dist_man_MANS = doc/sed.1
-dist_noinst_DATA = doc/config.texi doc/sed.x doc/sed-in.texi doc/s-texi \
-                   doc/fdl.texi
-dist_noinst_SCRIPTS = doc/groupify.sed
+dist_noinst_DATA = doc/sed.x
 HELP2MAN = $(top_srcdir)/build-aux/help2man
 SEDBIN = sed/sed
 
 AM_MAKEINFOHTMLFLAGS = --no-split
-
-# To produce better quality output, in the example sed
-# scripts we group comments with lines following them;
-# since mantaining the "@group...@end group" manually
-# is a burden, we do this automatically
-doc/sed.texi: $(srcdir)/doc/s-texi
-doc/s-texi: doc/sed-in.texi $(srcdir)/doc/groupify.sed
-	sed -nf $(srcdir)/doc/groupify.sed \
-	  < $(srcdir)/doc/sed-in.texi > $(srcdir)/doc/sed-tmp.texi
-	if cmp $(srcdir)/doc/sed.texi $(srcdir)/doc/sed-tmp.texi; then \
-	  rm -f $(srcdir)/doc/sed-tmp.texi; \
-	else \
-	  mv -f $(srcdir)/doc/sed-tmp.texi $(srcdir)/doc/sed.texi; \
-	fi
-	echo stamp > $(srcdir)/doc/s-texi
 
 doc/sed.1: sed/sed .version $(srcdir)/doc/sed.x
 	$(AM_V_GEN)$(MKDIR_P) doc
