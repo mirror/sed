@@ -29,10 +29,12 @@ noinst_HEADERS +=	\
   sed/sed.h		\
   sed/utils.h
 
-sed_sed_CPPFLAGS = $(AM_CPPFLAGS)  -DLOCALEDIR=\"$(localedir)\"
+sed_sed_CPPFLAGS = $(AM_CPPFLAGS) -DLOCALEDIR=\"$(localedir)\"
 sed_sed_CFLAGS = $(AM_CFLAGS) $(WARN_CFLAGS) $(WERROR_CFLAGS)
 sed_sed_LDADD = sed/libver.a lib/libsed.a $(INTLLIBS) $(LIB_ACL) $(LIB_SELINUX)
 sed_sed_DEPENDENCIES = lib/libsed.a sed/libver.a
+
+$(sed_sed_OBJECTS): $(BUILT_SOURCES)
 
 BUILT_SOURCES += sed/version.c
 DISTCLEANFILES += sed/version.c
