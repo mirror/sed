@@ -15,6 +15,7 @@ TR = $(SEDENV_2) tr
 
 CMP=cmp
 RM=rm -f
+elide_cr = $(SEDENV_2) $(SED) 's/\r//g'
 
 SKIP = :>$@.skip; exit 77
 
@@ -23,34 +24,34 @@ numsub head madding mac-mf empty xbxcx xbxcx3 recall recall2 xemacs \
 appquit fasts uniq manis linecnt khadafy allsub flipcase space modulo \
 y-bracket y-newline y-zero insert brackets amp-escape newline-anchor::
 	$(SEDENV) $(SED) -f $(srcdir)/$@.sed \
-		< $(srcdir)/$@.inp | $(TR) -d \\r > $@.out
+		< $(srcdir)/$@.inp | $(elide_cr) > $@.out
 	$(CMP) $(srcdir)/$@.good $@.out
 	@$(RM) $@.out
 
 0range::
 	$(SEDENV) $(SED) -s -f $(srcdir)/$@.sed \
-		< $(srcdir)/$@.inp | $(TR) -d \\r > $@.out
+		< $(srcdir)/$@.inp | $(elide_cr) > $@.out
 	$(CMP) $(srcdir)/$@.good $@.out
 	@$(RM) $@.out
 
 zero-anchor::
 	$(SEDENV) $(SED) -z -f $(srcdir)/$@.sed \
-		< $(srcdir)/$@.inp | $(TR) -d \\r > $@.out
+		< $(srcdir)/$@.inp | $(elide_cr) > $@.out
 	$(CMP) $(srcdir)/$@.good $@.out
 	@$(RM) $@.out
 
 badenc::
 	LC_ALL=ru_RU.UTF-8 $(TIME) $(SED) -nf $(srcdir)/$@.sed \
-		< $(srcdir)/$@.inp | $(TR) -d \\r > $@.out
+		< $(srcdir)/$@.inp | $(elide_cr) > $@.out
 	$(CMP) $(srcdir)/$@.good $@.out
 	LC_ALL=it_IT.UTF-8 $(TIME) $(SED) -nf $(srcdir)/$@.sed \
-		< $(srcdir)/$@.inp | $(TR) -d \\r > $@.out
+		< $(srcdir)/$@.inp | $(elide_cr) > $@.out
 	$(CMP) $(srcdir)/$@.good $@.out
 	LC_ALL=en_US.UTF-8 $(TIME) $(SED) -nf $(srcdir)/$@.sed \
-		< $(srcdir)/$@.inp | $(TR) -d \\r > $@.out
+		< $(srcdir)/$@.inp | $(elide_cr) > $@.out
 	$(CMP) $(srcdir)/$@.good $@.out
 	LC_ALL=en_GB.UTF-8 $(TIME) $(SED) -nf $(srcdir)/$@.sed \
-		< $(srcdir)/$@.inp | $(TR) -d \\r > $@.out
+		< $(srcdir)/$@.inp | $(elide_cr) > $@.out
 	$(CMP) $(srcdir)/$@.good $@.out
 	@$(RM) $@.out
 
@@ -59,10 +60,10 @@ badenc::
 utf8-1 utf8-2 utf8-3 utf8-4::
 	echo "LC_ALL=ru_RU.UTF-8" \
 	  "$(TIME) $(SED) -f $(srcdir)/$@.sed" \
-	  "< $(srcdir)/$@.inp | $(TR) -d \\r > $@.out"; \
+	  "< $(srcdir)/$@.inp | $(elide_cr) > $@.out"; \
 	LC_ALL=ru_RU.UTF-8 \
 	  $(TIME) $(SED) -f $(srcdir)/$@.sed \
-		< $(srcdir)/$@.inp | $(TR) -d \\r > $@.out; \
+		< $(srcdir)/$@.inp | $(elide_cr) > $@.out; \
 	$(CMP) $(srcdir)/$@.good $@.out && exit 0; \
 	$(CMP) $(srcdir)/$@.inp $@.out || exit 1; \
 	locale > $@.info 2>/dev/null || { rm $@.info; $(SKIP); }; \
@@ -70,9 +71,9 @@ utf8-1 utf8-2 utf8-3 utf8-4::
 	case "$$LC_CTYPE" in \
 	  *UTF-8 | *UTF8 | *utf8 | *utf-8) \
 	    echo "$(TIME) $(SED) -f $(srcdir)/$@.sed" \
-	      " < $(srcdir)/$@.inp | $(TR) -d \\r > $@.out"; \
+	      " < $(srcdir)/$@.inp | $(elide_cr) > $@.out"; \
 	    $(TIME) $(SED) -f $(srcdir)/$@.sed \
-		< $(srcdir)/$@.inp | $(TR) -d \\r > $@.out; \
+		< $(srcdir)/$@.inp | $(elide_cr) > $@.out; \
 	    $(CMP) $(srcdir)/$@.good $@.out && exit 0; \
 	    $(CMP) $(srcdir)/$@.inp $@.out || exit 1 ;; \
 	  *) ;; \
@@ -82,9 +83,9 @@ utf8-1 utf8-2 utf8-3 utf8-4::
 # This checks for a bug in 3.02 and 3.02.80
 stdin::
 	($(SEDENV) $(SED) d; $(SEDENV) $(SED) G) < $(srcdir)/numsub.inp \
-	  | $(TR) -d \\r > $@.1out
+	  | $(elide_cr) > $@.1out
 	$(SEDENV) cat $(srcdir)/numsub.inp \
-	  | ($(SEDENV) $(SED) d; $(SEDENV) $(SED) G) | $(TR) -d \\r > $@.2out
+	  | ($(SEDENV) $(SED) d; $(SEDENV) $(SED) G) | $(elide_cr) > $@.2out
 	$(CMP) $@.1out $@.2out
 	@$(RM) $@.1out $@.2out
 
@@ -100,41 +101,41 @@ inplace-hold::
 cv-vars classes middle dc distrib factor numsub2 numsub3 numsub4 numsub5 \
 insens::
 	$(SEDENV) $(SED) -n -f $(srcdir)/$@.sed \
-	  < $(srcdir)/$@.inp | $(TR) -d \\r > $@.out
+	  < $(srcdir)/$@.inp | $(elide_cr) > $@.out
 	$(CMP) $(srcdir)/$@.good $@.out
 	@$(RM) $@.out
 
 noeolw::
 	$(SEDENV) $(SED) -n -f $(srcdir)/$@.sed \
-	  $(srcdir)/noeol.inp $(srcdir)/noeol.inp | $(TR) -d \\r > $@.out
+	  $(srcdir)/noeol.inp $(srcdir)/noeol.inp | $(elide_cr) > $@.out
 	$(CMP) $(srcdir)/$@.good $@.out
-	$(TR) -d \\r <  $@.1out | $(CMP) $(srcdir)/$@.1good -
-	$(TR) -d \\r <  $@.2out | $(CMP) $(srcdir)/$@.2good -
+	$(elide_cr) <  $@.1out | $(CMP) $(srcdir)/$@.1good -
+	$(elide_cr) <  $@.2out | $(CMP) $(srcdir)/$@.2good -
 	@$(RM) $@.1out $@.2out $@.out
 
 subwrite::
 	$(SEDENV) $(SED) -f $(srcdir)/$@.sed \
-	  < $(srcdir)/$@.inp | $(TR) -d \\r > $@.1out
+	  < $(srcdir)/$@.inp | $(elide_cr) > $@.1out
 	$(CMP) $(srcdir)/subwrt1.good $@.1out
-	$(TR) -d \\r < $@.wout | $(CMP) $(srcdir)/subwrt2.good -
+	$(elide_cr) < $@.wout | $(CMP) $(srcdir)/subwrt2.good -
 	@$(RM) $@.1out $@.wout
 
 bsd::
 	$(SEDENV_2) sh $(srcdir)/$@.sh '$(TIME) $(SED)' $@.out
-	$(TR) -d \\r < $@.out | $(CMP) $(srcdir)/$@.good -
+	$(elide_cr) < $@.out | $(CMP) $(srcdir)/$@.good -
 	@$(RM) $@.out
 
 writeout::
 	$(SEDENV) $(SED) -f $(srcdir)/$@.sed \
-	  < $(srcdir)/$@.inp | $(TR) -d \\r > $@.1out
+	  < $(srcdir)/$@.inp | $(elide_cr) > $@.1out
 	$(CMP) $(srcdir)/wrtout1.good $@.1out
-	$(TR) -d \\r < $@.wout | $(CMP) $(srcdir)/wrtout2.good -
+	$(elide_cr) < $@.wout | $(CMP) $(srcdir)/wrtout2.good -
 	@$(RM) $@.1out $@.wout
 
 readin::
 	echo MOO | $(SEDENV) $(SED) b > $@.in2
 	$(SEDENV) $(SED) -f $(srcdir)/$@.sed \
-	  < $(srcdir)/$@.inp | $(TR) -d \\r > $@.out
+	  < $(srcdir)/$@.inp | $(elide_cr) > $@.out
 	$(CMP) $(srcdir)/$@.good $@.out
 	@$(RM) $@.out $@.in2
 
@@ -143,13 +144,13 @@ eval.in2: $(srcdir)/eval.inp
 
 eval:: eval.in2
 	$(SEDENV) $(SED) -f $(srcdir)/$@.sed \
-	  < $(srcdir)/$@.inp | $(TR) -d \\r > $@.out
+	  < $(srcdir)/$@.inp | $(elide_cr) > $@.out
 	$(CMP) $(srcdir)/$@.good $@.out
 	@$(RM) $@.out
 
 binary binary2 binary3::
 	$(SEDENV) $(SED) -n -f $(srcdir)/$@.sed \
-	  < $(srcdir)/binary.inp | $(TR) -d \\r > $@.out
+	  < $(srcdir)/binary.inp | $(elide_cr) > $@.out
 	$(CMP) $(srcdir)/binary.good $@.out
 	@$(RM) $@.out
 
@@ -165,19 +166,19 @@ help::
 	@$(RM) $@.1out $@.2out
 
 version::
-	$(SEDENV) $(SED) --version 2>&1 | $(TR) -d \\r > $@.out
+	$(SEDENV) $(SED) --version 2>&1 | $(elide_cr) > $@.out
 	$(CMP) $@.good $@.out
 	@$(RM) $@.out
 
 file::
 	$(SEDENV) $(SED) --file=$(srcdir)/newjis.sed \
-		< $(srcdir)/newjis.inp | $(TR) -d \\r > $@.out
+		< $(srcdir)/newjis.inp | $(elide_cr) > $@.out
 	$(CMP) $(srcdir)/newjis.good $@.out
 	@$(RM) $@.out
 
 quiet::
 	$(SEDENV) $(SED) --quiet -f $(srcdir)/cv-vars.sed \
-		< $(srcdir)/cv-vars.inp | $(TR) -d \\r > $@.out
+		< $(srcdir)/cv-vars.inp | $(elide_cr) > $@.out
 	$(CMP) $(srcdir)/cv-vars.good $@.out
 	@$(RM) $@.out
 
