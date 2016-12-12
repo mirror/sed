@@ -1,0 +1,83 @@
+-*- outline -*-
+
+These notes intend to help people working on the checked-out sources.
+These requirements do not apply when building from a distribution tarball.
+
+* Requirements
+
+We've opted to keep only the highest-level sources in the GIT repository.
+This eases our maintenance burden, (fewer merges etc.), but imposes more
+requirements on anyone wishing to build from the just-checked-out sources.
+Note the requirements to build the released archive are much less and
+are just the requirements of the standard ./configure && make procedure.
+Specific development tools and versions will be checked for and listed by
+the bootstrap script.  See README-prereq for specific notes on obtaining
+these prerequisite tools.
+
+Valgrind <http://valgrind.org/> is also highly recommended, if
+Valgrind supports your architecture. See also README-valgrind.
+
+While building from a just-cloned source tree may require installing a
+few prerequisites, later, a plain 'git pull && make' should be sufficient.
+
+* First GIT checkout
+
+You can get a copy of the source repository like this:
+
+        $ git clone git://git.sv.gnu.org/sed
+        $ cd sed
+
+As an optional step, if you already have a copy of the gnulib git
+repository on your hard drive, then you can use it as a reference to
+reduce download time and disk space requirements:
+
+        $ export GNULIB_SRCDIR=/path/to/gnulib
+
+The next step is to get and check other files needed to build,
+which are extracted from other source packages:
+
+        $ ./bootstrap
+
+To use the most-recent gnulib (as opposed to the gnulib version that
+the package last synchronized to), do this next:
+
+        $ git submodule foreach git pull origin master
+        $ git commit -m 'build: update gnulib submodule to latest' gnulib
+
+And there you are!  Just
+
+        $ ./configure --quiet #[--enable-gcc-warnings] [*]
+        $ make
+        $ make check
+
+At this point, there should be no difference between your local copy,
+and the GIT master copy:
+
+        $ git diff
+
+should output no difference.
+
+Enjoy!
+
+[*] The --enable-gcc-warnings option is useful only with glibc
+and with a very recent version of gcc.  You'll probably also have
+to use recent system headers.  If you configure with this option,
+and spot a problem, please be sure to send the report to the bug
+reporting address of this package, and not to that of gnulib, even
+if the problem seems to originate in a gnulib-provided file.
+-----
+
+Copyright (C) 2002-2016 Free Software Foundation, Inc.
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see <http://www.gnu.org/licenses/>.
