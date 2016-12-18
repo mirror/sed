@@ -144,8 +144,7 @@ compile_regex_1 (struct regex *new_regex, int needed_sub)
       bad_prog(buf);
     }
 
-  int dfaopts = (new_regex->flags & REG_ICASE) ? DFA_CASE_FOLD : 0;
-  dfaopts |= (buffer_delimiter == '\n') ? 0 : DFA_EOL_NUL;
+  int dfaopts = buffer_delimiter == '\n' ? 0 : DFA_EOL_NUL;
   new_regex->dfa = dfaalloc ();
   dfasyntax (new_regex->dfa, &localeinfo, syntax, dfaopts);
   dfacomp (new_regex->re, new_regex->sz, new_regex->dfa, 1);

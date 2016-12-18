@@ -234,3 +234,4 @@ xstrndup.h
 /hard-locale.c
 /hard-locale.h
 /memrchr.c
+/minmax.h

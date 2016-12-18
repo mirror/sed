@@ -224,3 +224,5 @@ xstrndup.m4
 /isblank.m4
 /limits-h.m4
 /memrchr.m4
+/builtin-expect.m4
+/minmax.m4
