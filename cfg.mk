@@ -14,6 +14,11 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+# Cause the tool(s) built by this package to be used also when running
+# commands via e.g., "make syntax-check".  Doing this a little sooner
+# would have avoided a grep infloop bug.
+export PATH := $(srcdir)/sed:${PATH}
+
 # Used in maint.mk's web-manual rule
 manual_title = GNU Sed: a stream editor
 
