@@ -2982,6 +2982,7 @@ clichX
 @menu
 * Execution Cycle::          How @command{sed} works
 * Hold and Pattern Buffers::
+* Multiline techniques::     Using D,G,H,N,P to process multiple lines
 * Branching and flow control::
 @end menu
 
@@ -3022,6 +3023,150 @@ its data between cycles (see commands @samp{h}, @samp{H}, @samp{x},
 @section Hold and Pattern Buffers
 
 TODO
+
+@node Multiline techniques
+@section Multiline techniques - using D,G,H,N,P to process multiple lines
+
+Multiple lines can be processed as one buffer using the
+@code{D},@code{G},@code{H},@code{N},@code{P}. They are similar to
+their lowercase counterparts (@code{d},@code{g},
+@code{h},@code{n},@code{p}), except that these commands append or
+subtract data while respecting embedded newlines - allowing adding and
+removing lines from the pattern and hold spaces.
+
+They operate as follows:
+@table @code
+@item D
+@emph{deletes} line from the pattern space until the first newline,
+and restarts the cycle.
+
+@item G
+@emph{appends} line from the hold space to the pattern space, with a
+newline before it.
+
+@item H
+@emph{appends} line from the pattern space to the hold space, with a
+newline before it.
+
+@item N
+@emph{appends} line from the input file to the pattern space.
+
+@item P
+@emph{prints} line from the pattern space until the first newline.
+
+@end table
+
+
+The following example illustrates the operation of @code{N} and
+@code{D} commands:
+
+@codequoteundirected on
+@codequotebacktick on
+@example
+@group
+$ seq 6 | sed -n 'N;l;D'
+1\n2$
+2\n3$
+3\n4$
+4\n5$
+5\n6$
+@end group
+@end example
+@codequoteundirected off
+@codequotebacktick off
+
+@enumerate
+@item
+@command{sed} starts by reading the first line into the pattern space
+(i.e. @samp{1}).
+@item
+At the beginning of every cycle, the @code{N}
+command appends a newline and the next line to the pattern space
+(i.e. @samp{1}, @samp{\n}, @samp{2} in the first cycle).
+@item
+The @code{l} command prints the content of the pattern space
+unambigiously.
+@item
+The @code{D} command then removes the content of pattern
+space up to the first newline (leaving @samp{2} at the end of
+the first cycle).
+@item
+At the next cycle the @code{N} command appends a
+newline and the next input line to the pattern space
+(e.g. @samp{2}, @samp{\n}, @samp{3}).
+@end enumerate
+
+
+@cindex processing paragraphs
+@cindex paragraphs, processing
+A common technique to process blocks of text such as paragraphs
+(instead of line-by-line) is using the following construct:
+
+@codequoteundirected on
+@codequotebacktick on
+@example
+sed '/./@{H;$!d@} ; x ; s/REGEXP/REPLACEMENT/'
+@end example
+@codequoteundirected off
+@codequotebacktick off
+
+@enumerate
+@item
+The first expression, @code{/./@{H;$!d@}} operates on all non-empty lines,
+and adds the current line (in the pattern space) to the hold space.
+On all lines except the last, the pattern space is deleted and the cycle is
+restarted.
+
+@item
+The other expressions @code{x} and @code{s} are executed only on empty
+lines (i.e. paragraph separators). The @code{x} command fetches the
+accumulated lines from the hold space back to the pattern space. The
+@code{s///} command then operates on all the text in the paragraph
+(including the embedded newlines).
+@end enumerate
+
+The following example demonstrates this technique:
+@codequoteundirected on
+@codequotebacktick on
+@example
+@group
+$ cat input.txt
+a a a aa aaa
+aaaa aaaa aa
+aaaa aaa aaa
+
+bbbb bbb bbb
+bb bb bbb bb
+bbbbbbbb bbb
+
+ccc ccc cccc
+cccc ccccc c
+cc cc cc cc
+
+$ sed '/./@{H;$!d@} ; x ; s/^/\nSTART-->/ ; s/$/\n<--END/' input.txt
+
+START-->
+a a a aa aaa
+aaaa aaaa aa
+aaaa aaa aaa
+<--END
+
+START-->
+bbbb bbb bbb
+bb bb bbb bb
+bbbbbbbb bbb
+<--END
+
+START-->
+ccc ccc cccc
+cccc ccccc c
+cc cc cc cc
+<--END
+@end group
+@end example
+@codequoteundirected off
+@codequotebacktick off
+
 
 @node Branching and flow control
 @section Branching and Flow Control
