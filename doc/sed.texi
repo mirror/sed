@@ -3168,6 +3168,9 @@ cc cc cc cc
 @codequotebacktick off
 
 
+For more annotated examples, @pxref{Text search across multiple lines}.
+
+
 @node Branching and flow control
 @section Branching and Flow Control
 
@@ -3190,6 +3193,7 @@ Some exotic examples:
 * Rename files to lower case::
 * Print bash environment::
 * Reverse chars of lines::
+* Text search across multiple lines::
 
 Emulating standard utilities:
 * tac::                             Reverse lines of files
@@ -3279,7 +3283,7 @@ technique.
 @end group
 
 @group
-# del leading and trailing spaces
+# delete leading and trailing spaces
 y/@kbd{tab}/ /
 s/^ *//
 s/ *$//
@@ -3620,6 +3624,121 @@ s/\n//g
 @end group
 @end example
 @c end---------------------------------------------
+
+
+@node Text search across multiple lines
+@section Text search across multiple lines
+
+This section uses @code{N} and @code{D} commands to search for
+consecutive words spanning multiple lines. @xref{Multiline techniques}.
+
+These examples deal with finding doubled occurrences of words in a document.
+
+Finding doubled words in a single line is easy using GNU @command{grep}
+and similarly with @value{SSED}:
+
+@c NOTE: in all examples, 'the@ the' is used to prevent
+@c 'make syntax-check' from complaining about double words.
+@codequoteundirected on
+@codequotebacktick on
+@example
+@group
+$ cat two-cities-dup1.txt
+It was the best of times,
+it was the worst of times,
+it was the@ the age of wisdom,
+it was the age of foolishness,
+
+$ grep -E '\b(\w+)\s+\1\b' two-cities-dup1.txt
+it was the@ the age of wisdom,
+
+$ grep -n -E '\b(\w+)\s+\1\b' two-cities-dup1.txt
+3:it was the@ the age of wisdom,
+
+$ sed -En '/\b(\w+)\s+\1\b/p' two-cities-dup1.txt
+it was the@ the age of wisdom,
+
+$ sed -En '/\b(\w+)\s+\1\b/@{=;p@}' two-cities-dup1.txt
+3
+it was the@ the age of wisdom,
+@end group
+@end example
+@codequoteundirected off
+@codequotebacktick off
+
+@itemize @bullet
+@item
+The regular expression @samp{\b\w+\s+} searches for word-boundary (@samp{\b}),
+followed by one-or-more word-characters (@samp{\w+}), followed by whitespace
+(@samp{\s+}). @xref{regexp extensions}.
+
+@item
+Adding parentheses around the @samp{(\w+)} expression creates a subexpression.
+The regular expression pattern @samp{(PATTERN)\s+\1} defines a subexpression
+(in the parentheses) followed by a back-reference, separated by whitespace.
+A successful match means the @var{PATTERN} was repeated twice in succession.
+@xref{Back-references and Subexpressions}.
+
+@item
+The word-boundery expression (@samp{\b}) at both ends ensures partial
+words are not matched (e.g. @samp{the then} is not a desired match).
+@c Thanks to Jim for pointing this out in
+@c http://lists.gnu.org/archive/html/sed-devel/2016-12/msg00041.html
+
+@item
+The @option{-E} option enables extended regular expression syntax, alleviating
+the need to add backslashes before the parenthesis. @xref{ERE syntax}.
+
+@end itemize
+
+When the doubled word span two lines the above regular expression
+will not find them as @command{grep} and @command{sed} operate line-by-line.
+
+By using @command{N} and @command{D} commands, @command{sed} can apply
+regular expressions on multiple lines (that is, multiple lines are stored
+in the pattern space, and the regular expression works on it):
+
+@c NOTE: use 'the@*the' instead of a real new line to prevent
+@c 'make syntax-check' to complain about doubled-words.
+@codequoteundirected on
+@codequotebacktick on
+@example
+$ cat two-cities-dup2.txt
+It was the best of times, it was the
+worst of times, it was the@*the age of wisdom,
+it was the age of foolishness,
+
+$ sed -En '@{N; /\b(\w+)\s+\1\b/@{=;p@} ; D@}'  two-cities-dup2.txt
+3
+worst of times, it was the@*the age of wisdom,
+@end example
+@codequoteundirected off
+@codequotebacktick off
+
+@itemize @bullet
+@item
+The @command{N} command appends the next line to the pattern space
+(thus ensuring it contains two consecutive lines in every cycle).
+
+@item
+The regular expression uses @samp{\s+} for word separator which matches
+both spaces and newlines.
+
+@item
+The regular expression matches, the entire pattern space is printed
+with @command{p}. No lines are printed by default due to the @option{-n} option.
+
+@item
+The @command{D} removes the first line from the pattern space (up until the
+first newline), readying it for the next cycle.
+@end itemize
+
+See the GNU @command{coreutils} manual for an alternative solution using
+@command{tr -s} and @command{uniq} at
+@c NOTE: cheating and keeping the URL line shorter than 80 characters
+@c by using 'gnu.org' and '/s/'.
+@url{https://gnu.org/s/coreutils/manual/html_node/Squeezing-and-deleting.html}.
+
 
 @node tac
 @section Reverse Lines of Files
