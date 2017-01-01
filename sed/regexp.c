@@ -419,8 +419,7 @@ match_regex(struct regex *regex, char *buf, size_t buflen,
 
 #ifdef DEBUG_LEAKS
 void
-release_regex(regex)
-  struct regex *regex;
+release_regex(struct regex *regex)
 {
   regfree(&regex->pattern);
   free(regex);
