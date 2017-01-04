@@ -3213,6 +3213,10 @@ Emulating standard utilities:
 @node Joining lines
 @section Joining lines
 
+This section uses @code{N}, @code{D} and @code{P} commands to process
+multiple lines, and the @code{b} and @code{t} commands for branching.
+@xref{Multiline techniques} and @ref{Branching and flow control}.
+
 Join specific lines (e.g. if lines 2 and 3 need to be joined):
 
 @codequoteundirected on
@@ -3232,7 +3236,7 @@ hello
 @codequoteundirected off
 @codequotebacktick off
 
-Join lines ending with backslashes:
+Join backslash-continued lines:
 
 @codequoteundirected on
 @codequotebacktick on
@@ -3256,6 +3260,42 @@ and another line
 @end example
 @codequoteundirected off
 @codequotebacktick off
+
+Join lines that start with whitespace (e.g SMTP headers):
+
+@codequoteundirected on
+@codequotebacktick on
+@example
+@group
+$ cat 2.txt
+Subject: Hello
+    World
+Content-Type: multipart/alternative;
+    boundary=94eb2c190cc6370f06054535da6a
+Date: Tue, 3 Jan 2017 19:41:16 +0000 (GMT)
+Authentication-Results: mx.gnu.org;
+       dkim=pass header.i=@@gnu.org;
+       spf=pass
+Message-ID: <abcdef@@gnu.org>
+From: John Doe <jdoe@@gnu.org>
+To: Jane Smith <jsmith@@gnu.org>
+
+$ sed -E ':a ; $!N ; s/\n\s+/ / ; ta ; P ; D' 2.txt
+Subject: Hello World
+Content-Type: multipart/alternative; boundary=94eb2c190cc6370f06054535da6a
+Date: Tue, 3 Jan 2017 19:41:16 +0000 (GMT)
+Authentication-Results: mx.gnu.org; dkim=pass header.i=@@gnu.org; spf=pass
+Message-ID: <abcdef@@gnu.org>
+From: John Doe <jdoe@@gnu.org>
+To: Jane Smith <jsmith@@gnu.org>
+
+# A portable (non-gnu) variation:
+#   sed -e :a -e '$!N;s/\n  */ /;ta' -e 'P;D'
+@end group
+@end example
+@codequoteundirected off
+@codequotebacktick off
+
 
 @node Centering lines
 @section Centering Lines
