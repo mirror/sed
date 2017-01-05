@@ -3085,7 +3085,7 @@ command appends a newline and the next line to the pattern space
 (i.e. @samp{1}, @samp{\n}, @samp{2} in the first cycle).
 @item
 The @code{l} command prints the content of the pattern space
-unambigiously.
+unambiguously.
 @item
 The @code{D} command then removes the content of pattern
 space up to the first newline (leaving @samp{2} at the end of
@@ -3173,7 +3173,303 @@ and @ref{Line length adjustment}.
 @node Branching and flow control
 @section Branching and Flow Control
 
-TODO
+The branching commands @code{b}, @code{t}, and @code{T} enable
+changing the flow of @command{sed} programs.
+
+By default, @command{sed} reads an input line into the pattern buffer,
+then continues to processes all commands in order.
+Commands without addresses affect all lines.
+Commands with addresses affect only matching lines.
+@xref {Execution Cycle} and @ref{Addresses overview}.
+
+@command{sed} does not support a typical @code{if/then} construct.
+Instead, some commands can be used as conditionals or to change the
+default flow control:
+
+@table @code
+
+@item d
+delete (clears) the current pattern space,
+and restart the program cycle without processing the rest of the commands
+and without printing the pattern space.
+
+@item D
+delete the contents of the pattern space @emph{up to the first newline},
+and restart the program cycle without processing the rest of
+the commands and without printing the pattern space.
+
+@item [addr]X
+@itemx [addr]@{ X ; X ; X @}
+@item /regexp/X
+@item /regexp/@{ X ; X ; X @}
+Addresses and regular expressions can be used as an @code{if/then}
+conditional: If @var{[addr]} matches the current pattern space,
+execute the command(s).
+For example: The command @code{/^#/d} means:
+@emph{if} the current pattern matches the regular expression @code{^#} (a line
+starting with a hash), @emph{then} execute the @code{d} command:
+delete the line without printing it, and restart the program cycle
+immediately.
+
+@item b
+branch unconditionally (that is: always jump to a label, skipping
+or repeating other commands, without restarting a new cycle). Combined
+with an address, the branch can be conditionally executed on matched
+lines.
+
+@item t
+branch conditionally (that is: jump to a label) @emph{only if} a
+@code{s///} command has succeeded since the last input line was read
+or another conditional branch was taken.
+
+@item T
+similar but opposite to the @code{t} command: branch only if
+there has been @emph{no} successful substitutions since the last
+input line was read.
+@end table
+
+
+The following two @command{sed} programs are equivalent.  The first
+(contrived) example uses the @code{b} command to skip the @code{s///}
+command on lines containing @samp{1}.  The second example uses an
+address with negation (@samp{!})  to perform substitution only on
+desired lines.  The @code{y///} command is still executed on all
+lines:
+
+@codequoteundirected on
+@codequotebacktick on
+@example
+@group
+$ printf '%s\n' a1 a2 a3 | sed -E '/1/bx ; s/a/z/ ; :x ; y/123/456/'
+a4
+z5
+z6
+
+$ printf '%s\n' a1 a2 a3 | sed -E '/1/!s/a/z/ ; y/123/456/'
+a4
+z5
+z6
+@end group
+@end example
+@codequoteundirected off
+@codequotebacktick off
+
+
+
+@subsection Branching and Cycles
+@cindex labels
+@cindex omitting labels
+@cindex cycle, restarting
+@cindex restarting a cycle
+The @code{b},@code{t} and @code{T} commands can be followed by a label
+(typically a single letter). Labels are defined with a colon followed by
+one or more letters (e.g. @samp{:x}). If the label is omitted the
+branch commands restart the cycle.  Note the difference between
+branching to a label and restarting the cycle: when a cycle is
+restarted, @command{sed} first prints the current content of the
+pattern space, then reads the next input line into the pattern space;
+Jumping to a label (even if it is at the beginning of the program)
+does not print the pattern space and does not read the next input line.
+
+The following program is a no-op. The @code{b} command (the only command
+in the program) does not have a label, and thus simply restarts the cycle.
+On each cycle, the pattern space is printed and the next input line is read:
+
+@example
+@group
+$ seq 3 | sed b
+1
+2
+3
+@end group
+@end example
+
+@cindex infinite loop, branching
+@cindex branching, infinite loop
+The following example is an infinite-loop - it doesn't terminate and
+doesn't print anything. The @code{b} command jumps to the @samp{x}
+label, and a new cycle is never started:
+
+@codequoteundirected on
+@codequotebacktick on
+@example
+@group
+$ seq 3 | sed ':x ; bx'
+
+# The above command requires gnu sed (which supports additional
+# commands following a label, without a newline). A portable equivalent:
+#     sed -e ':x' -e bx
+@end group
+@end example
+@codequoteundirected off
+@codequotebacktick off
+
+@cindex branching and n, N
+@cindex n, and branching
+@cindex N, and branching
+Branching is often complemented with the @code{n} or @code{N} commands:
+both commands read the next input line into the pattern space without waiting
+for the cycle to restart. Before reading the next input line, @code{n}
+prints the current pattern space then empties it, while @code{N}
+appends a newline and the next input line to the pattern space.
+
+Consider the following two examples:
+
+@codequoteundirected on
+@codequotebacktick on
+@example
+@group
+$ seq 3 | sed ':x ; n ; bx'
+1
+2
+3
+
+$ seq 3 | sed ':x ; N ; bx'
+1
+2
+3
+@end group
+@end example
+@codequoteundirected off
+@codequotebacktick off
+
+@itemize
+@item
+Both examples do not inf-loop, despite never starting a new cycle.
+
+@item
+In the first example, the @code{n} commands first prints the content
+of the pattern space, empties the pattern space then reads the next
+input line.
+
+@item
+In the second example, the @code{N} commands appends the next input
+line to the pattern space (with a newline).  Lines are accumulated in
+the pattern space until there are no more input lines to read, then
+the @code{N} command terminates the @command{sed} program. When the
+program terminates, the end-of-cycle actions are performed, and the
+entire pattern space is printed.
+
+@item
+The second example requires @value{SSED},
+because it uses the non-POSIX-standard behavior of @code{N}.
+See the ``@code{N} command on the last line'' paragraph
+in @ref{Reporting Bugs}.
+
+@item
+To further examine the difference between the two examples,
+try the following commands:
+@codequoteundirected on
+@codequotebacktick on
+@example
+@group
+printf '%s\n' aa bb cc dd | sed ':x ; n ; = ; bx'
+printf '%s\n' aa bb cc dd | sed ':x ; N ; = ; bx'
+printf '%s\n' aa bb cc dd | sed ':x ; n ; s/\n/***/ ; bx'
+printf '%s\n' aa bb cc dd | sed ':x ; N ; s/\n/***/ ; bx'
+@end group
+@end example
+@codequoteundirected off
+@codequotebacktick off
+
+@end itemize
+
+
+
+@subsection Branching example: joining lines
+
+@cindex joining lines with branching
+@cindex branching, joining lines
+@cindex quoted-printable lines, joining
+@cindex joining quoted-printable lines
+@cindex t, joining lines with
+@cindex b, joining lines with
+@cindex b, versus t
+@cindex t, versus b
+As a real-world example of using branching, consider the case of
+@uref{https://en.wikipedia.org/wiki/Quoted-printable,quoted-printable} files,
+typically used to encode email messages.
+In these files long lines are split and marked with a @dfn{soft line break}
+consisting of a single @samp{=} character at the end of the line:
+
+@example
+@group
+$ cat jaques.txt
+All the wor=
+ld's a stag=
+e,
+And all the=
+ men and wo=
+men merely =
+players:
+They have t=
+heir exits =
+and their e=
+ntrances;
+And one man=
+ in his tim=
+e plays man=
+y parts.
+@end group
+@end example
+
+
+The following program uses an address match @samp{/=$/} as a
+conditional: If the current pattern space ends with a @samp{=}, it
+reads the next input line using @code{N}, replaces all @samp{=}
+characters which are followed by a newline, and unconditionally
+branches (@code{b}) to the beginning of the program without restarting
+a new cycle. If the pattern space does not ends with @samp{=}, the
+default action is performed: the pattern space is printed and a new
+cycle is started:
+
+@codequoteundirected on
+@codequotebacktick on
+@example
+@group
+$ sed ':x ; /=$/ @{ N ; s/=\n//g ; bx @}' jaques.txt
+All the world's a stage,
+And all the men and women merely players:
+They have their exits and their entrances;
+And one man in his time plays many parts.
+@end group
+@end example
+@codequoteundirected off
+@codequotebacktick off
+
+Here's an alternative program with a slightly different approach: On
+all lines except the last, @code{N} appends the line to the pattern
+space.  A substitution command then removes soft line breaks
+(@samp{=} at the end of a line, i.e. followed by a newline) by replacing
+them with an empty string.
+@emph{if} the substitution was successful (meaning the pattern space contained
+a line which should be joined), The conditional branch command @code{t} jumps
+to the beginning of the program without completing or restarting the cycle.
+If the substitution failed (meaning there were no soft line breaks),
+The @code{t} command will @emph{not} branch. Then, @code{P} will
+print the pattern space content until the first newline, and @code{D}
+will delete the pattern space content until the first new line.
+(To learn more about @code{N}, @code{P} and @code{D} commands
+@pxref{Multiline techniques}).
+
+
+@codequoteundirected on
+@codequotebacktick on
+@example
+@group
+$ sed ':x ; $!N ; s/=\n// ; tx ; P ; D' jaques.txt
+All the world's a stage,
+And all the men and women merely players:
+They have their exits and their entrances;
+And one man in his time plays many parts.
+@end group
+@end example
+@codequoteundirected off
+@codequotebacktick off
+
+
+For more line-joining examples @pxref{Joining lines}.
+
 
 @node Examples
 @chapter Some Sample Scripts
