@@ -294,6 +294,13 @@ if test "$gl_gcc_warnings" = yes; then
   AC_SUBST([GNULIB_TEST_WARN_CFLAGS])
 fi
 
+# This is needed when building outside the source dir
+# with --disable-dependency-tracking, see https://bugs.gnu.org/25371
+AS_MKDIR_P([lib])
+AS_MKDIR_P([sed])
+AS_MKDIR_P([doc])
+AS_MKDIR_P([testsuite])
+
 AC_CONFIG_FILES([
   Makefile
   po/Makefile.in
