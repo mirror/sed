@@ -294,6 +294,37 @@ if test "$gl_gcc_warnings" = yes; then
   AC_SUBST([GNULIB_TEST_WARN_CFLAGS])
 fi
 
+AM_CONDITIONAL([CROSS_COMPILING], [test "$cross_compiling" = yes])
+
+# Perl is needed for help2man
+AC_PATH_PROG([PERL], [perl])
+
+# building from tarball?
+built_from_tarball=no
+test -f "$srcdir"/.tarball-version && \
+  ! test -d "$srcdir/.git" && \
+  built_from_tarball=yes
+
+# Can the man page be built?
+# Perl needed for help2man, executing sed needed for 'sed --help'
+can_rebuild_man_page=no
+test -n "$PERL" && \
+  test "$cross_compiling" != yes && \
+  can_rebuild_man_page=yes
+
+# Build the man page when
+# building from git and rebuilding is possible.
+AM_CONDITIONAL([BUILD_MAN_PAGE],
+ [test "$built_from_tarball" = no && \
+    test "$can_rebuild_man_page" = yes])
+
+# Create a stub man page instead of failing when
+# building from git and rebuilding is not possible.
+AM_CONDITIONAL([BUILD_DUMMY_MAN_PAGE],
+ [test "$built_from_tarball" = no && \
+    test "$can_rebuild_man_page" = no])
+
+
 # This is needed when building outside the source dir
 # with --disable-dependency-tracking, see https://bugs.gnu.org/25371
 AS_MKDIR_P([lib])

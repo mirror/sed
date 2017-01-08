@@ -16,12 +16,13 @@
 info_TEXINFOS = doc/sed.texi
 doc_sed_TEXINFOS = doc/config.texi doc/version.texi doc/fdl.texi
 dist_man_MANS = doc/sed.1
-dist_noinst_DATA = doc/sed.x
+dist_noinst_DATA = doc/sed.x doc/sed-dummy.1
 HELP2MAN = $(top_srcdir)/build-aux/help2man
 SEDBIN = sed/sed
 
 AM_MAKEINFOHTMLFLAGS = --no-split
 
+if BUILD_MAN_PAGE
 doc/sed.1: sed/sed$(EXEEXT) .version $(srcdir)/doc/sed.x
 	$(AM_V_GEN)$(MKDIR_P) doc
 	$(AM_V_at)rm -rf $@ $@-t
@@ -31,3 +32,14 @@ doc/sed.1: sed/sed$(EXEEXT) .version $(srcdir)/doc/sed.x
 	    -o $@-t $(SEDBIN)						\
 	  && chmod a-w $@-t						\
 	  && mv $@-t $@
+else !BUILD_MAN_PAGE
+
+if BUILD_DUMMY_MAN_PAGE
+doc/sed.1: doc/sed-dummy.1
+	$(AM_V_at)$(SED) \
+	            's/VERSION/@PACKAGE_VERSION@/' $< > $@-t		\
+	  && chmod a-w $@-t						\
+	  && mv $@-t $@
+endif BUILD_DUMMY_MAN_PAGE
+
+endif !BUILD_MAN_PAGE
