@@ -87,7 +87,7 @@ EOF
 
 ttydev=no-such-file
 type tty >/dev/null 2>&1 && ttydev=$(tty 2>/dev/null)
-if test -w "$ttydev" ; then
+if test -w "$ttydev" && test -r "$ttydev" ; then
     returns_ 4 sed -i = "$ttydev" 2>err-tty || fail=1
 
     # remove the actual terminal device name (using sed itself...)
