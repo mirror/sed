@@ -15,7 +15,7 @@ GNU sed NEWS                                    -*- outline -*-
 ** Bug fixes
 
   sed no longer mishandles anchors ^/$ in multiline regex (s///mg)
-  with -z option (NUL terminated lines). [Bug introducted in sed-4.2.2
+  with -z option (NUL terminated lines). [Bug introduced in sed-4.2.2
   with the initial implementation of -z]
 
   sed no longer accepts a ":" command without a label; before, it would
