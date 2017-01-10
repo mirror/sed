@@ -228,3 +228,5 @@ xstrndup.m4
 /minmax.m4
 /dirfd.m4
 /hard-locale.m4
+/pthread_rwlock_rdlock.m4
+/std-gnu11.m4
