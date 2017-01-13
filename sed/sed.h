@@ -28,7 +28,7 @@
 /* Struct vector is used to describe a compiled sed program. */
 struct vector {
   struct sed_cmd *v;	/* a dynamically allocated array */
-  size_t v_allocated;	/* ... number slots allocated */
+  size_t v_allocated;	/* ... number of slots allocated */
   size_t v_length;	/* ... number of slots in use */
 };
 
