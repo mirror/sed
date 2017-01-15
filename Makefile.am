@@ -38,7 +38,7 @@ noinst_DATA =
 noinst_HEADERS = basicdefs.h
 DISTCLEANFILES =
 
-EXTRA_DIST += BUGS THANKS.in COPYING.DOC \
+EXTRA_DIST += BUGS THANKS.in \
   .version				\
   .mailmap ChangeLog-2014 po/ChangeLog-2014 \
   bootstrap bootstrap.conf build-aux/help2man \
