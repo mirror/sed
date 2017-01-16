@@ -36,8 +36,7 @@ else !BUILD_MAN_PAGE
 
 if BUILD_DUMMY_MAN_PAGE
 doc/sed.1: doc/sed-dummy.1
-	$(AM_V_at)$(SED) \
-	            's/VERSION/@PACKAGE_VERSION@/' $< > $@-t		\
+	$(AM_V_at)$(SED) 's/VERSION/$(PACKAGE_VERSION)/' $< > $@-t	\
 	  && chmod a-w $@-t						\
 	  && mv $@-t $@
 endif BUILD_DUMMY_MAN_PAGE
