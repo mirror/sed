@@ -5,8 +5,9 @@ GNU Sed website: https://www.gnu.org/software/sed/
 See the NEWS file for a brief summary and the ChangeLog for
 more detailed descriptions of changes.
 
-See the file INSTALL for generic compilation and installation
-instructions.
+If you obtained this file as part of a "git clone", then see the
+README-hacking file.  If this file came to you as part of a tar archive,
+then see the file INSTALL for compilation and installation instructions.
 
 See the file BUGS for instructions about reporting bugs.
 
