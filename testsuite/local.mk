@@ -15,8 +15,25 @@
 
 CLEANFILES += tmp* core *.core $(EXTRA_PROGRAMS) *.*out *.log eval.in2
 
-TEST_EXTENSIONS = .sh
+TEST_EXTENSIONS = .sh .pl
+
+if HAVE_PERL
+TESTSUITE_PERL = $(PERL)
+else
+TESTSUITE_PERL = $(SHELL) $(srcdir)/no-perl
+endif
+
+# Options passed to the perl invocations running the perl test scripts.
+TESTSUITE_PERL_OPTIONS = -w -I$(srcdir)/testsuite -MCuSkip -MCoreutils
+# '$f' is set by the Automake-generated test harness to the path of the
+# current test script stripped of VPATH components, and is used by the
+# CuTmpdir module to determine the name of the temporary files to be
+# used.  Note that $f is a shell variable, not a make macro, so the use
+# of '$$f' below is correct, and not a typo.
+TESTSUITE_PERL_OPTIONS += -M"CuTmpdir qw($$f)"
+
 SH_LOG_COMPILER = $(SHELL)
+PL_LOG_COMPILER = $(TESTSUITE_PERL) $(TESTSUITE_PERL_OPTIONS)
 
 # Put new, init.sh-using tests here, so that each name
 # is listed in only one place.
@@ -167,9 +184,11 @@ TESTS_ENVIRONMENT =				\
 
 LOG_COMPILER = $(top_srcdir)/testsuite/runtest
 
-
 EXTRA_DIST += \
 	$(T) \
+	testsuite/Coreutils.pm					\
+	testsuite/CuSkip.pm					\
+	testsuite/CuTmpdir.pm					\
 	testsuite/init.sh init.cfg \
 	testsuite/envvar-check \
 	testsuite/PCRE.tests testsuite/BOOST.tests testsuite/SPENCER.tests \

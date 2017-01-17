@@ -32,6 +32,13 @@ gl_EARLY
 gl_INIT
 gl_DISABLE_THREADS
 
+# The test suite needs to know if we have a working perl.
+# FIXME: this is suboptimal.  Ideally, we would be able to call gl_PERL
+# with an ACTION-IF-NOT-FOUND argument ...
+cu_have_perl=yes
+case $PERL in *"/missing "*) cu_have_perl=no;; esac
+AM_CONDITIONAL([HAVE_PERL], [test $cu_have_perl = yes])
+
 # gl_GCC_VERSION_IFELSE([major], [minor], [run-if-found], [run-if-not-found])
 # ------------------------------------------------
 # If $CPP is gcc-MAJOR.MINOR or newer, then run RUN-IF-FOUND.
