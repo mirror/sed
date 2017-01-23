@@ -39,6 +39,7 @@ PL_LOG_COMPILER = $(TESTSUITE_PERL) $(TESTSUITE_PERL_OPTIONS)
 # is listed in only one place.
 
 T =					\
+  testsuite/misc.pl			\
   testsuite/cmd-l.sh			\
   testsuite/cmd-R.sh			\
   testsuite/colon-with-no-label.sh	\
@@ -103,8 +104,6 @@ check_PROGRAMS += testsuite/bug-regex7 \
   testsuite/bug-regex21 testsuite/bug-regex27 testsuite/bug-regex28 \
   testsuite/tst-pcre testsuite/tst-boost testsuite/runtests \
   testsuite/runptests testsuite/tst-rxspencer testsuite/tst-regex2
-
-SEDTESTS += space
 endif
 
 SEDTESTS += testsuite/appquit testsuite/enable testsuite/sep		\
@@ -113,8 +112,8 @@ SEDTESTS += testsuite/appquit testsuite/enable testsuite/sep		\
         testsuite/noeolw testsuite/modulo testsuite/numsub		\
         testsuite/numsub2 testsuite/numsub3 testsuite/numsub4		\
         testsuite/numsub5 testsuite/0range testsuite/bkslashes		\
-        testsuite/head testsuite/madding testsuite/mac-mf		\
-        testsuite/empty testsuite/xbxcx testsuite/xbxcx3		\
+        testsuite/madding testsuite/mac-mf		\
+        testsuite/xbxcx testsuite/xbxcx3		\
         testsuite/recall testsuite/recall2 testsuite/xemacs		\
         testsuite/fasts testsuite/uniq testsuite/manis			\
         testsuite/khadafy testsuite/linecnt testsuite/eval		\
@@ -129,7 +128,7 @@ SEDTESTS += testsuite/appquit testsuite/enable testsuite/sep		\
         testsuite/amp-escape testsuite/help testsuite/file		\
         testsuite/quiet testsuite/factor testsuite/binary3		\
         testsuite/binary2 testsuite/binary testsuite/dc			\
-        testsuite/newline-anchor testsuite/zero-anchor
+        testsuite/newline-anchor
 
 # Note that the first lines are statements.  They ensure that environment
 # variables that can perturb tests are unset or set to expected values.
@@ -240,9 +239,6 @@ EXTRA_DIST += \
 	testsuite/dollar.good \
 	testsuite/dollar.inp \
 	testsuite/dollar.sed \
-	testsuite/empty.good \
-	testsuite/empty.inp \
-	testsuite/empty.sed \
 	testsuite/enable.good \
 	testsuite/enable.inp \
 	testsuite/enable.sed \
@@ -258,9 +254,6 @@ EXTRA_DIST += \
 	testsuite/flipcase.good \
 	testsuite/flipcase.inp \
 	testsuite/flipcase.sed \
-	testsuite/head.good \
-	testsuite/head.inp \
-	testsuite/head.sed \
 	testsuite/inclib.good \
 	testsuite/inclib.inp \
 	testsuite/inclib.sed \
@@ -276,9 +269,6 @@ EXTRA_DIST += \
 	testsuite/linecnt.good \
 	testsuite/linecnt.inp \
 	testsuite/linecnt.sed \
-	testsuite/space.good \
-	testsuite/space.inp \
-	testsuite/space.sed \
 	testsuite/mac-mf.good \
 	testsuite/mac-mf.inp \
 	testsuite/mac-mf.sed \
@@ -380,10 +370,7 @@ EXTRA_DIST += \
 	testsuite/y-zero.inp \
 	testsuite/y-newline.good \
 	testsuite/y-newline.sed \
-	testsuite/y-newline.inp \
-	testsuite/zero-anchor.good \
-	testsuite/zero-anchor.sed \
-	testsuite/zero-anchor.inp
+	testsuite/y-newline.inp
 
 # automake makes `check' depend on $(TESTS).  Declare
 # dummy targets for $(TESTS) so that make does not complain.
