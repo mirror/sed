@@ -4841,24 +4841,35 @@ the size of the buffer that can be processed by certain patterns.
 @node Other Resources
 @chapter Other Resources for Learning About @command{sed}
 
+For up to date information about @value{SSED} please
+visit @uref{https://www.gnu.org/software/sed/}.
+
+Send general questions and suggestions to @email{sed-devel@@gnu.org}.
+Visit the mailing list archives for past discussions at
+@uref{https://lists.gnu.org/archive/html/sed-devel/}.
+
 @cindex Additional reading about @command{sed}
-In addition to several books that have been written about @command{sed}
-(either specifically or as chapters in books which discuss
-shell programming), one can find out more about @command{sed}
-(including suggestions of a few books) from the FAQ
-for the @code{sed-users} mailing list, available from:
-@display
-@uref{http://sed.sourceforge.net/sedfaq.html}
-@end display
+The following resources provide information about @command{sed}
+(both @value{SSED} and other variations). Note these not maintained by
+@value{SSED} developers.
 
-Also of interest are
-@uref{http://www.student.northpark.edu/pemente/sed/index.htm}
-and @uref{http://sed.sf.net/grabbag},
-which include @command{sed} tutorials and other @command{sed}-related goodies.
+@itemize @bullet
 
-The @code{sed-users} mailing list itself maintained by Sven Guckes.
-To subscribe, visit @uref{http://groups.yahoo.com} and search
-for the @code{sed-users} mailing list.
+@item
+sed @code{$HOME}: @uref{http://sed.sf.net}
+
+@item
+sed FAQ: @uref{http://sed.sf.net/sedfaq.html}
+
+@item
+seder's grabbag: @uref{http://sed.sf.net/grabbag}
+
+@item
+The @code{sed-users} mailing list maintained by Sven Guckes:
+@uref{http://groups.yahoo.com/group/sed-users/}
+(note this is @emph{not} the @value{SSED} mailing list).
+
+@end itemize
 
 @node Reporting Bugs
 @chapter Reporting Bugs
