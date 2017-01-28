@@ -484,6 +484,7 @@ $ echo | sed 'Q42' ; echo $?
 * Other Commands::           Less frequently used commands
 * Programming Commands::     Commands for @command{sed} gurus
 * Extended Commands::        Commands specific of @value{SSED}
+* Multiple commands syntax:: Extension for easier scripting
 @end menu
 
 @node sed script overview
@@ -586,6 +587,7 @@ thus should be terminated
 with newlines or be placed at the end of a @var{script} or @var{script-file}.
 Commands can also be preceded with optional non-significant
 whitespace characters.
+@xref{Multiple commands syntax}.
 
 
 
@@ -903,12 +905,12 @@ while in general flags for the @code{s} command show their
 effect just once.  This behavior, although documented, might
 change in future versions.
 
-@item w @var{file-name}
+@item w @var{filename}
 @cindex Text, writing to a file after substitution
 @cindex @value{SSEDEXT}, @file{/dev/stdout} file
 @cindex @value{SSEDEXT}, @file{/dev/stderr} file
 If the substitution was made, then write out the result to the named file.
-As a @value{SSED} extension, two special values of @var{file-name} are
+As a @value{SSED} extension, two special values of @var{filename} are
 supported: @file{/dev/stderr}, which writes the result to the standard
 error, and @file{/dev/stdout}, which writes to the standard
 output.@footnote{This is equivalent to @code{p} unless the @option{-i}
@@ -1149,7 +1151,7 @@ hello
 @codequoteundirected off
 @codequotebacktick off
 
-Leading whitespaces after the @code{a} command are ignored.
+Leading whitespace after the @code{a} command is ignored.
 The text to add is read until the end of the line.
 
 
@@ -1238,7 +1240,7 @@ hello
 @codequoteundirected off
 @codequotebacktick off
 
-Leading whitespaces after the @code{i} command are ignored.
+Leading whitespace after the @code{i} command is ignored.
 The text to add is read until the end of the line.
 
 @item i\
@@ -1319,7 +1321,7 @@ hello
 @codequoteundirected off
 @codequotebacktick off
 
-Leading whitespaces after the @code{c} command are ignored.
+Leading whitespace after the @code{c} command is ignored.
 The text to add is read until the end of the line.
 
 @item c\
@@ -1464,7 +1466,7 @@ file will then be reread and inserted on each of the addressed lines.
 @cindex @value{SSEDEXT}, @file{/dev/stdout} file
 @cindex @value{SSEDEXT}, @file{/dev/stderr} file
 Write the pattern space to @var{filename}.
-As a @value{SSED} extension, two special values of @var{file-name} are
+As a @value{SSED} extension, two special values of @var{filename} are
 supported: @file{/dev/stderr}, which writes the result to the standard
 error, and @file{/dev/stdout}, which writes to the standard
 output.@footnote{This is equivalent to @code{p} unless the @option{-i}
@@ -1706,7 +1708,283 @@ script in most multibyte locales (including UTF-8 locales).
 @end table
 
 
+@node Multiple commands syntax
+@section Multiple commands syntax
 
+@c POSIX says:
+@c   Editing commands other than {...}, a, b, c, i, r, t, w, :, and #
+@c   can be followed by a <semicolon>, optional <blank> characters, and
+@c   another editing command. However, when an s editing command is used
+@c   with the w flag, following it with another command in this manner
+@c   produces undefined results.
+
+There are several methods to specify multiple commands in a @command{sed}
+program.
+
+Using newlines is most natural when running a sed script from a file
+(using the @option{-f} option).
+
+On the command line, all @command{sed} commands may be separated by newlines.
+Alternatively, you may specify each command as an argument to an @option{-e}
+option:
+
+@codequoteundirected on
+@codequotebacktick on
+@example
+@group
+$ seq 6 | sed '1d
+3d
+5d'
+2
+4
+6
+
+$ seq 6 | sed -e 1d -e 3d -e 5d
+2
+4
+6
+@end group
+@end example
+@codequoteundirected off
+@codequotebacktick off
+
+A semicolon (@samp{;}) may be used to separate most simple commands:
+
+@codequoteundirected on
+@codequotebacktick on
+@example
+@group
+$ seq 6 | sed '1d;3d;5d'
+2
+4
+6
+@end group
+@end example
+@codequoteundirected off
+@codequotebacktick off
+
+The @code{@{},@code{@}},@code{b},@code{t},@code{T},@code{:} commands can
+be separated with a semicolon (this is a non-portable @value{SSED} extension).
+
+@codequoteundirected on
+@codequotebacktick on
+@example
+@group
+$ seq 4 | sed '@{1d;3d@}'
+2
+4
+
+$ seq 6 | sed '@{1d;3d@};5d'
+2
+4
+6
+@end group
+@end example
+@codequoteundirected off
+@codequotebacktick off
+
+Labels used in @code{b},@code{t},@code{T},@code{:} commands are read
+until a semicolon.  Leading and trailing whitespace is ignored.  In
+the examples below the label is @samp{x}.  The first example works
+with @value{SSED}.  The second is a portable equivalent.  For more
+information about branching and labels @pxref{Branching and flow
+control}.
+
+@codequoteundirected on
+@codequotebacktick on
+@example
+@group
+$ seq 3 | sed '/1/b x ; s/^/=/ ; :x ; 3d'
+1
+=2
+
+$ seq 3 | sed -e '/1/bx' -e 's/^/=/' -e ':x' -e '3d'
+1
+=2
+@end group
+@end example
+@codequoteundirected off
+@codequotebacktick off
+
+
+
+@subsection Commands Requiring a newline
+
+The following commands cannot be separated by a semicolon and
+require a newline:
+
+@table @asis
+
+@item @code{a},@code{c},@code{i} (append/change/insert)
+
+All characters following @code{a},@code{c},@code{i} commands are taken
+as the text to append/change/insert.  Using a semicolon leads to
+undesirable results:
+
+@codequoteundirected on
+@codequotebacktick on
+@example
+@group
+$ seq 2 | sed '1aHello ; 2d'
+1
+Hello ; 2d
+2
+@end group
+@end example
+@codequoteundirected off
+@codequotebacktick off
+
+Separate the commands using @option{-e} or a newline:
+
+@codequoteundirected on
+@codequotebacktick on
+@example
+@group
+$ seq 2 | sed -e 1aHello -e 2d
+1
+Hello
+
+$ seq 2 | sed '1aHello
+2d'
+1
+Hello
+@end group
+@end example
+@codequoteundirected off
+@codequotebacktick off
+
+Note that specifying the text to add (@samp{Hello}) immediately
+after @code{a},@code{c},@code{i} is itself a @value{SSED} extension.
+A portable, POSIX-compliant alternative is:
+
+@codequoteundirected on
+@codequotebacktick on
+@example
+@group
+$ seq 2 | sed '1a\
+Hello
+2d'
+1
+Hello
+@end group
+@end example
+@codequoteundirected off
+@codequotebacktick off
+
+@item @code{#} (comment)
+
+All characters following @samp{#} until the next newline are ignored.
+
+@codequoteundirected on
+@codequotebacktick on
+@example
+@group
+$ seq 3 | sed '# this is a comment ; 2d'
+1
+2
+3
+
+
+$ seq 3 | sed '# this is a comment
+2d'
+1
+3
+@end group
+@end example
+@codequoteundirected off
+@codequotebacktick off
+
+@item @code{r},@code{R},@code{w},@code{W} (reading and writing files)
+
+The @code{r},@code{R},@code{w},@code{W} commands parse the filename
+until end of the line.  If whitespace, comments or semicolons are found,
+they will be included in the filename, leading to unexpected results:
+
+@codequoteundirected on
+@codequotebacktick on
+@example
+@group
+$ seq 2 | sed '1w hello.txt ; 2d'
+1
+2
+
+$ ls -log
+total 4
+-rw-rw-r-- 1 2 Jan 23 23:03 hello.txt ; 2d
+
+$ cat 'hello.txt ; 2d'
+1
+@end group
+@end example
+@codequoteundirected off
+@codequotebacktick off
+
+Note that @command{sed} silently ignores read/write errors in
+@code{r},@code{R},@code{w},@code{W} commands (such as missing files).
+In the following example, @command{sed} tries to read a file named
+@samp{@file{hello.txt ; N}}. The file is missing, and the error is silently
+ignored:
+
+@codequoteundirected on
+@codequotebacktick on
+@example
+@group
+$ echo x | sed '1rhello.txt ; N'
+x
+@end group
+@end example
+@codequoteundirected off
+@codequotebacktick off
+
+@item @code{e} (command execution)
+
+Any characters following the @code{e} command until the end of the line
+will be sent to the shell.  If whitespace, comments or semicolons are found,
+they will be included in the shell command, leading to unexpected results:
+
+@codequoteundirected on
+@codequotebacktick on
+@example
+@group
+$ echo a | sed '1e touch foo#bar'
+a
+
+$ ls -1
+foo#bar
+
+$ echo a | sed '1e touch foo ; s/a/b/'
+sh: 1: s/a/b/: not found
+a
+@end group
+@end example
+@codequoteundirected off
+@codequotebacktick off
+
+
+@item @code{s///[we]} (substitute with @code{e} or @code{w} flags)
+
+In a substitution command, the @code{w} flag writes the substitution
+result to a file, and the @code{e} flag executes the subsitution result
+as a shell command.  As with the @code{r/R/w/W/e} commands, these
+must be terminated with a newline.  If whitespace, comments or semicolons
+are found, they will be included in the shell command or filename, leading to
+unexpected results:
+
+@codequoteundirected on
+@codequotebacktick on
+@example
+@group
+$ echo a | sed 's/a/b/w1.txt#foo'
+b
+
+$ ls -1
+1.txt#foo
+@end group
+@end example
+@codequoteundirected off
+@codequotebacktick off
+
+@end table
 
 
 @node sed addresses
