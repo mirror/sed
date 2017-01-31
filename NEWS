@@ -2,6 +2,11 @@ GNU sed NEWS                                    -*- outline -*-
 
 * Noteworthy changes in release ?.? (????-??-??) [?]
 
+** Bug fixes
+
+  sed could segfault when invoked with specific combination of newlines
+  in the input and regex pattern. [Bug introduced in sed-4.3]
+
 
 * Noteworthy changes in release 4.3 (2016-12-30) [stable]
 
