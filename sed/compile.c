@@ -257,7 +257,7 @@ savchar(int ch)
     {
       if (prog.cur <= prog.base || *--prog.cur != ch)
         panic("Called savchar() with unexpected pushback (%x)",
-              (unsigned char)ch);
+              (unsigned int) ch);
     }
   else
     ungetc(ch, prog.file);
