@@ -3458,7 +3458,7 @@ By default, @command{sed} reads an input line into the pattern buffer,
 then continues to processes all commands in order.
 Commands without addresses affect all lines.
 Commands with addresses affect only matching lines.
-@xref {Execution Cycle} and @ref{Addresses overview}.
+@xref{Execution Cycle} and @ref{Addresses overview}.
 
 @command{sed} does not support a typical @code{if/then} construct.
 Instead, some commands can be used as conditionals or to change the
