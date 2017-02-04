@@ -3008,7 +3008,7 @@ are either both ``word'' characters or both ``non-word''
 characters.
 
 @example
-$ echo "abc %-= def." | sed 's/\w/X/g'
+$ echo "abc %-= def." | sed 's/\B/X/g'
 aXbXc X%X-X=X dXeXf.X
 @end example
 
@@ -3027,7 +3027,7 @@ abcX%-=Xdef.
 Matches non-whitespace characters.
 
 @example
-$ echo "abc %-= def." | sed 's/\w/X/g'
+$ echo "abc %-= def." | sed 's/\S/X/g'
 XXX XXX XXXX
 @end example
 
