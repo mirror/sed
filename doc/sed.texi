@@ -1243,6 +1243,7 @@ hello
 Leading whitespace after the @code{i} command is ignored.
 The text to add is read until the end of the line.
 
+@anchor{insert command}
 @item i\
 @itemx @var{text}
 @findex i (insert text lines) command
@@ -2220,7 +2221,7 @@ a case-insensitive manner.
 
 In many other programming languages, a lower case @code{i} is used
 for case-insensitive regular expression matching. However, in @command{sed}
-the @code{i} is used for the insert command (TODO: add @code{pxref}).
+the @code{i} is used for the insert command (@pxref{insert command}).
 
 Observe the difference between the following examples.
 
