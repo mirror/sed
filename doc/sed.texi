@@ -700,7 +700,7 @@ ability to return an exit code to the caller.
 @c useful to quit on a conditional without printing
 
 @item r filename
-Reads text file a file. Example:
+Reads file @var{filename}.
 
 @item R filename
 Queue a line of @var{filename} to be read and
@@ -1431,7 +1431,7 @@ parameter is a @value{SSED} extension.
 
 @findex r (read file) command
 @cindex Read text from a file
-Reads text file a file. Example:
+Reads file @var{filename}. Example:
 
 @codequoteundirected on
 @codequotebacktick on
