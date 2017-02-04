@@ -2460,7 +2460,7 @@ unless prefixed backslash (@samp{\}); While with extended (ERE) syntax
 it is reversed: these characters are special unless they are prefixed
 with backslash (@samp{\}).
 
-@multitable @columnfractions .33 .33 .33
+@multitable @columnfractions .28 .36 .35
 
 @headitem Desired pattern
 @tab Basic (BRE) Syntax
@@ -2469,32 +2469,56 @@ with backslash (@samp{\}).
 @item literal @samp{+} (plus sign)
 
 @tab
+@exampleindent 0
+@codequoteundirected on
+@codequotebacktick on
 @example
-$ echo "a+b=c" | sed -n '/a+b/p'
+$ echo 'a+b=c' > foo
+$ sed -n '/a+b/p' foo
 a+b=c
 @end example
+@codequotebacktick off
+@codequoteundirected off
 
 @tab
+@exampleindent 0
+@codequoteundirected on
+@codequotebacktick on
 @example
-$ echo "a+b=c" | sed -E -n '/a\+b/p'
+$ echo 'a+b=c' > foo
+$ sed -E -n '/a\+b/p' foo
 a+b=c
 @end example
+@codequotebacktick off
+@codequoteundirected off
 
 
 @item One or more @samp{a} characters followed by @samp{b}
 (plus sign as special meta-character)
 
 @tab
+@exampleindent 0
+@codequoteundirected on
+@codequotebacktick on
 @example
-$ echo "aab" | sed -n '/a\+b/p'
+$ echo aab > foo
+$ sed -n '/a\+b/p' foo
 aab
 @end example
+@codequotebacktick off
+@codequoteundirected off
 
 @tab
+@exampleindent 0
+@codequoteundirected on
+@codequotebacktick on
 @example
-$ echo "aab" | sed -E -n '/a+b/p'
+$ echo aab > foo
+$ sed -E -n '/a+b/p' foo
 aab
 @end example
+@codequotebacktick off
+@codequoteundirected off
 
 @end multitable
 
