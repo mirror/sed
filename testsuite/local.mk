@@ -112,8 +112,8 @@ SEDTESTS += testsuite/appquit testsuite/enable testsuite/sep		\
         testsuite/noeolw testsuite/modulo testsuite/numsub		\
         testsuite/numsub2 testsuite/numsub3 testsuite/numsub4		\
         testsuite/numsub5 testsuite/0range testsuite/bkslashes		\
-        testsuite/madding testsuite/mac-mf		\
-        testsuite/xbxcx testsuite/xbxcx3		\
+        testsuite/madding testsuite/mac-mf				\
+        testsuite/xbxcx testsuite/xbxcx3				\
         testsuite/recall testsuite/recall2 testsuite/xemacs		\
         testsuite/fasts testsuite/uniq testsuite/manis			\
         testsuite/khadafy testsuite/linecnt testsuite/eval		\
@@ -121,7 +121,7 @@ SEDTESTS += testsuite/appquit testsuite/enable testsuite/sep		\
         testsuite/y-newline testsuite/y-zero testsuite/allsub		\
         testsuite/cv-vars testsuite/classes testsuite/middle		\
         testsuite/bsd testsuite/stdin testsuite/flipcase		\
-        testsuite/insens testsuite/subwrite testsuite/writeout		\
+        testsuite/subwrite testsuite/writeout				\
         testsuite/readin testsuite/insert testsuite/utf8-1		\
         testsuite/utf8-2 testsuite/utf8-3 testsuite/utf8-4		\
         testsuite/badenc testsuite/inplace-hold testsuite/brackets	\
@@ -257,9 +257,6 @@ EXTRA_DIST += \
 	testsuite/inclib.good \
 	testsuite/inclib.inp \
 	testsuite/inclib.sed \
-	testsuite/insens.good \
-	testsuite/insens.inp \
-	testsuite/insens.sed \
 	testsuite/insert.good \
 	testsuite/insert.inp \
 	testsuite/insert.sed \

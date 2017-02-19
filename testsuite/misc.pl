@@ -37,9 +37,15 @@ my @Tests =
      ['space', q('s/_\S/XX/g;s/\s/_/g'),
       {IN=>  "Hello World\t!\nSecond_line_ of tests\n" },
       {OUT=> "Hello_World_!\nSecondXXine__of_tests\n" }],
+
      ['zero-anchor', qw(-z), q('N;N;s/^/X/g;s/^/X/mg;s/$/Y/g;s/$/Y/mg'),
       {IN=>"a\0b\0c\0" },
       {OUT=>"XXaY\0XbY\0XcYY\0" }],
+
+     ['case-insensitive', qw(-n), q('h;s/Version: *//p;g;s/version: *//Ip'),
+      {IN=>"Version: 1.2.3\n" },
+      {OUT=>"1.2.3\n1.2.3\n" },
+      ],
     );
 
 my $save_temps = $ENV{SAVE_TEMPS};
