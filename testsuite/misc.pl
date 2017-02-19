@@ -46,6 +46,11 @@ my @Tests =
       {IN=>"Version: 1.2.3\n" },
       {OUT=>"1.2.3\n1.2.3\n" },
       ],
+
+     ['preserve-missing-EOL-at-EOF', q('s/$/x/'),
+      {IN=> "a\nb" },
+      {OUT=>"ax\nbx" },
+      ],
     );
 
 my $save_temps = $ENV{SAVE_TEMPS};

@@ -19,7 +19,7 @@ elide_cr = $(SEDENV_2) $(SED) 's/\r//g'
 
 SKIP = :>$@.skip; exit 77
 
-enable sep inclib 8bit 8to7 newjis xabcx dollar noeol bkslashes \
+enable sep inclib 8bit 8to7 newjis xabcx dollar bkslashes \
 numsub head madding mac-mf empty xbxcx xbxcx3 recall recall2 xemacs \
 appquit fasts uniq manis linecnt khadafy allsub flipcase space modulo \
 y-bracket y-newline y-zero insert brackets amp-escape newline-anchor::
@@ -107,7 +107,7 @@ insens::
 
 noeolw::
 	$(SEDENV) $(SED) -n -f $(srcdir)/$@.sed \
-	  $(srcdir)/noeol.inp $(srcdir)/noeol.inp | $(elide_cr) > $@.out
+	  $(srcdir)/$@.inp $(srcdir)/$@.inp | $(elide_cr) > $@.out
 	$(CMP) $(srcdir)/$@.good $@.out
 	$(elide_cr) <  $@.1out | $(CMP) $(srcdir)/$@.1good -
 	$(elide_cr) <  $@.2out | $(CMP) $(srcdir)/$@.2good -

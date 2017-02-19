@@ -108,7 +108,7 @@ endif
 
 SEDTESTS += testsuite/appquit testsuite/enable testsuite/sep		\
         testsuite/inclib testsuite/8bit testsuite/newjis		\
-        testsuite/xabcx testsuite/dollar testsuite/noeol		\
+        testsuite/xabcx testsuite/dollar				\
         testsuite/noeolw testsuite/modulo testsuite/numsub		\
         testsuite/numsub2 testsuite/numsub3 testsuite/numsub4		\
         testsuite/numsub5 testsuite/0range testsuite/bkslashes		\
@@ -287,10 +287,8 @@ EXTRA_DIST += \
 	testsuite/newline-anchor.good \
 	testsuite/newline-anchor.inp \
 	testsuite/newline-anchor.sed \
-	testsuite/noeol.good \
-	testsuite/noeol.inp \
-	testsuite/noeol.sed \
 	testsuite/noeolw.good \
+	testsuite/noeolw.inp \
 	testsuite/noeolw.1good \
 	testsuite/noeolw.2good \
 	testsuite/noeolw.sed \
