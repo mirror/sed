@@ -3238,6 +3238,71 @@ Produces or matches a character whose hexadecimal @sc{ascii} value is @var{xx}.
 @samp{\b} (backspace) was omitted because of the conflict with
 the existing ``word boundary'' meaning.
 
+@subsection Escaping Precedence
+
+@value{SSED} processes escape sequences @emph{before} passing
+the text onto the regular-expression matching of the @command{s///} command
+and Address matching. Thus the follwing two commands are equivalent
+(@samp{0x5e} is the hexadecimal @sc{ascii} value of the character @samp{^}):
+
+@codequoteundirected on
+@codequotebacktick on
+@example
+@group
+$ echo 'a^c' | sed 's/^/b/'
+ba^c
+
+$ echo 'a^c' | sed 's/\x5e/b/'
+ba^c
+@end group
+@end example
+@codequoteundirected off
+@codequotebacktick off
+
+As are the following (@samp{0x5b},@samp{0x5d} are the hexadecimal
+@sc{ascii} values of @samp{[},@samp{]}, respectively):
+
+@codequoteundirected on
+@codequotebacktick on
+@example
+@group
+$ echo abc | sed 's/[a]/x/'
+Xbc
+$ echo abc | sed 's/\x5ba\x5d/x/'
+Xbc
+@end group
+@end example
+@codequoteundirected off
+@codequotebacktick off
+
+However it is recommended to avoid such special characters
+due to unexpected edge-cases. For example, the following
+are not equivalent:
+
+@codequoteundirected on
+@codequotebacktick on
+@example
+@group
+$ echo 'a^c' | sed 's/\^/b/'
+abc
+
+$ echo 'a^c' | sed 's/\\\x5e/b/'
+a^c
+@end group
+@end example
+@codequoteundirected off
+@codequotebacktick off
+
+@c also: this fails in different places:
+@c   $ sed 's/[//'
+@c   sed: -e expression #1, char 5: unterminated `s' command
+@c   $ sed 's/\x5b//'
+@c   sed: -e expression #1, char 8: Invalid regular expression
+@c
+@c which is OK but confusing to explain why (the first
+@c fails in compile.c:snarf_char_class while the second
+@c is passed to the regex engine and then fails).
+
 
 @node Locale Considerations
 @section Locale Considerations
