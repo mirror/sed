@@ -2265,6 +2265,33 @@ the period character does not match a new-line character in
 multi-line mode.
 @end table
 
+
+@cindex regex addresses and pattern space
+@cindex regex addresses and input lines
+Regex addresses operate on the content of the current
+pattern space. If the pattern space is changed (for example with @code{s///}
+command) the regular expression matching will operate on the changed text.
+
+In the following example, automatic printing is disabled with
+@option{-n}.  The @code{s/2/X/} command changes lines containing
+@samp{2} to @samp{X}. The command @code{/[0-9]/p} matches
+lines with digits and prints them.
+Because the second line is changed before the @code{/[0-9]/} regex,
+it will not match and will not be printed:
+
+@codequoteundirected on
+@codequotebacktick on
+@example
+@group
+$ seq 3 | sed -n 's/2/X/ ; /[0-9]/p'
+1
+3
+@end group
+@end example
+@codequoteundirected off
+@codequotebacktick off
+
+
 @node Range Addresses
 @section Range Addresses
 

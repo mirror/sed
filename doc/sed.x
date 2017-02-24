@@ -257,6 +257,8 @@ Match the last line.
 .RI / regexp /
 Match lines matching the regular expression
 .IR regexp .
+Matching is performed on the current pattern space, which
+can be modified with commands such as ``s///''.
 .TP
 .BI \fR\e\fPc regexp c
 Match lines matching the regular expression
