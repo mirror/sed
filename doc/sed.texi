@@ -307,6 +307,31 @@ directory (provided the directory already exists).
 If no extension is supplied, the original file is
 overwritten without making a backup.
 
+Because @option{-i} takes an optional argument, it should
+not be followed by other short options:
+@table @code
+@item sed -Ei '...' FILE
+Same as @option{-E -i} with no backup suffix - @file{FILE} will be
+edited in-place without creating a backup.
+
+@item sed -iE '...' FILE
+This is equivalent to @option{--in-place=E}, creating @file{FILEE} as backup
+of @file{FILE}
+@end table
+
+Be cautious of using @option{-n} with @option{-i}: the former disables
+automatic printing of lines and the latter changes the file in-place
+without a backup. Used carelessly (and without an explicit @code{p} command),
+the output file will be empty:
+@codequotebacktick on
+@codequoteundirected on
+@example
+# WRONG USAGE: 'FILE' will be truncated.
+sed -ni 's/foo/bar/' FILE
+@end example
+@codequotebacktick off
+@codequoteundirected off
+
 @item -l @var{N}
 @itemx --line-length=@var{N}
 @opindex -l
