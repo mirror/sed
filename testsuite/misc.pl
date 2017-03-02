@@ -57,6 +57,11 @@ my @Tests =
       {OUT=> "Are you sure (y/n)?  y]\n" },
       ],
 
+     ['y-zero', q('y/b/\x00/'),
+      {IN => "abc\n" },
+      {OUT=> "a\0c\n" },
+      ],
+
     );
 
 my $save_temps = $ENV{SAVE_TEMPS};

@@ -118,7 +118,7 @@ SEDTESTS += testsuite/appquit testsuite/enable testsuite/sep		\
         testsuite/fasts testsuite/uniq testsuite/manis			\
         testsuite/khadafy testsuite/linecnt testsuite/eval		\
         testsuite/distrib testsuite/8to7				\
-        testsuite/y-newline testsuite/y-zero testsuite/allsub		\
+        testsuite/y-newline testsuite/allsub				\
         testsuite/cv-vars testsuite/classes testsuite/middle		\
         testsuite/bsd testsuite/stdin testsuite/flipcase		\
         testsuite/subwrite testsuite/writeout				\
@@ -357,9 +357,6 @@ EXTRA_DIST += \
 	testsuite/xemacs.good \
 	testsuite/xemacs.inp \
 	testsuite/xemacs.sed \
-	testsuite/y-zero.good \
-	testsuite/y-zero.sed \
-	testsuite/y-zero.inp \
 	testsuite/y-newline.good \
 	testsuite/y-newline.sed \
 	testsuite/y-newline.inp
