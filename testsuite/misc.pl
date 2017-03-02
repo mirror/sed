@@ -62,6 +62,13 @@ my @Tests =
       {OUT=> "a\0c\n" },
       ],
 
+     ['y-newline', q('H
+G
+y/Ss\nYy/yY$sS/'),
+      {IN => "Are you sure (y/n)? [y]\n" },
+      {OUT=> 'Are Sou Yure (S/n)? [S]$$Are Sou Yure (S/n)? [S]'."\n"},
+      ],
+
     );
 
 my $save_temps = $ENV{SAVE_TEMPS};

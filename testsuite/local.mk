@@ -118,7 +118,7 @@ SEDTESTS += testsuite/appquit testsuite/enable testsuite/sep		\
         testsuite/fasts testsuite/uniq testsuite/manis			\
         testsuite/khadafy testsuite/linecnt testsuite/eval		\
         testsuite/distrib testsuite/8to7				\
-        testsuite/y-newline testsuite/allsub				\
+        testsuite/allsub						\
         testsuite/cv-vars testsuite/classes testsuite/middle		\
         testsuite/bsd testsuite/stdin testsuite/flipcase		\
         testsuite/subwrite testsuite/writeout				\
@@ -356,10 +356,7 @@ EXTRA_DIST += \
 	testsuite/xbxcx3.sed \
 	testsuite/xemacs.good \
 	testsuite/xemacs.inp \
-	testsuite/xemacs.sed \
-	testsuite/y-newline.good \
-	testsuite/y-newline.sed \
-	testsuite/y-newline.inp
+	testsuite/xemacs.sed
 
 # automake makes `check' depend on $(TESTS).  Declare
 # dummy targets for $(TESTS) so that make does not complain.
