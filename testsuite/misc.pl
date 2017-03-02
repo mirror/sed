@@ -69,6 +69,11 @@ y/Ss\nYy/yY$sS/'),
       {OUT=> 'Are Sou Yure (S/n)? [S]$$Are Sou Yure (S/n)? [S]'."\n"},
       ],
 
+     ['allsub', q('s/foo/bar/g'),
+      {IN => "foo foo fo oo f oo foo foo foo foo foo foo foo foo foo\n"},
+      {OUT=> "bar bar fo oo f oo bar bar bar bar bar bar bar bar bar\n"},
+      ],
+
     );
 
 my $save_temps = $ENV{SAVE_TEMPS};

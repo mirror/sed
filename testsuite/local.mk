@@ -118,7 +118,6 @@ SEDTESTS += testsuite/appquit testsuite/enable testsuite/sep		\
         testsuite/fasts testsuite/uniq testsuite/manis			\
         testsuite/khadafy testsuite/linecnt testsuite/eval		\
         testsuite/distrib testsuite/8to7				\
-        testsuite/allsub						\
         testsuite/cv-vars testsuite/classes testsuite/middle		\
         testsuite/bsd testsuite/stdin testsuite/flipcase		\
         testsuite/subwrite testsuite/writeout				\
@@ -201,9 +200,6 @@ EXTRA_DIST += \
 	testsuite/8to7.good \
 	testsuite/8to7.inp \
 	testsuite/8to7.sed \
-	testsuite/allsub.good \
-	testsuite/allsub.inp \
-	testsuite/allsub.sed \
 	testsuite/amp-escape.good \
 	testsuite/amp-escape.inp \
 	testsuite/amp-escape.sed \
