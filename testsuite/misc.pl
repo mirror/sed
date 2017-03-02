@@ -51,6 +51,12 @@ my @Tests =
       {IN=> "a\nb" },
       {OUT=>"ax\nbx" },
       ],
+
+     ['y-bracket', q('y/[/ /'),
+      {IN => "Are you sure (y/n)? [y]\n" },
+      {OUT=> "Are you sure (y/n)?  y]\n" },
+      ],
+
     );
 
 my $save_temps = $ENV{SAVE_TEMPS};
