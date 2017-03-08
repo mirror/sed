@@ -121,7 +121,7 @@ SEDTESTS += testsuite/appquit testsuite/enable testsuite/sep		\
         testsuite/cv-vars testsuite/classes testsuite/middle		\
         testsuite/bsd testsuite/stdin testsuite/flipcase		\
         testsuite/subwrite testsuite/writeout				\
-        testsuite/readin testsuite/insert testsuite/utf8-1		\
+        testsuite/readin testsuite/utf8-1				\
         testsuite/utf8-2 testsuite/utf8-3 testsuite/utf8-4		\
         testsuite/badenc testsuite/inplace-hold testsuite/brackets	\
         testsuite/amp-escape testsuite/help testsuite/file		\
@@ -253,9 +253,6 @@ EXTRA_DIST += \
 	testsuite/inclib.good \
 	testsuite/inclib.inp \
 	testsuite/inclib.sed \
-	testsuite/insert.good \
-	testsuite/insert.inp \
-	testsuite/insert.sed \
 	testsuite/khadafy.good \
 	testsuite/khadafy.inp \
 	testsuite/khadafy.sed \

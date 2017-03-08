@@ -74,6 +74,11 @@ y/Ss\nYy/yY$sS/'),
       {OUT=> "bar bar fo oo f oo bar bar bar bar bar bar bar bar bar\n"},
       ],
 
+     ['insert-nl', qw(-f), {IN => "/foo/i\\\n"},
+      {IN => "bar\nfoo\n" },
+      {OUT=> "bar\n\nfoo\n" },
+      ],
+
     );
 
 my $save_temps = $ENV{SAVE_TEMPS};
