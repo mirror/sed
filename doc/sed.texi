@@ -2441,7 +2441,7 @@ $ seq 10 | sed -n '6,~4p'
 * regexp extensions::        Additional regular expression commands
 * Back-references and Subexpressions:: Back-references and Subexpressions
 * Escapes::                  Specifying special characters
-* Locale Considerations::
+* Locale Considerations::    Multibyte characters and locale considrations
 @end menu
 
 @node Regular Expressions Overview
@@ -3357,16 +3357,207 @@ a^c
 
 
 @node Locale Considerations
-@section Locale Considerations
+@section Multibyte characters and Locale Considerations
 
-TODO: fix following paragraphs (copied verbatim from 'bracket
-expression' section).
+@value{SSED} processes valid multibyte characters in multibyte locales
+(e.g. @code{UTF-8}).  @footnote{Some regexp edge-cases depends on the
+operating system and libc implementation. The examples shown are known
+to work as-expected on GNU/Linux systems using glibc.}
 
-TODO: mention locale support is heavily dependent on the OS/libc, not on sed.
+@noindent The following example uses the Greek letter Capital Sigma
+(@value{ucsigma},
+Unicode code point @code{0x03A3}). In a @code{UTF-8} locale,
+@command{sed} correctly processes the Sigma as one character despite
+it being 2 octets (bytes):
 
-The current locale affects the characters matched by @command{sed}'s
-regular expressions.
+@codequoteundirected on
+@codequotebacktick on
+@example
+@group
+$ locale | grep LANG
+LANG=en_US.UTF-8
 
+$ printf 'a\u03A3b'
+a@value{ucsigma}b
+
+$ printf 'a\u03A3b' | sed 's/./X/g'
+XXX
+
+$ printf 'a\u03A3b' | od -tx1 -An
+ 61 ce a3 62
+@end group
+@end example
+@codequoteundirected off
+@codequotebacktick off
+
+@noindent
+To force @command{sed} to process octets separately, use the @code{C} locale
+(also known as the @code{POSIX} locale):
+
+@codequoteundirected on
+@codequotebacktick on
+@example
+$ printf 'a\u03A3b' | LC_ALL=C sed 's/./X/g'
+XXXX
+@end example
+@codequoteundirected off
+@codequotebacktick off
+
+@subsection Invalid multibyte characters
+
+@command{sed}'s regular expressions @emph{do not} match
+invalid multibyte sequences in a multibyte locale.
+
+@noindent
+In the following examples, the ascii value @code{0xCE} is
+an incomplete multibyte character (shown here as @value{unicodeFFFD}).
+The regular expression @samp{.} does not match it:
+
+@codequoteundirected on
+@codequotebacktick on
+@example
+@group
+$ printf 'a\xCEb\n'
+a@value{unicodeFFFD}e
+
+$ printf 'a\xCEb\n' | sed 's/./X/g'
+X@value{unicodeFFFD}X
+
+$ printf 'a\xCEc\n' | sed 's/./X/g' | od -tx1c -An
+  58  ce  58  0a
+   X      X   \n
+@end group
+@end example
+@codequoteundirected off
+@codequotebacktick off
+
+@noindent Similarly, the 'catch-all' regular expression @samp{.*} does not
+match the entire line:
+
+@codequoteundirected on
+@codequotebacktick on
+@example
+@group
+$ printf 'a\xCEc\n' | sed 's/.*//' | od -tx1c -An
+  ce  63  0a
+       c  \n
+@end group
+@end example
+@codequoteundirected off
+@codequotebacktick off
+
+@noindent
+@value{SSED} offers the special @command{z} command to clear the
+current pattern space regardless of invalid multibyte characters
+(i.e. it works like @code{s/.*//} but also removes invalid multibyte
+characters):
+
+@codequoteundirected on
+@codequotebacktick on
+@example
+@group
+$ printf 'a\xCEc\n' | sed 'z' | od -tx1c -An
+   0a
+   \n
+@end group
+@end example
+@codequoteundirected off
+@codequotebacktick off
+
+@noindent Alternatively, force the @code{C} locale to process
+each octet separately (every octet is a valid character in the @code{C}
+locale):
+
+@codequoteundirected on
+@codequotebacktick on
+@example
+@group
+$ printf 'a\xCEc\n' | LC_ALL=C sed 's/.*//' | od -tx1c -An
+  0a
+  \n
+@end group
+@end example
+@codequoteundirected off
+@codequotebacktick off
+
+
+@command{sed}'s inability to process invalid multibyte characters
+can be used to detect such invalid sequences in a file.
+In the following examples, the @code{\xCE\xCE} is an invalid
+multibyte sequence, while @code{\xCE\A3} is a valid multibyte sequence
+(of the Greek Sigma character).
+
+@noindent
+The following @command{sed} program removes all valid
+characters using @code{s/.//g}.  Any content left in the pattern space
+(the invalid characters) are added to the hold space using the
+@code{H} command. On the last line (@code{$}), the hold space is retrieved
+(@code{x}), newlines are removed (@code{s/\n//g}), and any remaining
+octets are printed unambiguously (@code{l}).  Thus, any invalid
+multibyte sequences are printed as octal values:
+
+@codequoteundirected on
+@codequotebacktick on
+@example
+@group
+$ printf 'ab\nc\n\xCE\xCEde\n\xCE\xA3f\n' > invalid.txt
+
+$ cat invalid.txt
+ab
+c
+@value{unicodeFFFD}@value{unicodeFFFD}de
+@value{ucsigma}f
+
+$ sed -n 's/.//g ; H ; $@{x;s/\n//g;l@}' invalid.txt
+\316\316$
+@end group
+@end example
+@codequoteundirected off
+@codequotebacktick off
+
+@noindent With a few more commands, @command{sed} can print
+the exact line number corresponding to each invalid characters (line 3).
+These characters can then be removed by forcing the @code{C} locale
+and using octal escape sequences:
+
+@codequoteundirected on
+@codequotebacktick on
+@example
+$ sed -n 's/.//g;=;l' invalid.txt | paste - -  | awk '$2!="$"'
+3       \316\316$
+
+$ LC_ALL=C sed '3s/\o316\o316//' invalid.txt > fixed.txt
+@end example
+@codequoteundirected off
+@codequotebacktick off
+
+@subsection Upper/Lower case conversion
+
+
+@value{SSED}'s substitute command (@code{s}) supports upper/lower
+case conversions using @code{\U},@code{\L} codes.
+These conversions support multibyte characters:
+
+@codequoteundirected on
+@codequotebacktick on
+@example
+$ printf 'ABC\u03a3\n'
+ABC@value{ucsigma}
+
+$ printf 'ABC\u03a3\n' | sed 's/.*/\L&/'
+abc@value{lcsigma}
+@end example
+@codequoteundirected off
+@codequotebacktick off
+
+@noindent
+@xref{The "s" Command}.
+
+
+@subsection Multibyte regexp character classes
+
+@c TODO: fix following paragraphs (copied verbatim from 'bracket
+@c expression' section).
 
 In other locales, the sorting sequence is not specified, and
 @samp{[a-d]} might be equivalent to @samp{[abcd]} or to
@@ -3389,11 +3580,15 @@ in the current locale.
 
 TODO: show example of collation
 
+@codequoteundirected on
+@codequotebacktick on
 @example
 # TODO: this works on glibc systems, not on musl-libc/freebsd/macosx.
 $ printf 'cliché\n' | LC_ALL=fr_FR.utf8 sed 's/[[=e=]]/X/g'
 clichX
 @end example
+@codequoteundirected off
+@codequotebacktick off
 
 
 @node advanced sed
