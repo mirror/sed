@@ -29,6 +29,7 @@ T =					\
   testsuite/compile-errors.sh		\
   testsuite/compile-tests.sh		\
   testsuite/convert-number.sh		\
+  testsuite/command-endings.sh		\
   testsuite/execute-tests.sh		\
   testsuite/help-version.sh		\
   testsuite/in-place-hyphen.sh		\
