@@ -1348,7 +1348,10 @@ compile_program(struct vector *vector)
                 cur_cmd->x.translate = translate;
               }
 
-            if ((ch = in_nonblank()) != EOF && ch != '\n' && ch != ';')
+            ch = in_nonblank();
+            if (ch == CLOSE_BRACE || ch == '#')
+              savchar(ch);
+            else if (ch != EOF && ch != '\n' && ch != ';')
               bad_prog(_(EXCESS_JUNK));
 
             free_buffer(b);
