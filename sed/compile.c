@@ -274,6 +274,21 @@ in_nonblank(void)
   return ch;
 }
 
+/* Consume script input until a valid end of command marker is found:
+     comment, closing brace, newline, semicolon or EOF.
+   If any other character is found, die with 'extra characters after command'
+   error.
+*/
+static void
+read_end_of_cmd (void)
+{
+  const int ch = in_nonblank();
+  if (ch == CLOSE_BRACE || ch == '#')
+    savchar(ch);
+  else if (ch != EOF && ch != '\n' && ch != ';')
+    bad_prog(_(EXCESS_JUNK));
+}
+
 /* Read an integer value from the program.  */
 static countT
 in_integer (int ch)
@@ -1103,11 +1118,8 @@ compile_program(struct vector *vector)
             bad_prog(_(EXCESS_CLOSE_BRACE));
           if (cur_cmd->a1)
             bad_prog(_(NO_CLOSE_BRACE_ADDR));
-          ch = in_nonblank();
-          if (ch == CLOSE_BRACE || ch == '#')
-            savchar(ch);
-          else if (ch != EOF && ch != '\n' && ch != ';')
-            bad_prog(_(EXCESS_JUNK));
+
+          read_end_of_cmd ();
 
           vector->v[blocks->v_index].x.jump_index = vector->v_length;
           blocks = release_label(blocks);	/* done with this entry */
@@ -1177,16 +1189,14 @@ compile_program(struct vector *vector)
           if (ISDIGIT(ch) && posixicity != POSIXLY_BASIC)
             {
               cur_cmd->x.int_arg = in_integer(ch);
-              ch = in_nonblank();
             }
           else
-            cur_cmd->x.int_arg = -1;
+            {
+              cur_cmd->x.int_arg = -1;
+              savchar (ch);
+            }
 
-          if (ch == CLOSE_BRACE || ch == '#')
-            savchar(ch);
-          else if (ch != EOF && ch != '\n' && ch != ';')
-            bad_prog(_(EXCESS_JUNK));
-
+          read_end_of_cmd ();
           break;
 
        case '=':
@@ -1203,11 +1213,7 @@ compile_program(struct vector *vector)
         case 'P':
         case 'z':
         case 'x':
-          ch = in_nonblank();
-          if (ch == CLOSE_BRACE || ch == '#')
-            savchar(ch);
-          else if (ch != EOF && ch != '\n' && ch != ';')
-            bad_prog(_(EXCESS_JUNK));
+          read_end_of_cmd ();
           break;
 
         case 'r':
@@ -1348,11 +1354,7 @@ compile_program(struct vector *vector)
                 cur_cmd->x.translate = translate;
               }
 
-            ch = in_nonblank();
-            if (ch == CLOSE_BRACE || ch == '#')
-              savchar(ch);
-            else if (ch != EOF && ch != '\n' && ch != ';')
-              bad_prog(_(EXCESS_JUNK));
+            read_end_of_cmd ();
 
             free_buffer(b);
             free_buffer(b2);
