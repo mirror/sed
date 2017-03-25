@@ -114,7 +114,7 @@ SEDTESTS += testsuite/appquit testsuite/enable testsuite/sep		\
         testsuite/numsub5 testsuite/0range testsuite/bkslashes		\
         testsuite/madding testsuite/mac-mf				\
         testsuite/xbxcx testsuite/xbxcx3				\
-        testsuite/recall testsuite/recall2 testsuite/xemacs		\
+        testsuite/recall2 testsuite/xemacs				\
         testsuite/fasts testsuite/uniq testsuite/manis			\
         testsuite/khadafy testsuite/linecnt testsuite/eval		\
         testsuite/distrib testsuite/8to7				\
@@ -303,9 +303,6 @@ EXTRA_DIST += \
 	testsuite/readin.good \
 	testsuite/readin.inp \
 	testsuite/readin.sed \
-	testsuite/recall.good \
-	testsuite/recall.inp \
-	testsuite/recall.sed \
 	testsuite/recall2.good \
 	testsuite/recall2.inp \
 	testsuite/recall2.sed \

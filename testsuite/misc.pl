@@ -79,6 +79,20 @@ y/Ss\nYy/yY$sS/'),
       {OUT=> "bar\n\nfoo\n" },
       ],
 
+     ['recall',
+      # Check that the empty regex recalls the last *executed* regex,
+      # not the last *compiled* regex
+      qw(-f), {IN => "p;s/e/X/p;:x;s//Y/p;/f/bx"},
+      {IN => "eeefff\n" },
+      {OUT=> "eeefff\n"
+	   . "Xeefff\n"
+	   . "XYefff\n"
+	   . "XYeYff\n"
+	   . "XYeYYf\n"
+	   . "XYeYYY\n"
+	   . "XYeYYY\n"
+      },
+      ],
     );
 
 my $save_temps = $ENV{SAVE_TEMPS};
