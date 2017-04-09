@@ -88,7 +88,9 @@ compile_regex_1 (struct regex *new_regex, int needed_sub)
       syntax |= RE_UNMATCHED_RIGHT_PAREN_ORD;
       break;
     case POSIXLY_BASIC:
-      syntax |= RE_UNMATCHED_RIGHT_PAREN_ORD | RE_LIMITED_OPS | RE_NO_GNU_OPS;
+      syntax |= RE_UNMATCHED_RIGHT_PAREN_ORD | RE_NO_GNU_OPS;
+      if (!(extended_regexp_flags & REG_EXTENDED))
+        syntax |= RE_LIMITED_OPS;
       break;
     }
 

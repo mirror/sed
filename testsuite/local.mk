@@ -46,6 +46,7 @@ T =					\
   testsuite/posix-char-class.sh		\
   testsuite/posix-mode-addr.sh		\
   testsuite/posix-mode-bad-ref.sh	\
+  testsuite/posix-mode-ERE.sh		\
   testsuite/posix-mode-s.sh		\
   testsuite/posix-mode-N.sh		\
   testsuite/range-overlap.sh		\
