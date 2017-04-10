@@ -207,6 +207,69 @@ q)},
             . "wollybears-in-minnesota\n"}
      ],
 
+     ['fasts',
+      # test `fast' substitutions
+      qw(-f),
+      {IN => q(
+h
+s/a//
+p
+g
+s/a//g
+p
+g
+s/^a//p
+g
+s/^a//g
+p
+g
+s/not present//g
+p
+g
+s/^[a-z]//g
+p
+g
+s/a$//
+p
+g
+
+y/a/b/
+h
+s/b//
+p
+g
+s/b//g
+p
+g
+s/^b//p
+g
+s/^b//g
+p
+g
+s/^[a-z]//g
+p
+g
+s/b$//
+p
+g
+)},
+      {IN => "aaaaaaabbbbbbaaaaaaa\n"},
+      {OUT => "aaaaaabbbbbbaaaaaaa\n"
+            . "bbbbbb\n"
+            . "aaaaaabbbbbbaaaaaaa\n"
+            . "aaaaaabbbbbbaaaaaaa\n"
+            . "aaaaaaabbbbbbaaaaaaa\n"
+            . "aaaaaabbbbbbaaaaaaa\n"
+            . "aaaaaaabbbbbbaaaaaa\n"
+            . "bbbbbbbbbbbbbbbbbbb\n"
+            . "\n"
+            . "bbbbbbbbbbbbbbbbbbb\n"
+            . "bbbbbbbbbbbbbbbbbbb\n"
+            . "bbbbbbbbbbbbbbbbbbb\n"
+            . "bbbbbbbbbbbbbbbbbbb\n"
+            . "bbbbbbbbbbbbbbbbbbbb\n"}
+     ],
+
      ['xabcx',
       # from the ChangeLog (Fri May 21 1993)
       # Regex address with custom character (\xREGEXx)

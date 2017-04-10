@@ -113,7 +113,7 @@ SEDTESTS += testsuite/sep						\
         testsuite/numsub5 						\
         testsuite/madding testsuite/mac-mf				\
         testsuite/xemacs						\
-        testsuite/fasts testsuite/uniq testsuite/manis			\
+        testsuite/uniq testsuite/manis					\
         testsuite/khadafy testsuite/linecnt testsuite/eval		\
         testsuite/distrib testsuite/8to7				\
         testsuite/middle						\
@@ -218,9 +218,6 @@ EXTRA_DIST += \
 	testsuite/factor.good \
 	testsuite/factor.inp \
 	testsuite/factor.sed \
-	testsuite/fasts.good \
-	testsuite/fasts.inp \
-	testsuite/fasts.sed \
 	testsuite/flipcase.good \
 	testsuite/flipcase.inp \
 	testsuite/flipcase.sed \
