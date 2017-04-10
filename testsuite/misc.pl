@@ -874,6 +874,22 @@ q(   universe.  You will never succeed.  Everything will fail and come
 )}
      ],
 
+     ['newline-anchor',
+      qw(-f),
+      {IN => q(N
+N
+s/^/X/g
+s/^/X/mg
+s/$/Y/g
+s/$/Y/mg
+)},
+      {IN => "a\n"
+           . "b\n"
+           . "c\n"},
+      {OUT => "XXaY\n"
+            . "XbY\n"
+            . "XcYY\n"}
+     ],
 
      ['xabcx',
       # from the ChangeLog (Fri May 21 1993)
