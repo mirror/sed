@@ -891,6 +891,26 @@ s/$/Y/mg
             . "XcYY\n"}
      ],
 
+     ['numsub',
+      qw(-f),
+      {IN => q(
+# the first one matches, the second doesn't
+1s/foo/bar/10
+2s/foo/bar/20
+
+# The second line should be deleted.  ssed 3.55-3.58 do not.
+t
+d
+)},
+      {IN =>
+q(foo foo fo oo f oo foo foo foo foo foo foo foo foo foo foo foo foo foo
+foo foo fo oo f oo foo foo foo foo foo foo foo foo foo foo foo foo foo
+)},
+      {OUT => "foo foo fo oo f oo foo foo foo foo "
+            . "foo foo foo bar foo foo foo foo foo\n"}
+     ],
+
+
      ['numsub2',
       qw(-n -e 's/a*/b/2'),
       {IN => "\n"},

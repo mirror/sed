@@ -108,7 +108,7 @@ endif
 
 SEDTESTS += testsuite/sep						\
         testsuite/8bit testsuite/newjis					\
-        testsuite/noeolw testsuite/numsub				\
+        testsuite/noeolw 						\
         testsuite/madding testsuite/mac-mf				\
         testsuite/xemacs						\
         testsuite/uniq 							\
@@ -225,9 +225,6 @@ EXTRA_DIST += \
 	testsuite/noeolw.1good \
 	testsuite/noeolw.2good \
 	testsuite/noeolw.sed \
-	testsuite/numsub.good \
-	testsuite/numsub.inp \
-	testsuite/numsub.sed \
 	testsuite/readin.good \
 	testsuite/readin.inp \
 	testsuite/readin.sed \
