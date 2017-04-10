@@ -103,6 +103,26 @@ y/Ss\nYy/yY$sS/'),
       {IN => "ababb||abbbabbbb\n" },
       {OUT=> ">abb<||>abbbb<\n" },
       ],
+
+     ['xbxcx',
+      # from the ChangeLog (Wed Sep 5 2001)
+      qw(-e 's/a*/x/g'),
+      {IN => "\n"
+           . "b\n"
+           . "bc\n"
+           . "bac\n"
+           . "baac\n"
+           . "baaac\n"
+           . "baaaac\n"},
+      {OUT => "x\n"
+            . "xbx\n"
+            . "xbxcx\n"
+            . "xbxcx\n"
+            . "xbxcx\n"
+            . "xbxcx\n"
+            . "xbxcx\n"}
+      ],
+
     );
 
 my $save_temps = $ENV{SAVE_TEMPS};
