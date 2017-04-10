@@ -178,7 +178,7 @@ TESTS_ENVIRONMENT =				\
   PACKAGE_VERSION=$(PACKAGE_VERSION)		\
   PERL='$(PERL)'				\
   SHELL='$(SHELL)'				\
-  PATH='$(abs_top_builddir)/src$(PATH_SEPARATOR)'"$$PATH" \
+  PATH='$(abs_top_builddir)/sed$(PATH_SEPARATOR)'"$$PATH" \
   $(LOCALCHARSET_TESTS_ENVIRONMENT)		\
   ; 9>&2
 
