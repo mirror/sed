@@ -891,6 +891,13 @@ s/$/Y/mg
             . "XcYY\n"}
      ],
 
+     ['numsub2',
+      qw(-n -e 's/a*/b/2'),
+      {IN => "\n"},
+      {OUT => ""}
+     ],
+
+
      ['xabcx',
       # from the ChangeLog (Fri May 21 1993)
       # Regex address with custom character (\xREGEXx)
