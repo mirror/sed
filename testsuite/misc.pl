@@ -104,6 +104,18 @@ y/Ss\nYy/yY$sS/'),
       {OUT=> ">abb<||>abbbb<\n" },
       ],
 
+     ['dollar',
+      # Test replacement on the last line (address '$')
+      qw(-e '$s/^/space /'),
+      {IN => "I can't quite remember where I heard it,\n"
+           . "but I can't seem to get out of my head\n"
+           . "the phrase\n"
+           . "the final frontier\n"},
+      {OUT => "I can't quite remember where I heard it,\n"
+            . "but I can't seem to get out of my head\n"
+            . "the phrase\n"
+            . "space the final frontier\n"}
+     ],
 
      ['xabcx',
       # from the ChangeLog (Fri May 21 1993)
