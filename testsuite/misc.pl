@@ -117,6 +117,14 @@ y/Ss\nYy/yY$sS/'),
       {OUT => "yes\n"}
      ],
 
+     ['amp-escape',
+      # Test ampersand as escape sequence (ASCII 0x26), which should
+      # not have a special meaning (i.e. the 'matched pattern')
+      qw(-e 's/yes/yes\x26/'),
+      {IN => "yes\n"},
+      {OUT => "yes&\n"}
+     ],
+
      ['appquit',
       # Test 'a'ppend command before 'q'uit
       qw(-f),

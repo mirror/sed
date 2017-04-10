@@ -122,7 +122,7 @@ SEDTESTS += testsuite/enable testsuite/sep		\
         testsuite/readin testsuite/utf8-1				\
         testsuite/utf8-2 testsuite/utf8-3 testsuite/utf8-4		\
         testsuite/badenc testsuite/inplace-hold testsuite/brackets	\
-        testsuite/amp-escape testsuite/help testsuite/file		\
+        testsuite/help testsuite/file		\
         testsuite/quiet testsuite/factor testsuite/binary3		\
         testsuite/binary2 testsuite/binary testsuite/dc			\
         testsuite/newline-anchor
@@ -195,9 +195,6 @@ EXTRA_DIST += \
 	testsuite/8to7.good \
 	testsuite/8to7.inp \
 	testsuite/8to7.sed \
-	testsuite/amp-escape.good \
-	testsuite/amp-escape.inp \
-	testsuite/amp-escape.sed \
 	testsuite/binary.good \
 	testsuite/binary.inp \
 	testsuite/binary.sed \
