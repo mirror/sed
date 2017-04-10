@@ -110,7 +110,7 @@ SEDTESTS += testsuite/appquit testsuite/enable testsuite/sep		\
         testsuite/inclib testsuite/8bit testsuite/newjis		\
         testsuite/noeolw testsuite/modulo testsuite/numsub		\
         testsuite/numsub2 testsuite/numsub3 testsuite/numsub4		\
-        testsuite/numsub5 testsuite/0range testsuite/bkslashes		\
+        testsuite/numsub5 testsuite/bkslashes		\
         testsuite/madding testsuite/mac-mf				\
         testsuite/xemacs						\
         testsuite/fasts testsuite/uniq testsuite/manis			\
@@ -189,9 +189,6 @@ EXTRA_DIST += \
 	testsuite/envvar-check \
 	testsuite/PCRE.tests testsuite/BOOST.tests testsuite/SPENCER.tests \
 	testsuite/runtest testsuite/Makefile.tests \
-	testsuite/0range.good \
-	testsuite/0range.inp \
-	testsuite/0range.sed \
 	testsuite/8bit.good \
 	testsuite/8bit.inp \
 	testsuite/8bit.sed \

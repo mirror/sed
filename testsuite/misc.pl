@@ -104,6 +104,19 @@ y/Ss\nYy/yY$sS/'),
       {OUT=> ">abb<||>abbbb<\n" },
       ],
 
+     ['0range',
+      # Test address 0 (GNU extension)
+      # FIXME: This test does NOT actually fail if the address is changed to 1.
+      qw(-e '0,/aaa/d'),
+      {IN => "1\n"
+           . "2\n"
+           . "3\n"
+           . "4\n"
+           . "aaa\n"
+           . "yes\n"},
+      {OUT => "yes\n"}
+     ],
+
      ['dollar',
       # Test replacement on the last line (address '$')
       qw(-e '$s/^/space /'),
