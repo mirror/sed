@@ -196,6 +196,17 @@ q)},
             . "space the final frontier\n"}
      ],
 
+     ['enable',
+      # inspired by an autoconf generated configure script.
+      qw(-e 's/-*enable-//;s/=.*//'),
+      {IN => "--enable-targets=sparc-sun-sunos4.1.3,srec\n"
+           . "--enable-x11-testing=on\n"
+           . "--enable-wollybears-in-minnesota=yes-id-like-that\n"},
+      {OUT => "targets\n"
+            . "x11-testing\n"
+            . "wollybears-in-minnesota\n"}
+     ],
+
      ['xabcx',
       # from the ChangeLog (Fri May 21 1993)
       # Regex address with custom character (\xREGEXx)

@@ -106,7 +106,7 @@ check_PROGRAMS += testsuite/bug-regex7 \
   testsuite/runptests testsuite/tst-rxspencer testsuite/tst-regex2
 endif
 
-SEDTESTS += testsuite/enable testsuite/sep		\
+SEDTESTS += testsuite/sep						\
         testsuite/inclib testsuite/8bit testsuite/newjis		\
         testsuite/noeolw testsuite/modulo testsuite/numsub		\
         testsuite/numsub2 testsuite/numsub3 testsuite/numsub4		\
@@ -212,9 +212,6 @@ EXTRA_DIST += \
 	testsuite/distrib.inp \
 	testsuite/distrib.sed \
 	testsuite/distrib.sh \
-	testsuite/enable.good \
-	testsuite/enable.inp \
-	testsuite/enable.sed \
 	testsuite/eval.good \
 	testsuite/eval.inp \
 	testsuite/eval.sed \
