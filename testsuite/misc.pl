@@ -938,6 +938,48 @@ foo foo fo oo f oo foo foo foo foo foo foo foo foo foo foo foo foo foo
       {OUT => ""}
      ],
 
+     ['readin',
+      qw(-f),
+      {IN => q(/\.$/r readin.in2
+/too\.$/q
+)},
+      {AUX => { 'readin.in2' => "MOO\n" }},
+      {IN => "``Democracy will not come today, this year,\n"
+           . "  nor ever through compromise and fear.\n"
+           . "  I have as much right as the other fellow has\n"
+           . "  to stand on my two feet and own the land.\n"
+           . "  I tire so of hearing people say\n"
+           . "  let things take their course,\n"
+           . "  tomorrow is another day.\n"
+           . "  I do not need my freedom when I'm dead.\n"
+           . "  I cannot live on tomorrow's bread.\n"
+           . "  Freedom is a strong seed\n"
+           . "  planted in a great need.\n"
+           . "  I live here, too.\n"
+           . "  I want freedom just as you.''\n"
+           . "    ``The Weary Blues'', Langston Hughes\n"},
+      {OUT => "``Democracy will not come today, this year,\n"
+            . "  nor ever through compromise and fear.\n"
+            . "MOO\n"
+            . "  I have as much right as the other fellow has\n"
+            . "  to stand on my two feet and own the land.\n"
+            . "MOO\n"
+            . "  I tire so of hearing people say\n"
+            . "  let things take their course,\n"
+            . "  tomorrow is another day.\n"
+            . "MOO\n"
+            . "  I do not need my freedom when I'm dead.\n"
+            . "MOO\n"
+            . "  I cannot live on tomorrow's bread.\n"
+            . "MOO\n"
+            . "  Freedom is a strong seed\n"
+            . "  planted in a great need.\n"
+            . "MOO\n"
+            . "  I live here, too.\n"
+            . "MOO\n"}
+     ],
+
+
      ['xabcx',
       # from the ChangeLog (Fri May 21 1993)
       # Regex address with custom character (\xREGEXx)
