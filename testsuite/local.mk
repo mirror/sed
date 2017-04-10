@@ -117,7 +117,7 @@ SEDTESTS += testsuite/8bit testsuite/newjis				\
         testsuite/subwrite testsuite/writeout				\
         testsuite/utf8-1						\
         testsuite/utf8-2 testsuite/utf8-3 testsuite/utf8-4		\
-        testsuite/badenc testsuite/inplace-hold testsuite/brackets	\
+        testsuite/badenc testsuite/inplace-hold				\
         testsuite/help testsuite/file		\
         testsuite/quiet testsuite/binary3		\
         testsuite/binary2 testsuite/binary testsuite/dc
@@ -195,9 +195,6 @@ EXTRA_DIST += \
 	testsuite/binary.sed \
 	testsuite/binary2.sed \
 	testsuite/binary3.sed \
-	testsuite/brackets.good \
-	testsuite/brackets.inp \
-	testsuite/brackets.sed \
 	testsuite/bsd.good \
 	testsuite/bsd.sh \
 	testsuite/dc.good \

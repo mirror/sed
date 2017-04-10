@@ -136,6 +136,23 @@ q)},
             . "ok\n"}
      ],
 
+
+     ['brackets',
+      qw(-f),
+      {IN => q(s/[[]/a/
+s/[[[]/b/
+s/[[[[]/c/
+s/[[[[[]/d/
+s/[[[[[[]/e/
+s/[[[[[[[]/f/
+s/[[[[[[[[]/g/
+s/[[[[[[[[[]/h/
+)},
+      {IN => "[[[[[[[[[\n"},
+      {OUT => "abcdefgh[\n"}
+     ],
+
+
      ['bkslashes',
       # Test backslashes in regex
       # bug in sed 4.0b
