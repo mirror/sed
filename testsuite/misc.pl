@@ -136,6 +136,18 @@ q)},
             . "ok\n"}
      ],
 
+     ['bkslashes',
+      # Test backslashes in regex
+      # bug in sed 4.0b
+      qw(-f),
+      {IN => q(s/$/\\\\\
+/
+)},
+      {IN => "a\n"},
+      {OUT => "a\\\n"
+            . "\n"}
+     ],
+
      ['dollar',
       # Test replacement on the last line (address '$')
       qw(-e '$s/^/space /'),

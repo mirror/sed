@@ -110,7 +110,7 @@ SEDTESTS += testsuite/enable testsuite/sep		\
         testsuite/inclib testsuite/8bit testsuite/newjis		\
         testsuite/noeolw testsuite/modulo testsuite/numsub		\
         testsuite/numsub2 testsuite/numsub3 testsuite/numsub4		\
-        testsuite/numsub5 testsuite/bkslashes		\
+        testsuite/numsub5 						\
         testsuite/madding testsuite/mac-mf				\
         testsuite/xemacs						\
         testsuite/fasts testsuite/uniq testsuite/manis			\
@@ -200,9 +200,6 @@ EXTRA_DIST += \
 	testsuite/binary.sed \
 	testsuite/binary2.sed \
 	testsuite/binary3.sed \
-	testsuite/bkslashes.good \
-	testsuite/bkslashes.inp \
-	testsuite/bkslashes.sed \
 	testsuite/brackets.good \
 	testsuite/brackets.inp \
 	testsuite/brackets.sed \
