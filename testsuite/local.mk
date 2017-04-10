@@ -116,7 +116,7 @@ SEDTESTS += testsuite/enable testsuite/sep		\
         testsuite/fasts testsuite/uniq testsuite/manis			\
         testsuite/khadafy testsuite/linecnt testsuite/eval		\
         testsuite/distrib testsuite/8to7				\
-        testsuite/cv-vars testsuite/middle				\
+        testsuite/middle						\
         testsuite/bsd testsuite/stdin testsuite/flipcase		\
         testsuite/subwrite testsuite/writeout				\
         testsuite/readin testsuite/utf8-1				\
@@ -205,9 +205,6 @@ EXTRA_DIST += \
 	testsuite/brackets.sed \
 	testsuite/bsd.good \
 	testsuite/bsd.sh \
-	testsuite/cv-vars.good \
-	testsuite/cv-vars.inp \
-	testsuite/cv-vars.sed \
 	testsuite/dc.good \
 	testsuite/dc.inp \
 	testsuite/dc.sed \
