@@ -114,7 +114,7 @@ SEDTESTS += testsuite/sep						\
         testsuite/madding testsuite/mac-mf				\
         testsuite/xemacs						\
         testsuite/uniq testsuite/manis					\
-        testsuite/linecnt testsuite/eval				\
+        testsuite/eval							\
         testsuite/distrib testsuite/8to7				\
         testsuite/middle						\
         testsuite/bsd testsuite/stdin 					\
@@ -215,9 +215,6 @@ EXTRA_DIST += \
 	testsuite/eval.good \
 	testsuite/eval.inp \
 	testsuite/eval.sed \
-	testsuite/linecnt.good \
-	testsuite/linecnt.inp \
-	testsuite/linecnt.sed \
 	testsuite/mac-mf.good \
 	testsuite/mac-mf.inp \
 	testsuite/mac-mf.sed \
