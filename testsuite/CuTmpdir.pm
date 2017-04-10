@@ -92,9 +92,12 @@ sub import {
       $SIG{$sig} = $on_sig_remove_tmpdir;
     }
 
-  $dir = File::Temp::tempdir("$prefix.tmp-XXXX", CLEANUP => 1 );
+  my $cleanup = $ENV{SAVE_TEMPS} ? 0 : 1;
+  $dir = File::Temp::tempdir("$prefix.tmp-XXXX", CLEANUP => $cleanup );
   chdir $dir
     or warn "$ME: failed to chdir to $dir: $!\n";
+
+  warn "Temp directory: $dir\n" unless $cleanup;
 }
 
 END {
