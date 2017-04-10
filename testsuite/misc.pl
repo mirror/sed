@@ -855,6 +855,26 @@ s/@@/%@/; s/@@/@%/; s/@g$/%g/
             . "s\%\@EVENT_TYPE\@\%\$EVENT_TYPE\%g\n"}
       ],
 
+     ['middle',
+      qw(-n -e '3,5p'),
+      {IN => q(   "...by imposing a tiny bit of order in a communication you are
+   translating, you are carving out a little bit of order in the
+   universe.  You will never succeed.  Everything will fail and come
+   to an end finally.  But you have a chance to carve a little bit
+   of order and maybe even beauty out of the raw materials that
+   surround you everywhere, and I think there is no greater meaning
+   in life."
+
+             Donald L. Philippi, Oct 1930 - Jan 1993
+)},
+    {OUT =>
+q(   universe.  You will never succeed.  Everything will fail and come
+   to an end finally.  But you have a chance to carve a little bit
+   of order and maybe even beauty out of the raw materials that
+)}
+     ],
+
+
      ['xabcx',
       # from the ChangeLog (Fri May 21 1993)
       # Regex address with custom character (\xREGEXx)

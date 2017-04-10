@@ -116,7 +116,6 @@ SEDTESTS += testsuite/sep						\
         testsuite/uniq 							\
         testsuite/eval							\
         testsuite/distrib testsuite/8to7				\
-        testsuite/middle						\
         testsuite/bsd testsuite/stdin 					\
         testsuite/subwrite testsuite/writeout				\
         testsuite/readin testsuite/utf8-1				\
@@ -221,9 +220,6 @@ EXTRA_DIST += \
 	testsuite/madding.good \
 	testsuite/madding.inp \
 	testsuite/madding.sed \
-	testsuite/middle.good \
-	testsuite/middle.sed \
-	testsuite/middle.inp \
 	testsuite/newjis.good \
 	testsuite/newjis.inp \
 	testsuite/newjis.sed \
