@@ -117,7 +117,7 @@ SEDTESTS += testsuite/sep						\
         testsuite/khadafy testsuite/linecnt testsuite/eval		\
         testsuite/distrib testsuite/8to7				\
         testsuite/middle						\
-        testsuite/bsd testsuite/stdin testsuite/flipcase		\
+        testsuite/bsd testsuite/stdin 					\
         testsuite/subwrite testsuite/writeout				\
         testsuite/readin testsuite/utf8-1				\
         testsuite/utf8-2 testsuite/utf8-3 testsuite/utf8-4		\
@@ -218,9 +218,6 @@ EXTRA_DIST += \
 	testsuite/factor.good \
 	testsuite/factor.inp \
 	testsuite/factor.sed \
-	testsuite/flipcase.good \
-	testsuite/flipcase.inp \
-	testsuite/flipcase.sed \
 	testsuite/inclib.good \
 	testsuite/inclib.inp \
 	testsuite/inclib.sed \

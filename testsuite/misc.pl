@@ -270,6 +270,66 @@ g
             . "bbbbbbbbbbbbbbbbbbbb\n"}
      ],
 
+     ['flipcase',
+      qw(-f),
+      {IN => q|s,\([^A-Za-z]*\)\([A-Za-z]*\),\1\L\u\2,g|},
+      {IN => "09 - 02 - 2002 00.00 Tg La7 La7 -\n"
+           . "09 - 02 - 2002 00.00 Brand New Tmc 2 -\n"
+           . "09 - 02 - 2002 00.10 Tg1 Notte Rai Uno -\n"
+           . "09 - 02 - 2002 00.15 Tg Parlamento Rai Due -\n"
+           . "09 - 02 - 2002 00.15 Kung Fu - La Leggenda Continua La7 -\n"
+           . "09 - 02 - 2002 00.20 Berserk - La CoNFESSIONE Di Gatz"
+             . " Italia 1 Cartoon\n"
+           . "09 - 02 - 2002 00.20 Tg3 - Tg3 Meteo Rai TrE -\n"
+           . "09 - 02 - 2002 00.25 Meteo 2 Rai Due -\n"
+           . "09 - 02 - 2002 00.30 Appuntamento Al CinEMA RaI Due -\n"
+           . "09 - 02 - 2002 00.30 Rai Educational - Mediamente Rai Tre -\n"
+           . "09 - 02 - 2002 00.35 Profiler Rai Due -\n"
+           . "09 - 02 - 2002 00.35 Stampa OggI - Che Tempo Fa Rai Uno -\n"
+           . "09 - 02 - 2002 00.45 Rai Educational - Babele: Euro Rai Uno -\n"
+           . "09 - 02 - 2002 00.45 BollettINO Della NEVE RETE 4 News\n"
+           . "09 - 02 - 2002 00.50 STUDIO Aperto - La Giornata Italia 1 News\n"
+           . "09 - 02 - 2002 00.50 BOCCA A Bocca - 2 Tempo Rete 4 Film\n"
+           . "09 - 02 - 2002 01.00 AppuntAMENTO Al Cinema Rai Tre -\n"
+           . "09 - 02 - 2002 01.00 Music NoN Stop Tmc 2 -\n"
+           . "09 - 02 - 2002 01.00 Studio SpORT Italia 1 SporT\n"
+           . "09 - 02 - 2002 01.00 Tg 5 - Notte Canale 5 News\n"
+           . "09 - 02 - 2002 01.05 Fuori Orario. CosE (Mai) Viste Rai Tre -\n"
+           . "09 - 02 - 2002 01.15 RAINOTTE Rai Due -\n"
+           . "09 - 02 - 2002 01.15 Sottovoce Rai Uno -\n"
+           . "09 - 02 - 2002 01.15 GiOCHI Olimpici InVERNALI - CERIMONIA"
+             . " Di Apertura Rai Tre -\n"
+           . "09 - 02 - 2002 01.17 Italia Interroga Rai Due -\n"},
+      {OUT => "09 - 02 - 2002 00.00 Tg La7 La7 -\n"
+            . "09 - 02 - 2002 00.00 Brand New Tmc 2 -\n"
+            . "09 - 02 - 2002 00.10 Tg1 Notte Rai Uno -\n"
+            . "09 - 02 - 2002 00.15 Tg Parlamento Rai Due -\n"
+            . "09 - 02 - 2002 00.15 Kung Fu - La Leggenda Continua La7 -\n"
+            . "09 - 02 - 2002 00.20 Berserk - La Confessione Di Gatz"
+              . " Italia 1 Cartoon\n"
+            . "09 - 02 - 2002 00.20 Tg3 - Tg3 Meteo Rai Tre -\n"
+            . "09 - 02 - 2002 00.25 Meteo 2 Rai Due -\n"
+            . "09 - 02 - 2002 00.30 Appuntamento Al Cinema Rai Due -\n"
+            . "09 - 02 - 2002 00.30 Rai Educational - Mediamente Rai Tre -\n"
+            . "09 - 02 - 2002 00.35 Profiler Rai Due -\n"
+            . "09 - 02 - 2002 00.35 Stampa Oggi - Che Tempo Fa Rai Uno -\n"
+            . "09 - 02 - 2002 00.45 Rai Educational - Babele: Euro Rai Uno -\n"
+            . "09 - 02 - 2002 00.45 Bollettino Della Neve Rete 4 News\n"
+            . "09 - 02 - 2002 00.50 Studio Aperto - La Giornata Italia 1 News\n"
+            . "09 - 02 - 2002 00.50 Bocca A Bocca - 2 Tempo Rete 4 Film\n"
+            . "09 - 02 - 2002 01.00 Appuntamento Al Cinema Rai Tre -\n"
+            . "09 - 02 - 2002 01.00 Music Non Stop Tmc 2 -\n"
+            . "09 - 02 - 2002 01.00 Studio Sport Italia 1 Sport\n"
+            . "09 - 02 - 2002 01.00 Tg 5 - Notte Canale 5 News\n"
+            . "09 - 02 - 2002 01.05 Fuori Orario. Cose (Mai) Viste Rai Tre -\n"
+            . "09 - 02 - 2002 01.15 Rainotte Rai Due -\n"
+            . "09 - 02 - 2002 01.15 Sottovoce Rai Uno -\n"
+            . "09 - 02 - 2002 01.15 Giochi Olimpici Invernali - Cerimonia"
+              . " Di Apertura Rai Tre -\n"
+            . "09 - 02 - 2002 01.17 Italia Interroga Rai Due -\n"}
+       ],
+
+
      ['xabcx',
       # from the ChangeLog (Fri May 21 1993)
       # Regex address with custom character (\xREGEXx)
