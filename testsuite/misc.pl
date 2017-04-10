@@ -117,6 +117,17 @@ y/Ss\nYy/yY$sS/'),
       {OUT => "yes\n"}
      ],
 
+     ['appquit',
+      # Test 'a'ppend command before 'q'uit
+      qw(-f),
+      {IN => q(a\
+ok
+q)},
+      {IN => "doh\n"},
+      {OUT => "doh\n"
+            . "ok\n"}
+     ],
+
      ['dollar',
       # Test replacement on the last line (address '$')
       qw(-e '$s/^/space /'),

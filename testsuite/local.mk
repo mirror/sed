@@ -106,7 +106,7 @@ check_PROGRAMS += testsuite/bug-regex7 \
   testsuite/runptests testsuite/tst-rxspencer testsuite/tst-regex2
 endif
 
-SEDTESTS += testsuite/appquit testsuite/enable testsuite/sep		\
+SEDTESTS += testsuite/enable testsuite/sep		\
         testsuite/inclib testsuite/8bit testsuite/newjis		\
         testsuite/noeolw testsuite/modulo testsuite/numsub		\
         testsuite/numsub2 testsuite/numsub3 testsuite/numsub4		\
@@ -198,9 +198,6 @@ EXTRA_DIST += \
 	testsuite/amp-escape.good \
 	testsuite/amp-escape.inp \
 	testsuite/amp-escape.sed \
-	testsuite/appquit.good \
-	testsuite/appquit.inp \
-	testsuite/appquit.sed \
 	testsuite/binary.good \
 	testsuite/binary.inp \
 	testsuite/binary.sed \
