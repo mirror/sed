@@ -980,6 +980,22 @@ foo foo fo oo f oo foo foo foo foo foo foo foo foo foo foo foo foo foo
      ],
 
 
+     ['sep',
+      # inspired by an autoconf generated configure script.
+      qw(-f),
+      {IN => q(s%/[^/][^/]*$%%
+s%[\/][^\/][^\/]*$%%
+s,.*[^\/],,
+)},
+      {IN => "miss mary mack mack//mack/ran down/the track  track  track\n"
+           . "slashes\aren't%used enough/in/casual-conversation///\n"
+           . "possibly sentences would be more attractive if they ended"
+             . "in two slashes//\n"},
+      {OUT => "\n"
+            . "///\n"
+            . "//\n"}
+     ],
+
      ['xabcx',
       # from the ChangeLog (Fri May 21 1993)
       # Regex address with custom character (\xREGEXx)

@@ -106,8 +106,7 @@ check_PROGRAMS += testsuite/bug-regex7 \
   testsuite/runptests testsuite/tst-rxspencer testsuite/tst-regex2
 endif
 
-SEDTESTS += testsuite/sep						\
-        testsuite/8bit testsuite/newjis					\
+SEDTESTS += testsuite/8bit testsuite/newjis				\
         testsuite/noeolw 						\
         testsuite/madding testsuite/mac-mf				\
         testsuite/xemacs						\
@@ -225,9 +224,6 @@ EXTRA_DIST += \
 	testsuite/noeolw.1good \
 	testsuite/noeolw.2good \
 	testsuite/noeolw.sed \
-	testsuite/sep.good \
-	testsuite/sep.inp \
-	testsuite/sep.sed \
 	testsuite/subwrite.inp \
 	testsuite/subwrite.sed \
 	testsuite/subwrt1.good \
