@@ -807,6 +807,53 @@ s/@@/%@/; s/@@/@%/; s/@g$/%g/
             . "s\%\@SETUID\@\%\$SETUID\%g\n"}
      ],
 
+     ['modulo',
+      qw(-e '0~2d;='),
+      {IN => "s\%\@CFLAGS\@\%\%g\n"
+           . "s\%\@CPPFLAGS\@\%-I/\%g\n"
+           . "s\%\@CXXFLAGS\@\%-x c++\%g\n"
+           . "s\%\@DEFS\@\%\$DEFS\%g\n"
+           . "s\%\@LDFLAGS\@\%-L/usr/lib\%g\n"
+           . "s\%\@LIBS\@\%-lgnu -lbfd\%g\n"
+           . "s\%\@exec_prefix\@\%\%g\n"
+           . "s\%\@prefix\@\%\$prefix\%g\n"
+           . "s\%\@RANLIB\@\%\$RANLIB\%g\n"
+           . "s\%\@CC\@\%/usr/local/bin/gcc\%g\n"
+           . "s\%\@CPP\@\%\$CPP\%g\n"
+           . "s\%\@XCFLAGS\@\%\$XCFLAGS\%g\n"
+           . "s\%\@XINCLUDES\@\%\$XINCLUDES\%g\n"
+           . "s\%\@XLIBS\@\%\$XLIBS\%g\n"
+           . "s\%\@XPROGS\@\%\$XPROGS\%g\n"
+           . "s\%\@TCLHDIR\@\%\$TCLHDIR\%g\n"
+           . "s\%\@TCLLIB\@\%\$TCLLIB\%g\n"
+           . "s\%\@TKHDIR\@\%\$TKHDIR\%g\n"
+           . "s\%\@TKLIB\@\%\$TKLIB\%g\n"
+           . "s\%\@PTY_TYPE\@\%\$PTY_TYPE\%g\n"
+           . "s\%\@EVENT_TYPE\@\%\$EVENT_TYPE\%g\n"
+           . "s\%\@SETUID\@\%\$SETUID\%g\n"},
+      {OUT => "1\n"
+            . "s\%\@CFLAGS\@\%\%g\n"
+            . "3\n"
+            . "s\%\@CXXFLAGS\@\%-x c++\%g\n"
+            . "5\n"
+            . "s\%\@LDFLAGS\@\%-L/usr/lib\%g\n"
+            . "7\n"
+            . "s\%\@exec_prefix\@\%\%g\n"
+            . "9\n"
+            . "s\%\@RANLIB\@\%\$RANLIB\%g\n"
+            . "11\n"
+            . "s\%\@CPP\@\%\$CPP\%g\n"
+            . "13\n"
+            . "s\%\@XINCLUDES\@\%\$XINCLUDES\%g\n"
+            . "15\n"
+            . "s\%\@XPROGS\@\%\$XPROGS\%g\n"
+            . "17\n"
+            . "s\%\@TCLLIB\@\%\$TCLLIB\%g\n"
+            . "19\n"
+            . "s\%\@TKLIB\@\%\$TKLIB\%g\n"
+            . "21\n"
+            . "s\%\@EVENT_TYPE\@\%\$EVENT_TYPE\%g\n"}
+      ],
 
      ['xabcx',
       # from the ChangeLog (Fri May 21 1993)
