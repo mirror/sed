@@ -148,6 +148,23 @@ q)},
             . "\n"}
      ],
 
+     ['classes',
+      # inspired by an autoconf generated configure script.
+      qw(-n -f),
+      {IN => 's/^\([/[:lower:]A-Z0-9]*_cv_[[:lower:][:upper:]/[:digit:]]*\)'.
+             '=\(.*\)/: \${\1=\'\2\'}/p'},
+      {IN => "_cv_=emptyvar\n"
+           . "ac_cv_prog/RANLIB=/usr/bin/ranlib\n"
+           . "ac_cv_prog/CC=/usr/unsupported/\\ \\ /lib/_cv_/cc\n"
+           . "a/c_cv_prog/CPP=/usr/bin/cpp\n"
+           . "SHELL=bash\n"
+           . "GNU=GNU!UNIX\n"},
+      {OUT => ": \${_cv_='emptyvar'}\n"
+            . ": \${ac_cv_prog/RANLIB='/usr/bin/ranlib'}\n"
+            . ": \${ac_cv_prog/CC='/usr/unsupported/\\ \\ /lib/_cv_/cc'}\n"
+            . ": \${a/c_cv_prog/CPP='/usr/bin/cpp'}\n"}
+     ],
+
      ['dollar',
       # Test replacement on the last line (address '$')
       qw(-e '$s/^/space /'),
