@@ -139,6 +139,25 @@ y/Ss\nYy/yY$sS/'),
             . "xbxcx\n"}
       ],
 
+     ['xbxcx3',
+      # Test s///N replacements (GNU extension)
+      qw(-e 's/a*/x/3'),
+      {IN => "\n"
+           . "b\n"
+           . "bc\n"
+           . "bac\n"
+           . "baac\n"
+           . "baaac\n"
+           . "baaaac\n"},
+      {OUT => "\n"
+           . "b\n"
+           . "bcx\n"
+           . "bacx\n"
+           . "baacx\n"
+           . "baaacx\n"
+           . "baaaacx\n"}
+     ],
+
     );
 
 my $save_temps = $ENV{SAVE_TEMPS};

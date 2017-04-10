@@ -113,7 +113,6 @@ SEDTESTS += testsuite/appquit testsuite/enable testsuite/sep		\
         testsuite/numsub2 testsuite/numsub3 testsuite/numsub4		\
         testsuite/numsub5 testsuite/0range testsuite/bkslashes		\
         testsuite/madding testsuite/mac-mf				\
-        testsuite/xbxcx3						\
         testsuite/xemacs						\
         testsuite/fasts testsuite/uniq testsuite/manis			\
         testsuite/khadafy testsuite/linecnt testsuite/eval		\
@@ -332,9 +331,6 @@ EXTRA_DIST += \
 	testsuite/writeout.sed \
 	testsuite/wrtout1.good \
 	testsuite/wrtout2.good \
-	testsuite/xbxcx3.good \
-	testsuite/xbxcx3.inp \
-	testsuite/xbxcx3.sed \
 	testsuite/xemacs.good \
 	testsuite/xemacs.inp \
 	testsuite/xemacs.sed
