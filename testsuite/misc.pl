@@ -911,6 +911,13 @@ s/$/Y/mg
       {OUT => ""}
      ],
 
+
+     ['numsub5',
+      qw(-n -e 's/a*/b/3p'),
+      {IN => "z\n"},
+      {OUT => ""}
+     ],
+
      ['xabcx',
       # from the ChangeLog (Fri May 21 1993)
       # Regex address with custom character (\xREGEXx)
