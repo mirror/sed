@@ -104,6 +104,22 @@ y/Ss\nYy/yY$sS/'),
       {OUT=> ">abb<||>abbbb<\n" },
       ],
 
+
+     ['xabcx',
+      # from the ChangeLog (Fri May 21 1993)
+      # Regex address with custom character (\xREGEXx)
+      qw(-e '\xfeetxs/blue/too/'),
+      {IN => "roses are red\n"
+           . "violets are blue\n"
+           . "my feet are cold\n"
+           . "your feet are blue\n"},
+      {OUT => "roses are red\n"
+            . "violets are blue\n"
+            . "my feet are cold\n"
+            . "your feet are too\n"}
+     ],
+
+
      ['xbxcx',
       # from the ChangeLog (Wed Sep 5 2001)
       qw(-e 's/a*/x/g'),

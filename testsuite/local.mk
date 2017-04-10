@@ -108,7 +108,7 @@ endif
 
 SEDTESTS += testsuite/appquit testsuite/enable testsuite/sep		\
         testsuite/inclib testsuite/8bit testsuite/newjis		\
-        testsuite/xabcx testsuite/dollar				\
+        testsuite/dollar						\
         testsuite/noeolw testsuite/modulo testsuite/numsub		\
         testsuite/numsub2 testsuite/numsub3 testsuite/numsub4		\
         testsuite/numsub5 testsuite/0range testsuite/bkslashes		\
@@ -332,9 +332,6 @@ EXTRA_DIST += \
 	testsuite/writeout.sed \
 	testsuite/wrtout1.good \
 	testsuite/wrtout2.good \
-	testsuite/xabcx.good \
-	testsuite/xabcx.inp \
-	testsuite/xabcx.sed \
 	testsuite/xbxcx3.good \
 	testsuite/xbxcx3.inp \
 	testsuite/xbxcx3.sed \
