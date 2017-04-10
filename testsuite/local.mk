@@ -107,7 +107,7 @@ check_PROGRAMS += testsuite/bug-regex7 \
 endif
 
 SEDTESTS += testsuite/sep						\
-        testsuite/inclib testsuite/8bit testsuite/newjis		\
+        testsuite/8bit testsuite/newjis					\
         testsuite/noeolw testsuite/modulo testsuite/numsub		\
         testsuite/numsub2 testsuite/numsub3 testsuite/numsub4		\
         testsuite/numsub5 						\
@@ -215,9 +215,6 @@ EXTRA_DIST += \
 	testsuite/eval.good \
 	testsuite/eval.inp \
 	testsuite/eval.sed \
-	testsuite/inclib.good \
-	testsuite/inclib.inp \
-	testsuite/inclib.sed \
 	testsuite/khadafy.good \
 	testsuite/khadafy.inp \
 	testsuite/khadafy.sed \
