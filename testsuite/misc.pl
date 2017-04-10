@@ -510,6 +510,79 @@ y/b/a/
             . "	/usr/openwin/share/include\n"}
      ],
 
+     ['khadafy',
+      # The Khadafy test is brought to you by Scott Anderson . . .
+      qw(-f),
+      {IN => '/M[ou]\'\{0,1\}am\{1,2\}[ae]r' .
+             ' .*' .
+             '\([AEae]l[- ]\)\{0,1\}' .
+             '[GKQ]h\{0,1\}[aeu]\{1,\}\([dtz][dhz]\{0,1\}\)\{1,\}af[iy]/!d'},
+      {IN => "1)  Muammar Qaddafi\n"
+           . "2)  Mo'ammar Gadhafi\n"
+           . "3)  Muammar Kaddafi\n"
+           . "4)  Muammar Qadhafi\n"
+           . "5)  Moammar El Kadhafi\n"
+           . "6)  Muammar Gadafi\n"
+           . "7)  Mu'ammar al-Qadafi\n"
+           . "8)  Moamer El Kazzafi\n"
+           . "9)  Moamar al-Gaddafi\n"
+           . "10) Mu'ammar Al Qathafi\n"
+           . "11) Muammar Al Qathafi\n"
+           . "12) Mo'ammar el-Gadhafi\n"
+           . "13) Moamar El Kadhafi\n"
+           . "14) Muammar al-Qadhafi\n"
+           . "15) Mu'ammar al-Qadhdhafi\n"
+           . "16) Mu'ammar Qadafi\n"
+           . "17) Moamar Gaddafi\n"
+           . "18) Mu'ammar Qadhdhafi\n"
+           . "19) Muammar Khaddafi\n"
+           . "20) Muammar al-Khaddafi\n"
+           . "21) Mu'amar al-Kadafi\n"
+           . "22) Muammar Ghaddafy\n"
+           . "23) Muammar Ghadafi\n"
+           . "24) Muammar Ghaddafi\n"
+           . "25) Muamar Kaddafi\n"
+           . "26) Muammar Quathafi\n"
+           . "27) Muammar Gheddafi\n"
+           . "28) Muamar Al-Kaddafi\n"
+           . "29) Moammar Khadafy\n"
+           . "30) Moammar Qudhafi\n"
+           . "31) Mu'ammar al-Qaddafi\n"
+           . "32) Mulazim Awwal Mu'ammar Muhammad Abu Minyar al-Qadhafi\n"},
+      {OUT => "1)  Muammar Qaddafi\n"
+            . "2)  Mo'ammar Gadhafi\n"
+            . "3)  Muammar Kaddafi\n"
+            . "4)  Muammar Qadhafi\n"
+            . "5)  Moammar El Kadhafi\n"
+            . "6)  Muammar Gadafi\n"
+            . "7)  Mu'ammar al-Qadafi\n"
+            . "8)  Moamer El Kazzafi\n"
+            . "9)  Moamar al-Gaddafi\n"
+            . "10) Mu'ammar Al Qathafi\n"
+            . "11) Muammar Al Qathafi\n"
+            . "12) Mo'ammar el-Gadhafi\n"
+            . "13) Moamar El Kadhafi\n"
+            . "14) Muammar al-Qadhafi\n"
+            . "15) Mu'ammar al-Qadhdhafi\n"
+            . "16) Mu'ammar Qadafi\n"
+            . "17) Moamar Gaddafi\n"
+            . "18) Mu'ammar Qadhdhafi\n"
+            . "19) Muammar Khaddafi\n"
+            . "20) Muammar al-Khaddafi\n"
+            . "21) Mu'amar al-Kadafi\n"
+            . "22) Muammar Ghaddafy\n"
+            . "23) Muammar Ghadafi\n"
+            . "24) Muammar Ghaddafi\n"
+            . "25) Muamar Kaddafi\n"
+            . "26) Muammar Quathafi\n"
+            . "27) Muammar Gheddafi\n"
+            . "28) Muamar Al-Kaddafi\n"
+            . "29) Moammar Khadafy\n"
+            . "30) Moammar Qudhafi\n"
+            . "31) Mu'ammar al-Qaddafi\n"
+            . "32) Mulazim Awwal Mu'ammar Muhammad Abu Minyar al-Qadhafi\n"}
+     ],
+
 
      ['xabcx',
       # from the ChangeLog (Fri May 21 1993)
