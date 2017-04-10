@@ -752,6 +752,61 @@ y/b/a/
             . "	-- Yamanoue Okura\n"}
      ],
 
+     ['manis',
+      # straight out of an autoconf-generated configure.
+      # The input should look just like the input after this is run.
+      #
+      # Protect against being on the right side of a sed subst in config.status.
+      qw(-f),
+      {IN => q(s/%@/@@/; s/@%/@@/; s/%g$/@g/; /@g$/s/[\\\\&%]/\\\\&/g;
+s/@@/%@/; s/@@/@%/; s/@g$/%g/
+)},
+      {IN => "s\%\@CFLAGS\@\%\%g\n"
+           . "s\%\@CPPFLAGS\@\%-I/\%g\n"
+           . "s\%\@CXXFLAGS\@\%-x c++\%g\n"
+           . "s\%\@DEFS\@\%\$DEFS\%g\n"
+           . "s\%\@LDFLAGS\@\%-L/usr/lib\%g\n"
+           . "s\%\@LIBS\@\%-lgnu -lbfd\%g\n"
+           . "s\%\@exec_prefix\@\%\%g\n"
+           . "s\%\@prefix\@\%\$prefix\%g\n"
+           . "s\%\@RANLIB\@\%\$RANLIB\%g\n"
+           . "s\%\@CC\@\%/usr/local/bin/gcc\%g\n"
+           . "s\%\@CPP\@\%\$CPP\%g\n"
+           . "s\%\@XCFLAGS\@\%\$XCFLAGS\%g\n"
+           . "s\%\@XINCLUDES\@\%\$XINCLUDES\%g\n"
+           . "s\%\@XLIBS\@\%\$XLIBS\%g\n"
+           . "s\%\@XPROGS\@\%\$XPROGS\%g\n"
+           . "s\%\@TCLHDIR\@\%\$TCLHDIR\%g\n"
+           . "s\%\@TCLLIB\@\%\$TCLLIB\%g\n"
+           . "s\%\@TKHDIR\@\%\$TKHDIR\%g\n"
+           . "s\%\@TKLIB\@\%\$TKLIB\%g\n"
+           . "s\%\@PTY_TYPE\@\%\$PTY_TYPE\%g\n"
+           . "s\%\@EVENT_TYPE\@\%\$EVENT_TYPE\%g\n"
+           . "s\%\@SETUID\@\%\$SETUID\%g\n"},
+      {OUT => "s\%\@CFLAGS\@\%\%g\n"
+            . "s\%\@CPPFLAGS\@\%-I/\%g\n"
+            . "s\%\@CXXFLAGS\@\%-x c++\%g\n"
+            . "s\%\@DEFS\@\%\$DEFS\%g\n"
+            . "s\%\@LDFLAGS\@\%-L/usr/lib\%g\n"
+            . "s\%\@LIBS\@\%-lgnu -lbfd\%g\n"
+            . "s\%\@exec_prefix\@\%\%g\n"
+            . "s\%\@prefix\@\%\$prefix\%g\n"
+            . "s\%\@RANLIB\@\%\$RANLIB\%g\n"
+            . "s\%\@CC\@\%/usr/local/bin/gcc\%g\n"
+            . "s\%\@CPP\@\%\$CPP\%g\n"
+            . "s\%\@XCFLAGS\@\%\$XCFLAGS\%g\n"
+            . "s\%\@XINCLUDES\@\%\$XINCLUDES\%g\n"
+            . "s\%\@XLIBS\@\%\$XLIBS\%g\n"
+            . "s\%\@XPROGS\@\%\$XPROGS\%g\n"
+            . "s\%\@TCLHDIR\@\%\$TCLHDIR\%g\n"
+            . "s\%\@TCLLIB\@\%\$TCLLIB\%g\n"
+            . "s\%\@TKHDIR\@\%\$TKHDIR\%g\n"
+            . "s\%\@TKLIB\@\%\$TKLIB\%g\n"
+            . "s\%\@PTY_TYPE\@\%\$PTY_TYPE\%g\n"
+            . "s\%\@EVENT_TYPE\@\%\$EVENT_TYPE\%g\n"
+            . "s\%\@SETUID\@\%\$SETUID\%g\n"}
+     ],
+
 
      ['xabcx',
       # from the ChangeLog (Fri May 21 1993)

@@ -113,7 +113,7 @@ SEDTESTS += testsuite/sep						\
         testsuite/numsub5 						\
         testsuite/madding testsuite/mac-mf				\
         testsuite/xemacs						\
-        testsuite/uniq testsuite/manis					\
+        testsuite/uniq 							\
         testsuite/eval							\
         testsuite/distrib testsuite/8to7				\
         testsuite/middle						\
@@ -221,9 +221,6 @@ EXTRA_DIST += \
 	testsuite/madding.good \
 	testsuite/madding.inp \
 	testsuite/madding.sed \
-	testsuite/manis.good \
-	testsuite/manis.inp \
-	testsuite/manis.sed \
 	testsuite/middle.good \
 	testsuite/middle.sed \
 	testsuite/middle.inp \
