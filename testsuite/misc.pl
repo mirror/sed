@@ -199,6 +199,38 @@ s/[[[[[[[[[]/h/
             . ": \${ac_cv_prog_CPP='/usr/bin/cpp'}\n"}
      ],
 
+     ['quiet',
+      # the old 'quiet' test: --quiet instead of -n
+      qw(--quiet -f),
+      {IN => q|s/^\([a-zA-Z0-9_]*_cv_[a-zA-Z0-9_]*\)=\(.*\)/: \${\1='\2'}/p|},
+      {IN => "_cv_=emptyvar\n"
+           . "ac_cv_prog_RANLIB=/usr/bin/ranlib\n"
+           . "ac_cv_prog_CC=/usr/unsupported/\ \ /lib/_cv_/cc\n"
+           . "ac_cv_prog_CPP=/usr/bin/cpp\n"
+           . "SHELL=bash\n"
+           . "GNU=GNU!UNIX\n"},
+      {OUT => ": \${_cv_='emptyvar'}\n"
+            . ": \${ac_cv_prog_RANLIB='/usr/bin/ranlib'}\n"
+            . ": \${ac_cv_prog_CC='/usr/unsupported/\ \ /lib/_cv_/cc'}\n"
+            . ": \${ac_cv_prog_CPP='/usr/bin/cpp'}\n"}
+     ],
+
+     ['file',
+      # the old 'file' test: --file instead of -f
+      qw(-n --file),
+      {IN => q|s/^\([a-zA-Z0-9_]*_cv_[a-zA-Z0-9_]*\)=\(.*\)/: \${\1='\2'}/p|},
+      {IN => "_cv_=emptyvar\n"
+           . "ac_cv_prog_RANLIB=/usr/bin/ranlib\n"
+           . "ac_cv_prog_CC=/usr/unsupported/\ \ /lib/_cv_/cc\n"
+           . "ac_cv_prog_CPP=/usr/bin/cpp\n"
+           . "SHELL=bash\n"
+           . "GNU=GNU!UNIX\n"},
+      {OUT => ": \${_cv_='emptyvar'}\n"
+            . ": \${ac_cv_prog_RANLIB='/usr/bin/ranlib'}\n"
+            . ": \${ac_cv_prog_CC='/usr/unsupported/\ \ /lib/_cv_/cc'}\n"
+            . ": \${ac_cv_prog_CPP='/usr/bin/cpp'}\n"}
+     ],
+
 
      ['dollar',
       # Test replacement on the last line (address '$')

@@ -118,8 +118,8 @@ SEDTESTS += testsuite/8bit testsuite/newjis				\
         testsuite/utf8-1						\
         testsuite/utf8-2 testsuite/utf8-3 testsuite/utf8-4		\
         testsuite/badenc testsuite/inplace-hold				\
-        testsuite/help testsuite/file		\
-        testsuite/quiet testsuite/binary3		\
+        testsuite/help							\
+        testsuite/binary3						\
         testsuite/binary2 testsuite/binary testsuite/dc
 
 # Note that the first lines are statements.  They ensure that environment
