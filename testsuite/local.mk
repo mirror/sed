@@ -114,7 +114,7 @@ SEDTESTS += testsuite/8bit testsuite/newjis				\
         testsuite/eval							\
         testsuite/distrib testsuite/8to7				\
         testsuite/bsd testsuite/stdin 					\
-        testsuite/subwrite testsuite/writeout				\
+        testsuite/subwrite						\
         testsuite/utf8-1						\
         testsuite/utf8-2 testsuite/utf8-3 testsuite/utf8-4		\
         testsuite/badenc testsuite/inplace-hold				\
@@ -243,10 +243,6 @@ EXTRA_DIST += \
 	testsuite/badenc.good \
 	testsuite/badenc.inp \
 	testsuite/badenc.sed \
-	testsuite/writeout.inp \
-	testsuite/writeout.sed \
-	testsuite/wrtout1.good \
-	testsuite/wrtout2.good \
 	testsuite/xemacs.good \
 	testsuite/xemacs.inp \
 	testsuite/xemacs.sed

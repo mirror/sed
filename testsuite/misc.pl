@@ -1045,6 +1045,24 @@ s,.*[^\/],,
             . "//\n"}
      ],
 
+     ['writeout',
+      # Test 'w' command
+      qw(-e '/^Facts ar/w writeout.wout'),
+      {IN => "Facts are simple and facts are straight\n"
+           . "Facts are lazy and facts are late\n"
+           . "Facts all come with points of view\n"
+           . "Facts don't do what I want them to\n"},
+      # The expected STDOUT
+      {OUT => "Facts are simple and facts are straight\n"
+            . "Facts are lazy and facts are late\n"
+            . "Facts all come with points of view\n"
+            . "Facts don't do what I want them to\n"},
+      # The expected content of 'writeout.wout'
+      {CMP => [ "Facts are simple and facts are straight\n"
+                . "Facts are lazy and facts are late\n",
+                { 'writeout.wout' => undef }]}
+     ],
+
      ['xabcx',
       # from the ChangeLog (Fri May 21 1993)
       # Regex address with custom character (\xREGEXx)
