@@ -1045,6 +1045,24 @@ s,.*[^\/],,
             . "//\n"}
      ],
 
+     ['subwrite',
+      # test s///w option
+      qw(-e 's/you/YoU/w subwrite.wout'),
+      {IN => "Not some church, and not the state,\n"
+           . "Not some dark capricious fate.\n"
+           . "Who you are, and when you lose,\n"
+           . "Comes only from the things you choose.\n"},
+      # The expected STDOUT
+      {OUT => "Not some church, and not the state,\n"
+            . "Not some dark capricious fate.\n"
+            . "Who YoU are, and when you lose,\n"
+            . "Comes only from the things YoU choose.\n"},
+      # The expected content of 'writeout.wout'
+      {CMP => [  "Who YoU are, and when you lose,\n"
+               . "Comes only from the things YoU choose.\n",
+                 { 'subwrite.wout' => undef }]}
+     ],
+
      ['writeout',
       # Test 'w' command
       qw(-e '/^Facts ar/w writeout.wout'),

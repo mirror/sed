@@ -114,7 +114,6 @@ SEDTESTS += testsuite/8bit testsuite/newjis				\
         testsuite/eval							\
         testsuite/distrib testsuite/8to7				\
         testsuite/bsd testsuite/stdin 					\
-        testsuite/subwrite						\
         testsuite/utf8-1						\
         testsuite/utf8-2 testsuite/utf8-3 testsuite/utf8-4		\
         testsuite/badenc testsuite/inplace-hold				\
@@ -221,10 +220,6 @@ EXTRA_DIST += \
 	testsuite/noeolw.1good \
 	testsuite/noeolw.2good \
 	testsuite/noeolw.sed \
-	testsuite/subwrite.inp \
-	testsuite/subwrite.sed \
-	testsuite/subwrt1.good \
-	testsuite/subwrt2.good \
 	testsuite/uniq.good \
 	testsuite/uniq.inp \
 	testsuite/uniq.sed \
