@@ -87,7 +87,8 @@ endif
 # Old tests converted to newer init.sh style
 T += testsuite/8bit.sh			\
      testsuite/binary.sh		\
-     testsuite/dc.sh
+     testsuite/dc.sh			\
+     testsuite/utf8-ru.sh
 
 TESTS = $(check_PROGRAMS) $(SEDTESTS) $(T)
 
@@ -117,8 +118,6 @@ SEDTESTS += testsuite/newjis				\
         testsuite/eval							\
         testsuite/distrib testsuite/8to7				\
         testsuite/bsd testsuite/stdin 					\
-        testsuite/utf8-1						\
-        testsuite/utf8-2 testsuite/utf8-3 testsuite/utf8-4		\
         testsuite/badenc testsuite/inplace-hold				\
         testsuite/help
 
@@ -219,18 +218,6 @@ EXTRA_DIST += \
 	testsuite/uniq.good \
 	testsuite/uniq.inp \
 	testsuite/uniq.sed \
-	testsuite/utf8-1.good \
-	testsuite/utf8-1.inp \
-	testsuite/utf8-1.sed \
-	testsuite/utf8-2.good \
-	testsuite/utf8-2.inp \
-	testsuite/utf8-2.sed \
-	testsuite/utf8-3.good \
-	testsuite/utf8-3.inp \
-	testsuite/utf8-3.sed \
-	testsuite/utf8-4.good \
-	testsuite/utf8-4.inp \
-	testsuite/utf8-4.sed \
 	testsuite/badenc.good \
 	testsuite/badenc.inp \
 	testsuite/badenc.sed \
