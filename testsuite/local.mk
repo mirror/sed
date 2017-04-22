@@ -84,6 +84,8 @@ T += testsuite/follow-symlinks.sh		\
      testsuite/follow-symlinks-stdin.sh
 endif
 
+# Old tests converted to newer init.sh style
+T += testsuite/8bit.sh
 
 
 TESTS = $(check_PROGRAMS) $(SEDTESTS) $(T)
@@ -106,7 +108,7 @@ check_PROGRAMS += testsuite/bug-regex7 \
   testsuite/runptests testsuite/tst-rxspencer testsuite/tst-regex2
 endif
 
-SEDTESTS += testsuite/8bit testsuite/newjis				\
+SEDTESTS += testsuite/newjis				\
         testsuite/noeolw 						\
         testsuite/madding testsuite/mac-mf				\
         testsuite/xemacs						\
@@ -185,7 +187,6 @@ EXTRA_DIST += \
 	testsuite/runtest testsuite/Makefile.tests \
 	testsuite/8bit.good \
 	testsuite/8bit.inp \
-	testsuite/8bit.sed \
 	testsuite/8to7.good \
 	testsuite/8to7.inp \
 	testsuite/8to7.sed \
