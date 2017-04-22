@@ -90,7 +90,8 @@ T += testsuite/8bit.sh			\
      testsuite/dc.sh			\
      testsuite/help.sh			\
      testsuite/utf8-ru.sh		\
-     testsuite/uniq.sh
+     testsuite/uniq.sh			\
+     testsuite/xemacs.sh
 
 TESTS = $(check_PROGRAMS) $(SEDTESTS) $(T)
 
@@ -115,7 +116,6 @@ endif
 SEDTESTS += testsuite/newjis				\
         testsuite/noeolw 						\
         testsuite/madding testsuite/mac-mf				\
-        testsuite/xemacs						\
         testsuite/eval							\
         testsuite/distrib testsuite/8to7				\
         testsuite/bsd testsuite/stdin 					\
@@ -222,8 +222,7 @@ EXTRA_DIST += \
 	testsuite/badenc.inp \
 	testsuite/badenc.sed \
 	testsuite/xemacs.good \
-	testsuite/xemacs.inp \
-	testsuite/xemacs.sed
+	testsuite/xemacs.inp
 
 # automake makes `check' depend on $(TESTS).  Declare
 # dummy targets for $(TESTS) so that make does not complain.
