@@ -86,8 +86,8 @@ endif
 
 # Old tests converted to newer init.sh style
 T += testsuite/8bit.sh			\
-     testsuite/binary.sh
-
+     testsuite/binary.sh		\
+     testsuite/dc.sh
 
 TESTS = $(check_PROGRAMS) $(SEDTESTS) $(T)
 
@@ -120,8 +120,7 @@ SEDTESTS += testsuite/newjis				\
         testsuite/utf8-1						\
         testsuite/utf8-2 testsuite/utf8-3 testsuite/utf8-4		\
         testsuite/badenc testsuite/inplace-hold				\
-        testsuite/help							\
-        testsuite/dc
+        testsuite/help
 
 # Note that the first lines are statements.  They ensure that environment
 # variables that can perturb tests are unset or set to expected values.
@@ -195,8 +194,6 @@ EXTRA_DIST += \
 	testsuite/binary3.sed \
 	testsuite/bsd.good \
 	testsuite/bsd.sh \
-	testsuite/dc.good \
-	testsuite/dc.inp \
 	testsuite/dc.sed \
 	testsuite/distrib.good \
 	testsuite/distrib.inp \
