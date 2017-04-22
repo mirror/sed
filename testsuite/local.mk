@@ -88,6 +88,7 @@ endif
 T += testsuite/8bit.sh			\
      testsuite/binary.sh		\
      testsuite/dc.sh			\
+     testsuite/help.sh			\
      testsuite/utf8-ru.sh		\
      testsuite/uniq.sh
 
@@ -118,8 +119,7 @@ SEDTESTS += testsuite/newjis				\
         testsuite/eval							\
         testsuite/distrib testsuite/8to7				\
         testsuite/bsd testsuite/stdin 					\
-        testsuite/badenc testsuite/inplace-hold				\
-        testsuite/help
+        testsuite/badenc testsuite/inplace-hold
 
 # Note that the first lines are statements.  They ensure that environment
 # variables that can perturb tests are unset or set to expected values.
