@@ -85,7 +85,8 @@ T += testsuite/follow-symlinks.sh		\
 endif
 
 # Old tests converted to newer init.sh style
-T += testsuite/8bit.sh
+T += testsuite/8bit.sh			\
+     testsuite/binary.sh
 
 
 TESTS = $(check_PROGRAMS) $(SEDTESTS) $(T)
@@ -120,8 +121,7 @@ SEDTESTS += testsuite/newjis				\
         testsuite/utf8-2 testsuite/utf8-3 testsuite/utf8-4		\
         testsuite/badenc testsuite/inplace-hold				\
         testsuite/help							\
-        testsuite/binary3						\
-        testsuite/binary2 testsuite/binary testsuite/dc
+        testsuite/dc
 
 # Note that the first lines are statements.  They ensure that environment
 # variables that can perturb tests are unset or set to expected values.
@@ -190,8 +190,6 @@ EXTRA_DIST += \
 	testsuite/8to7.good \
 	testsuite/8to7.inp \
 	testsuite/8to7.sed \
-	testsuite/binary.good \
-	testsuite/binary.inp \
 	testsuite/binary.sed \
 	testsuite/binary2.sed \
 	testsuite/binary3.sed \
