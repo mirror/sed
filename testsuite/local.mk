@@ -88,7 +88,8 @@ endif
 T += testsuite/8bit.sh			\
      testsuite/binary.sh		\
      testsuite/dc.sh			\
-     testsuite/utf8-ru.sh
+     testsuite/utf8-ru.sh		\
+     testsuite/uniq.sh
 
 TESTS = $(check_PROGRAMS) $(SEDTESTS) $(T)
 
@@ -114,7 +115,6 @@ SEDTESTS += testsuite/newjis				\
         testsuite/noeolw 						\
         testsuite/madding testsuite/mac-mf				\
         testsuite/xemacs						\
-        testsuite/uniq 							\
         testsuite/eval							\
         testsuite/distrib testsuite/8to7				\
         testsuite/bsd testsuite/stdin 					\
