@@ -91,6 +91,7 @@ T += testsuite/8bit.sh			\
      testsuite/dc.sh			\
      testsuite/eval.sh			\
      testsuite/help.sh			\
+     testsuite/inplace-hold.sh          \
      testsuite/stdin.sh                 \
      testsuite/utf8-ru.sh		\
      testsuite/uniq.sh			\
@@ -120,7 +121,7 @@ SEDTESTS += testsuite/newjis				\
         testsuite/noeolw 						\
         testsuite/madding testsuite/mac-mf				\
         testsuite/distrib testsuite/8to7				\
-        testsuite/badenc testsuite/inplace-hold
+        testsuite/badenc
 
 # Note that the first lines are statements.  They ensure that environment
 # variables that can perturb tests are unset or set to expected values.
