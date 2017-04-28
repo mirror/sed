@@ -13,7 +13,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-CLEANFILES += tmp* core *.core $(EXTRA_PROGRAMS) *.*out *.log eval.in2
+CLEANFILES += tmp* core *.core $(EXTRA_PROGRAMS) *.*out *.log
 
 TEST_EXTENSIONS = .sh .pl
 
@@ -89,6 +89,7 @@ T += testsuite/8bit.sh			\
      testsuite/binary.sh		\
      testsuite/bsd-wrapper.sh		\
      testsuite/dc.sh			\
+     testsuite/eval.sh			\
      testsuite/help.sh			\
      testsuite/utf8-ru.sh		\
      testsuite/uniq.sh			\
@@ -117,7 +118,6 @@ endif
 SEDTESTS += testsuite/newjis				\
         testsuite/noeolw 						\
         testsuite/madding testsuite/mac-mf				\
-        testsuite/eval							\
         testsuite/distrib testsuite/8to7				\
         testsuite/stdin 					\
         testsuite/badenc testsuite/inplace-hold
@@ -199,9 +199,6 @@ EXTRA_DIST += \
 	testsuite/distrib.inp \
 	testsuite/distrib.sed \
 	testsuite/distrib.sh \
-	testsuite/eval.good \
-	testsuite/eval.inp \
-	testsuite/eval.sed \
 	testsuite/mac-mf.good \
 	testsuite/mac-mf.inp \
 	testsuite/mac-mf.sed \
