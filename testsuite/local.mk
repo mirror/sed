@@ -91,6 +91,7 @@ T += testsuite/8bit.sh			\
      testsuite/dc.sh			\
      testsuite/eval.sh			\
      testsuite/help.sh			\
+     testsuite/stdin.sh                 \
      testsuite/utf8-ru.sh		\
      testsuite/uniq.sh			\
      testsuite/xemacs.sh
@@ -119,7 +120,6 @@ SEDTESTS += testsuite/newjis				\
         testsuite/noeolw 						\
         testsuite/madding testsuite/mac-mf				\
         testsuite/distrib testsuite/8to7				\
-        testsuite/stdin 					\
         testsuite/badenc testsuite/inplace-hold
 
 # Note that the first lines are statements.  They ensure that environment
