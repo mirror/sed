@@ -87,6 +87,7 @@ endif
 # Old tests converted to newer init.sh style
 T += testsuite/8bit.sh			\
      testsuite/binary.sh		\
+     testsuite/bsd-wrapper.sh		\
      testsuite/dc.sh			\
      testsuite/help.sh			\
      testsuite/utf8-ru.sh		\
@@ -118,7 +119,7 @@ SEDTESTS += testsuite/newjis				\
         testsuite/madding testsuite/mac-mf				\
         testsuite/eval							\
         testsuite/distrib testsuite/8to7				\
-        testsuite/bsd testsuite/stdin 					\
+        testsuite/stdin 					\
         testsuite/badenc testsuite/inplace-hold
 
 # Note that the first lines are statements.  They ensure that environment
