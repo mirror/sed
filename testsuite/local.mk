@@ -86,6 +86,7 @@ endif
 
 # Old tests converted to newer init.sh style
 T += testsuite/8bit.sh			\
+     testsuite/8to7.sh			\
      testsuite/badenc.sh		\
      testsuite/binary.sh		\
      testsuite/bsd-wrapper.sh		\
@@ -122,8 +123,8 @@ endif
 
 SEDTESTS += testsuite/newjis				\
         testsuite/noeolw 						\
-        testsuite/mac-mf				\
-        testsuite/8to7
+        testsuite/mac-mf
+
 
 # Note that the first lines are statements.  They ensure that environment
 # variables that can perturb tests are unset or set to expected values.
@@ -189,9 +190,6 @@ EXTRA_DIST += \
 	testsuite/runtest testsuite/Makefile.tests \
 	testsuite/8bit.good \
 	testsuite/8bit.inp \
-	testsuite/8to7.good \
-	testsuite/8to7.inp \
-	testsuite/8to7.sed \
 	testsuite/binary.sed \
 	testsuite/binary2.sed \
 	testsuite/binary3.sed \
