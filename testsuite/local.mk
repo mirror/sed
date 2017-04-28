@@ -89,6 +89,7 @@ T += testsuite/8bit.sh			\
      testsuite/binary.sh		\
      testsuite/bsd-wrapper.sh		\
      testsuite/dc.sh			\
+     testsuite/distrib.sh               \
      testsuite/eval.sh			\
      testsuite/help.sh			\
      testsuite/inplace-hold.sh          \
@@ -120,7 +121,7 @@ endif
 SEDTESTS += testsuite/newjis				\
         testsuite/noeolw 						\
         testsuite/madding testsuite/mac-mf				\
-        testsuite/distrib testsuite/8to7				\
+        testsuite/8to7				\
         testsuite/badenc
 
 # Note that the first lines are statements.  They ensure that environment
@@ -196,10 +197,7 @@ EXTRA_DIST += \
 	testsuite/bsd.good \
 	testsuite/bsd.sh \
 	testsuite/dc.sed \
-	testsuite/distrib.good \
 	testsuite/distrib.inp \
-	testsuite/distrib.sed \
-	testsuite/distrib.sh \
 	testsuite/mac-mf.good \
 	testsuite/mac-mf.inp \
 	testsuite/mac-mf.sed \
