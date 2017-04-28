@@ -96,6 +96,7 @@ T += testsuite/8bit.sh			\
      testsuite/help.sh			\
      testsuite/inplace-hold.sh          \
      testsuite/madding.sh		\
+     testsuite/newjis.sh		\
      testsuite/stdin.sh                 \
      testsuite/utf8-ru.sh		\
      testsuite/uniq.sh			\
@@ -121,8 +122,7 @@ check_PROGRAMS += testsuite/bug-regex7 \
   testsuite/runptests testsuite/tst-rxspencer testsuite/tst-regex2
 endif
 
-SEDTESTS += testsuite/newjis				\
-        testsuite/noeolw 						\
+SEDTESTS += testsuite/noeolw 						\
         testsuite/mac-mf
 
 
@@ -203,9 +203,6 @@ EXTRA_DIST += \
 	testsuite/madding.good \
 	testsuite/madding.inp \
 	testsuite/madding.sed \
-	testsuite/newjis.good \
-	testsuite/newjis.inp \
-	testsuite/newjis.sed \
 	testsuite/noeolw.good \
 	testsuite/noeolw.inp \
 	testsuite/noeolw.1good \
