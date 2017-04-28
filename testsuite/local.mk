@@ -94,6 +94,7 @@ T += testsuite/8bit.sh			\
      testsuite/eval.sh			\
      testsuite/help.sh			\
      testsuite/inplace-hold.sh          \
+     testsuite/madding.sh		\
      testsuite/stdin.sh                 \
      testsuite/utf8-ru.sh		\
      testsuite/uniq.sh			\
@@ -121,7 +122,7 @@ endif
 
 SEDTESTS += testsuite/newjis				\
         testsuite/noeolw 						\
-        testsuite/madding testsuite/mac-mf				\
+        testsuite/mac-mf				\
         testsuite/8to7
 
 # Note that the first lines are statements.  They ensure that environment
