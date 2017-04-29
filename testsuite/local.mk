@@ -123,9 +123,6 @@ check_PROGRAMS += testsuite/bug-regex7 \
   testsuite/runptests testsuite/tst-rxspencer testsuite/tst-regex2
 endif
 
-SEDTESTS += testsuite/noeolw
-
-
 # Note that the first lines are statements.  They ensure that environment
 # variables that can perturb tests are unset or set to expected values.
 # The rest are envvar settings that propagate build-related Makefile
@@ -203,11 +200,6 @@ EXTRA_DIST += \
 	testsuite/madding.good \
 	testsuite/madding.inp \
 	testsuite/madding.sed \
-	testsuite/noeolw.good \
-	testsuite/noeolw.inp \
-	testsuite/noeolw.1good \
-	testsuite/noeolw.2good \
-	testsuite/noeolw.sed \
 	testsuite/uniq.good \
 	testsuite/uniq.inp \
 	testsuite/uniq.sed \

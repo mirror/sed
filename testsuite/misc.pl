@@ -940,6 +940,62 @@ s/$/Y/mg
             . "XcYY\n"}
      ],
 
+     ['noeolw',
+      qw(-n -f),
+      # The sed program:
+      # generates two output files (in addition to STDOUT)
+      {IN => q(w noeolw.1out
+$ {
+	x
+	w noeolw.1out
+	x
+}
+h
+1,3w noeolw.2out
+p
+p
+)},
+      # The input file (was: noeolw.inp).
+      # NOTE: in the old test, the input file was given twice.
+      #       here we specify two (identical) input files.
+      {IN => "This file is unique\n" .
+	     "in that it does\n" .
+	     "end in a newline."},
+      {IN => "This file is unique\n" .
+	     "in that it does\n" .
+	     "end in a newline."},
+
+      # The expected STDOUT (was: noeolw.good)
+      {OUT => "This file is unique\n" .
+	      "This file is unique\n" .
+	      "in that it does\n" .
+	      "in that it does\n" .
+	      "end in a newline.\n" .
+	      "end in a newline.\n" .
+	      "This file is unique\n" .
+	      "This file is unique\n" .
+	      "in that it does\n" .
+	      "in that it does\n" .
+	      "end in a newline.\n" .
+	      "end in a newline."},
+
+      # The expected content of 'noeolw.1out' (was: noeolw.1good)
+      {CMP => [ "This file is unique\n" .
+		"in that it does\n" .
+		"end in a newline.\n" .
+		"This file is unique\n" .
+		"in that it does\n" .
+		"end in a newline.\n" .
+		"in that it does\n",
+		{ 'noeolw.1out' => undef }]},
+
+      # The expected content of 'noeolw.2out' (was: noeolw.2good)
+      {CMP => [ "This file is unique\n" .
+		"in that it does\n" .
+		"end in a newline.",
+		{ 'noeolw.2out' => undef }]},
+     ],
+
      ['numsub',
       qw(-f),
       {IN => q(
