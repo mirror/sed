@@ -2,24 +2,23 @@
 
 # The test harness, used invoked through LOG_COMPILER
 # in testsuite/local.mk .
-# Current directory is '$top_builddir'.
+# The two auxialiary programs (get-mb-cur-max and test-mbrtowc)
+# need to be compiled, but they are not stand-alone tests -
+# so they are skipped.
 
-: ${MAKE=make}
-: ${srcdir=.}
-: ${SED="./sed/sed"}
-
-makefile="${abs_top_srcdir}/testsuite/Makefile.tests"
-
-# Strip the directory './testsuite/' from the test name.
-test=`echo "$@"| sed 's,.*/,,'`
+# Strip any leading directory names from the test name
+test=${1##*/}
 
 # Skip the utility programs, they are not standalone tests
-test "$test" = get-mb-cur-max \
-    || test "$test" = test-mbrtowc \
-    && exit 77
-
-exitcode=0
-$MAKE SED="$SED" srcdir="$srcdir/testsuite" -f "$makefile" $test || exitcode=$?
-test -f $test.skip && exitcode=77
-rm -f $test.skip
-exit $exitcode
+case "$test" in
+    get-mb-cur-max|test-mbrtowc)
+	# exit code 77 is automake's code for 'skip'.
+	exit 77
+	;;
+    *)
+	# should not happen. If it does - a sed developer
+	# made some mistake in 'testsuite/local.mk'.
+	echo "internal error: unknown test '$test' in $0" >&2 ;
+	exit 1
+	;;
+esac
