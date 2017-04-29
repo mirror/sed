@@ -95,6 +95,7 @@ T += testsuite/8bit.sh			\
      testsuite/eval.sh			\
      testsuite/help.sh			\
      testsuite/inplace-hold.sh          \
+     testsuite/mac-mf.sh		\
      testsuite/madding.sh		\
      testsuite/newjis.sh		\
      testsuite/stdin.sh                 \
@@ -122,8 +123,7 @@ check_PROGRAMS += testsuite/bug-regex7 \
   testsuite/runptests testsuite/tst-rxspencer testsuite/tst-regex2
 endif
 
-SEDTESTS += testsuite/noeolw 						\
-        testsuite/mac-mf
+SEDTESTS += testsuite/noeolw
 
 
 # Note that the first lines are statements.  They ensure that environment
