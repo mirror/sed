@@ -185,7 +185,7 @@ main (int argc, char **argv)
 
       if (!rm_valid)
 	{
-	  printf ("%lu: No preceeding pattern or search string\n", linenum);
+	  printf ("%lu: No preceding pattern or search string\n", linenum);
 	  ret = 1;
 	  continue;
 	}

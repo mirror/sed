@@ -93,7 +93,7 @@ aa\) !
 . \0 0 1
 
 ;
-; now move on to the repetion ops,
+; now move on to the repetition ops,
 ; starting with operator *
 - match_default normal REG_EXTENDED
 a* b 0 0

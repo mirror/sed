@@ -28,7 +28,7 @@ EOF
 returns_ 1 sed 's/abc/\1/g' 2>err < /dev/null || fail=1
 compare_ exp-err err || fail=1
 
-# Invalid referencs are silently ignored in posix mode
+# Invalid references are silently ignored in posix mode
 sed --posix 's/abc/\1/g' < /dev/null || fail=1
 
 Exit $fail
