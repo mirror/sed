@@ -344,13 +344,13 @@ not specified, it is taken to be 70.
 @item --posix
 @opindex --posix
 @cindex @value{SSEDEXT}, disabling
-@value{SSED} includes several extensions to @acronym{POSIX}
+@value{SSED} includes several extensions to POSIX
 sed.  In order to simplify writing portable scripts, this
 option disables all the extensions that this manual documents,
 including additional commands.
 @cindex @code{POSIXLY_CORRECT} behavior, enabling
 Most of the extensions accept @command{sed} programs that
-are outside the syntax mandated by @acronym{POSIX}, but some
+are outside the syntax mandated by POSIX, but some
 of them (such as the behavior of the @command{N} command
 described in @ref{Reporting Bugs}) actually violate the
 standard.  If you want to disable only the latter kind of
@@ -387,12 +387,12 @@ so that the link destination will not be modified.
 @opindex -r
 @opindex --regexp-extended
 @cindex Extended regular expressions, choosing
-@cindex @acronym{GNU} extensions, extended regular expressions
+@cindex GNU extensions, extended regular expressions
 Use extended regular expressions rather than basic
 regular expressions.  Extended regexps are those that
 @command{egrep} accepts; they can be clearer because they
 usually have fewer backslashes.
-Historically this was a @acronym{GNU} extension,
+Historically this was a GNU extension,
 but the @option{-E}
 extension has since been added to the POSIX standard
 (http://austingroupbugs.net/view.php?id=528),
@@ -903,7 +903,7 @@ not just the first.
 @cindex Replacing only @var{n}th match of regexp in a line
 Only replace the @var{number}th match of the @var{regexp}.
 
-@cindex @acronym{GNU} extensions, @code{g} and @var{number} modifier
+@cindex GNU extensions, @code{g} and @var{number} modifier
 interaction in @code{s} command
 @cindex Mixing @code{g} and @var{number} modifiers in the @code{s} command
 Note: the @sc{posix} standard does not specify what should happen
@@ -955,9 +955,9 @@ a @sc{nul} character.  This is a @value{SSED} extension.
 
 @item I
 @itemx i
-@cindex @acronym{GNU} extensions, @code{I} modifier
+@cindex GNU extensions, @code{I} modifier
 @cindex Case-insensitive matching
-The @code{I} modifier to regular-expression matching is a @acronym{GNU}
+The @code{I} modifier to regular-expression matching is a GNU
 extension which makes @command{sed} match @var{regexp} in a
 case-insensitive manner.
 
@@ -1160,7 +1160,7 @@ contain the same number of characters (after de-escaping).
 See the @command{tr} command from GNU coreutils for similar functionality.
 
 @item a @var{text}
-Appending @var{text} after a line. This is a @acronym{GNU} extension
+Appending @var{text} after a line. This is a GNU extension
 to the standard @code{a} command - see below for details.
 
 Example: Add the word @samp{hello} after the second line:
@@ -1209,7 +1209,7 @@ to be output at the end of the current cycle,
 or when the next input line is read.
 
 @cindex @value{SSEDEXT}, two addresses supported by most commands
-As a @acronym{GNU} extension, this command accepts two addresses.
+As a GNU extension, this command accepts two addresses.
 
 Escape sequences in @var{text} are processed, so you should
 use @code{\\} in @var{text} to print a single backslash.
@@ -1232,7 +1232,7 @@ world
 @codequoteundirected off
 @codequotebacktick off
 
-As a @acronym{GNU} extension, the @code{a} command and @var{text} can be
+As a GNU extension, the @code{a} command and @var{text} can be
 separated into two @code{-e} parameters, enabling easier scripting:
 @codequoteundirected on
 @codequotebacktick on
@@ -1249,7 +1249,7 @@ $ sed -e '2a\' -e "$VAR"
 @codequotebacktick off
 
 @item i @var{text}
-insert @var{text} before a line. This is a @acronym{GNU} extension
+insert @var{text} before a line. This is a GNU extension
 to the standard @code{i} command - see below for details.
 
 Example: Insert the word @samp{hello} before the second line:
@@ -1292,7 +1292,7 @@ hello'
 @codequotebacktick off
 
 @cindex @value{SSEDEXT}, two addresses supported by most commands
-As a @acronym{GNU} extension, this command accepts two addresses.
+As a GNU extension, this command accepts two addresses.
 
 Escape sequences in @var{text} are processed, so you should
 use @code{\\} in @var{text} to print a single backslash.
@@ -1315,7 +1315,7 @@ s/./X/'
 @codequoteundirected off
 @codequotebacktick off
 
-As a @acronym{GNU} extension, the @code{i} command and @var{text} can be
+As a GNU extension, the @code{i} command and @var{text} can be
 separated into two @code{-e} parameters, enabling easier scripting:
 @codequoteundirected on
 @codequotebacktick on
@@ -1332,7 +1332,7 @@ $ sed -e '2i\' -e "$VAR"
 @codequotebacktick off
 
 @item c @var{text}
-Replaces the line(s) with @var{text}. This is a @acronym{GNU} extension
+Replaces the line(s) with @var{text}. This is a GNU extension
 to the standard @code{c} command - see below for details.
 
 Example: Replace the 2nd to 9th lines with the word @samp{hello}:
@@ -1394,7 +1394,7 @@ s/./X/'
 @codequoteundirected off
 @codequotebacktick off
 
-As a @acronym{GNU} extension, the @code{c} command and @var{text} can be
+As a GNU extension, the @code{c} command and @var{text} can be
 separated into two @code{-e} parameters, enabling easier scripting:
 @codequoteundirected on
 @codequotebacktick on
@@ -1431,7 +1431,7 @@ ccc
 @codequotebacktick off
 
 @cindex @value{SSEDEXT}, two addresses supported by most commands
-As a @acronym{GNU} extension, this command accepts two addresses.
+As a GNU extension, this command accepts two addresses.
 
 
 
@@ -1483,7 +1483,7 @@ is supported for the file name, which reads the contents of the
 standard input.
 
 @cindex @value{SSEDEXT}, two addresses supported by most commands
-As a @acronym{GNU} extension, this command accepts two addresses. The
+As a GNU extension, this command accepts two addresses. The
 file will then be reread and inserted on each of the addressed lines.
 
 @item w @var{filename}
@@ -2144,8 +2144,8 @@ are specified.
 
 
 @item @var{first}~@var{step}
-@cindex @acronym{GNU} extensions, @samp{@var{n}~@var{m}} addresses
-This @acronym{GNU} extension matches every @var{step}th line
+@cindex GNU extensions, @samp{@var{n}~@var{m}} addresses
+This GNU extension matches every @var{step}th line
 starting with line @var{first}.
 In particular, lines will be selected when there exists
 a non-negative @var{n} such that the current line-number equals
@@ -2238,9 +2238,9 @@ sed -n '\;^/home/alice/documents/;p'
 
 @item /@var{regexp}/I
 @itemx \%@var{regexp}%I
-@cindex @acronym{GNU} extensions, @code{I} modifier
+@cindex GNU extensions, @code{I} modifier
 @cindex case insensitive, regular expression
-The @code{I} modifier to regular-expression matching is a @acronym{GNU}
+The @code{I} modifier to regular-expression matching is a GNU
 extension which causes the @var{regexp} to be matched in
 a case-insensitive manner.
 
@@ -2360,13 +2360,13 @@ $ seq 10 | sed -n '4,1p'
 @cindex Zero, as range start address
 @cindex @var{addr1},+N
 @cindex @var{addr1},~N
-@cindex @acronym{GNU} extensions, special two-address forms
-@cindex @acronym{GNU} extensions, @code{0} address
-@cindex @acronym{GNU} extensions, 0,@var{addr2} addressing
-@cindex @acronym{GNU} extensions, @var{addr1},+@var{N} addressing
-@cindex @acronym{GNU} extensions, @var{addr1},~@var{N} addressing
+@cindex GNU extensions, special two-address forms
+@cindex GNU extensions, @code{0} address
+@cindex GNU extensions, 0,@var{addr2} addressing
+@cindex GNU extensions, @var{addr1},+@var{N} addressing
+@cindex GNU extensions, @var{addr1},~@var{N} addressing
 @value{SSED} also supports some special two-address forms; all these
-are @acronym{GNU} extensions:
+are GNU extensions:
 @table @code
 @item 0,/@var{regexp}/
 A line number of @code{0} can be used in an address specification like
@@ -2589,16 +2589,16 @@ of regular expression syntax as used in @command{sed}.
 A single ordinary character matches itself.
 
 @item *
-@cindex @acronym{GNU} extensions, to basic regular expressions
+@cindex GNU extensions, to basic regular expressions
 Matches a sequence of zero or more instances of matches for the
 preceding regular expression, which must be an ordinary character, a
 special character preceded by @code{\}, a @code{.}, a grouped regexp
-(see below), or a bracket expression.  As a @acronym{GNU} extension, a
+(see below), or a bracket expression.  As a GNU extension, a
 postfixed regular expression can also be followed by @code{*}; for
-example, @code{a**} is equivalent to @code{a*}.  @acronym{POSIX}
+example, @code{a**} is equivalent to @code{a*}.  POSIX
 1003.1-2001 says that @code{*} stands for itself when it appears at
 the start of a regular expression or subexpression, but many
-non@acronym{GNU} implementations do not support this and portable
+nonGNU implementations do not support this and portable
 scripts should instead use @code{\*} in these contexts.
 @item .
 Matches any character, including newline.
@@ -2619,7 +2619,7 @@ for example with an @code{s} command.
 @code{^} acts as a special character only at the beginning of the
 regular expression or subexpression (that is, after @code{\(} or
 @code{\|}).  Portable scripts should avoid @code{^} at the beginning of
-a subexpression, though, as @acronym{POSIX} allows implementations that
+a subexpression, though, as POSIX allows implementations that
 treat @code{^} as an ordinary character in that context.
 
 @item $
@@ -2640,12 +2640,12 @@ and @var{char2}.
 @xref{Character Classes and Bracket Expressions}.
 
 @item \+
-@cindex @acronym{GNU} extensions, to basic regular expressions
-As @code{*}, but matches one or more.  It is a @acronym{GNU} extension.
+@cindex GNU extensions, to basic regular expressions
+As @code{*}, but matches one or more.  It is a GNU extension.
 
 @item \?
-@cindex @acronym{GNU} extensions, to basic regular expressions
-As @code{*}, but only matches zero or one.  It is a @acronym{GNU} extension.
+@cindex GNU extensions, to basic regular expressions
+As @code{*}, but only matches zero or one.  It is a GNU extension.
 
 @item \@{@var{i}\@}
 As @code{*}, but matches exactly @var{i} sequences (@var{i} is a
@@ -2663,13 +2663,13 @@ Groups the inner @var{regexp} as a whole, this is used to:
 
 @itemize @bullet
 @item
-@cindex @acronym{GNU} extensions, to basic regular expressions
+@cindex GNU extensions, to basic regular expressions
 Apply postfix operators, like @code{\(abcd\)*}:
 this will search for zero or more whole sequences
 of @samp{abcd}, while @code{abcd*} would search
 for @samp{abc} followed by zero or more occurrences
 of @samp{d}.  Note that support for @code{\(abcd\)*} is
-required by @acronym{POSIX} 1003.1-2001, but many non-@acronym{GNU}
+required by POSIX 1003.1-2001, but many non-GNU
 implementations do not support it and hence it is not universally
 portable.
 
@@ -2679,12 +2679,12 @@ Use back references (see below).
 
 
 @item @var{regexp1}\|@var{regexp2}
-@cindex @acronym{GNU} extensions, to basic regular expressions
+@cindex GNU extensions, to basic regular expressions
 Matches either @var{regexp1} or @var{regexp2}.  Use
 parentheses to use complex alternative regular expressions.
 The matching process tries each alternative in turn, from
 left to right, and the first one that succeeds is used.
-It is a @acronym{GNU} extension.
+It is a GNU extension.
 
 @item @var{regexp1}@var{regexp2}
 Matches the concatenation of @var{regexp1} and @var{regexp2}.
@@ -2761,7 +2761,7 @@ Instead, this matches a string consisting of a single dollar sign,
 because it is escaped.
 
 @item [a-zA-Z0-9]
-In the C locale, this matches any @acronym{ASCII} letters or digits.
+In the C locale, this matches any ASCII letters or digits.
 
 @item [^ @kbd{tab}]\+
 (Here @kbd{tab} stands for a single tab character.)
@@ -3226,7 +3226,7 @@ regular expressions are given with @option{-e} or from a file
 @node Escapes
 @section Escape Sequences - specifying special characters
 
-@cindex @acronym{GNU} extensions, special escapes
+@cindex GNU extensions, special escapes
 Until this chapter, we have only encountered escapes of the form
 @samp{\^}, which tell @command{sed} not to interpret the circumflex
 as a special character, but rather to take it literally.  For
@@ -3235,7 +3235,7 @@ or more backslashes.
 
 @cindex @code{POSIXLY_CORRECT} behavior, escapes
 This chapter introduces another kind of escape@footnote{All
-the escapes introduced here are @acronym{GNU}
+the escapes introduced here are GNU
 extensions, with the exception of @code{\n}.  In basic regular
 expression mode, setting @code{POSIXLY_CORRECT} disables them inside
 bracket expressions.}---that
@@ -4789,7 +4789,7 @@ This one begins a series of totally useless (yet interesting)
 scripts emulating various Unix commands.  This, in particular,
 is a @command{tac} workalike.
 
-Note that on implementations other than @acronym{GNU} @command{sed}
+Note that on implementations other than GNU @command{sed}
 this script might easily overflow internal buffers.
 
 @c start-------------------------------------------
@@ -4820,7 +4820,7 @@ h
 @section Numbering Lines
 
 This script replaces @samp{cat -n}; in fact it formats its output
-exactly like @acronym{GNU} @command{cat} does.
+exactly like GNU @command{cat} does.
 
 Of course this is completely useless and for two reasons:  first,
 because somebody else did it in C, second, because the following
@@ -5436,7 +5436,7 @@ bx
 @node Limitations
 @chapter @value{SSED}'s Limitations and Non-limitations
 
-@cindex @acronym{GNU} extensions, unlimited line length
+@cindex GNU extensions, unlimited line length
 @cindex Portability, line length limitations
 For those who want to write portable @command{sed} scripts,
 be aware that some implementations have been known to
@@ -5569,7 +5569,7 @@ scripts that rely on the traditional behavior, or to set
 the @code{POSIXLY_CORRECT} variable to a non-empty value.
 
 @item Regex syntax clashes (problems with backslashes)
-@cindex @acronym{GNU} extensions, to basic regular expressions
+@cindex GNU extensions, to basic regular expressions
 @cindex Non-bugs, regex syntax clashes
 @command{sed} uses the @sc{posix} basic regular expression syntax.  According to
 the standard, the meaning of some escape sequences is undefined in
@@ -5577,7 +5577,7 @@ this syntax;  notable in the case of @command{sed} are @code{\|},
 @code{\+}, @code{\?}, @code{\`}, @code{\'}, @code{\<},
 @code{\>}, @code{\b}, @code{\B}, @code{\w}, and @code{\W}.
 
-As in all @acronym{GNU} programs that use @sc{posix} basic regular
+As in all GNU programs that use @sc{posix} basic regular
 expressions, @command{sed} interprets these escape sequences as special
 characters.  So, @code{x\+} matches one or more occurrences of @samp{x}.
 @code{abc\|def} matches either @samp{abc} or @samp{def}.
@@ -5588,19 +5588,19 @@ assumption that @code{\|} and @code{\+} match the literal characters
 @code{|} and @code{+}.  Such scripts must be modified by removing the
 spurious backslashes if they are to be used with modern implementations
 of @command{sed}, like
-@acronym{GNU} @command{sed}.
+GNU @command{sed}.
 
 On the other hand, some scripts use s|abc\|def||g to remove occurrences
 of @emph{either} @code{abc} or @code{def}.  While this worked until
 @command{sed} 4.0.x, newer versions interpret this as removing the
 string @code{abc|def}.  This is again undefined behavior according to
-@acronym{POSIX}, and this interpretation is arguably more robust: older
+POSIX, and this interpretation is arguably more robust: older
 @command{sed}s, for example, required that the regex matcher parsed
 @code{\/} as @code{/} in the common case of escaping a slash, which is
 again undefined behavior; the new behavior avoids this, and this is good
 because the regex matcher is only partially under our control.
 
-@cindex @acronym{GNU} extensions, special escapes
+@cindex GNU extensions, special escapes
 In addition, this version of @command{sed} supports several escape characters
 (some of which are multi-character) to insert non-printable characters
 in scripts (@code{\a}, @code{\c}, @code{\d}, @code{\o}, @code{\r},
@@ -5632,7 +5632,7 @@ in a read-only directory, and will break hard or symbolic links when
 
 @item @code{0a} does not work (gives an error)
 @cindex @code{0} address
-@cindex @acronym{GNU} extensions, @code{0} address
+@cindex GNU extensions, @code{0} address
 @cindex Non-bugs, @code{0} address
 
 There is no line 0.  0 is a special address that is only used to treat
@@ -5653,9 +5653,9 @@ uses the current locale's collation order -- in C parlance, that means using
 case-insensitive collation order, others don't.
 
 Another problem is that @code{[a-z]} tries to use collation symbols.
-This only happens if you are on the @acronym{GNU} system, using
-@acronym{GNU} libc's regular expression matcher instead of compiling the
-one supplied with @acronym{GNU} sed.  In a Danish locale, for example,
+This only happens if you are on the GNU system, using
+GNU libc's regular expression matcher instead of compiling the
+one supplied with GNU sed.  In a Danish locale, for example,
 the regular expression @code{^[a-z]$} matches the string @samp{aa},
 because this is a single collating symbol that comes after @samp{a}
 and before @samp{b}; @samp{ll} behaves similarly in Spanish

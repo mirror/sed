@@ -35,7 +35,6 @@ local-checks-to-skip =			\
   sc_prohibit_atoi_atof			\
   sc_prohibit_magic_number_exit		\
   sc_prohibit_strcmp			\
-  sc_texinfo_acronym			\
   sc_unmarked_diagnostics		\
   sc_useless_cpp_parens
 

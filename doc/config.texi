@@ -5,8 +5,8 @@
 @end direntry
 
 @clear PERL
-@set SSEDEXT @acronym{GNU} extensions
-@set SSED @acronym{GNU} @command{sed}
+@set SSEDEXT GNU extensions
+@set SSED GNU @command{sed}
 
 @c Ugly hack to enable using new texinfo commands '@codequotebacktick'
 @c and '@codequoteundirected' or define empty fallbacks if they are
