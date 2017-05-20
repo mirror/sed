@@ -658,7 +658,7 @@ mark_subst_opts (struct subst *cmd)
       case CLOSE_BRACE:
       case '#':
         savchar(ch);
-        /* Fall Through */
+        FALLTHROUGH;
       case EOF:
       case '\n':
       case ';':
@@ -667,7 +667,7 @@ mark_subst_opts (struct subst *cmd)
       case '\r':
         if (inchar() == '\n')
           return flags;
-        /* FALLTHROUGH */
+        FALLTHROUGH;
 
       default:
         bad_prog(_(UNKNOWN_S_OPT));
@@ -1068,7 +1068,7 @@ compile_program(struct vector *vector)
            case 'e': case 'F': case 'v': case 'z': case 'L':
            case 'Q': case 'T': case 'R': case 'W':
              bad_command(ch);
-             /* FALLTHROUGH */
+             FALLTHROUGH;
 
             case 'a': case 'i': case 'l':
             case '=': case 'r':
@@ -1181,7 +1181,7 @@ compile_program(struct vector *vector)
         case 'q':
           if (cur_cmd->a2)
             bad_prog(_(ONE_ADDR));
-          /* Fall through */
+          FALLTHROUGH;
 
         case 'L':
         case 'l':

@@ -278,3 +278,11 @@ extern void cancel_cleanup (void);
 #else
 # define IF_LINT(Code) /* empty */
 #endif
+
+#ifndef FALLTHROUGH
+# if __GNUC__ < 7
+#  define FALLTHROUGH ((void) 0)
+# else
+#  define FALLTHROUGH __attribute__ ((__fallthrough__))
+# endif
+#endif

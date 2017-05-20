@@ -1324,7 +1324,7 @@ execute_program(struct vector *vec, struct input *input)
                             &output_file);
               /* POSIX.2 is silent about c starting a new cycle,
                  but it seems to be expected (and make sense). */
-              /* Fall Through */
+              FALLTHROUGH;
             case 'd':
               return -1;
 
@@ -1480,7 +1480,7 @@ execute_program(struct vector *vec, struct input *input)
                 output_line(line.active, line.length, line.chomped,
                             &output_file);
               dump_append_queue();
-              /* FALLTHROUGH */
+              FALLTHROUGH;
 
             case 'Q':
               return cur_cmd->x.int_arg == -1 ? 0 : cur_cmd->x.int_arg;
