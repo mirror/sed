@@ -113,16 +113,6 @@ check_PROGRAMS = testsuite/get-mb-cur-max testsuite/test-mbrtowc
 testsuite_get_mb_cur_max_LDADD = lib/libsed.a $(INTLLIBS)
 testsuite_test_mbrtowc_LDADD = lib/libsed.a $(INTLLIBS)
 
-if TEST_REGEX
-check_PROGRAMS += testsuite/bug-regex7 \
-  testsuite/bug-regex8 testsuite/bug-regex9 testsuite/bug-regex10 \
-  testsuite/bug-regex11 testsuite/bug-regex12 testsuite/bug-regex13 \
-  testsuite/bug-regex14 testsuite/bug-regex15 testsuite/bug-regex16 \
-  testsuite/bug-regex21 testsuite/bug-regex27 testsuite/bug-regex28 \
-  testsuite/tst-pcre testsuite/tst-boost testsuite/runtests \
-  testsuite/runptests testsuite/tst-rxspencer testsuite/tst-regex2
-endif
-
 # Note that the first lines are statements.  They ensure that environment
 # variables that can perturb tests are unset or set to expected values.
 # The rest are envvar settings that propagate build-related Makefile

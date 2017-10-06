@@ -130,18 +130,6 @@ if test "x$enable_i18n" = xno; then
   ac_cv_func_wcscoll=no
 fi
 
-AC_ARG_ENABLE(regex-tests,
-[  --enable-regex-tests    enable regex matcher regression tests (default=yes)],
-[if test "x$with_included_regex" = xno; then
-  enable_regex_tests=no
-fi],
-enable_regex_tests=$with_included_regex)
-
-AM_CONDITIONAL(TEST_REGEX, test "x$enable_regex_tests" = xyes)
-if test "x$enable_regex_tests" = xyes; then
-  AC_DEFINE_UNQUOTED([_REGEX_RE_COMP], 1,
-    [Include BSD functions in regex, used by the testsuite])
-fi
 
 # Determine whether we should run UTF-8 tests by checking if cyrillic
 # letters are case-folded properly.  The test for UTF-8 locales (both
