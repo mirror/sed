@@ -21,6 +21,7 @@
 . "${srcdir=.}/testsuite/init.sh"; path_prepend_ ./sed
 print_ver_ sed
 
+require_ru_utf8_locale_
 
 fail=0
 
