@@ -4698,7 +4698,7 @@ consecutive words spanning multiple lines, and the @code{b} command for
 branching.
 @xref{Multiline techniques} and @ref{Branching and flow control}.
 
-These (somewhat contrived) examples deal with formatting and wrapping
+This (somewhat contrived) example deal with formatting and wrapping
 lines of text of the following input file:
 
 @example
@@ -4715,13 +4715,58 @@ of foolishness,
 @end group
 @end example
 
-The following command will wrap lines at 40 characters:
+@exdent The following sed program wraps lines at 40 characters:
 @codequoteundirected on
 @codequotebacktick on
 @example
 @group
-$ sed -E ':x @{N ; s/\n/ /g ; s/(.@{40,40@})/\1\n/ ; /\n/!bx ; P ; D@}' \
-      two-cities-mix.txt
+$ cat wrap40.sed
+# outer loop
+:x
+
+# Appead a newline followed by the next input line to the pattern buffer
+N
+
+# Remove all newlines from the pattern buffer
+s/\n/ /g
+
+
+# Inner loop
+:y
+
+# Add a newline after the first 40 characters
+s/(.@{40,40@})/\1\n/
+
+# If there is a newline in the pattern buffer
+# (i.e. the previous substitution added a newline)
+/\n/ @{
+    # There are newlines in the pattern buffer -
+    # print the content until the first newline.
+    P
+
+   # Remove the printed characters and the first newline
+   s/.*\n//
+
+   # branch to label 'y' - repeat inner loop
+   by
+ @}
+
+# No newlines in the pattern buffer - Branch to label 'x' (outer loop)
+# and read the next input line
+bx
+@end group
+@end example
+@codequoteundirected off
+@codequotebacktick off
+
+
+
+@exdent The wrapped output:
+@codequoteundirected on
+@codequotebacktick on
+@example
+@group
+$ sed -E -f wrap40.sed two-cities-mix.txt
 It was the best of times, it was the wor
 st of times, it was the age of wisdom, i
 t was the age of foolishness,
@@ -4730,55 +4775,6 @@ t was the age of foolishness,
 @codequoteundirected off
 @codequotebacktick off
 
-The following command will split lines by comma character:
-@codequoteundirected on
-@codequotebacktick on
-@example
-@group
-$ sed -E ':x @{N ; s/\n/ /g ; s/,/,\n/ ; /\n/!bx ; s/^ *// ; P ; D@}' \
-      two-cities-mix.txt
-It was the best of times,
-it was the worst of times,
-it was the age of wisdom,
-it was the age of foolishness,
-@end group
-@end example
-@codequoteundirected off
-@codequotebacktick off
-
-Both examples use similar construct:
-
-@itemize @bullet
-
-@item
-The @samp{:x} is a label. It will be used later by the @command{b} command
-to jump to the beginning of the @command{sed} program without starting
-a new cycle.
-
-@item
-The @samp{N} command reads the next line from the input file, and appends
-it to the existing content of the pattern space (with a newline preceding it).
-
-@item
-The first @samp{s/\n/ /g} command replaces all newlines with spaces, discarding
-the line structure of the input file.
-
-@item
-The second @samp{s///} command adds newlines based on the desired pattern
-(after 40 characters in the first example, after comma character in the second
-example).
-
-@item
-The @samp{/\n/!bx} command searches for a newline in the pattern space
-(@samp{/n/}), and if it is @emph{not} found (@samp{!}), branches (=jumps)
-to the previously defined label @samp{x}. This will cause @command{sed}
-to read the next line without processing any further commands in this cycle.
-
-@item
-If a newline is found in the pattern space, @command{P} is used to print
-up to the newline (that is - the newly structured line) then @command{D}
-deletes the pattern space up to the newline, and starts a new cycle.
-@end itemize
 
 
 
