@@ -154,7 +154,7 @@ other files. The following command modifies @file{file.txt} and
 does not produce any output:
 
 @example
-sed -i 's/hello/world' file.txt
+sed -i 's/hello/world/' file.txt
 @end example
 
 @cindex -n, example
