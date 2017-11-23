@@ -52,6 +52,7 @@ T =					\
   testsuite/help-version.sh		\
   testsuite/in-place-hyphen.sh		\
   testsuite/in-place-suffix-backup.sh	\
+  testsuite/inplace-selinux.sh		\
   testsuite/invalid-mb-seq-UMR.sh	\
   testsuite/mb-bad-delim.sh		\
   testsuite/mb-charclass-non-utf8.sh	\

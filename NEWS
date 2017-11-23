@@ -11,6 +11,10 @@ GNU sed NEWS                                    -*- outline -*-
   [Bug introduced in the original implementation of --posix option in
   v4.1a-5-gba68fb4]
 
+  sed -i now creates selinux context based on the context of the symlink
+  instead of the symlink target. [Bug present since at least sed-4.2]
+  sed -i --follow-symlinks remains unchanged.
+
 
 * Noteworthy changes in release 4.4 (2017-02-03) [stable]
 

@@ -607,7 +607,7 @@ open_next_file(const char *name, struct input *input)
       if (is_selinux_enabled () > 0)
         {
           security_context_t con;
-          if (getfilecon (input->in_file_name, &con) != -1)
+          if (lgetfilecon (input->in_file_name, &con) != -1)
             {
               /* Save and restore the old context for the sake of w and W
                  commands.  */
