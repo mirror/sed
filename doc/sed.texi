@@ -34,7 +34,7 @@
 This file documents version @value{VERSION} of
 @value{SSED}, a stream editor.
 
-Copyright @copyright{} 1998-2017 Free Software Foundation, Inc.
+Copyright @copyright{} 1998-2018 Free Software Foundation, Inc.
 
 @quotation
 Permission is granted to copy, distribute and/or modify this document
