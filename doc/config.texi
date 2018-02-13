@@ -40,7 +40,7 @@
 @c Use with: @value{ucsigma}
 @c
 @c Based on:
-@c http://lists.gnu.org/archive/html/help-texinfo/2012-06/msg00004.html
+@c https://lists.gnu.org/archive/html/help-texinfo/2012-06/msg00004.html
 @iftex
 @set ucsigma @math{@Sigma{}}
 @end iftex

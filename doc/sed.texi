@@ -4634,7 +4634,7 @@ A successful match means the @var{PATTERN} was repeated twice in succession.
 The word-boundery expression (@samp{\b}) at both ends ensures partial
 words are not matched (e.g. @samp{the then} is not a desired match).
 @c Thanks to Jim for pointing this out in
-@c http://lists.gnu.org/archive/html/sed-devel/2016-12/msg00041.html
+@c https://lists.gnu.org/archive/html/sed-devel/2016-12/msg00041.html
 
 @item
 The @option{-E} option enables extended regular expression syntax, alleviating
