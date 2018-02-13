@@ -110,8 +110,8 @@ contact(int errmsg)
 {
   FILE *out = errmsg ? stderr : stdout;
 #ifndef REG_PERL
-  fprintf(out, _("GNU sed home page: <http://www.gnu.org/software/sed/>.\n\
-General help using GNU software: <http://www.gnu.org/gethelp/>.\n"));
+  fprintf(out, _("GNU sed home page: <https://www.gnu.org/software/sed/>.\n\
+General help using GNU software: <https://www.gnu.org/gethelp/>.\n"));
 #endif
 
   /* Only print the bug report address for `sed --help', otherwise we'll
