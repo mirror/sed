@@ -1025,7 +1025,7 @@ $ seq 3 | sed 2q
 2
 @end example
 
-This command only accepts a single address.
+This command accepts only one address.
 Note that the current pattern space is printed if auto-print is
 not disabled with the @option{-n} options.  The ability to return
 an exit code from the @command{sed} script is a @value{SSED} extension.
@@ -1648,7 +1648,7 @@ Print out the file name of the current input file (with a trailing
 newline).
 
 @item Q [@var{exit-code}]
-This command only accepts a single address.
+This command accepts only one address.
 
 @findex Q (silent Quit) command
 @cindex @value{SSEDEXT}, quitting silently
@@ -2499,12 +2499,12 @@ characters in regular expressions.
 @section Basic (BRE) and extended (ERE) regular expression
 
 Basic and extended regular expressions are two variations on the
-syntax of the specified pattern. Basic Regular Expression (BRE) is the
-default in @command{sed} (and similarly in @command{grep}).  Extended
-Regular Expression syntax (ERE) is activated by using the @option{-r}
-or @option{-E} options (and similarly, @command{grep -E}).
+syntax of the specified pattern. Basic Regular Expression (BRE) syntax is the
+default in @command{sed} (and similarly in @command{grep}).
+Use the POSIX-specified @option{-E} option (@option{-r},
+@option{--regexp-extended}) to enable Extended Regular Expression (ERE) syntax.
 
-In @value{SSED} the only difference between basic and extended regular
+In @value{SSED}, the only difference between basic and extended regular
 expressions is in the behavior of a few special characters: @samp{?},
 @samp{+}, parentheses, braces (@samp{@{@}}), and @samp{|}.
 
