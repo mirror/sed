@@ -168,7 +168,7 @@ Usage: %s [OPTION]... {script-only-if-no-other-script} [input-file]...\n\
                  consider files as separate rather than as a single,\n\
                  continuous long stream.\n"));
   fprintf(out, _("      --sandbox\n\
-                 operate in sandbox mode.\n"));
+                 operate in sandbox mode (disable e/r/w commands).\n"));
   fprintf(out, _("  -u, --unbuffered\n\
                  load minimal amounts of data from the input files and flush\n\
                  the output buffers more often\n"));
