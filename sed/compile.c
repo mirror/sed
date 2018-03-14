@@ -1481,7 +1481,7 @@ convert:
             p = convert_number(&ch, p, bufend, base);
 
             /* for an ampersand in a replacement, pass the \ up one level */
-            if (buftype == TEXT_REPLACEMENT && ch == '&')
+            if (buftype == TEXT_REPLACEMENT && (ch == '&' || ch == '\\'))
               *q++ = '\\';
             *q++ = ch;
             continue;

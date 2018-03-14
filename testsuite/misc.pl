@@ -1190,6 +1190,13 @@ s,.*[^\/],,
            . "baaaacx\n"}
      ],
 
+
+     # Four backslashes (2 pairs of "\\") to pass through two interpolations:
+     # once in Perl, then the shell command line argument.
+     # sed will see one backslash character in the s/// command.
+     ['bug30794_1', "s/z/\\\\x5cA/",  {IN=>'z'}, {OUT => "\\A"}],
+     ['bug30794_2', "s/z/\\\\x5c/",   {IN=>'z'}, {OUT => "\\"}],
+     ['bug30794_3', "s/z/\\\\x5c1/",  {IN=>'z'}, {OUT => "\\1"}],
     );
 
 my $save_temps = $ENV{SAVE_TEMPS};
