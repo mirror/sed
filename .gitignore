@@ -73,6 +73,7 @@
 /po/sed.pot
 /po/stamp-po
 /sed-*.tar.xz
+/sed-*.tar.xz.sig
 /sed-[4-9]*
 /sed/.dirstamp
 /sed/Makefile
