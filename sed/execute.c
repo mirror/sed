@@ -37,16 +37,6 @@
 #include "acl.h"
 #include "ignore-value.h"
 
-#ifdef __GNUC__
-# if __GNUC__ > 2 || (__GNUC__ == 2 && __GNUC_MINOR__-0 >= 7)
-   /* silence warning about unused parameter even for "gcc -W -Wunused" */
-#  define UNUSED	__attribute__((unused))
-# endif
-#endif
-#ifndef UNUSED
-# define UNUSED
-#endif
-
 /* The number of extra bytes that must be allocated/usable, beyond
    the declared "end" of each line buffer that may be passed to
    match_regex.  This is imposed by its use of dfaexec.  */
@@ -386,7 +376,7 @@ line_exchange (struct line *a, struct line *b, int state)
 
 /* dummy function to simplify read_pattern_space() */
 static bool
-read_always_fail(struct input *input UNUSED)
+read_always_fail(struct input *input _GL_UNUSED)
 {
   return false;
 }
