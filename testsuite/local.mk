@@ -71,6 +71,7 @@ T =					\
   testsuite/range-overlap.sh		\
   testsuite/recursive-escape-c.sh	\
   testsuite/regex-errors.sh		\
+  testsuite/regex-max-int.sh		\
   testsuite/sandbox.sh			\
   testsuite/stdin-prog.sh		\
   testsuite/subst-options.sh		\

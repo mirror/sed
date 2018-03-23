@@ -4,6 +4,10 @@ GNU sed NEWS                                    -*- outline -*-
 
 ** Bug fixes
 
+  sed now fails when matching very long input lines (>2GB).
+  Before, sed would silently ignore the regex without indicating an
+  error. [Bug present at least since sed-3.02]
+
   sed no longer rejects comments and closing braces after y/// commands.
   [Bug existed at least since sed-3.02]
 

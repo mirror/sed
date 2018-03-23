@@ -138,3 +138,9 @@ include $(top_srcdir)/testsuite/local.mk
 distclean-local:
 	test x$(srcdir) = x$(builddir) || rm -f $(dist_man_MANS)
 	rm -f lib/.deps/getfilecon.Po lib/.deps/obstack.Po
+
+# Shortcut targets to make it easier to run (very) expensive tests.
+check-expensive:
+	$(MAKE) check RUN_EXPENSIVE_TESTS=yes
+check-very-expensive:
+	$(MAKE) check-expensive RUN_VERY_EXPENSIVE_TESTS=yes

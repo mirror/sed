@@ -18,6 +18,7 @@
 #include "sed.h"
 
 #include <ctype.h>
+#include <limits.h>
 #include <string.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -252,6 +253,10 @@ match_regex(struct regex *regex, char *buf, size_t buflen,
     }
   else
     regex_last = regex;
+
+  /* gnulib's re_search uses signed-int as length */
+  if (buflen >= INT_MAX)
+    panic (_("regex input buffer length larger than INT_MAX"));
 
 #ifdef REG_PERL
   regmatch[0].rm_so = (int)buf_start_offset;
