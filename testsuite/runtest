@@ -6,6 +6,8 @@
 # need to be compiled, but they are not stand-alone tests -
 # so they are skipped.
 
+. "${srcdir=.}/testsuite/init.sh"; path_prepend_ ./sed
+
 # Strip any leading directory names from the test name
 test=${1##*/}
 
