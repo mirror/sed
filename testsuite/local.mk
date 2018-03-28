@@ -35,6 +35,9 @@ TESTSUITE_PERL_OPTIONS += -M"CuTmpdir qw($$f)"
 SH_LOG_COMPILER = $(SHELL)
 PL_LOG_COMPILER = $(TESTSUITE_PERL) $(TESTSUITE_PERL_OPTIONS)
 
+# Ensure that anything not covered by the above evokes failure.
+LOG_COMPILER = false
+
 # Put new, init.sh-using tests here, so that each name
 # is listed in only one place.
 
@@ -105,7 +108,7 @@ T += testsuite/8bit.sh			\
      testsuite/uniq.sh			\
      testsuite/xemacs.sh
 
-TESTS = $(check_PROGRAMS) $(SEDTESTS) $(T)
+TESTS = $(SEDTESTS) $(T)
 
 SEDTESTS =
 
@@ -165,8 +168,6 @@ TESTS_ENVIRONMENT =				\
   PATH='$(abs_top_builddir)/sed$(PATH_SEPARATOR)'"$$PATH" \
   $(LOCALCHARSET_TESTS_ENVIRONMENT)		\
   ; 9>&2
-
-LOG_COMPILER = $(top_srcdir)/testsuite/runtest
 
 EXTRA_DIST += \
 	$(T) \
