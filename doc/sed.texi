@@ -2509,7 +2509,7 @@ expressions is in the behavior of a few special characters: @samp{?},
 @samp{+}, parentheses, braces (@samp{@{@}}), and @samp{|}.
 
 With basic (BRE) syntax, these characters do not have special meaning
-unless prefixed backslash (@samp{\}); While with extended (ERE) syntax
+unless prefixed with a backslash (@samp{\}); While with extended (ERE) syntax
 it is reversed: these characters are special unless they are prefixed
 with backslash (@samp{\}).
 
