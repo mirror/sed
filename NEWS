@@ -2,6 +2,11 @@ GNU sed NEWS                                    -*- outline -*-
 
 * Noteworthy changes in release ?.? (????-??-??) [?]
 
+** Bug fixes
+
+  sed no longer accesses invalid memory (heap overflow) when given invalid
+  backreferences in 's' command [bug#32082, present at least since sed-4.0.6].
+
 
 * Noteworthy changes in release 4.5 (2018-03-31) [stable]
 

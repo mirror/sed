@@ -987,7 +987,7 @@ static void append_replacement (struct line *buf, struct replacement *p,
           curr_type &= ~REPL_MODIFIERS;
         }
 
-      if (0 <= i)
+      if (0 <= i && i < regs->num_regs)
         {
           if (regs->end[i] == regs->start[i] && p->repl_type & REPL_MODIFIERS)
             /* Save this modifier, we shall apply it later.
