@@ -173,6 +173,9 @@ struct sed_cmd {
     /* This is used for the y command. */
     unsigned char *translate;
     char **translatemb;
+
+    /* This is used for the ':' command (debug only).  */
+    char* label_name;
   } x;
 };
 
@@ -192,6 +195,13 @@ int match_regex (struct regex *regex,
 #ifdef lint
 void release_regex (struct regex *);
 #endif
+
+void
+debug_print_command (const struct vector *program, const struct sed_cmd *sc);
+void
+debug_print_program (const struct vector *program);
+void
+debug_print_char (char c);
 
 int process_files (struct vector *, char **argv);
 
@@ -239,6 +249,9 @@ extern bool is_utf8;
 
 /* If set, operate in 'sandbox' mode - disable e/r/w commands */
 extern bool sandbox;
+
+/* If set, print debugging information.  */
+extern bool debug;
 
 #define MBRTOWC(pwc, s, n, ps) \
   (mb_cur_max == 1 ? \

@@ -253,6 +253,31 @@ These options disable this automatic printing,
 and @command{sed} only produces output when explicitly told to
 via the @code{p} command.
 
+@item --debug
+@opindex --debug
+@cindex @value{SSEDEXT}, debug
+Print the input sed program in canonical form,
+and annotate program execution.
+@codequotebacktick on
+@codequoteundirected on
+@example
+$ echo 1 | sed '\%1%s21232'
+3
+
+$ echo 1 | sed --debug '\%1%s21232'
+SED PROGRAM:
+  /1/ s/1/3/
+INPUT:   'STDIN' line 1
+PATTERN: 1
+COMMAND: /1/ s/1/3/
+PATTERN: 3
+END-OF-CYCLE:
+3
+@end example
+@codequotebacktick off
+@codequoteundirected off
+
+
 @item -e @var{script}
 @itemx --expression=@var{script}
 @opindex -e

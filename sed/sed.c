@@ -59,6 +59,9 @@ bool follow_symlinks = false;
 /* If set, opearate in 'sandbox' mode */
 bool sandbox = false;
 
+/* if set, print debugging information */
+bool debug = false;
+
 /* How do we edit files in-place? (we don't if NULL) */
 char *in_place_extension = NULL;
 
@@ -131,6 +134,8 @@ Usage: %s [OPTION]... {script-only-if-no-other-script} [input-file]...\n\
 
   fprintf (out, _("  -n, --quiet, --silent\n\
                  suppress automatic printing of pattern space\n"));
+  fprintf (out, _("      --debug\n\
+                 annotate program execution\n"));
   fprintf (out, _("  -e script, --expression=script\n\
                  add the script to the commands to be executed\n"));
   fprintf (out, _("  -f script-file, --file=script-file\n\
@@ -184,11 +189,14 @@ main (int argc, char **argv)
 {
 #define SHORTOPTS "bsnrzuEe:f:l:i::V:"
 
-  enum { SANDBOX_OPTION = CHAR_MAX+1 };
+  enum { SANDBOX_OPTION = CHAR_MAX+1,
+         DEBUG_OPTION
+    };
 
   static const struct option longopts[] = {
     {"binary", 0, NULL, 'b'},
     {"regexp-extended", 0, NULL, 'r'},
+    {"debug", 0, NULL, DEBUG_OPTION},
     {"expression", 1, NULL, 'e'},
     {"file", 1, NULL, 'f'},
     {"in-place", 2, NULL, 'i'},
@@ -315,6 +323,10 @@ main (int argc, char **argv)
           sandbox = true;
           break;
 
+        case DEBUG_OPTION:
+          debug = true;
+          break;
+
         case 'u':
           unbuffered = true;
           break;
@@ -343,6 +355,9 @@ main (int argc, char **argv)
         usage (EXIT_BAD_USAGE);
     }
   check_final_program (the_program);
+
+  if (debug)
+    debug_print_program (the_program);
 
   return_code = process_files (the_program, argv+optind);
 

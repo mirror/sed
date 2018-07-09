@@ -1138,6 +1138,9 @@ compile_program (struct vector *vector)
             if (!*label)
               bad_prog (_(COLON_LACKS_LABEL));
             labels = setup_label (labels, vector->v_length, label, NULL);
+
+            if (debug)
+              cur_cmd->x.label_name = strdup (label);
           }
           break;
 
@@ -1539,6 +1542,28 @@ compile_file (struct vector *cur_program, const char *cmdfile)
   return ret;
 }
 
+static void
+cleanup_program_filenames (void)
+{
+  {
+    struct output *p;
+
+    for (p = file_read; p; p = p->link)
+      if (p->name)
+        {
+          free (p->name);
+          p->name = NULL;
+        }
+
+    for (p = file_write; p; p = p->link)
+      if (p->name)
+        {
+          free (p->name);
+          p->name = NULL;
+        }
+  }
+}
+
 /* Make any checks which require the whole program to have been read.
    In particular: this backpatches the jump targets.
    Any cleanup which can be done after these checks is done here also.  */
@@ -1588,26 +1613,8 @@ check_final_program (struct vector *program)
   for (lbl = labels; lbl; lbl = release_label (lbl))
     ;
   labels = NULL;
-
-  /* There is no longer a need to track file names: */
-  {
-    struct output *p;
-
-    for (p=file_read; p; p=p->link)
-      if (p->name)
-        {
-          free (p->name);
-          p->name = NULL;
-        }
-
-    for (p=file_write; p; p=p->link)
-      if (p->name)
-        {
-          free (p->name);
-          p->name = NULL;
-        }
-  }
 }
+
 
 /* Rewind all resources which were allocated in this module. */
 void
@@ -1624,6 +1631,8 @@ rewind_read_files (void)
 void
 finish_program (struct vector *program)
 {
+  cleanup_program_filenames ();
+
   /* close all files... */
   {
     struct output *p, *q;

@@ -54,6 +54,7 @@ T =					\
   testsuite/compile-tests.sh		\
   testsuite/convert-number.sh		\
   testsuite/command-endings.sh		\
+  testsuite/debug.pl			\
   testsuite/execute-tests.sh		\
   testsuite/help-version.sh		\
   testsuite/in-place-hyphen.sh		\

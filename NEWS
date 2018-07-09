@@ -24,6 +24,11 @@ GNU sed NEWS                                    -*- outline -*-
   sed no longer accesses invalid memory (heap overflow) with s/$//n regexes.
   [bug#32271, present since sed-4.3].
 
+** New Features
+
+  New option, --debug: print the input sed script in canonical form
+  and annotate program execution.
+
 
 * Noteworthy changes in release 4.5 (2018-03-31) [stable]
 

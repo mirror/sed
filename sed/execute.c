@@ -1016,6 +1016,27 @@ do_subst (struct subst *sub)
                     &regs, sub->max_id + 1))
     return;
 
+  if (debug)
+    {
+      if (regs.num_regs>0 && regs.start[0] != -1)
+        puts ("MATCHED REGEX REGISTERS");
+
+      for (int i = 0; i < regs.num_regs; ++i)
+        {
+          if (regs.start[i] == -1)
+            break;
+
+          printf ("  regex[%d] = %d-%d '", i,
+                  (int)regs.start[i], (int)regs.end[i]);
+
+          if (regs.start[i] != regs.end[i])
+            fwrite (line.active + regs.start[i], regs.end[i] -regs.start[i],
+                    1, stdout);
+
+          puts ("'");
+        }
+    }
+
   if (!sub->replacement && sub->numb <= 1)
     {
       if (regs.start[0] == 0 && !sub->global)
@@ -1219,6 +1240,35 @@ translate_mb (char *const *trans)
     }
 }
 
+static void
+debug_print_end_of_cycle (void)
+{
+  puts ("END-OF-CYCLE:");
+}
+
+static void
+debug_print_input (const struct input *input)
+{
+  bool stdin = (input->fp && fileno (input->fp) == 0);
+
+  printf ("INPUT:   '%s' line %lu\n",
+          stdin?"STDIN":input->in_file_name,
+          input->line_number);
+}
+
+static void
+debug_print_line (struct line *ln)
+{
+  const char *src = ln->active ? ln->active : ln->text;
+  size_t l = ln->length;
+  const char *p = src;
+
+  fputs ( (ln == &hold) ? "HOLD:    ":"PATTERN: ", stdout);
+  while (l--)
+    debug_print_char (*p++);
+  putchar ('\n');
+}
+
 /* Execute the program `vec' on the current input line.
    Return exit status if caller should quit, -1 otherwise. */
 static int
@@ -1231,6 +1281,12 @@ execute_program (struct vector *vec, struct input *input)
   end_cmd = vec->v + vec->v_length;
   while (cur_cmd < end_cmd)
     {
+      if (debug)
+        {
+          fputs ("COMMAND: ", stdout);
+          debug_print_command (vec, cur_cmd);
+        }
+
       if (match_address_p (cur_cmd, input) != cur_cmd->addr_bang)
         {
           switch (cur_cmd->cmd)
@@ -1263,6 +1319,8 @@ execute_program (struct vector *vec, struct input *input)
                  but it seems to be expected (and make sense). */
               FALLTHROUGH;
             case 'd':
+              if (debug)
+                debug_print_end_of_cycle ();
               return -1;
 
             case 'D':
@@ -1278,6 +1336,9 @@ execute_program (struct vector *vec, struct input *input)
 
                 /* reset to start next cycle without reading a new line: */
                 cur_cmd = vec->v;
+
+                if (debug)
+                  debug_print_line (&line);
                 continue;
               }
 
@@ -1347,6 +1408,8 @@ execute_program (struct vector *vec, struct input *input)
                  on the moved buffer might consider a wrong character set.
                  We keep it true because it's what sed <= 4.1.5 did.  */
               line_copy (&hold, &line, true);
+              if (debug)
+                debug_print_line (&hold);
               break;
 
             case 'G':
@@ -1356,16 +1419,22 @@ execute_program (struct vector *vec, struct input *input)
                  We keep it true because it's what sed <= 4.1.5 did, but
                  we could consider having line_ap.  */
               line_append (&hold, &line, true);
+              if (debug)
+                debug_print_line (&line);
               break;
 
             case 'h':
               /* Here, it is ok to have true.  */
               line_copy (&line, &hold, true);
+              if (debug)
+                debug_print_line (&hold);
               break;
 
             case 'H':
               /* See comment above for 'G' regarding the third parameter.  */
               line_append (&line, &hold, true);
+              if (debug)
+                debug_print_line (&hold);
               break;
 
             case 'i':
@@ -1385,7 +1454,14 @@ execute_program (struct vector *vec, struct input *input)
                 output_line (line.active, line.length, line.chomped,
                              &output_file);
               if (test_eof (input) || !read_pattern_space (input, vec, false))
-                return -1;
+                {
+                  if (debug)
+                    debug_print_end_of_cycle ();
+                  return -1;
+                }
+
+              if (debug)
+                debug_print_line (&line);
               break;
 
             case 'N':
@@ -1393,12 +1469,16 @@ execute_program (struct vector *vec, struct input *input)
 
               if (test_eof (input) || !read_pattern_space (input, vec, true))
                 {
+                  if (debug)
+                    debug_print_end_of_cycle ();
                   line.length--;
                   if (posixicity == POSIXLY_EXTENDED && !no_default_output)
                      output_line (line.active, line.length, line.chomped,
                                   &output_file);
                   return -1;
                 }
+              if (debug)
+                debug_print_line (&line);
               break;
 
             case 'p':
@@ -1461,6 +1541,8 @@ execute_program (struct vector *vec, struct input *input)
 
             case 's':
               do_subst (cur_cmd->x.cmd_subst);
+              if (debug)
+                debug_print_line (&line);
               break;
 
             case 't':
@@ -1500,6 +1582,11 @@ execute_program (struct vector *vec, struct input *input)
             case 'x':
               /* See comment above for 'g' regarding the third parameter.  */
               line_exchange (&line, &hold, false);
+              if (debug)
+                {
+                  debug_print_line (&line);
+                  debug_print_line (&hold);
+                }
               break;
 
             case 'y':
@@ -1512,10 +1599,14 @@ execute_program (struct vector *vec, struct input *input)
                   for (e=p+line.length; p<e; ++p)
                     *p = cur_cmd->x.translate[*p];
                 }
+              if (debug)
+                debug_print_line (&line);
               break;
 
             case 'z':
               line.length = 0;
+              if (debug)
+                debug_print_line (&line);
               break;
 
             case '=':
@@ -1543,6 +1634,8 @@ execute_program (struct vector *vec, struct input *input)
       ++cur_cmd;
     }
 
+    if (debug)
+      debug_print_end_of_cycle ();
     if (!no_default_output)
       output_line (line.active, line.length, line.chomped, &output_file);
     return -1;
@@ -1578,6 +1671,12 @@ process_files (struct vector *the_program, char **argv)
   status = EXIT_SUCCESS;
   while (read_pattern_space (&input, the_program, false))
     {
+      if (debug)
+        {
+          debug_print_input (&input);
+          debug_print_line (&line);
+        }
+
       status = execute_program (the_program, &input);
       if (status == -1)
         status = EXIT_SUCCESS;
