@@ -2,6 +2,13 @@ GNU sed NEWS                                    -*- outline -*-
 
 * Noteworthy changes in release ?.? (????-??-??) [?]
 
+** Improvements
+
+  sed now uses fully-buffered output (instead of line-buffered) when
+  writing to files. This should noticeably improve performance of "sed -i"
+  and other write commands.
+  Buffering can be disabled (as before) with "sed -u".
+
 ** Bug fixes
 
   sed no longer accesses invalid memory (heap overflow) when given invalid

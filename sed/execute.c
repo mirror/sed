@@ -415,7 +415,7 @@ output_missing_newline(struct output *outf)
 static inline void
 flush_output(FILE *fp)
 {
-  if (fp != stdout || unbuffered)
+  if (unbuffered)
     ck_fflush(fp);
 }
 
