@@ -2226,7 +2226,7 @@ a lot of slashes, since it avoids the tedious escaping of every @code{/}.
 If @var{regexp} itself includes any delimiter characters,
 each must be escaped by a backslash (@code{\}).
 
-The following two commands are equivalent. They print lines
+The following commands are equivalent. They print lines
 which start with @samp{/home/alice/documents/}:
 
 @example
