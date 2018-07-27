@@ -1050,7 +1050,10 @@ do_subst(struct subst *sub)
 
       /* Copy stuff to the left of this match into the output string. */
       if (start < offset)
-        str_append(&s_accum, line.active + start, offset - start);
+        {
+          str_append(&s_accum, line.active + start, offset - start);
+          start = offset;
+        }
 
       /* If we're counting up to the Nth match, are we there yet?
          And even if we are there, there is another case we have to

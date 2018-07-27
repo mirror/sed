@@ -44,6 +44,7 @@ LOG_COMPILER = false
 T =					\
   testsuite/misc.pl			\
   testsuite/bug32082.sh		\
+  testsuite/bug32271-1.sh		\
   testsuite/cmd-l.sh			\
   testsuite/cmd-R.sh			\
   testsuite/colon-with-no-label.sh	\
