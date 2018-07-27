@@ -283,7 +283,8 @@ match_regex(struct regex *regex, char *buf, size_t buflen,
           const char *p = NULL;
 
           if (regex->flags & REG_NEWLINE)
-            p = memchr (buf + buf_start_offset, buffer_delimiter, buflen);
+            p = memchr (buf + buf_start_offset, buffer_delimiter,
+                        buflen - buf_start_offset);
 
           offset = p ? p - buf : buflen;
         }
