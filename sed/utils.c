@@ -319,8 +319,8 @@ follow_symlink(const char *fname)
       while ((rc = readlink (buf, buf2, buf_size)) == buf_size)
         {
           buf_size *= 2;
-          buf1 = ck_realloc (buf1, buf_size);
-          buf2 = ck_realloc (buf2, buf_size);
+          buf1 = xrealloc (buf1, buf_size);
+          buf2 = xrealloc (buf2, buf_size);
         }
       if (rc < 0)
         panic (_("couldn't follow symlink %s: %s"), buf, strerror(errno));
@@ -335,8 +335,8 @@ follow_symlink(const char *fname)
           if (len + rc + 1 > buf_size)
             {
               buf_size = len + rc + 1;
-              buf1 = ck_realloc (buf1, buf_size);
-              buf2 = ck_realloc (buf2, buf_size);
+              buf1 = xrealloc (buf1, buf_size);
+              buf2 = xrealloc (buf2, buf_size);
             }
 
           /* Always store the new path in buf1.  */
@@ -392,25 +392,6 @@ ck_rename (const char *from, const char *to, const char *unlink_if_fail)
 
 
 
-
-/* Panic on failing realloc */
-void *
-ck_realloc(void *ptr, size_t size)
-{
-  void *ret;
-
-  if (size == 0)
-    {
-      free(ptr);
-      return NULL;
-    }
-  if (!ptr)
-    return xzalloc(size);
-  ret = realloc(ptr, size);
-  if (!ret)
-    panic("couldn't re-allocate memory");
-  return ret;
-}
 
 
 /* Implement a variable sized buffer of `stuff'.  We don't know what it is,

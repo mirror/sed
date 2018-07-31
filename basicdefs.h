@@ -34,7 +34,7 @@ typedef unsigned long countT;
 #include "xalloc.h"
 
 /* some basic definitions to avoid undue promulgating of  ugliness */
-#define REALLOC(x,n,t)	 ((t *)ck_realloc((void *)(x),(n)*sizeof(t)))
+#define REALLOC(x,n,t)	 ((t *)xnrealloc((void *)(x),(n),sizeof(t)))
 #define MEMDUP(x,n,t)	 ((t *)xmemdup((x),(n)*sizeof(t)))
 #define OB_MALLOC(o,n,t) ((t *)(void *)obstack_alloc(o,(n)*sizeof(t)))
 
