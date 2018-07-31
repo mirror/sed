@@ -757,6 +757,8 @@ setup_replacement (struct subst *sub, const char *text, size_t length)
   base = MEMDUP (text, length, char);
   length = normalize_text (base, length, TEXT_REPLACEMENT);
 
+  IF_LINT (sub->replacement_buffer = base);
+
   text_end = base + length;
   tail = &root;
 
@@ -1330,6 +1332,8 @@ compile_program (struct vector *vector)
                 trans_pairs[2 * i] = NULL;
                 if (idx != dest_len)
                   bad_prog (_(Y_CMD_LEN));
+
+                IF_LINT (free (src_lens));
               }
             else
               {
@@ -1678,7 +1682,7 @@ rewind_read_files (void)
 
 /* Release all resources which were allocated in this module. */
 void
-finish_program (void)
+finish_program (struct vector *program)
 {
   /* close all files... */
   {
@@ -1708,7 +1712,29 @@ finish_program (void)
     file_read = file_write = NULL;
   }
 
-#ifdef DEBUG_LEAKS
+#ifdef lint
+  for (int i = 0; i < program->v_length; ++i)
+    {
+      const struct sed_cmd *sc = &program->v[i];
+
+      if (sc->a1 && sc->a1->addr_regex)
+        release_regex (sc->a1->addr_regex);
+      if (sc->a2 && sc->a2->addr_regex)
+        release_regex (sc->a2->addr_regex);
+
+      switch (sc->cmd)
+        {
+        case 's':
+          free (sc->x.cmd_subst->replacement_buffer);
+          if (sc->x.cmd_subst->regx)
+            release_regex (sc->x.cmd_subst->regx);
+          break;
+        }
+    }
+
   obstack_free (&obs, NULL);
-#endif /*DEBUG_LEAKS*/
+#else
+  (void)program;
+#endif /* lint */
+
 }

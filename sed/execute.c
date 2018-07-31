@@ -1502,6 +1502,13 @@ execute_program (struct vector *vec, struct input *input)
                       aq->text = text;
                       aq->textlen = result;
                     }
+                  else
+                    {
+                      /* The external input file (for R command) reached EOF,
+                      the 'text' buffer will not be added to the append queue
+                      so release it */
+                      free (text);
+                    }
                 }
               break;
 
@@ -1683,7 +1690,7 @@ process_files (struct vector *the_program, char **argv)
     }
   closedown (&input);
 
-#ifdef DEBUG_LEAKS
+#ifdef lint
   /* We're about to exit, so these free()s are redundant.
      But if we're running under a memory-leak detecting
      implementation of malloc(), we want to explicitly
@@ -1694,7 +1701,7 @@ process_files (struct vector *the_program, char **argv)
   free (hold.text);
   free (line.text);
   free (s_accum.text);
-#endif /*DEBUG_LEAKS*/
+#endif /* lint */
 
   if (input.bad_count)
     status = EXIT_BAD_INPUT;

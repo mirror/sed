@@ -74,7 +74,14 @@ panic (const char *str, ...)
                      strerror (errno));
         }
 
+#ifdef lint
+      struct open_file *next = open_files->link;
+      free (open_files->name);
+      free (open_files);
+      open_files = next;
+#else
       open_files = open_files->link;
+#endif
     }
 
   exit (EXIT_PANIC);

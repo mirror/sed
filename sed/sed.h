@@ -126,6 +126,9 @@ struct subst {
   unsigned print : 2;	/* 'p' option given (before/after eval) */
   unsigned eval : 1;	/* 'e' option given */
   unsigned max_id : 4;  /* maximum backreference on the RHS */
+#ifdef lint
+  char* replacement_buffer;
+#endif
 };
 
 #ifdef REG_PERL
@@ -190,13 +193,13 @@ struct vector *compile_string (struct vector *, char *str, size_t len);
 struct vector *compile_file (struct vector *, const char *cmdfile);
 void check_final_program (struct vector *);
 void rewind_read_files (void);
-void finish_program (void);
+void finish_program (struct vector *);
 
 struct regex *compile_regex (struct buffer *b, int flags, int needed_sub);
 int match_regex (struct regex *regex,
                  char *buf, size_t buflen, size_t buf_start_offset,
                  struct re_registers *regarray, int regsize);
-#ifdef DEBUG_LEAKS
+#ifdef lint
 void release_regex (struct regex *);
 #endif
 

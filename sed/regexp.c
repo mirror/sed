@@ -425,11 +425,17 @@ match_regex (struct regex *regex, char *buf, size_t buflen,
 }
 
 
-#ifdef DEBUG_LEAKS
+#ifdef lint
 void
 release_regex (struct regex *regex)
 {
+  if (regex->dfa)
+    {
+      dfafree (regex->dfa);
+      free (regex->dfa);
+      regex->dfa = NULL;
+    }
   regfree (&regex->pattern);
   free (regex);
 }
-#endif /*DEBUG_LEAKS*/
+#endif /* lint */
