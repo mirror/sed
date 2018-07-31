@@ -44,7 +44,6 @@ void ck_rename (const char *from, const char *to, const char *unlink_if_fail);
 
 void *ck_malloc (size_t size);
 void *ck_realloc (void *ptr, size_t size);
-char *ck_strdup (const char *str);
 
 struct buffer *init_buffer (void);
 char *get_buffer (struct buffer const *b) _GL_ATTRIBUTE_PURE;

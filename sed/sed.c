@@ -28,6 +28,7 @@
 #include "getopt.h"
 #include "progname.h"
 #include "version.h"
+#include "xalloc.h"
 
 #include "version-etc.h"
 
@@ -293,10 +294,10 @@ main (int argc, char **argv)
           separate_files = true;
           if (optarg == NULL)
             /* use no backups */
-            in_place_extension = ck_strdup ("*");
+            in_place_extension = xstrdup ("*");
 
           else if (strchr(optarg, '*') != NULL)
-            in_place_extension = ck_strdup(optarg);
+            in_place_extension = xstrdup(optarg);
 
           else
             {

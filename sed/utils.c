@@ -30,6 +30,7 @@
 #include "unlocked-io.h"
 #include "utils.h"
 #include "fwriting.h"
+#include "xalloc.h"
 
 const char *myname;
 
@@ -118,7 +119,7 @@ register_open_file (FILE *fp, const char *name)
       p->link = open_files;
       open_files = p;
     }
-  p->name = ck_strdup(name);
+  p->name = xstrdup(name);
   p->fp = fp;
   p->temp = false;
 }
@@ -420,15 +421,6 @@ ck_realloc(void *ptr, size_t size)
     panic("couldn't re-allocate memory");
   return ret;
 }
-
-/* Return a malloc()'d copy of a string */
-char *
-ck_strdup(const char *str)
-{
-  char *ret = MALLOC(strlen(str)+1, char);
-  return strcpy(ret, str);
-}
-
 
 
 /* Implement a variable sized buffer of `stuff'.  We don't know what it is,

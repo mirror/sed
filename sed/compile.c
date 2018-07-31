@@ -413,7 +413,7 @@ get_openfile (struct output **file_ptrs, const char *mode, int fail)
   if (!p)
     {
       p = OB_MALLOC(&obs, 1, struct output);
-      p->name = ck_strdup(file_name);
+      p->name = xstrdup(file_name);
       p->fp = ck_fopen(p->name, mode, fail);
       p->missing_newline = false;
       p->link = *file_ptrs;
@@ -693,7 +693,7 @@ read_label (void)
 
   savchar(ch);
   add1_buffer(b, '\0');
-  ret = ck_strdup(get_buffer(b));
+  ret = xstrdup(get_buffer(b));
   free_buffer(b);
   return ret;
 }
@@ -1218,7 +1218,7 @@ compile_program(struct vector *vector)
 
         case 'r':
           b = read_filename();
-          cur_cmd->x.fname = ck_strdup(get_buffer(b));
+          cur_cmd->x.fname = xstrdup(get_buffer(b));
           free_buffer(b);
           break;
 

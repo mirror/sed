@@ -36,6 +36,7 @@
 #include <selinux/context.h>
 #include "acl.h"
 #include "ignore-value.h"
+#include "xalloc.h"
 
 /* The number of extra bytes that must be allocated/usable, beyond
    the declared "end" of each line buffer that may be passed to
@@ -580,7 +581,7 @@ open_next_file(const char *name, struct input *input)
       memset (&old_fscreatecon, 0, sizeof (old_fscreatecon));
 
       /* get the base name */
-      tmpdir = ck_strdup(input->in_file_name);
+      tmpdir = xstrdup(input->in_file_name);
       if ((p = strrchr(tmpdir, '/')))
         *p = 0;
       else
