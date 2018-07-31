@@ -301,7 +301,7 @@ main (int argc, char **argv)
 
           else
             {
-              in_place_extension = MALLOC (strlen(optarg) + 2, char);
+              in_place_extension = XCALLOC (strlen(optarg) + 2, char);
               in_place_extension[0] = '*';
               strcpy (in_place_extension + 1, optarg);
             }

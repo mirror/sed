@@ -280,7 +280,7 @@ str_append_modified(struct line *to, const char *string, size_t length,
 static void
 line_init(struct line *buf, struct line *state, size_t initial_size)
 {
-  buf->text = MALLOC(initial_size + DFA_SLOP, char);
+  buf->text = XCALLOC (initial_size + DFA_SLOP, char);
   buf->active = buf->text;
   buf->alloc = initial_size;
   buf->length = 0;
@@ -328,7 +328,7 @@ line_copy(struct line *from, struct line *to, int state)
       /* Use free()+MALLOC() instead of REALLOC() to
          avoid unnecessary copying of old text. */
       free(to->text);
-      to->text = MALLOC(to->alloc + DFA_SLOP, char);
+      to->text = XCALLOC (to->alloc + DFA_SLOP, char);
     }
 
   to->active = to->text;
@@ -440,7 +440,7 @@ output_line(const char *text, size_t length, int nl, struct output *outf)
 static struct append_queue *
 next_append_slot(void)
 {
-  struct append_queue *n = MALLOC(1, struct append_queue);
+  struct append_queue *n = XCALLOC (1, struct append_queue);
 
   n->fname = NULL;
   n->text = NULL;

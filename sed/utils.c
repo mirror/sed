@@ -115,7 +115,7 @@ register_open_file (FILE *fp, const char *name)
     }
   if (!p)
     {
-      p = MALLOC(1, struct open_file);
+      p = XCALLOC (1, struct open_file);
       p->link = open_files;
       open_files = p;
     }
@@ -302,8 +302,8 @@ follow_symlink(const char *fname)
 
   if (buf_size == 0)
     {
-      buf1 = ck_malloc (PATH_MAX + 1);
-      buf2 = ck_malloc (PATH_MAX + 1);
+      buf1 = xzalloc (PATH_MAX + 1);
+      buf2 = xzalloc (PATH_MAX + 1);
       buf_size = PATH_MAX + 1;
     }
 
@@ -392,16 +392,6 @@ ck_rename (const char *from, const char *to, const char *unlink_if_fail)
 
 
 
-
-/* Panic on failing malloc */
-void *
-ck_malloc(size_t size)
-{
-  void *ret = calloc(1, size ? size : 1);
-  if (!ret)
-    panic("couldn't allocate memory");
-  return ret;
-}
 
 /* Panic on failing realloc */
 void *
@@ -415,7 +405,7 @@ ck_realloc(void *ptr, size_t size)
       return NULL;
     }
   if (!ptr)
-    return ck_malloc(size);
+    return xzalloc(size);
   ret = realloc(ptr, size);
   if (!ret)
     panic("couldn't re-allocate memory");
@@ -438,8 +428,8 @@ struct buffer
 struct buffer *
 init_buffer(void)
 {
-  struct buffer *b = MALLOC(1, struct buffer);
-  b->b = MALLOC(MIN_ALLOCATE, char);
+  struct buffer *b = XCALLOC (1, struct buffer);
+  b->b = XCALLOC (MIN_ALLOCATE, char);
   b->allocated = MIN_ALLOCATE;
   b->length = 0;
   return b;

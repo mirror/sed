@@ -34,12 +34,11 @@ typedef unsigned long countT;
 #include "xalloc.h"
 
 /* some basic definitions to avoid undue promulgating of  ugliness */
-#define MALLOC(n,t)	 ((t *)ck_malloc((n)*sizeof(t)))
 #define REALLOC(x,n,t)	 ((t *)ck_realloc((void *)(x),(n)*sizeof(t)))
 #define MEMDUP(x,n,t)	 ((t *)xmemdup((x),(n)*sizeof(t)))
 #define OB_MALLOC(o,n,t) ((t *)(void *)obstack_alloc(o,(n)*sizeof(t)))
 
-#define obstack_chunk_alloc  ck_malloc
+#define obstack_chunk_alloc  xzalloc
 #define obstack_chunk_free   free
 
 /* MAX_PATH is not defined in some platforms, most notably GNU/Hurd.

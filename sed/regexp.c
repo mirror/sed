@@ -23,6 +23,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+#include "xalloc.h"
+
 #ifdef gettext_noop
 # define N_(String) gettext_noop(String)
 #else
@@ -176,7 +178,7 @@ compile_regex(struct buffer *b, int flags, int needed_sub)
     }
 
   re_len = size_buffer(b);
-  new_regex = ck_malloc(sizeof (struct regex) + re_len - 1);
+  new_regex = xzalloc(sizeof (struct regex) + re_len - 1);
   new_regex->flags = flags;
   memcpy (new_regex->re, get_buffer(b), re_len);
 
@@ -206,8 +208,8 @@ copy_regs (regs, pmatch, nregs)
   /* Have the register data arrays been allocated?  */
   if (!regs->start)
     { /* No.  So allocate them with malloc.  */
-      regs->start = MALLOC (need_regs, regoff_t);
-      regs->end = MALLOC (need_regs, regoff_t);
+      regs->start = XCALLOC (need_regs, regoff_t);
+      regs->end = XCALLOC (need_regs, regoff_t);
       regs->num_regs = need_regs;
     }
   else if (need_regs > regs->num_regs)
@@ -323,8 +325,8 @@ match_regex(struct regex *regex, char *buf, size_t buflen,
 
           if (!regarray->start)
             {
-              regarray->start = MALLOC (1, regoff_t);
-              regarray->end = MALLOC (1, regoff_t);
+              regarray->start = XCALLOC (1, regoff_t);
+              regarray->end = XCALLOC (1, regoff_t);
               regarray->num_regs = 1;
             }
 
