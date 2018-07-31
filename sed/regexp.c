@@ -269,7 +269,19 @@ match_regex (struct regex *regex, char *buf, size_t buflen,
   return (ret == 0);
 #else
   if (regex->pattern.no_sub && regsize)
-    compile_regex_1 (regex, regsize);
+    {
+      /* Re-compiling an existing regex, free the previously allocated
+         structures.  */
+      if (regex->dfa)
+        {
+          dfafree (regex->dfa);
+          free (regex->dfa);
+          regex->dfa = NULL;
+        }
+      regfree (&regex->pattern);
+
+      compile_regex_1 (regex, regsize);
+    }
 
   regex->pattern.regs_allocated = REGS_REALLOCATE;
 
