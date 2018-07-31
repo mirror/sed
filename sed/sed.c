@@ -134,7 +134,7 @@ usage(int status)
 
   fprintf(out, _("\
 Usage: %s [OPTION]... {script-only-if-no-other-script} [input-file]...\n\
-\n"), myname);
+\n"), program_name);
 
   fprintf(out, _("  -n, --quiet, --silent\n\
                  suppress automatic printing of pattern space\n"));
@@ -230,13 +230,12 @@ main (int argc, char **argv)
   int return_code;
   const char *cols = getenv("COLS");
 
-  program_name = argv[0];
+  set_program_name (argv[0]);
   initialize_main (&argc, &argv);
 #if HAVE_SETLOCALE
   /* Set locale according to user's wishes.  */
   setlocale (LC_ALL, "");
 #endif
-  set_program_name (argv[0]);
   initialize_mbcs ();
   init_localeinfo (&localeinfo);
 
@@ -267,7 +266,6 @@ main (int argc, char **argv)
         lcmd_out_line_len = t-1;
     }
 
-  myname = *argv;
   while ((opt = getopt_long(argc, argv, SHORTOPTS, longopts, NULL)) != EOF)
     {
       switch (opt)

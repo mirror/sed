@@ -29,10 +29,9 @@
 
 #include "unlocked-io.h"
 #include "utils.h"
+#include "progname.h"
 #include "fwriting.h"
 #include "xalloc.h"
-
-const char *myname;
 
 /* Store information about files opened with ck_fopen
    so that error messages from ck_fread, ck_fwrite, etc. can print the
@@ -56,7 +55,7 @@ panic(const char *str, ...)
 {
   va_list ap;
 
-  fprintf(stderr, "%s: ", myname);
+  fprintf(stderr, "%s: ", program_name);
   va_start(ap, str);
   vfprintf(stderr, str, ap);
   va_end(ap);

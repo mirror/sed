@@ -51,5 +51,3 @@ size_t size_buffer (struct buffer const *b) _GL_ATTRIBUTE_PURE;
 char *add_buffer (struct buffer *b, const char *p, size_t n);
 char *add1_buffer (struct buffer *b, int ch);
 void free_buffer (struct buffer *b);
-
-extern const char *myname;

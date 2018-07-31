@@ -36,6 +36,7 @@
 #include <selinux/context.h>
 #include "acl.h"
 #include "ignore-value.h"
+#include "progname.h"
 #include "xalloc.h"
 
 /* The number of extra bytes that must be allocated/usable, beyond
@@ -563,7 +564,8 @@ open_next_file(const char *name, struct input *input)
       if ( ! (input->fp = ck_fopen (name, read_mode, false)) )
         {
           const char *ptr = strerror (errno);
-          fprintf (stderr, _("%s: can't read %s: %s\n"), myname, name, ptr);
+          fprintf (stderr, _("%s: can't read %s: %s\n"), program_name,
+		   name, ptr);
           input->read_fn = read_always_fail; /* a redundancy */
           ++input->bad_count;
           return;
@@ -606,7 +608,7 @@ open_next_file(const char *name, struct input *input)
               if (setfscreatecon (con) < 0)
                 fprintf (stderr, _("%s: warning: failed to set default" \
                                    " file creation context to %s: %s"),
-                         myname, con, strerror (errno));
+                         program_name, con, strerror (errno));
               freecon (con);
             }
           else
@@ -614,7 +616,7 @@ open_next_file(const char *name, struct input *input)
               if (errno != ENOSYS)
                 fprintf (stderr, _("%s: warning: failed to get" \
                                    " security context of %s: %s"),
-                         myname, input->in_file_name, strerror (errno));
+                         program_name, input->in_file_name, strerror (errno));
             }
         }
 

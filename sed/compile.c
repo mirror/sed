@@ -24,6 +24,7 @@
 #include <stdlib.h>
 #include <sys/types.h>
 #include <obstack.h>
+#include "progname.h"
 #include "xalloc.h"
 
 
@@ -212,10 +213,10 @@ bad_prog(const char *why)
 {
   if (cur_input.name)
     fprintf(stderr, _("%s: file %s line %lu: %s\n"),
-            myname, cur_input.name, (unsigned long)cur_input.line, why);
+            program_name, cur_input.name, (unsigned long)cur_input.line, why);
   else
     fprintf(stderr, _("%s: -e expression #%lu, char %lu: %s\n"),
-            myname,
+            program_name,
             (unsigned long)cur_input.string_expr_count,
             (unsigned long)(prog.cur-prog.base),
             why);
