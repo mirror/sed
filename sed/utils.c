@@ -267,10 +267,7 @@ ck_fclose (FILE *stream)
      last output operations might fail and it is important
      to signal this as an error (perhaps to make). */
   if (!stream)
-    {
-      do_ck_fclose (stdout);
-      do_ck_fclose (stderr);
-    }
+    do_ck_fclose (stdout);
 }
 
 /* Close a single file. */
