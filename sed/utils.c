@@ -429,13 +429,6 @@ ck_strdup(const char *str)
   return strcpy(ret, str);
 }
 
-/* Return a malloc()'d copy of a block of memory */
-void *
-ck_memdup(const void *buf, size_t len)
-{
-  void *ret = ck_malloc(len);
-  return memcpy(ret, buf, len);
-}
 
 
 /* Implement a variable sized buffer of `stuff'.  We don't know what it is,
