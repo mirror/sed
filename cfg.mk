@@ -368,3 +368,30 @@ build-asan:
 	./configure CFLAGS="$(ASAN_CFLAGS)" LDFLAGS="$(ASAN_LDFLAGS)"
 	make
 
+# NOTE: These options require a recent gcc (tested with gcc 8.2)
+UBSAN_FLAGS=-fsanitize=undefined \
+	-fsanitize=signed-integer-overflow \
+	-fsanitize=bounds-strict \
+	-fsanitize=shift \
+	-fsanitize=shift-exponent \
+	-fsanitize=shift-base \
+	-fsanitize=integer-divide-by-zero \
+	-fsanitize=null \
+	-fsanitize=return \
+	-fsanitize=alignment \
+	-fsanitize=object-size \
+	-fsanitize=nonnull-attribute \
+	-fsanitize=returns-nonnull-attribute \
+	-fsanitize=bool \
+	-fsanitize=enum \
+	-fsanitize=pointer-overflow \
+	-fsanitize=builtin
+UBSAN_CFLAGS=-O0 -g -Dlint $(UBSAN_FLAGS)
+UBSAN_LDFLAGS=$(UBSAN_FLAGS)
+
+.PHONY: build-ubsan
+build-ubsan:
+	test -x ./configure || \
+	    { echo "./configure script not found" >&2; exit 1; }
+	./configure CFLAGS="$(UBSAN_CFLAGS)" LDFLAGS="$(UBSAN_LDFLAGS)"
+	make
