@@ -356,3 +356,15 @@ static-analysis-make:
 .PHONY: static-analysis
 static-analysis: static-analysis-init static-analysis-config \
                  static-analysis-make
+
+ASAN_FLAGS=-fsanitize=address -fno-omit-frame-pointer
+ASAN_CFLAGS=-O0 -g -Dlint $(ASAN_FLAGS)
+ASAN_LDFLAGS=$(ASAN_FLAGS)
+
+.PHONY: build-asan
+build-asan:
+	test -x ./configure || \
+	    { echo "./configure script not found" >&2; exit 1; }
+	./configure CFLAGS="$(ASAN_CFLAGS)" LDFLAGS="$(ASAN_LDFLAGS)"
+	make
+
