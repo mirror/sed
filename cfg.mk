@@ -222,6 +222,14 @@ sc_gitignore_missing:
 	      sort | uniq -u | grep . && { echo '$(ME): Add above'	\
 		'entries to .gitignore' >&2; exit 1; } || :
 
+
+# Similar to the gnulib maint.mk rule for sc_prohibit_strcmp
+# Use STREQ_LEN or STRPREFIX rather than comparing strncmp == 0, or != 0.
+sc_prohibit_strncmp:
+	@prohibit='^[^#].*str''ncmp *\('				\
+	halt='use STREQ_LEN or STRPREFIX instead of str''ncmp'		\
+	  $(_sc_search_regexp)
+
 update-copyright-env = \
   UPDATE_COPYRIGHT_USE_INTERVALS=2 \
   UPDATE_COPYRIGHT_MAX_LINE_LENGTH=79

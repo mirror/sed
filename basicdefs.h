@@ -41,6 +41,10 @@ typedef unsigned long countT;
 #define obstack_chunk_alloc  xzalloc
 #define obstack_chunk_free   free
 
+#define STREQ(a, b) (strcmp (a, b) == 0)
+#define STREQ_LEN(a, b, n) (strncmp (a, b, n) == 0)
+#define STRPREFIX(a, b) (strncmp (a, b, strlen (b)) == 0)
+
 /* MAX_PATH is not defined in some platforms, most notably GNU/Hurd.
    In that case we define it here to some constant.  Note however that
    this relies in the fact that sed does reallocation if a buffer

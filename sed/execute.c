@@ -1228,7 +1228,7 @@ translate_mb (char *const *trans)
       /* `i' indicate i-th translate pair.  */
       for (i = 0; trans[2*i] != NULL; i++)
         {
-          if (strncmp (line.active + idx, trans[2*i], mbclen) == 0)
+          if (STREQ_LEN (line.active + idx, trans[2*i], mbclen))
             {
               bool move_remain_buffer = false;
               const char *tr = trans[2*i+1];
