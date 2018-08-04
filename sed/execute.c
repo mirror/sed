@@ -565,7 +565,7 @@ open_next_file(const char *name, struct input *input)
         {
           const char *ptr = strerror (errno);
           fprintf (stderr, _("%s: can't read %s: %s\n"), program_name,
-		   name, ptr);
+                   name, ptr);
           input->read_fn = read_always_fail; /* a redundancy */
           ++input->bad_count;
           return;
