@@ -287,6 +287,18 @@ sc_prohibit_test_empty:
 	halt='use `compare /dev/null ...`, not `test -s ...` in tests/'	\
 	  $(_sc_search_regexp)
 
+# With split lines, don't leave an operator at end of line.
+# Instead, put it on the following line, where it is more apparent.
+# Don't bother checking for "*" at end of line, since it provokes
+# far too many false positives, matching constructs like "TYPE *".
+# Similarly, omit "=" (initializers).
+binop_re_ ?= [-/+^!<>]|[-/+*^!<>=]=|&&?|\|\|?|<<=?|>>=?
+sc_prohibit_operator_at_end_of_line:
+	@prohibit='. ($(binop_re_))$$'					\
+	in_vc_files='\.[chly]$$'					\
+	halt='found operator at end of line'				\
+	  $(_sc_search_regexp)
+
 update-copyright-env = \
   UPDATE_COPYRIGHT_USE_INTERVALS=2 \
   UPDATE_COPYRIGHT_MAX_LINE_LENGTH=79

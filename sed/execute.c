@@ -1140,8 +1140,8 @@ do_subst (struct subst *sub)
              s_accum.active into line.text (for huge lines).  See comment above
              for 'g' as to while the third argument is incorrect anyway.  */
           line_exchange (&line, &s_accum, true);
-          if (line.length &&
-              line.active[line.length - 1] == buffer_delimiter)
+          if (line.length
+              && line.active[line.length - 1] == buffer_delimiter)
             line.length--;
         }
       else
@@ -1373,8 +1373,9 @@ execute_program (struct vector *vec, struct input *input)
                 if (!cmd_length)
                   {
                     /* Store into pattern space for plain `e' commands */
-                    if (s_accum.length &&
-                        s_accum.active[s_accum.length - 1] == buffer_delimiter)
+                    if (s_accum.length
+                        && (s_accum.active[s_accum.length - 1]
+                            == buffer_delimiter))
                       s_accum.length--;
 
                     /* Exchange line and s_accum.  This can be much
