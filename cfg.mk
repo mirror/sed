@@ -213,6 +213,15 @@ sc_prohibit-form-feed:
 	  $(_sc_search_regexp)
 
 
+# Ensure gnulib generated files are ignored
+# TODO: Perhaps augment gnulib-tool to do this in lib/.gitignore?
+sc_gitignore_missing:
+	@{ sed -n '/^\/lib\/.*\.h$$/{p;p}' $(srcdir)/.gitignore;	\
+	    find lib -name '*.in*' ! -name '*~' ! -name 'sys_*' |	\
+	      sed 's|^|/|; s|_\(.*in\.h\)|/\1|; s/\.in//'; } |		\
+	      sort | uniq -u | grep . && { echo '$(ME): Add above'	\
+		'entries to .gitignore' >&2; exit 1; } || :
+
 update-copyright-env = \
   UPDATE_COPYRIGHT_USE_INTERVALS=2 \
   UPDATE_COPYRIGHT_MAX_LINE_LENGTH=79
