@@ -80,7 +80,6 @@ panic (const char *str, ...)
   exit (EXIT_PANIC);
 }
 
-
 /* Internal routine to get a filename from open_files */
 static const char * _GL_ATTRIBUTE_PURE
 utils_fp_name (FILE *fp)
@@ -284,7 +283,6 @@ do_ck_fclose (FILE *fp)
   if (fclose (fp) == EOF)
     panic ("couldn't close %s: %s", utils_fp_name (fp), strerror (errno));
 }
-
 
 /* Follow symlink and panic if something fails.  Return the ultimate
    symlink target, stored in a temporary buffer that the caller should
@@ -393,7 +391,6 @@ ck_rename (const char *from, const char *to, const char *unlink_if_fail)
 
 
 
-
 /* Implement a variable sized buffer of `stuff'.  We don't know what it is,
 nor do we care, as long as it doesn't mind being aligned by malloc. */
 

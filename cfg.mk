@@ -206,6 +206,13 @@ sc_space_before_open_paren:
 	fi
 ###########################################################
 
+sc_prohibit-form-feed:
+	@prohibit=$$'\f' \
+	in_vc_files='\.[chly]$$' \
+	halt='Form Feed (^L) detected' \
+	  $(_sc_search_regexp)
+
+
 update-copyright-env = \
   UPDATE_COPYRIGHT_USE_INTERVALS=2 \
   UPDATE_COPYRIGHT_MAX_LINE_LENGTH=79

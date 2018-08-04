@@ -40,7 +40,6 @@ static const char errors[] =
 #define NO_REGEX (errors)
 #define BAD_MODIF (NO_REGEX + sizeof(N_("no previous regular expression")))
 
-
 
 void
 dfaerror (char const *mesg)
@@ -55,7 +54,6 @@ dfawarn (char const *mesg)
     dfaerror (mesg);
 }
 
-
 
 static void
 compile_regex_1 (struct regex *new_regex, int needed_sub)

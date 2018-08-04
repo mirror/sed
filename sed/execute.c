@@ -125,7 +125,6 @@ static struct line buffer;
 static struct append_queue *append_head = NULL;
 static struct append_queue *append_tail = NULL;
 
-
 /* increase a struct line's length, making some attempt at
    keeping realloc() calls under control by padding for future growth.  */
 static void
@@ -375,7 +374,6 @@ line_exchange (struct line *a, struct line *b, int state)
     }
 }
 
-
 /* dummy function to simplify read_pattern_space() */
 static bool
 read_always_fail (struct input *input _GL_UNUSED)
@@ -403,7 +401,6 @@ read_file_line (struct input *input)
   return true;
 }
 
-
 static inline void
 output_missing_newline (struct output *outf)
 {
@@ -507,7 +504,6 @@ dump_append_queue (void)
   release_append_queue ();
 }
 
-
 /* Compute the name of the backup file for in-place editing */
 static char *
 get_backup_file_name (const char *name)
@@ -748,7 +744,6 @@ read_pattern_space (struct input *input, struct vector *the_program, int append)
   return true;
 }
 
-
 static bool
 last_file_with_data_p (struct input *input)
 {
@@ -903,7 +898,6 @@ match_address_p (struct sed_cmd *cmd, struct input *input)
   return true;
 }
 
-
 static void
 do_list (int line_len)
 {
@@ -1647,7 +1641,6 @@ execute_program (struct vector *vec, struct input *input)
     return -1;
 }
 
-
 
 /* Apply the compiled script to all the named files. */
 int

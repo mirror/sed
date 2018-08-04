@@ -27,7 +27,6 @@
 #include "progname.h"
 #include "xalloc.h"
 
-
 #define YMAP_LENGTH		256 /*XXX shouldn't this be (UCHAR_MAX+1)?*/
 #define VECTOR_ALLOC_INCREMENT	40
 
@@ -87,7 +86,6 @@ static struct special_files special_files[] = {
   { { NULL, false, NULL, NULL }, NULL }
 };
 
-
 /* Where we are in the processing of the input. */
 static struct prog_info prog;
 static struct error_info cur_input;
@@ -197,7 +195,6 @@ static const char errors[] =
 static struct output *file_read = NULL;
 static struct output *file_write = NULL;
 
-
 /* Complain about an unknown command and exit. */
 static void
 bad_command (char ch)
@@ -224,7 +221,6 @@ bad_prog (const char *why)
   exit (EXIT_BAD_USAGE);
 }
 
-
 /* Read the next character from the program.  Return EOF if there isn't
    anything to read.  Keep cur_input.line up to date, so error messages
    can be meaningful. */
@@ -354,7 +350,6 @@ convert_number (char *result, char *buf, const char *bufend, int base)
   return p;
 }
 
-
 /* Read in a filename for a `r', `w', or `s///w' command. */
 static struct buffer *
 read_filename (void)
@@ -426,7 +421,6 @@ get_openfile (struct output **file_ptrs, const char *mode, int fail)
   return p;
 }
 
-
 static struct sed_cmd *
 next_cmd_entry (struct vector **vectorp)
 {
@@ -678,7 +672,6 @@ mark_subst_opts (struct subst *cmd)
       }
 }
 
-
 /* read in a label for a `:', `b', or `t' command */
 static char *
 read_label (void)
@@ -903,7 +896,6 @@ read_text (struct text_buf *buf, int leadin_ch)
   pending_text = NULL;
 }
 
-
 /* Try to read an address for a sed command.  If it succeeds,
    return non-zero and store the resulting address in `*addr'.
    If the input doesn't look like an address read nothing
@@ -1381,7 +1373,6 @@ compile_program (struct vector *vector)
   return vector;
 }
 
-
 /* deal with \X escapes */
 size_t
 normalize_text (char *buf, size_t len, enum text_types buftype)
