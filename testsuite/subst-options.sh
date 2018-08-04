@@ -18,8 +18,6 @@
 . "${srcdir=.}/testsuite/init.sh"; path_prepend_ ./sed
 print_ver_ sed
 
-fail=0
-
 #
 # Simple modifiers to s//
 # (specific characters included as make_subst_opts's implementation

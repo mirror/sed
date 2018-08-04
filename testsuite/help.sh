@@ -19,9 +19,6 @@
 . "${srcdir=.}/testsuite/init.sh"; path_prepend_ ./sed
 print_ver_ sed
 
-fail=0
-
-
 # Help screen should include the contact email address
 sed --help | grep E-mail > /dev/null 2>&1 || fail=1
 

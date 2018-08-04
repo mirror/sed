@@ -18,8 +18,6 @@
 . "${srcdir=.}/testsuite/init.sh"; path_prepend_ ./sed
 print_ver_ sed
 
-fail=0
-
 cat <<\EOF >exp-err || framework_failure_
 sed: -e expression #1, char 7: unknown option to `s'
 EOF

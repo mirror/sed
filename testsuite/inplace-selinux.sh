@@ -18,8 +18,6 @@
 print_ver_ sed
 require_selinux_
 
-fail=0
-
 touch a || framework_failure_
 chcon -u system_u a || skip_ "chcon doesn't work"
 chcon -u user_u a || skip_ "chcon doesn't work"

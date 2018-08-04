@@ -18,7 +18,6 @@
 . "${srcdir=.}/testsuite/init.sh"; path_prepend_ ./sed
 print_ver_ sed
 
-fail=0
 require_en_utf8_locale_
 
 # These tests use the following unicode character in various ways:

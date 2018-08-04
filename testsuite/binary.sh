@@ -20,8 +20,6 @@
 . "${srcdir=.}/testsuite/init.sh"; path_prepend_ ./sed
 print_ver_ sed
 
-fail=0
-
 cat << \EOF > inp || framework_failure_
 192.168.1.2 br b8<r b16<r b24< R|R|R| D
 255.255.255.0 br b8<r b16<r b24< R|R|R| D~r

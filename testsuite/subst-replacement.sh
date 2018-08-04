@@ -18,8 +18,6 @@
 . "${srcdir=.}/testsuite/init.sh"; path_prepend_ ./sed
 print_ver_ sed
 
-fail=0
-
 #
 # Backslash followed by unrecognized letter,
 # use letter as-is.

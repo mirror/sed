@@ -18,8 +18,6 @@
 . "${srcdir=.}/testsuite/init.sh"; path_prepend_ ./sed
 print_ver_ sed
 
-fail=0
-
 echo X > in1 || framework_failure_
 printf "1\nX\n" > exp1 || framework_failure_
 

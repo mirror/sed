@@ -19,8 +19,6 @@
 . "${srcdir=.}/testsuite/init.sh"; path_prepend_ ./sed
 print_ver_ sed
 
-fail=0
-
 # location of external test files
 dir="$abs_top_srcdir/testsuite"
 

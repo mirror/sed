@@ -230,6 +230,23 @@ sc_prohibit_strncmp:
 	halt='use STREQ_LEN or STRPREFIX instead of str''ncmp'		\
 	  $(_sc_search_regexp)
 
+# Ensure that tests don't include a redundant fail=0.
+sc_prohibit_fail_0:
+	@prohibit='\<fail=0\>'						\
+	halt='fail=0 initialization'					\
+	  $(_sc_search_regexp)
+
+# Ensure that tests don't use `cmd ... && fail=1` as that hides crashes.
+# The "exclude" expression allows common idioms like `test ... && fail=1`
+# and the 2>... portion allows commands that redirect stderr and so probably
+# independently check its contents and thus detect any crash messages.
+sc_prohibit_and_fail_1:
+	@prohibit='&& fail=1'						\
+	exclude='(returns_|stat|kill|test |EGREP|grep|compare|2> *[^/])' \
+	halt='&& fail=1 detected. Please use: returns_ 1 ... || fail=1'	\
+	in_vc_files='^tests/'						\
+	  $(_sc_search_regexp)
+
 # Ensure that env vars are not passed through returns_ as
 # that was seen to fail on FreeBSD /bin/sh at least
 sc_prohibit_env_returns:
@@ -300,6 +317,9 @@ exclude_file_name_regexp--sc_long_lines = ^testsuite/
 # Exempt test-related files from space-before-parens requirements.
 exclude_file_name_regexp--sc_space_before_open_paren = ^testsuite/
 
+# Exempt makefiles from 'fail=0' detection (it is only relevant to shell
+# script tests).
+exclude_file_name_regexp--sc_prohibit_fail_0 = cfg\.mk
 
 
 # static analysis

@@ -18,8 +18,6 @@
 . "${srcdir=.}/testsuite/init.sh"; path_prepend_ ./sed
 print_ver_ sed
 
-fail=0
-
 # in/exp as identical, but using 'exp' for both input and output
 # will cause unneeded confusion when looking at the logs.
 printf "A\nB\n" > in1   || framework_failure_

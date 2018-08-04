@@ -20,8 +20,6 @@ print_ver_ sed
 
 require_en_utf8_locale_
 
-fail=0
-
 # before sed-4.3, a slash following an incomplete multibyte character
 # would be ignored during program compilation, leading to an error.
 

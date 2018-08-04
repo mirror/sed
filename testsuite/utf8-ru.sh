@@ -23,9 +23,6 @@ print_ver_ sed
 
 require_ru_utf8_locale_
 
-fail=0
-
-
 # The letter used in these tests are:
 #      UTF8:Octal  UTF8:HEX   CodePoint Name
 #  А   \320\220    \xD0\x90   U+0410   \N{CYRILLIC CAPITAL LETTER A}

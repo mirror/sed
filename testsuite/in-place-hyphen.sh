@@ -21,7 +21,6 @@ print_ver_ sed
 echo abc > ./- || framework_failure_
 echo aXc > exp-out || framework_failure_
 
-fail=0
 sed -i 's/b/X/' - > out 2> err || fail=1
 
 compare exp-out ./- || fail=1

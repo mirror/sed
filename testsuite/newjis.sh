@@ -19,8 +19,6 @@
 . "${srcdir=.}/testsuite/init.sh"; path_prepend_ ./sed
 print_ver_ sed
 
-fail=0
-
 # Input file. \033 is ASCII escape (0x1B).
 {
   printf '\033$B$H$J$j$N$?$1$,$-$K\033(B\n' ;

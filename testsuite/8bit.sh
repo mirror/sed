@@ -19,8 +19,6 @@
 . "${srcdir=.}/testsuite/init.sh"; path_prepend_ ./sed
 print_ver_ sed
 
-fail=0
-
 # Original comment from '8bit.sed':
 
 # The first poem from the Man'yoshu.  I like Hitomaro's poems better

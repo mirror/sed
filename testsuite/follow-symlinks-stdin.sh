@@ -20,7 +20,6 @@ print_ver_ sed
 
 echo dbc > exp-out || framework_failure_
 
-fail=0
 echo abc | sed --follow-symlinks s/a/d/ > out 2> err || fail=1
 
 compare exp-out out || fail=1

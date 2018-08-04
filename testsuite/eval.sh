@@ -19,9 +19,6 @@
 . "${srcdir=.}/testsuite/init.sh"; path_prepend_ ./sed
 print_ver_ sed
 
-fail=0
-
-
 cat << \EOF > eval-in || framework_failure_
 17380: 2 2 5 11 79
 abcd

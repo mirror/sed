@@ -19,8 +19,6 @@
 . "${srcdir=.}/testsuite/init.sh"; path_prepend_ ./sed
 print_ver_ sed
 
-fail=0
-
 # Generate the input file, containing non-ascii 8-bit octets.
 # printf with octal escape sequences is the most portable way
 # to produce these.

@@ -34,8 +34,6 @@
 . "${srcdir=.}/testsuite/init.sh"; path_prepend_ ./sed
 print_ver_ sed
 
-fail=0
-
 echo X > exp || framework_failure_
 
 # Closing bracket without opening bracket, match as-is

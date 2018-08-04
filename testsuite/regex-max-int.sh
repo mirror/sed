@@ -19,9 +19,6 @@
 very_expensive_
 print_ver_ sed
 
-fail=0
-
-
 # Create a file larger than 2GB and containing a single line
 # (resulting in a regex match against the entire file)
 #

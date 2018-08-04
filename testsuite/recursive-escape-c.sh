@@ -18,7 +18,6 @@
 . "${srcdir=.}/testsuite/init.sh"; path_prepend_ ./sed
 print_ver_ sed
 
-fail=0
 unset POSIXLY_CORRECT
 export LC_ALL=C
 

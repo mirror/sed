@@ -19,9 +19,6 @@
 . "${srcdir=.}/testsuite/init.sh"; path_prepend_ ./sed
 print_ver_ sed
 
-fail=0
-
-
 # Compute Easter of 2002...
 # usage:   (echo YEAR; cat easter.dc) | dc.sed
 cat << \EOF > easter.dc || framework_failure_

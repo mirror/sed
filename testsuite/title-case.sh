@@ -20,8 +20,6 @@ print_ver_ sed
 
 require_el_iso88597_locale_
 
-fail=0
-
 a='\323' # SIGMA
 b='\362' # stigma
 c='\363' # sigma

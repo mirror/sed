@@ -18,9 +18,6 @@
 . "${srcdir=.}/testsuite/init.sh"; path_prepend_ ./sed
 print_ver_ sed
 
-fail=0
-
-
 #
 # Special file names, with gnu extensions and without (if the host
 # supports /dev/std{out,err} )

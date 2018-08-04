@@ -18,8 +18,6 @@
 . "${srcdir=.}/testsuite/init.sh"; path_prepend_ ./sed
 print_ver_ sed
 
-fail=0
-
 #
 # Excess P modifier to s//  (EXCESS_P_OPT)
 #

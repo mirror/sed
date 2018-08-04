@@ -27,8 +27,6 @@ for i in 1 6 14 ; do
   echo "$err" > exp-err$i || framework_failure_
 done
 
-fail=0
-
 # read command - without sandbox
 printf "a\nb\n" > exp || framework_failure_
 sed rb a > out || fail=1

@@ -18,8 +18,6 @@
 . "${srcdir=.}/testsuite/init.sh"; path_prepend_ ./sed
 print_ver_ sed
 
-fail=0
-
 echo X > in1 || framework_failure_
 
 # expected output with 'sed -n = in1' (silent mode)

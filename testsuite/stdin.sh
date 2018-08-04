@@ -19,8 +19,6 @@
 . "${srcdir=.}/testsuite/init.sh"; path_prepend_ ./sed
 print_ver_ sed
 
-fail=0
-
 
 cat << \EOF > stdin-in || framework_failure_
 foo foo fo oo f oo foo foo foo foo foo foo foo foo foo foo foo foo foo

@@ -21,9 +21,6 @@ print_ver_ sed
 
 require_en_utf8_locale_
 
-fail=0
-
-
 # The input (and also the expected output)
 # containing an invalid multibyte sequences in utf-8 (octet \320 = 0xD0).
 printf "abc\nde\320f\nghi\njkl\nmno\npqr\nstu\nvwx\nyz\n" > badenc-inp \

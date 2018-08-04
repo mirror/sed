@@ -18,8 +18,6 @@
 . "${srcdir=.}/testsuite/init.sh"; path_prepend_ ./sed
 print_ver_ sed
 
-fail=0
-
 #         10        20        30        40        50        60        70  75
 cat <<\EOF >in1 || framework_failure_
 0123456789012345678901234567890123456789012345678901234567890123456789012345

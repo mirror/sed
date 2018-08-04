@@ -19,8 +19,6 @@
 . "${srcdir=.}/testsuite/init.sh"; path_prepend_ ./sed
 print_ver_ sed
 
-fail=0
-
 echo > inplace-hold-exp || framework_failure_
 
 echo x > inplace-hold-out1 || framework_failure_

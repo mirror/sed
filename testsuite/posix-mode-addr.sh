@@ -18,8 +18,6 @@
 . "${srcdir=.}/testsuite/init.sh"; path_prepend_ ./sed
 print_ver_ sed
 
-fail=0
-
 cat <<\EOF> exp-err-addr0 || framework_failure_
 sed: -e expression #1, char 6: invalid usage of line address 0
 EOF

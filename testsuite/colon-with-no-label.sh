@@ -21,8 +21,6 @@ print_ver_ sed
 echo 'sed: -e expression #1, char 1: ":" lacks a label' > exp-err \
   || framework_failure_
 
-fail=0
-
 # Before sed-4.3, sed would mistakenly accept a ":" with no following
 # label name.
 echo x | returns_ 1 sed : > out 2> err || fail=1

@@ -25,7 +25,6 @@ require_en_utf8_locale_
 echo > in || framework_failure_
 printf '\233\375\200\n' > exp-out || framework_failure_
 
-fail=0
 LC_ALL=en_US.utf8 sed $(printf 's/^/\\L\233\375\\\200/') in > out 2> err
 
 compare exp-out out || fail=1

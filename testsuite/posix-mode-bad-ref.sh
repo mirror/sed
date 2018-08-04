@@ -18,8 +18,6 @@
 . "${srcdir=.}/testsuite/init.sh"; path_prepend_ ./sed
 print_ver_ sed
 
-fail=0
-
 cat <<\EOF >exp-err || framework_failure_
 sed: -e expression #1, char 10: invalid reference \1 on `s' command's RHS
 EOF
