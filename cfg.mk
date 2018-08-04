@@ -230,6 +230,46 @@ sc_prohibit_strncmp:
 	halt='use STREQ_LEN or STRPREFIX instead of str''ncmp'		\
 	  $(_sc_search_regexp)
 
+# Ensure that env vars are not passed through returns_ as
+# that was seen to fail on FreeBSD /bin/sh at least
+sc_prohibit_env_returns:
+	@prohibit='=[^ ]* returns_ '					\
+	exclude='_ returns_ '						\
+	halt='Passing env vars to returns_ is non portable'		\
+	in_vc_files='^tests/'						\
+	  $(_sc_search_regexp)
+
+sc_prohibit_perl_hash_quotes:
+	@prohibit="\{'[A-Z_]+' *[=}]"					\
+	halt="in Perl code, write \$$hash{KEY}, not \$$hash{'K''EY'}"	\
+	  $(_sc_search_regexp)
+
+# Use print_ver_ (from init.cfg), not open-coded $VERBOSE check.
+sc_prohibit_verbose_version:
+	@prohibit='test "\$$VERBOSE" = yes && .* --version'		\
+	halt='use the print_ver_ function instead...'			\
+	  $(_sc_search_regexp)
+
+
+# Use framework_failure_, not the old name without the trailing underscore.
+sc_prohibit_framework_failure:
+	@prohibit='\<framework_''failure\>'				\
+	halt='use framework_failure_ instead'				\
+	  $(_sc_search_regexp)
+
+# Prohibit the use of `...` in tests/.  Use $(...) instead.
+sc_prohibit_test_backticks:
+	@prohibit='`' in_vc_files='^tests/'				\
+	halt='use $$(...), not `...` in tests/'				\
+	  $(_sc_search_regexp)
+
+# Ensure that compare is used to check empty files
+# so that the unexpected contents are displayed
+sc_prohibit_test_empty:
+	@prohibit='test -s.*&&' in_vc_files='^tests/'			\
+	halt='use `compare /dev/null ...`, not `test -s ...` in tests/'	\
+	  $(_sc_search_regexp)
+
 update-copyright-env = \
   UPDATE_COPYRIGHT_USE_INTERVALS=2 \
   UPDATE_COPYRIGHT_MAX_LINE_LENGTH=79
