@@ -107,22 +107,22 @@ cancel_cleanup (void)
 
 static void usage (int);
 static void
-contact(int errmsg)
+contact (int errmsg)
 {
   FILE *out = errmsg ? stderr : stdout;
 #ifndef REG_PERL
-  fprintf(out, _("GNU sed home page: <https://www.gnu.org/software/sed/>.\n\
+  fprintf (out, _("GNU sed home page: <https://www.gnu.org/software/sed/>.\n\
 General help using GNU software: <https://www.gnu.org/gethelp/>.\n"));
 #endif
 
   /* Only print the bug report address for `sed --help', otherwise we'll
      get reports for other people's bugs.  */
   if (!errmsg)
-    fprintf(out, _("E-mail bug reports to: <%s>.\n"), PACKAGE_BUGREPORT);
+    fprintf (out, _("E-mail bug reports to: <%s>.\n"), PACKAGE_BUGREPORT);
 }
 
 _Noreturn static void
-usage(int status)
+usage (int status)
 {
   FILE *out = status ? stderr : stdout;
 
@@ -132,52 +132,52 @@ usage(int status)
                     " syntax in the script.\n")
 #endif
 
-  fprintf(out, _("\
+  fprintf (out, _("\
 Usage: %s [OPTION]... {script-only-if-no-other-script} [input-file]...\n\
 \n"), program_name);
 
-  fprintf(out, _("  -n, --quiet, --silent\n\
+  fprintf (out, _("  -n, --quiet, --silent\n\
                  suppress automatic printing of pattern space\n"));
-  fprintf(out, _("  -e script, --expression=script\n\
+  fprintf (out, _("  -e script, --expression=script\n\
                  add the script to the commands to be executed\n"));
-  fprintf(out, _("  -f script-file, --file=script-file\n\
+  fprintf (out, _("  -f script-file, --file=script-file\n\
                  add the contents of script-file to the commands" \
                  " to be executed\n"));
 #ifdef ENABLE_FOLLOW_SYMLINKS
-  fprintf(out, _("  --follow-symlinks\n\
+  fprintf (out, _("  --follow-symlinks\n\
                  follow symlinks when processing in place\n"));
 #endif
-  fprintf(out, _("  -i[SUFFIX], --in-place[=SUFFIX]\n\
+  fprintf (out, _("  -i[SUFFIX], --in-place[=SUFFIX]\n\
                  edit files in place (makes backup if SUFFIX supplied)\n"));
 #if defined WIN32 || defined _WIN32 || defined __CYGWIN__ \
   || defined MSDOS || defined __EMX__
-  fprintf(out, _("  -b, --binary\n\
+  fprintf (out, _("  -b, --binary\n\
                  open files in binary mode (CR+LFs are not" \
                  " processed specially)\n"));
 #endif
-  fprintf(out, _("  -l N, --line-length=N\n\
+  fprintf (out, _("  -l N, --line-length=N\n\
                  specify the desired line-wrap length for the `l' command\n"));
-  fprintf(out, _("  --posix\n\
+  fprintf (out, _("  --posix\n\
                  disable all GNU extensions.\n"));
-  fprintf(out, _("  -E, -r, --regexp-extended\n\
+  fprintf (out, _("  -E, -r, --regexp-extended\n\
                  use extended regular expressions in the script\n\
                  (for portability use POSIX -E).\n"));
 #ifdef REG_PERL
-  fprintf(out, PERL_HELP);
+  fprintf (out, PERL_HELP);
 #endif
-  fprintf(out, _("  -s, --separate\n\
+  fprintf (out, _("  -s, --separate\n\
                  consider files as separate rather than as a single,\n\
                  continuous long stream.\n"));
-  fprintf(out, _("      --sandbox\n\
+  fprintf (out, _("      --sandbox\n\
                  operate in sandbox mode (disable e/r/w commands).\n"));
-  fprintf(out, _("  -u, --unbuffered\n\
+  fprintf (out, _("  -u, --unbuffered\n\
                  load minimal amounts of data from the input files and flush\n\
                  the output buffers more often\n"));
-  fprintf(out, _("  -z, --null-data\n\
+  fprintf (out, _("  -z, --null-data\n\
                  separate lines by NUL characters\n"));
-  fprintf(out, _("      --help     display this help and exit\n"));
-  fprintf(out, _("      --version  output version information and exit\n"));
-  fprintf(out, _("\n\
+  fprintf (out, _("      --help     display this help and exit\n"));
+  fprintf (out, _("      --version  output version information and exit\n"));
+  fprintf (out, _("\n\
 If no -e, --expression, -f, or --file option is given, then the first\n\
 non-option argument is taken as the sed script to interpret.  All\n\
 remaining arguments are names of input files; if no input files are\n\
@@ -228,7 +228,7 @@ main (int argc, char **argv)
 
   int opt;
   int return_code;
-  const char *cols = getenv("COLS");
+  const char *cols = getenv ("COLS");
 
   set_program_name (argv[0]);
   initialize_main (&argc, &argv);
@@ -250,7 +250,7 @@ main (int argc, char **argv)
   textdomain (PACKAGE);
 #endif
 
-  if (getenv("POSIXLY_CORRECT") != NULL)
+  if (getenv ("POSIXLY_CORRECT") != NULL)
     posixicity = POSIXLY_CORRECT;
   else
     posixicity = POSIXLY_EXTENDED;
@@ -261,12 +261,12 @@ main (int argc, char **argv)
    */
   if (cols)
     {
-      countT t = atoi(cols);
+      countT t = atoi (cols);
       if (t > 1)
         lcmd_out_line_len = t-1;
     }
 
-  while ((opt = getopt_long(argc, argv, SHORTOPTS, longopts, NULL)) != EOF)
+  while ((opt = getopt_long (argc, argv, SHORTOPTS, longopts, NULL)) != EOF)
     {
       switch (opt)
         {
@@ -274,10 +274,10 @@ main (int argc, char **argv)
           no_default_output = true;
           break;
         case 'e':
-          the_program = compile_string(the_program, optarg, strlen(optarg));
+          the_program = compile_string (the_program, optarg, strlen (optarg));
           break;
         case 'f':
-          the_program = compile_file(the_program, optarg);
+          the_program = compile_file (the_program, optarg);
           break;
 
         case 'z':
@@ -294,12 +294,12 @@ main (int argc, char **argv)
             /* use no backups */
             in_place_extension = xstrdup ("*");
 
-          else if (strchr(optarg, '*') != NULL)
-            in_place_extension = xstrdup(optarg);
+          else if (strchr (optarg, '*') != NULL)
+            in_place_extension = xstrdup (optarg);
 
           else
             {
-              in_place_extension = XCALLOC (strlen(optarg) + 2, char);
+              in_place_extension = XCALLOC (strlen (optarg) + 2, char);
               in_place_extension[0] = '*';
               strcpy (in_place_extension + 1, optarg);
             }
@@ -307,7 +307,7 @@ main (int argc, char **argv)
           break;
 
         case 'l':
-          lcmd_out_line_len = atoi(optarg);
+          lcmd_out_line_len = atoi (optarg);
           break;
 
         case 'p':
@@ -323,7 +323,7 @@ main (int argc, char **argv)
         case 'r':
 #ifdef REG_PERL
           if (extended_regexp_flags && (extended_regexp_flags!=REG_EXTENDED))
-            usage(EXIT_BAD_USAGE);
+            usage (EXIT_BAD_USAGE);
 #endif
           extended_regexp_flags = REG_EXTENDED;
           break;
@@ -331,7 +331,7 @@ main (int argc, char **argv)
 #ifdef REG_PERL
         case 'R':
           if (extended_regexp_flags && (extended_regexp_flags!=REG_PERL)))
-            usage(EXIT_BAD_USAGE);
+            usage (EXIT_BAD_USAGE);
           extended_regexp_flags = REG_PERL;
           break;
 #endif
@@ -349,15 +349,15 @@ main (int argc, char **argv)
           break;
 
         case 'v':
-          version_etc(stdout, program_name, PACKAGE_NAME, Version,
+          version_etc (stdout, program_name, PACKAGE_NAME, Version,
                       AUTHORS, (char *) NULL);
-          contact(false);
+          contact (false);
           ck_fclose (NULL);
           exit (EXIT_SUCCESS);
         case 'h':
-          usage(EXIT_SUCCESS);
+          usage (EXIT_SUCCESS);
         default:
-          usage(EXIT_BAD_USAGE);
+          usage (EXIT_BAD_USAGE);
         }
     }
 
@@ -366,17 +366,17 @@ main (int argc, char **argv)
       if (optind < argc)
         {
           char *arg = argv[optind++];
-          the_program = compile_string(the_program, arg, strlen(arg));
+          the_program = compile_string (the_program, arg, strlen (arg));
         }
       else
-        usage(EXIT_BAD_USAGE);
+        usage (EXIT_BAD_USAGE);
     }
-  check_final_program(the_program);
+  check_final_program (the_program);
 
-  return_code = process_files(the_program, argv+optind);
+  return_code = process_files (the_program, argv+optind);
 
-  finish_program();
-  ck_fclose(NULL);
+  finish_program ();
+  ck_fclose (NULL);
 
   return return_code;
 }

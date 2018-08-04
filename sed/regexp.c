@@ -62,7 +62,7 @@ compile_regex_1 (struct regex *new_regex, int needed_sub)
 {
 #ifdef REG_PERL
   int errcode;
-  errcode = regncomp(&new_regex->pattern, new_regex->re, new_regex->sz,
+  errcode = regncomp (&new_regex->pattern, new_regex->re, new_regex->sz,
                      (needed_sub ? 0 : REG_NOSUB)
                      | new_regex->flags
                      | extended_regexp_flags);
@@ -70,8 +70,8 @@ compile_regex_1 (struct regex *new_regex, int needed_sub)
   if (errcode)
     {
       char errorbuf[200];
-      regerror(errcode, NULL, errorbuf, 200);
-      bad_prog(gettext(errorbuf));
+      regerror (errcode, NULL, errorbuf, 200);
+      bad_prog (gettext (errorbuf));
     }
 #else
   const char *error;
@@ -121,9 +121,9 @@ compile_regex_1 (struct regex *new_regex, int needed_sub)
 #ifndef RE_ICASE
   if (new_regex->flags & REG_ICASE)
     {
-      static char translate[1 << (sizeof(char) * 8)];
+      static char translate[1 << (sizeof (char) * 8)];
       int i;
-      for (i = 0; i < sizeof(translate) / sizeof(char); i++)
+      for (i = 0; i < sizeof (translate) / sizeof (char); i++)
         translate[i] = tolower (i);
 
       new_regex->pattern.translate = translate;
@@ -131,7 +131,7 @@ compile_regex_1 (struct regex *new_regex, int needed_sub)
 #endif
 
   if (error)
-    bad_prog(error);
+    bad_prog (error);
 #endif
 
   /* Just to be sure, I mark this as not POSIXLY_CORRECT behavior */
@@ -140,9 +140,9 @@ compile_regex_1 (struct regex *new_regex, int needed_sub)
       && posixicity == POSIXLY_EXTENDED)
     {
       char buf[200];
-      sprintf(buf, _("invalid reference \\%d on `s' command's RHS"),
+      sprintf (buf, _("invalid reference \\%d on `s' command's RHS"),
               needed_sub - 1);
-      bad_prog(buf);
+      bad_prog (buf);
     }
 
   int dfaopts = buffer_delimiter == '\n' ? 0 : DFA_EOL_NUL;
@@ -164,29 +164,29 @@ compile_regex_1 (struct regex *new_regex, int needed_sub)
 }
 
 struct regex *
-compile_regex(struct buffer *b, int flags, int needed_sub)
+compile_regex (struct buffer *b, int flags, int needed_sub)
 {
   struct regex *new_regex;
   size_t re_len;
 
   /* // matches the last RE */
-  if (size_buffer(b) == 0)
+  if (size_buffer (b) == 0)
     {
       if (flags > 0)
-        bad_prog(_(BAD_MODIF));
+        bad_prog (_(BAD_MODIF));
       return NULL;
     }
 
-  re_len = size_buffer(b);
-  new_regex = xzalloc(sizeof (struct regex) + re_len - 1);
+  re_len = size_buffer (b);
+  new_regex = xzalloc (sizeof (struct regex) + re_len - 1);
   new_regex->flags = flags;
-  memcpy (new_regex->re, get_buffer(b), re_len);
+  memcpy (new_regex->re, get_buffer (b), re_len);
 
 #ifdef REG_PERL
   new_regex->sz = re_len;
 #else
   /* GNU regex does not process \t & co. */
-  new_regex->sz = normalize_text(new_regex->re, re_len, TEXT_REGEX);
+  new_regex->sz = normalize_text (new_regex->re, re_len, TEXT_REGEX);
 #endif
 
   compile_regex_1 (new_regex, needed_sub);
@@ -232,7 +232,7 @@ copy_regs (regs, pmatch, nregs)
 #endif
 
 int
-match_regex(struct regex *regex, char *buf, size_t buflen,
+match_regex (struct regex *regex, char *buf, size_t buflen,
             size_t buf_start_offset, struct re_registers *regarray,
             int regsize)
 {
@@ -251,7 +251,7 @@ match_regex(struct regex *regex, char *buf, size_t buflen,
     {
       regex = regex_last;
       if (!regex_last)
-        bad_prog(_(NO_REGEX));
+        bad_prog (_(NO_REGEX));
     }
   else
     regex_last = regex;
@@ -429,9 +429,9 @@ match_regex(struct regex *regex, char *buf, size_t buflen,
 
 #ifdef DEBUG_LEAKS
 void
-release_regex(struct regex *regex)
+release_regex (struct regex *regex)
 {
-  regfree(&regex->pattern);
-  free(regex);
+  regfree (&regex->pattern);
+  free (regex);
 }
 #endif /*DEBUG_LEAKS*/

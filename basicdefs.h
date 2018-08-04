@@ -90,7 +90,7 @@ typedef unsigned long countT;
 #ifndef initialize_main
 # ifdef __EMX__
 #  define initialize_main(argcp, argvp) \
-  { _response(argcp, argvp); _wildcard(argcp, argvp); }
+  { _response (argcp, argvp); _wildcard (argcp, argvp); }
 # else /* NOT __EMX__ */
 #  define initialize_main(argcp, argvp)
 # endif

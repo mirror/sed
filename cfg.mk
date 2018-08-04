@@ -152,6 +152,60 @@ sc_THANKS_in_sorted:
 	  || { echo '$(ME): this system has erroneous locale data;'	\
 		    'skipping $@' 1>&2; }
 
+###########################################################
+_p0 = \([^"'/]\|"\([^\"]\|[\].\)*"\|'\([^\']\|[\].\)*'
+_pre = $(_p0)\|[/][^"'/*]\|[/]"\([^\"]\|[\].\)*"\|[/]'\([^\']\|[\].\)*'\)*
+_pre_anchored = ^\($(_pre)\)
+_comment_and_close = [^*]\|[*][^/*]\)*[*][*]*/
+# help font-lock mode: '
+
+# A sed expression that removes ANSI C and ISO C99 comments.
+# Derived from the one in GNU gettext's 'moopp' preprocessor.
+_sed_remove_comments =					\
+/[/][/*]/{						\
+  ta;							\
+  :a;							\
+  s,$(_pre_anchored)//.*,\1,;				\
+  te;							\
+  s,$(_pre_anchored)/[*]\($(_comment_and_close),\1 ,;	\
+  ta;							\
+  /^$(_pre)[/][*]/{					\
+    s,$(_pre_anchored)/[*].*,\1 ,;			\
+    tu;							\
+    :u;							\
+    n;							\
+    s,^\($(_comment_and_close),,;			\
+    tv;							\
+    s,^.*$$,,;						\
+    bu;							\
+    :v;							\
+  };							\
+  :e;							\
+}
+# Quote all single quotes.
+_sed_rm_comments_q = $(subst ','\'',$(_sed_remove_comments))
+# help font-lock mode: '
+
+_space_before_paren_exempt =? \\n\\$$
+_space_before_paren_exempt = \
+  (^ *\#|\\n\\$$|%s\(to %s|(date|group|character)\(s\))
+# Ensure that there is a space before each open parenthesis in C code.
+sc_space_before_open_paren:
+	@if $(VC_LIST_EXCEPT) | grep -l '\.[ch]$$' > /dev/null; then	\
+	  fail=0;							\
+	  for c in $$($(VC_LIST_EXCEPT) | grep '\.[ch]$$'); do		\
+	    sed '$(_sed_rm_comments_q)' $$c 2>/dev/null			\
+	      | grep -i '[[:alnum:]]('					\
+	      | grep -vE '$(_space_before_paren_exempt)'		\
+	      | grep . && { fail=1; echo "*** $$c"; };			\
+	  done;								\
+	  test $$fail = 1 &&						\
+	    { echo '$(ME): the above files lack a space-before-open-paren' \
+		1>&2; exit 1; } || :;					\
+	else :;								\
+	fi
+###########################################################
+
 update-copyright-env = \
   UPDATE_COPYRIGHT_USE_INTERVALS=2 \
   UPDATE_COPYRIGHT_MAX_LINE_LENGTH=79
@@ -178,6 +232,10 @@ exclude_file_name_regexp--sc_prohibit_empty_lines_at_EOF = \
 
 # Exempt test-related files from our 80-column limitation, for now.
 exclude_file_name_regexp--sc_long_lines = ^testsuite/
+
+# Exempt test-related files from space-before-parens requirements.
+exclude_file_name_regexp--sc_space_before_open_paren = ^testsuite/
+
 
 
 # static analysis
