@@ -673,7 +673,7 @@ mark_subst_opts (struct subst *cmd)
 }
 
 /* read in a label for a `:', `b', or `t' command */
-static char *
+static char * _GL_ATTRIBUTE_MALLOC
 read_label (void)
 {
   struct buffer *b;
