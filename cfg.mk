@@ -14,10 +14,14 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-# Cause the tool(s) built by this package to be used also when running
-# commands via e.g., "make syntax-check".  Doing this a little sooner
-# would have avoided a grep infloop bug.
-export PATH := $(srcdir)/sed:${PATH}
+# When running a 'check' target, adjust the $PATH to use the newly built
+# sed binary - expanding coverage testing, and enabling sophisticated
+# rules in syntax-check.
+_is-check-target ?= $(filter-out install%, \
+                         $(filter %check check%,$(MAKECMDGOALS)))
+ifneq (,$(_is-check-target))
+  export PATH := $(srcdir)/sed:${PATH}
+endif
 
 # Used in maint.mk's web-manual rule
 manual_title = GNU Sed: a stream editor
