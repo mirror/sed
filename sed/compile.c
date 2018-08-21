@@ -548,10 +548,8 @@ match_slash (int slash, int regex)
               ch = inchar ();
               if (ch == EOF)
                 break;
-#ifndef REG_PERL
               else if (ch == 'n' && regex)
                 ch = '\n';
-#endif
               else if (ch != '\n' && (ch != slash || (!regex && ch == '&')))
                 add1_buffer (b, '\\');
             }
@@ -594,24 +592,6 @@ mark_subst_opts (struct subst *cmd)
           bad_prog (_(UNKNOWN_S_OPT));
         flags |= REG_ICASE;
         break;
-
-#ifdef REG_PERL
-      case 's':	/* GNU extension */
-      case 'S':	/* GNU extension */
-        if (posixicity == POSIXLY_BASIC)
-          bad_prog (_(UNKNOWN_S_OPT));
-        if (extended_regexp_flags & REG_PERL)
-          flags |= REG_DOTALL;
-        break;
-
-      case 'x':	/* GNU extension */
-      case 'X':	/* GNU extension */
-        if (posixicity == POSIXLY_BASIC)
-          bad_prog (_(UNKNOWN_S_OPT));
-        if (extended_regexp_flags & REG_PERL)
-          flags |= REG_EXTENDED;
-        break;
-#endif
 
       case 'm':	/* GNU extension */
       case 'M':	/* GNU extension */
@@ -929,18 +909,6 @@ compile_address (struct addr *addr, int ch)
             case 'I':	/* GNU extension */
               flags |= REG_ICASE;
               break;
-
-#ifdef REG_PERL
-            case 'S':	/* GNU extension */
-              if (extended_regexp_flags & REG_PERL)
-                flags |= REG_DOTALL;
-              break;
-
-            case 'X':	/* GNU extension */
-              if (extended_regexp_flags & REG_PERL)
-                flags |= REG_EXTENDED;
-              break;
-#endif
 
             case 'M':	/* GNU extension */
               flags |= REG_NEWLINE;
@@ -1437,43 +1405,8 @@ normalize_text (char *buf, size_t len, enum text_types buftype)
             base = 16;
             goto convert;
 
-#ifdef REG_PERL
-          case '0': case '1': case '2': case '3':
-          case '4': case '5': case '6': case '7':
-            if ((extended_regexp_flags & REG_PERL)
-                && p+1 < bufend
-                && p[1] >= '0' && p[1] <= '9')
-              {
-                base = 8;
-                goto convert;
-              }
-            else
-              {
-                /* we just pass the \ up one level for interpretation */
-                if (buftype != TEXT_BUFFER)
-                  *q++ = '\\';
-              }
-
-            continue;
-
-          case 'o': /* octal byte */
-            if (!(extended_regexp_flags & REG_PERL))
-              {
-                base = 8;
-                goto convert;
-              }
-            else
-              {
-                /* we just pass the \ up one level for interpretation */
-                if (buftype != TEXT_BUFFER)
-                  *q++ = '\\';
-              }
-
-            continue;
-#else
           case 'o': /* octal byte */
             base = 8;
-#endif
 convert:
             p = convert_number (&ch, p, bufend, base);
 

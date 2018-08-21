@@ -57,20 +57,6 @@ dfawarn (char const *mesg)
 static void
 compile_regex_1 (struct regex *new_regex, int needed_sub)
 {
-#ifdef REG_PERL
-  int errcode;
-  errcode = regncomp (&new_regex->pattern, new_regex->re, new_regex->sz,
-                     (needed_sub ? 0 : REG_NOSUB)
-                     | new_regex->flags
-                     | extended_regexp_flags);
-
-  if (errcode)
-    {
-      char errorbuf[200];
-      regerror (errcode, NULL, errorbuf, 200);
-      bad_prog (gettext (errorbuf));
-    }
-#else
   const char *error;
   int syntax = ((extended_regexp_flags & REG_EXTENDED)
                  ? RE_SYNTAX_POSIX_EXTENDED
@@ -129,7 +115,6 @@ compile_regex_1 (struct regex *new_regex, int needed_sub)
 
   if (error)
     bad_prog (error);
-#endif
 
   /* Just to be sure, I mark this as not POSIXLY_CORRECT behavior */
   if (needed_sub
@@ -179,54 +164,12 @@ compile_regex (struct buffer *b, int flags, int needed_sub)
   new_regex->flags = flags;
   memcpy (new_regex->re, get_buffer (b), re_len);
 
-#ifdef REG_PERL
-  new_regex->sz = re_len;
-#else
   /* GNU regex does not process \t & co. */
   new_regex->sz = normalize_text (new_regex->re, re_len, TEXT_REGEX);
-#endif
 
   compile_regex_1 (new_regex, needed_sub);
   return new_regex;
 }
-
-#ifdef REG_PERL
-static void
-copy_regs (regs, pmatch, nregs)
-     struct re_registers *regs;
-     regmatch_t *pmatch;
-     int nregs;
-{
-  int i;
-  int need_regs = nregs + 1;
-  /* We need one extra element beyond `num_regs' for the `-1' marker GNU code
-     uses.  */
-
-  /* Have the register data arrays been allocated?  */
-  if (!regs->start)
-    { /* No.  So allocate them with malloc.  */
-      regs->start = XCALLOC (need_regs, regoff_t);
-      regs->end = XCALLOC (need_regs, regoff_t);
-      regs->num_regs = need_regs;
-    }
-  else if (need_regs > regs->num_regs)
-    { /* Yes.  We also need more elements than were already
-         allocated, so reallocate them.  */
-      regs->start = REALLOC (regs->start, need_regs, regoff_t);
-      regs->end = REALLOC (regs->end, need_regs, regoff_t);
-      regs->num_regs = need_regs;
-    }
-
-  /* Copy the regs.  */
-  for (i = 0; i < nregs; ++i)
-    {
-      regs->start[i] = pmatch[i].rm_so;
-      regs->end[i] = pmatch[i].rm_eo;
-    }
-  for ( ; i < regs->num_regs; ++i)
-    regs->start[i] = regs->end[i] = -1;
-}
-#endif
 
 int
 match_regex (struct regex *regex, char *buf, size_t buflen,
@@ -235,11 +178,6 @@ match_regex (struct regex *regex, char *buf, size_t buflen,
 {
   int ret;
   static struct regex *regex_last;
-#ifdef REG_PERL
-  regmatch_t rm[10], *regmatch = rm;
-  if (regsize > 10)
-    regmatch = alloca (sizeof (regmatch_t) * regsize);
-#endif
 
   /* printf ("Matching from %d/%d\n", buf_start_offset, buflen); */
 
@@ -257,16 +195,6 @@ match_regex (struct regex *regex, char *buf, size_t buflen,
   if (buflen >= INT_MAX)
     panic (_("regex input buffer length larger than INT_MAX"));
 
-#ifdef REG_PERL
-  regmatch[0].rm_so = (int)buf_start_offset;
-  regmatch[0].rm_eo = (int)buflen;
-  ret = regexec (&regex->pattern, buf, regsize, regmatch, REG_STARTEND);
-
-  if (regsize)
-    copy_regs (regarray, regmatch, regsize);
-
-  return (ret == 0);
-#else
   if (regex->pattern.no_sub && regsize)
     {
       /* Re-compiling an existing regex, free the previously allocated
@@ -432,7 +360,6 @@ match_regex (struct regex *regex, char *buf, size_t buflen,
                      regsize ? regarray : NULL);
 
   return (ret > -1);
-#endif
 }
 
 

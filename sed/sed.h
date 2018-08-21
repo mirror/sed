@@ -130,16 +130,6 @@ struct subst {
 #endif
 };
 
-#ifdef REG_PERL
-/* This is the structure we store register match data in.  See
-   regex.texinfo for a full description of what registers match.  */
-struct re_registers
-{
-  unsigned num_regs;
-  regoff_t *start;
-  regoff_t *end;
-};
-#endif
 
 
 

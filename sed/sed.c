@@ -109,10 +109,8 @@ static void
 contact (int errmsg)
 {
   FILE *out = errmsg ? stderr : stdout;
-#ifndef REG_PERL
   fprintf (out, _("GNU sed home page: <https://www.gnu.org/software/sed/>.\n\
 General help using GNU software: <https://www.gnu.org/gethelp/>.\n"));
-#endif
 
   /* Only print the bug report address for `sed --help', otherwise we'll
      get reports for other people's bugs.  */
@@ -124,12 +122,6 @@ _Noreturn static void
 usage (int status)
 {
   FILE *out = status ? stderr : stdout;
-
-#ifdef REG_PERL
-#define PERL_HELP _("  -R, --regexp-perl" \
-                    "\n                 use Perl 5's regular expressions" \
-                    " syntax in the script.\n")
-#endif
 
   fprintf (out, _("\
 Usage: %s [OPTION]... {script-only-if-no-other-script} [input-file]...\n\
@@ -161,9 +153,6 @@ Usage: %s [OPTION]... {script-only-if-no-other-script} [input-file]...\n\
   fprintf (out, _("  -E, -r, --regexp-extended\n\
                  use extended regular expressions in the script\n\
                  (for portability use POSIX -E).\n"));
-#ifdef REG_PERL
-  fprintf (out, PERL_HELP);
-#endif
   fprintf (out, _("  -s, --separate\n\
                  consider files as separate rather than as a single,\n\
                  continuous long stream.\n"));
@@ -191,20 +180,13 @@ specified, then the standard input is read.\n\
 int
 main (int argc, char **argv)
 {
-#ifdef REG_PERL
-#define SHORTOPTS "bsnrzRuEe:f:l:i::V:"
-#else
 #define SHORTOPTS "bsnrzuEe:f:l:i::V:"
-#endif
 
   enum { SANDBOX_OPTION = CHAR_MAX+1 };
 
   static const struct option longopts[] = {
     {"binary", 0, NULL, 'b'},
     {"regexp-extended", 0, NULL, 'r'},
-#ifdef REG_PERL
-    {"regexp-perl", 0, NULL, 'R'},
-#endif
     {"expression", 1, NULL, 'e'},
     {"file", 1, NULL, 'f'},
     {"in-place", 2, NULL, 'i'},
@@ -320,20 +302,8 @@ main (int argc, char **argv)
 
         case 'E':
         case 'r':
-#ifdef REG_PERL
-          if (extended_regexp_flags && (extended_regexp_flags!=REG_EXTENDED))
-            usage (EXIT_BAD_USAGE);
-#endif
           extended_regexp_flags = REG_EXTENDED;
           break;
-
-#ifdef REG_PERL
-        case 'R':
-          if (extended_regexp_flags && (extended_regexp_flags!=REG_PERL)))
-            usage (EXIT_BAD_USAGE);
-          extended_regexp_flags = REG_PERL;
-          break;
-#endif
 
         case 's':
           separate_files = true;
