@@ -14,7 +14,6 @@
     You should have received a copy of the GNU General Public License
     along with this program; If not, see <https://www.gnu.org/licenses/>. */
 
-#undef EXPERIMENTAL_DASH_N_OPTIMIZATION	/*don't use -- is very buggy*/
 #define INITIAL_BUFFER_SIZE	50
 #define FREAD_BUFFER_SIZE	8192
 
@@ -1156,57 +1155,6 @@ do_subst (struct subst *sub)
     output_line (line.active, line.length, line.chomped, sub->outf);
 }
 
-#ifdef EXPERIMENTAL_DASH_N_OPTIMIZATION
-/* Used to attempt a simple-minded optimization. */
-
-static countT branches;
-
-static countT
-count_branches (program)
-  struct vector *program;
-{
-  struct sed_cmd *cur_cmd = program->v;
-  countT isn_cnt = program->v_length;
-  countT cnt = 0;
-
-  while (isn_cnt-- > 0)
-    {
-      switch (cur_cmd->cmd)
-        {
-        case 'b':
-        case 't':
-        case 'T':
-        case '{':
-          ++cnt;
-        }
-    }
-  return cnt;
-}
-
-static struct sed_cmd *
-shrink_program (vec, cur_cmd)
-  struct vector *vec;
-  struct sed_cmd *cur_cmd;
-{
-  struct sed_cmd *v = vec->v;
-  struct sed_cmd *last_cmd = v + vec->v_length;
-  struct sed_cmd *p;
-  countT cmd_cnt;
-
-  for (p=v; p < cur_cmd; ++p)
-    if (p->cmd != '#')
-      memcpy (v++, p, sizeof *v);
-  cmd_cnt = v - vec->v;
-
-  for (; p < last_cmd; ++p)
-    if (p->cmd != '#')
-      memcpy (v++, p, sizeof *v);
-  vec->v_length = v - vec->v;
-
-  return (0 < vec->v_length) ? (vec->v + cmd_cnt) : (struct sed_cmd *)0;
-}
-#endif /*EXPERIMENTAL_DASH_N_OPTIMIZATION*/
-
 /* Translate the global input LINE via TRANS.
    This function handles the multi-byte case.  */
 static void
@@ -1591,54 +1539,6 @@ execute_program (struct vector *vec, struct input *input)
            }
         }
 
-#ifdef EXPERIMENTAL_DASH_N_OPTIMIZATION
-      /* If our top-level program consists solely of commands with
-         ADDR_IS_NUM addresses then once we past the last mentioned
-         line we should be able to quit if no_default_output is true,
-         or otherwise quickly copy input to output.  Now whether this
-         optimization is a win or not depends on how cheaply we can
-         implement this for the cases where it doesn't help, as
-         compared against how much time is saved.  One semantic
-         difference (which I think is an improvement) is that *this*
-         version will terminate after printing line two in the script
-         "yes | sed -n 2p".
-
-         Don't use this when in-place editing is active, because line
-         numbers restart each time then. */
-      else if (!separate_files)
-        {
-          if (cur_cmd->a1->addr_type == ADDR_IS_NUM
-              && (cur_cmd->a2
-                  ? cur_cmd->range_state == RANGE_CLOSED
-                  : cur_cmd->a1->addr_number < input->line_number))
-            {
-              /* Skip this address next time */
-              cur_cmd->addr_bang = !cur_cmd->addr_bang;
-              cur_cmd->a1->addr_type = ADDR_IS_NULL;
-              if (cur_cmd->a2)
-                cur_cmd->a2->addr_type = ADDR_IS_NULL;
-
-              /* can we make an optimization? */
-              if (cur_cmd->addr_bang)
-                {
-                  if (cur_cmd->cmd == 'b' || cur_cmd->cmd == 't'
-                      || cur_cmd->cmd == 'T' || cur_cmd->cmd == '}')
-                    branches--;
-
-                  cur_cmd->cmd = '#';	/* replace with no-op */
-                  if (branches == 0)
-                    cur_cmd = shrink_program (vec, cur_cmd);
-                  if (!cur_cmd && no_default_output)
-                    return 0;
-                  end_cmd = vec->v + vec->v_length;
-                  if (!cur_cmd)
-                    cur_cmd = end_cmd;
-                  continue;
-                }
-            }
-        }
-#endif /*EXPERIMENTAL_DASH_N_OPTIMIZATION*/
-
       /* this is buried down here so that a "continue" statement can skip it */
       ++cur_cmd;
     }
@@ -1662,9 +1562,6 @@ process_files (struct vector *the_program, char **argv)
   line_init (&hold, NULL, 0);
   line_init (&buffer, NULL, 0);
 
-#ifdef EXPERIMENTAL_DASH_N_OPTIMIZATION
-  branches = count_branches (the_program);
-#endif /*EXPERIMENTAL_DASH_N_OPTIMIZATION*/
   input.reset_at_next_file = true;
   if (argv && *argv)
     input.file_list = argv;
