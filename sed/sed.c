@@ -35,7 +35,9 @@
    _("Jay Fenlason"), \
    _("Tom Lord"), \
    _("Ken Pizzini"), \
-   _("Paolo Bonzini")
+   _("Paolo Bonzini"), \
+   _("Jim Meyering"), \
+   _("Assaf Gordon")
 
 int extended_regexp_flags = 0;
 

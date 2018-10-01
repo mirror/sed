@@ -51,7 +51,7 @@ section entitled ``GNU Free Documentation License''.
 @titlepage
 @title @value{SSED}, a stream editor
 @subtitle version @value{VERSION}, @value{UPDATED}
-@author by Ken Pizzini, Paolo Bonzini
+@author by Ken Pizzini, Paolo Bonzini, Jim Meyering, Assaf Gordon
 
 @page
 @vskip 0pt plus 1filll
