@@ -42,7 +42,7 @@ commands.
 .TP
 .RI # comment
 The comment extends until the next newline (or the end of a
-.B -e
+.B \-e
 script fragment).
 .TP
 }
@@ -235,7 +235,7 @@ The following address types are supported:
 Match only the specified line
 .IR number
 (which increments cumulatively across files, unless the
-.B -s
+.B \-s
 option is specified on the command line).
 .TP
 .IR first ~ step
@@ -243,7 +243,7 @@ Match every
 .IR step 'th
 line starting with line
 .IR first .
-For example, ``sed -n 1~2p'' will print all the odd-numbered lines in
+For example, ``sed \-n 1~2p'' will print all the odd-numbered lines in
 the input stream, and the address 2~5 will match every fifth line,
 starting with the second.
 .I first
@@ -315,7 +315,7 @@ and similarly for
 .BR \et ,
 and other sequences.
 The \fI-E\fP option switches to using extended regular expressions instead;
-the -E option has been supported for years by GNU sed, and is now
+it has been supported for years by GNU sed, and is now
 included in POSIX.
 
 [SEE ALSO]
@@ -334,5 +334,5 @@ http://sed.sf.net/grabbag/.
 .PP
 E-mail bug reports to
 .BR bug-sed@gnu.org .
-Also, please include the output of ``sed --version'' in the body
+Also, please include the output of ``sed \-\-version'' in the body
 of your report if at all possible.
