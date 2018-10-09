@@ -2763,8 +2763,8 @@ because it is escaped.
 @item [a-zA-Z0-9]
 In the C locale, this matches any ASCII letters or digits.
 
-@item [^ @kbd{tab}]\+
-(Here @kbd{tab} stands for a single tab character.)
+@item [^ @kbd{@key{TAB}}]\+
+(Here @kbd{@key{TAB}} stands for a single tab character.)
 This matches a string of one or more
 characters, none of which is a space or a tab.
 Usually this means a word.
@@ -4235,7 +4235,7 @@ technique.
 
 @group
 # delete leading and trailing spaces
-y/@kbd{tab}/ /
+y/@kbd{@key{TAB}}/ /
 s/^ *//
 s/ *$//
 @end group
@@ -5055,7 +5055,7 @@ of commenting @command{sed} scripts.
 
 @group
 # Convert words to a's
-s/[ @kbd{tab}][ @kbd{tab}]*/ /g
+s/[ @kbd{@key{TAB}}][ @kbd{@key{TAB}}]*/ /g
 s/^/ /
 s/ [^ ][^ ]*/a /g
 s/ //g
