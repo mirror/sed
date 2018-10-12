@@ -1433,7 +1433,7 @@ execute_program (struct vector *vec, struct input *input)
               break;
 
             case 'R':
-              if (cur_cmd->x.fp && !feof (cur_cmd->x.fp))
+              if (cur_cmd->x.inf->fp && !feof (cur_cmd->x.inf->fp))
                 {
                   struct append_queue *aq;
                   size_t buflen;
@@ -1441,7 +1441,7 @@ execute_program (struct vector *vec, struct input *input)
                   int result;
 
                   result = ck_getdelim (&text, &buflen, buffer_delimiter,
-                                        cur_cmd->x.fp);
+                                        cur_cmd->x.inf->fp);
                   if (result != EOF)
                     {
                       aq = next_append_slot ();
@@ -1483,13 +1483,13 @@ execute_program (struct vector *vec, struct input *input)
               break;
 
             case 'w':
-              if (cur_cmd->x.fp)
+              if (cur_cmd->x.outf->fp)
                 output_line (line.active, line.length,
                             line.chomped, cur_cmd->x.outf);
               break;
 
             case 'W':
-              if (cur_cmd->x.fp)
+              if (cur_cmd->x.outf->fp)
                 {
                   char *p = memchr (line.active, buffer_delimiter, line.length);
                   output_line (line.active, p ? p - line.active : line.length,

@@ -1195,7 +1195,7 @@ compile_program (struct vector *vector)
           break;
 
         case 'R':
-          cur_cmd->x.fp = get_openfile (&file_read, read_mode, false)->fp;
+          cur_cmd->x.inf = get_openfile (&file_read, read_mode, false);
           break;
 
         case 'W':

@@ -166,8 +166,9 @@ struct sed_cmd {
     /* This is used for the w command. */
     struct output *outf;
 
-    /* This is used for the R command. */
-    FILE *fp;
+    /* This is used for the R command.
+       (despite the struct name, it is used for both in and out files). */
+    struct output *inf;
 
     /* This is used for the y command. */
     unsigned char *translate;
