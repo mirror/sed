@@ -26,11 +26,16 @@
 #include <unistd.h>
 #include <limits.h>
 
+#include "binary-io.h"
 #include "unlocked-io.h"
 #include "utils.h"
 #include "progname.h"
 #include "fwriting.h"
 #include "xalloc.h"
+
+#if O_BINARY
+extern bool binary_mode;
+#endif
 
 /* Store information about files opened with ck_fopen
    so that error messages from ck_fread, ck_fwrite, etc. can print the
@@ -182,6 +187,10 @@ ck_mkstemp (char **p_filename, const char *tmpdir,
   if (fd == -1)
     panic (_("couldn't open temporary file %s: %s"), template,
            strerror (errno));
+#if O_BINARY
+  if (binary_mode && (set_binary_mode ( fd, O_BINARY) == -1))
+      panic (_("failed to set binary mode on '%s'"), template);
+#endif
 
   *p_filename = template;
   FILE *fp = fdopen (fd, mode);

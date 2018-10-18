@@ -13,6 +13,9 @@ GNU sed NEWS                                    -*- outline -*-
   and other write commands.
   Buffering can be disabled (as before) with "sed -u".
 
+  sed in non-cygwin windows environments (e.g. mingw) now properly handles
+  '\n' newlines in -b/--binary mode.
+
 ** Bug fixes
 
   sed no longer accesses invalid memory (heap overflow) when given invalid

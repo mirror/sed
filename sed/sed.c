@@ -24,6 +24,7 @@
 #include <stdlib.h>
 #include <sys/types.h>
 #include <unistd.h>
+#include "binary-io.h"
 #include "getopt.h"
 #include "progname.h"
 #include "version.h"
@@ -68,6 +69,11 @@ char *in_place_extension = NULL;
 /* The mode to use to read/write files, either "r"/"w" or "rb"/"wb".  */
 char const *read_mode = "r";
 char const *write_mode = "w";
+
+#if O_BINARY
+/* Additional flag for binary mode on platforms with O_BINARY/O_TEXT.  */
+bool binary_mode = false;
+#endif
 
 /* Do we need to be pedantically POSIX compliant? */
 enum posixicity_types posixicity;
@@ -148,8 +154,7 @@ Usage: %s [OPTION]... {script-only-if-no-other-script} [input-file]...\n\
 #endif
   fprintf (out, _("  -i[SUFFIX], --in-place[=SUFFIX]\n\
                  edit files in place (makes backup if SUFFIX supplied)\n"));
-#if defined WIN32 || defined _WIN32 || defined __CYGWIN__ \
-  || defined MSDOS || defined __EMX__
+#if O_BINARY
   fprintf (out, _("  -b, --binary\n\
                  open files in binary mode (CR+LFs are not" \
                  " processed specially)\n"));
@@ -310,6 +315,9 @@ main (int argc, char **argv)
         case 'b':
           read_mode = "rb";
           write_mode = "wb";
+#if O_BINARY
+          binary_mode = true;
+#endif
           break;
 
         case 'E':
@@ -357,6 +365,16 @@ main (int argc, char **argv)
         usage (EXIT_BAD_USAGE);
     }
   check_final_program (the_program);
+
+#if O_BINARY
+  if (binary_mode)
+    {
+       if (set_binary_mode ( fileno (stdin), O_BINARY) == -1)
+         panic (_("failed to set binary mode on STDIN"));
+       if (set_binary_mode ( fileno (stdout), O_BINARY) == -1)
+         panic (_("failed to set binary mode on STDOUT"));
+    }
+#endif
 
   if (debug)
     debug_print_program (the_program);
