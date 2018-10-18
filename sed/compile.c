@@ -139,7 +139,8 @@ static const char errors[] =
   "incomplete command\0"
   "\":\" lacks a label\0"
   "recursive escaping after \\c not allowed\0"
-  "e/r/w commands disabled in sandbox mode";
+  "e/r/w commands disabled in sandbox mode\0"
+  "missing filename in r/R/w/W commands";
 
 #define BAD_BANG (errors)
 #define BAD_COMMA (BAD_BANG + sizeof (N_("multiple `!'s")))
@@ -188,6 +189,8 @@ static const char errors[] =
   + sizeof (N_("\":\" lacks a label")))
 #define DISALLOWED_CMD (RECURSIVE_ESCAPE_C \
   + sizeof (N_("recursive escaping after \\c not allowed")))
+#define MISSING_FILENAME (DISALLOWED_CMD \
+  + sizeof(N_( "e/r/w commands disabled in sandbox mode")))
 /* #define END_ERRORS (DISALLOWED_CMD \
      + sizeof(N_( "e/r/w commands disabled in sandbox mode"))) */
 
@@ -386,6 +389,9 @@ get_openfile (struct output **file_ptrs, const char *mode, int fail)
 
   b = read_filename ();
   file_name = get_buffer (b);
+  if (strlen (file_name) == 0)
+    bad_prog (_(MISSING_FILENAME));
+
   for (p=*file_ptrs; p; p=p->link)
     if (strcmp (p->name, file_name) == 0)
       break;
@@ -1182,6 +1188,8 @@ compile_program (struct vector *vector)
 
         case 'r':
           b = read_filename ();
+          if (strlen (get_buffer (b)) == 0)
+            bad_prog (_(MISSING_FILENAME));
           cur_cmd->x.fname = xstrdup (get_buffer (b));
           free_buffer (b);
           break;

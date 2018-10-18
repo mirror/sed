@@ -64,6 +64,7 @@ T =					\
   testsuite/mb-charclass-non-utf8.sh	\
   testsuite/mb-match-slash.sh		\
   testsuite/mb-y-translate.sh		\
+  testsuite/missing-filename.sh		\
   testsuite/newline-dfa-bug.sh		\
   testsuite/normalize-text.sh		\
   testsuite/nulldata.sh			\

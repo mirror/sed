@@ -4,6 +4,10 @@ GNU sed NEWS                                    -*- outline -*-
 
 ** Improvements
 
+  sed now prints a clear error message when r/R/w/W (and s///w) commands
+  are missing a filename. Previously, w/W commands would fail with confusing
+  error message, while r/R would be a silent no-op.
+
   sed now uses fully-buffered output (instead of line-buffered) when
   writing to files. This should noticeably improve performance of "sed -i"
   and other write commands.
