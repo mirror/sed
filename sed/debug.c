@@ -302,9 +302,12 @@ debug_print_function (const struct vector *program, const struct sed_cmd *sc)
     case 't':
     case 'T':
       {
-        const char *label_name = program->v[sc->x.jump_index].x.label_name;
-        if (label_name)
-          printf (" %s", label_name);
+        if (sc->x.jump_index < program->v_length)
+          {
+            const char *label_name = program->v[sc->x.jump_index].x.label_name;
+            if (label_name)
+              printf (" %s", label_name);
+          }
       }
       break;
 
