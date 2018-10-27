@@ -18,7 +18,6 @@
 
 use strict;
 use File::stat;
-use Data::Dump qw(dump);
 
 (my $program_name = $0) =~ s|.*/||;
 
