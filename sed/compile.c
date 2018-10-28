@@ -190,9 +190,9 @@ static const char errors[] =
 #define DISALLOWED_CMD (RECURSIVE_ESCAPE_C \
   + sizeof (N_("recursive escaping after \\c not allowed")))
 #define MISSING_FILENAME (DISALLOWED_CMD \
-  + sizeof(N_( "e/r/w commands disabled in sandbox mode")))
+  + sizeof (N_( "e/r/w commands disabled in sandbox mode")))
 /* #define END_ERRORS (DISALLOWED_CMD \
-     + sizeof(N_( "e/r/w commands disabled in sandbox mode"))) */
+     + sizeof (N_( "e/r/w commands disabled in sandbox mode"))) */
 
 static struct output *file_read = NULL;
 static struct output *file_write = NULL;
