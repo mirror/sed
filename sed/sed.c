@@ -91,6 +91,7 @@ struct localeinfo localeinfo;
 static void
 cleanup (void)
 {
+  IF_LINT (free (in_place_extension));
   if (G_file_to_unlink)
     unlink (G_file_to_unlink);
 }
@@ -281,6 +282,7 @@ main (int argc, char **argv)
 
         case 'i':
           separate_files = true;
+          IF_LINT (free (in_place_extension));
           if (optarg == NULL)
             /* use no backups */
             in_place_extension = xstrdup ("*");
