@@ -1249,10 +1249,10 @@ debug_print_end_of_cycle (void)
 static void
 debug_print_input (const struct input *input)
 {
-  bool stdin = (input->fp && fileno (input->fp) == 0);
+  bool is_stdin = (input->fp && fileno (input->fp) == 0);
 
   printf ("INPUT:   '%s' line %lu\n",
-          stdin?"STDIN":input->in_file_name,
+          is_stdin?"STDIN":input->in_file_name,
           input->line_number);
 }
 
