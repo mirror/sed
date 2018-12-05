@@ -36,7 +36,6 @@
 absolute-header.m4
 acl.m4
 alloca.m4
-asm-underscore.m4
 btowc.m4
 canonicalize.m4
 codeset.m4
@@ -230,3 +229,6 @@ xstrndup.m4
 /hard-locale.m4
 /pthread_rwlock_rdlock.m4
 /std-gnu11.m4
+/__inline.m4
+/intl-thread-locale.m4
+/mkdir.m4

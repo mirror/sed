@@ -249,3 +249,6 @@ xstrndup.h
 /stat-w32.c
 /stat-w32.h
 /stdalign.in.h
+/cdefs.h
+/libc-config.h
+/mkdir.c
