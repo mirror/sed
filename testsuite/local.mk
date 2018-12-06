@@ -69,6 +69,7 @@ T =					\
   testsuite/newline-dfa-bug.sh		\
   testsuite/normalize-text.sh		\
   testsuite/nulldata.sh			\
+  testsuite/obinary.sh			\
   testsuite/panic-tests.sh		\
   testsuite/posix-char-class.sh		\
   testsuite/posix-mode-addr.sh		\
