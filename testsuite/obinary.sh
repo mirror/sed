@@ -23,7 +23,7 @@ print_ver_ sed
 # If not, skip the test.
 printf a | sed cb > out1 \
   || framework_failure_ "failed to run sed 'cb'"
-size=$(wc -c < out1) \
+size=$(LC_ALL=C wc -c < out1 | tr -d '[:space:]') \
   || framework_failure_ "failed to check size of 'out1'"
 case $size in
   2) skip_ "platform does not enable O_TEXT by default" ;;
