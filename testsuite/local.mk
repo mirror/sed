@@ -112,6 +112,7 @@ T += testsuite/8bit.sh			\
      testsuite/stdin.sh                 \
      testsuite/utf8-ru.sh		\
      testsuite/uniq.sh			\
+     testsuite/word-delim.sh		\
      testsuite/xemacs.sh
 
 TESTS = $(SEDTESTS) $(T)

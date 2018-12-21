@@ -2,6 +2,14 @@ GNU sed NEWS                                    -*- outline -*-
 
 * Noteworthy changes in release ?.? (????-??-??) [?]
 
+** Bug fixes
+
+  Some uses of \b in the C locale and with the DFA matcher would fail, e.g.,
+  the following would mistakenly print "123-x" instead of "123":
+    echo 123-x|LC_ALL=C sed 's/.\bx//'
+  Using a multibyte locale or certain regexp constructs (some ranges,
+  backreferences) would avoid the bug.  [bug introduced in sed 4.6]
+
 
 * Noteworthy changes in release 4.6 (2018-12-19) [stable]
 
