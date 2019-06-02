@@ -18,6 +18,11 @@
 print_ver_ sed
 require_selinux_
 
+sed --version | grep -q "with SELinux" \
+  || skip_ "sed built without SELinux support"
+sed --version | grep -q "^SELinux is enabled" \
+  || skip_ "sed reports SELinux is disabled on this system"
+
 touch a || framework_failure_
 chcon -u system_u a || skip_ "chcon doesn't work"
 chcon -u user_u a || skip_ "chcon doesn't work"
