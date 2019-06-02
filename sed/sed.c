@@ -29,6 +29,7 @@
 #include "progname.h"
 #include "version.h"
 #include "xalloc.h"
+#include <selinux/selinux.h>
 
 #include "version-etc.h"
 
@@ -128,6 +129,22 @@ General help using GNU software: <https://www.gnu.org/gethelp/>.\n"));
      get reports for other people's bugs.  */
   if (!errmsg)
     fprintf (out, _("E-mail bug reports to: <%s>.\n"), PACKAGE_BUGREPORT);
+}
+
+static void
+selinux_support (void)
+{
+  putchar ('\n');
+#if HAVE_SELINUX_SELINUX_H
+  puts (_("This sed program was built with SELinux support."));
+  if (is_selinux_enabled())
+    puts (_("SELinux is enabled on this system."));
+  else
+    puts (_("SELinux is disabled on this system."));
+#else
+  puts (_("This sed program was built without SELinux support."));
+#endif
+  putchar ('\n');
 }
 
 _Noreturn static void
@@ -344,6 +361,7 @@ main (int argc, char **argv)
         case 'v':
           version_etc (stdout, program_name, PACKAGE_NAME, Version,
                       AUTHORS, (char *) NULL);
+          selinux_support ();
           contact (false);
           ck_fclose (NULL);
           exit (EXIT_SUCCESS);
