@@ -2,6 +2,13 @@ GNU sed NEWS                                    -*- outline -*-
 
 * Noteworthy changes in release ?.? (????-??-??) [?]
 
+** Bug fixes
+
+  "sed -i" now creates temporary files with correct umask (limited to u=rwx).
+  Previously sed would incorrectly set umask on temporary files, resulting
+  in problems under certain fuse-like file systems.
+  [bug introduced in sed 4.2.1]
+
 
 * Noteworthy changes in release 4.7 (2018-12-20) [stable]
 
