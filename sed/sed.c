@@ -137,7 +137,7 @@ selinux_support (void)
   putchar ('\n');
 #if HAVE_SELINUX_SELINUX_H
   puts (_("This sed program was built with SELinux support."));
-  if (is_selinux_enabled())
+  if (is_selinux_enabled ())
     puts (_("SELinux is enabled on this system."));
   else
     puts (_("SELinux is disabled on this system."));
