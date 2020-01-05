@@ -71,6 +71,7 @@
 /lib/fcntl.h
 /lib/getopt-cdefs.h
 /lib/getopt.h
+/lib/inttypes.h
 /lib/langinfo.h
 /lib/limits.h
 /lib/locale.h
