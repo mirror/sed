@@ -9,6 +9,10 @@ GNU sed NEWS                                    -*- outline -*-
   in problems under certain fuse-like file systems.
   [bug introduced in sed 4.2.1]
 
+** Release
+
+  distribute gzip-compressed tarballs once again
+
 
 * Noteworthy changes in release 4.7 (2018-12-20) [stable]
 

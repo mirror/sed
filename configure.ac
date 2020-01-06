@@ -21,7 +21,7 @@ AC_CONFIG_AUX_DIR(build-aux)
 AC_CONFIG_SRCDIR([sed/sed.c])
 AM_CONFIG_HEADER(config.h:config_h.in)
 AC_PREREQ([2.64])
-AM_INIT_AUTOMAKE([1.11.1 no-dist-gzip dist-xz color-tests parallel-tests
+AM_INIT_AUTOMAKE([1.11.1 dist-xz color-tests parallel-tests
                   subdir-objects])
 AM_SILENT_RULES([yes]) # make --enable-silent-rules the default.
 AC_CONFIG_MACRO_DIR([m4])
