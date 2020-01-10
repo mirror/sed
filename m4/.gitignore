@@ -232,3 +232,4 @@ xstrndup.m4
 /__inline.m4
 /intl-thread-locale.m4
 /mkdir.m4
+/perl.m4

@@ -20,7 +20,7 @@ TEST_EXTENSIONS = .sh .pl
 if HAVE_PERL
 TESTSUITE_PERL = $(PERL)
 else
-TESTSUITE_PERL = $(SHELL) $(srcdir)/no-perl
+TESTSUITE_PERL = $(SHELL) $(srcdir)/testsuite/no-perl
 endif
 
 # Options passed to the perl invocations running the perl test scripts.
@@ -199,6 +199,7 @@ EXTRA_DIST += \
 	testsuite/madding.good \
 	testsuite/madding.inp \
 	testsuite/madding.sed \
+	testsuite/no-perl \
 	testsuite/uniq.good \
 	testsuite/uniq.inp \
 	testsuite/uniq.sed \
