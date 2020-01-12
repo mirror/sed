@@ -64,6 +64,9 @@ valgrind --quiet --error-exitcode=1 \
 grep 'valgrind: .*Assertion.*failed' err-no-posix > /dev/null \
   && skip_ 'you seem to have a buggy version of valgrind'
 
+# Remove any valgrind-added diagnostics from stderr.
+sed -i '/^==/d' err
+
 compare exp out || fail=1
 compare /dev/null err || fail=1
 
