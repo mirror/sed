@@ -117,7 +117,6 @@ cancel_cleanup (void)
   G_file_to_unlink = NULL;
 }
 
-static void usage (int);
 static void
 contact (int errmsg)
 {
