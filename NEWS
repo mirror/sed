@@ -13,6 +13,10 @@ GNU sed NEWS                                    -*- outline -*-
 
   distribute gzip-compressed tarballs once again
 
+** Improvements
+
+  a year's worth of gnulib development, including improved DFA performance
+
 
 * Noteworthy changes in release 4.7 (2018-12-20) [stable]
 
