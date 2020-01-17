@@ -1347,7 +1347,7 @@ execute_program (struct vector *vec, struct input *input)
               panic (_("`e' command not supported"));
 #else
               FILE *pipe_fp;
-              int cmd_length = cur_cmd->x.cmd_txt.text_length;
+              size_t cmd_length = cur_cmd->x.cmd_txt.text_length;
               line_reset (&s_accum, NULL);
 
               if (!cmd_length)
@@ -1367,7 +1367,7 @@ execute_program (struct vector *vec, struct input *input)
 
               {
                 char buf[4096];
-                int n;
+                size_t n;
                 while (!feof (pipe_fp))
                   if ((n = fread (buf, sizeof (char), 4096, pipe_fp)) > 0)
                     {

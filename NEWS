@@ -2,6 +2,11 @@ GNU sed NEWS                                    -*- outline -*-
 
 * Noteworthy changes in release ?.? (????-??-??) [?]
 
+** Bug fixes
+
+  a program with an execution line longer than 2GB can no longer trigger
+  an out-of-bounds memory write.
+
 
 * Noteworthy changes in release 4.8 (2020-01-14) [stable]
 
