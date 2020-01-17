@@ -1518,7 +1518,7 @@ execute_program (struct vector *vec, struct input *input)
                   struct append_queue *aq;
                   size_t buflen;
                   char *text = NULL;
-                  int result;
+                  size_t result;
 
                   result = ck_getdelim (&text, &buflen, buffer_delimiter,
                                         cur_cmd->x.inf->fp);

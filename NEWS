@@ -7,6 +7,9 @@ GNU sed NEWS                                    -*- outline -*-
   a program with an execution line longer than 2GB can no longer trigger
   an out-of-bounds memory write.
 
+  using the R command to read an input line of length longer than 2GB
+  can no longer trigger an out-of-bounds memory read.
+
 
 * Noteworthy changes in release 4.8 (2020-01-14) [stable]
 
