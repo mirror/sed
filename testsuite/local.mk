@@ -166,6 +166,7 @@ TESTS_ENVIRONMENT =				\
   srcdir='$(srcdir)'				\
   top_srcdir='$(top_srcdir)'			\
   CC='$(CC)'					\
+  CONFIG_HEADER='$(CONFIG_HEADER)'		\
   SED_TEST_NAME=`echo $$tst|sed 's,^\./,,;s,/,-,g'` \
   MAKE=$(MAKE)					\
   MALLOC_PERTURB_=$(MALLOC_PERTURB_)		\
