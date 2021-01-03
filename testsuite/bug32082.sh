@@ -3,7 +3,7 @@
 # Before sed 4.6 these would result in "Invalid read size of 4" reported
 # by valgrind from execute.c:992
 
-# Copyright (C) 2018-2020 Free Software Foundation, Inc.
+# Copyright (C) 2018-2021 Free Software Foundation, Inc.
 
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by

@@ -1,5 +1,5 @@
 /*  Functions from hack's utils library.
-    Copyright (C) 1989-2020 Free Software Foundation, Inc.
+    Copyright (C) 1989-2021 Free Software Foundation, Inc.
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -26,7 +26,8 @@ enum exit_codes {
 };
 
 
-_Noreturn void panic (const char *str, ...) _GL_ATTRIBUTE_FORMAT_PRINTF (1, 2);
+_Noreturn void panic (const char *str, ...)
+  _GL_ATTRIBUTE_FORMAT_PRINTF_STANDARD (1, 2);
 
 FILE *ck_fopen (const char *name, const char *mode, int fail);
 FILE *ck_fdopen (int fd, const char *name, const char *mode, int fail);

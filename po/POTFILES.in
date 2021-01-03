@@ -2,7 +2,6 @@ lib/closeout.c
 lib/copy-acl.c
 lib/dfa.c
 lib/error.c
-lib/getopt.c
 lib/obstack.c
 lib/quotearg.c
 lib/regcomp.c
