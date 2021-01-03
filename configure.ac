@@ -297,12 +297,6 @@ AM_CONDITIONAL([CROSS_COMPILING], [test "$cross_compiling" = yes])
 # Perl is needed for help2man
 AC_PATH_PROG([PERL], [perl])
 
-# building from tarball?
-built_from_tarball=no
-test -f "$srcdir"/.tarball-version && \
-  ! test -d "$srcdir/.git" && \
-  built_from_tarball=yes
-
 # Can the man page be built?
 # Perl needed for help2man, executing sed needed for 'sed --help'
 can_rebuild_man_page=no
@@ -313,14 +307,12 @@ test -n "$PERL" && \
 # Build the man page when
 # building from git and rebuilding is possible.
 AM_CONDITIONAL([BUILD_MAN_PAGE],
- [test "$built_from_tarball" = no && \
-    test "$can_rebuild_man_page" = yes])
+ [test "$can_rebuild_man_page" = yes])
 
 # Create a stub man page instead of failing when
 # building from git and rebuilding is not possible.
 AM_CONDITIONAL([BUILD_DUMMY_MAN_PAGE],
- [test "$built_from_tarball" = no && \
-    test "$can_rebuild_man_page" = no])
+ [test "$can_rebuild_man_page" = no])
 
 
 # This is needed when building outside the source dir
