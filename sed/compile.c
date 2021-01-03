@@ -203,7 +203,10 @@ bad_command (char ch)
 {
   const char *msg = _(UNKNOWN_CMD);
   char *unknown_cmd = xmalloc (strlen (msg));
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wformat-nonliteral"
   sprintf (unknown_cmd, msg, ch);
+#pragma GCC diagnostic pop
   bad_prog (unknown_cmd);
 }
 
