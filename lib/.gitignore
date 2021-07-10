@@ -252,3 +252,8 @@ xstrndup.h
 /cdefs.h
 /libc-config.h
 /mkdir.c
+/calloc.c
+/dynarray.h
+/ialloc.c
+/ialloc.h
+/reallocarray.c

@@ -76,6 +76,7 @@
 /lib/limits.h
 /lib/locale.h
 /lib/se-context.h
+/lib/se-label.h
 /lib/se-selinux.h
 /lib/stdalign.h
 /lib/stdarg.h

@@ -1,3 +1,4 @@
+/glibc21.m4
 /xsize.m4
 /wint_t.m4
 /wchar_t.m4
@@ -24,7 +25,6 @@
 /intl.m4
 /intdiv0.m4
 /iconv.m4
-/glibc21.m4
 /glibc2.m4
 /gettext.m4
 /fcntl-o.m4
@@ -60,7 +60,6 @@ getpagesize.m4
 gettext.m4
 gettimeofday.m4
 glibc2.m4
-glibc21.m4
 gnulib-cache.m4
 gnulib-common.m4
 gnulib-comp.m4
@@ -216,7 +215,6 @@ xstrndup.m4
 /closeout.m4
 /fpending.m4
 /non-recursive-gnulib-prefix-hack.m4
-/ctype.m4
 /assert.m4
 /flexmember.m4
 /getprogname.m4
@@ -233,3 +231,7 @@ xstrndup.m4
 /intl-thread-locale.m4
 /mkdir.m4
 /perl.m4
+/calloc.m4
+/ctype_h.m4
+/reallocarray.m4
+/year2038.m4
