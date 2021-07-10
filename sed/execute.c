@@ -572,7 +572,7 @@ open_next_file (const char *name, struct input *input)
     {
       int input_fd;
       char *tmpdir, *p;
-      security_context_t old_fscreatecon;
+      char *old_fscreatecon;
       int reset_fscreatecon = 0;
       memset (&old_fscreatecon, 0, sizeof (old_fscreatecon));
 
@@ -593,7 +593,7 @@ open_next_file (const char *name, struct input *input)
 
       if (is_selinux_enabled () > 0)
         {
-          security_context_t con;
+          char *con;
           if (lgetfilecon (input->in_file_name, &con) != -1)
             {
               /* Save and restore the old context for the sake of w and W
