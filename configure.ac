@@ -19,14 +19,14 @@ AC_INIT([GNU sed],
         [bug-sed@gnu.org])
 AC_CONFIG_AUX_DIR(build-aux)
 AC_CONFIG_SRCDIR([sed/sed.c])
-AM_CONFIG_HEADER(config.h:config_h.in)
+AC_CONFIG_HEADERS([config.h:config_h.in])
 AC_PREREQ([2.64])
 AM_INIT_AUTOMAKE([1.11.1 dist-xz color-tests parallel-tests
                   subdir-objects])
 AM_SILENT_RULES([yes]) # make --enable-silent-rules the default.
 AC_CONFIG_MACRO_DIR([m4])
 
-AC_PROG_CC_STDC
+AC_PROG_CC
 AM_PROG_CC_C_O
 gl_EARLY
 gl_INIT
@@ -62,7 +62,8 @@ AC_DEFUN([gl_GCC_VERSION_IFELSE],
 )
 
 AC_CACHE_CHECK([whether "rt" can be used with fopen], [sed_cv_fopen_rt], [
-AC_TRY_RUN([
+AC_RUN_IFELSE(
+  [AC_LANG_SOURCE([[
 #include <stdio.h>
 #include <errno.h>
 
@@ -74,7 +75,7 @@ int main()
   fp = fopen ("conftest.c", "rt");
   if (fp) fclose (fp);
   return fp ? 0 : 1;
-}], [sed_cv_fopen_rt=yes],
+}]])], [sed_cv_fopen_rt=yes],
     [sed_cv_fopen_rt=no],
     [case $host in
        *cygwin* | *mingw*) sed_cv_fopen_rt=yes ;;
@@ -86,7 +87,8 @@ if test "$sed_cv_fopen_rt" = yes; then
 fi
 
 AC_CACHE_CHECK([whether -lcP is needed], [sed_cv_libcp_needed], [
-AC_TRY_RUN([
+AC_RUN_IFELSE(
+  [AC_LANG_SOURCE([[
 #include <stdio.h>
 #include <errno.h>
 
@@ -100,7 +102,7 @@ int main()
   result = fflush (fp) == EOF && errno == 0;
   fclose (fp);
   return result;
-}], [sed_cv_libcp_needed=no],
+}]])], [sed_cv_libcp_needed=no],
     [sed_cv_libcp_needed=yes],
     [sed_cv_libcp_needed="assuming no"])
 ])
@@ -143,7 +145,8 @@ fi
 # have a couple of platforms where these tests pass.  Right now, only
 # Windows and HP/UX do not support the tests.
 AC_MSG_CHECKING([whether UTF-8 case folding tests should pass])
-AC_TRY_RUN([
+AC_RUN_IFELSE(
+  [AC_LANG_SOURCE([[
 #include <locale.h>
 #include <string.h>
 #include <stdlib.h>
@@ -204,7 +207,7 @@ int main()
   setlocale (LC_CTYPE, old);
   exit (!test ());
 }
-], [AC_MSG_RESULT([yes]); XFAIL_TESTS=],
+]])], [AC_MSG_RESULT([yes]); XFAIL_TESTS=],
    [AC_MSG_RESULT([no]); XFAIL_TESTS='testsuite/utf8-1 testsuite/utf8-2 \
                                       testsuite/utf8-3 testsuite/utf8-4'],
    [AC_MSG_RESULT([don't care (cross compiling)]); XFAIL_TESTS=])
