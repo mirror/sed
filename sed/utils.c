@@ -47,6 +47,7 @@ struct open_file
     char *name;
     struct open_file *link;
     unsigned temp : 1;
+    unsigned fclose_failed : 1;
   };
 
 static struct open_file *open_files = NULL;
@@ -70,7 +71,8 @@ panic (const char *str, ...)
     {
       if (open_files->temp)
         {
-          fclose (open_files->fp);
+          if (!open_files->fclose_failed)
+            fclose (open_files->fp);
           errno = 0;
           unlink (open_files->name);
           if (errno != 0)
@@ -131,6 +133,7 @@ register_open_file (FILE *fp, const char *name)
   p->name = xstrdup (name);
   p->fp = fp;
   p->temp = false;
+  p->fclose_failed = false;
 }
 
 /* Panic on failing fopen */
@@ -252,6 +255,21 @@ ck_fflush (FILE *stream)
     panic ("couldn't flush %s: %s", utils_fp_name (stream), strerror (errno));
 }
 
+/* If we've failed to close a file in open_files whose "fp" member
+   is the same as FP, mark its entry as fclose_failed.  */
+static void
+mark_as_fclose_failed (FILE *fp)
+{
+  for (struct open_file *p = open_files; p; p = p->link)
+    {
+      if (p->fp == fp)
+        {
+          p->fclose_failed = true;
+          break;
+        }
+    }
+}
+
 /* Panic on failing fclose */
 void
 ck_fclose (FILE *stream)
@@ -293,7 +311,13 @@ do_ck_fclose (FILE *fp)
   clearerr (fp);
 
   if (fclose (fp) == EOF)
-    panic ("couldn't close %s: %s", utils_fp_name (fp), strerror (errno));
+    {
+      /* Mark as already fclose-failed, so we don't attempt to fclose it
+         a second time via panic.  */
+      mark_as_fclose_failed (fp);
+
+      panic ("couldn't close %s: %s", utils_fp_name (fp), strerror (errno));
+    }
 }
 
 /* Follow symlink and panic if something fails.  Return the ultimate
