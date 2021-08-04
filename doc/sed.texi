@@ -4718,9 +4718,8 @@ See the GNU @command{coreutils} manual for an alternative solution using
 @node Line length adjustment
 @section Line length adjustment
 
-This section uses @code{N} and @code{D} commands to search for
-consecutive words spanning multiple lines, and the @code{b} command for
-branching.
+This section uses @code{N} and @code{P} commands to read and write
+lines, and the @code{b} command for branching.
 @xref{Multiline techniques} and @ref{Branching and flow control}.
 
 This (somewhat contrived) example deal with formatting and wrapping
@@ -4749,7 +4748,7 @@ $ cat wrap40.sed
 # outer loop
 :x
 
-# Appead a newline followed by the next input line to the pattern buffer
+# Append a newline followed by the next input line to the pattern buffer
 N
 
 # Remove all newlines from the pattern buffer
