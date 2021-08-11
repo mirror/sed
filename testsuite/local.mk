@@ -47,6 +47,7 @@ T =					\
   testsuite/bug32271-1.sh		\
   testsuite/bug32271-2.sh		\
   testsuite/cmd-l.sh			\
+  testsuite/cmd-0r.sh			\
   testsuite/cmd-R.sh			\
   testsuite/colon-with-no-label.sh	\
   testsuite/comment-n.sh		\

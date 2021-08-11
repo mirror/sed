@@ -1511,6 +1511,10 @@ standard input.
 As a GNU extension, this command accepts two addresses. The
 file will then be reread and inserted on each of the addressed lines.
 
+As a @value{SSED} extension, the @code{r} command accepts a zero address,
+inserting a file @emph{before} the first line of the input
+@pxref{Adding a header to multiple files}.
+
 @item w @var{filename}
 @findex w (write file) command
 @cindex Write to a file
@@ -2046,6 +2050,7 @@ $ ls -1
 * Numeric Addresses::                 selecting lines by numbers
 * Regexp Addresses::                  selecting lines by text matching
 * Range Addresses::                   selecting a range of lines
+* Zero Address::                      Using address @code{0}
 @end menu
 
 @node Addresses overview
@@ -2380,6 +2385,7 @@ $ seq 10 | sed -n '4,1p'
 4
 @end example
 
+@anchor{Zero Address Regex Range}
 @cindex Special addressing forms
 @cindex Range with start address of zero
 @cindex Zero, as range start address
@@ -2403,10 +2409,6 @@ except that if @var{addr2} matches the very first line of input the
 the @code{1,/@var{regexp}/} form will match the beginning of its range and
 hence make the range span up to the @emph{second} occurrence of the
 regular expression.
-
-Note that this is the only place where the @code{0} address makes
-sense; there is no 0-th line and commands which are given the @code{0}
-address in any other way will give an error.
 
 The following examples demonstrate the difference between starting
 with address 1 and 0:
@@ -2450,6 +2452,24 @@ $ seq 10 | sed -n '6,~4p'
 
 @end table
 
+
+
+@node Zero Address
+@section Zero Address
+@cindex Zero Address
+As a @value{SSED} extension, @code{0} address can be used in two cases:
+@enumerate
+@item
+In a regex range addresses as @code{0,/@var{regexp}/}
+(@pxref{Zero Address Regex Range}).
+@item
+With the @code{r} command, inserting a file before the first line
+(@pxref{Adding a header to multiple files}).
+@end enumerate
+
+Note that these are the only places where the @code{0} address makes
+sense; Commands which are given the @code{0} address in any
+other way will give an error.
 
 
 
@@ -4130,6 +4150,7 @@ Some exotic examples:
 * Reverse chars of lines::
 * Text search across multiple lines::
 * Line length adjustment::
+* Adding a header to multiple files::
 
 Emulating standard utilities:
 * tac::                             Reverse lines of files
@@ -4799,6 +4820,131 @@ t was the age of foolishness,
 @codequoteundirected off
 @codequotebacktick off
 
+
+
+
+@node Adding a header to multiple files
+@section Adding a header to multiple files
+
+@value{SSED} can be used to safely modify multiple files at once.
+
+@exdent Add a single line to the beginning of source code files:
+
+@codequoteundirected on
+@codequotebacktick on
+@example
+sed -i '1i/* Copyright (C) FOO BAR */' *.c
+@end example
+@codequoteundirected off
+@codequotebacktick off
+
+@exdent Adding a few lines is possible using @samp{\n} in the text:
+
+@codequoteundirected on
+@codequotebacktick on
+@example
+sed -i '1i/*\n * Copyright (C) FOO BAR\n * Created by Jane Doe\n */' *.c
+@end example
+@codequoteundirected off
+@codequotebacktick off
+
+To add multiple lines from another file, use @code{0rFILE}.
+A typical use case is adding a license notice header to all files:
+
+@codequoteundirected on
+@codequotebacktick on
+@example
+## Create the header file:
+$ cat<<'EOF'>LIC.TXT
+/*
+    Copyright (C) 1989-2021 FOO BAR
+
+    This program is free software; you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation; either version 3, or (at your option)
+    any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with this program; If not, see <https://www.gnu.org/licenses/>.
+*/
+EOF
+
+## Add the file at the beginning of all source code files:
+$ sed -i '0rLIC.TXT' *.cpp *.h
+@end example
+@codequoteundirected off
+@codequotebacktick off
+
+
+With script files (e.g. @file{.sh},@file{.py},@file{.pl} files)
+the license notice typically appears @emph{after} the first line (the
+'shebang' @samp{#!} line). The @code{1rFILE} command will add @file{FILE}
+@emph{after} the first line:
+
+@codequoteundirected on
+@codequotebacktick on
+@example
+## Create the header file:
+$ cat<<'EOF'>LIC.TXT
+##
+## Copyright (C) 1989-2021 FOO BAR
+##
+## This program is free software; you can redistribute it and/or modify
+## it under the terms of the GNU General Public License as published by
+## the Free Software Foundation; either version 3, or (at your option)
+## any later version.
+##
+## This program is distributed in the hope that it will be useful,
+## but WITHOUT ANY WARRANTY; without even the implied warranty of
+## MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+## GNU General Public License for more details.
+##
+## You should have received a copy of the GNU General Public License
+## along with this program; If not, see <https://www.gnu.org/licenses/>.
+##
+##
+EOF
+
+## Add the file at the beginning of all source code files:
+$ sed -i '1rLIC.TXT' *.py *.sh
+@end example
+@codequoteundirected off
+@codequotebacktick off
+
+The above @command{sed} commands can be combined with @command{find}
+to locate files in all subdirectories, @command{xargs} to run additional
+commands on selected files and @command{grep} to filter out files that already
+contain a copyright notice:
+
+@codequoteundirected on
+@codequotebacktick on
+@example
+find \( -iname '*.cpp' -o -iname '*.c' -o -iname '*.h' \) \
+    | xargs grep -Li copyright \
+    | xargs -r sed -i '0rLIC.TXT'
+@end example
+@codequoteundirected off
+@codequotebacktick off
+
+@exdent Or a slightly safe version (handling files with spaces and newlines):
+
+@codequoteundirected on
+@codequotebacktick on
+@example
+find \( -iname '*.cpp' -o -iname '*.c' -o -iname '*.h' \) -print0 \
+    | xargs -0 grep -Z -Li copyright \
+    | xargs -0 -r sed -i '0rLIC.TXT'
+@end example
+@codequoteundirected off
+@codequotebacktick off
+
+Note: using the @code{0} address with @code{r} command requires @value{SSED}
+version 4.9 or later. @xref{Zero Address}.
 
 
 

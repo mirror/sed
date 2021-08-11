@@ -363,7 +363,7 @@ debug_print_function (const struct vector *program, const struct sed_cmd *sc)
 
     case 'r':
       putchar (' ');
-      fputs (sc->x.fname, stdout);
+      fputs (sc->x.readcmd.fname, stdout);
       break;
 
     case 'R':

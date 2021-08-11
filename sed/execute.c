@@ -1509,10 +1509,17 @@ execute_program (struct vector *vec, struct input *input)
               return cur_cmd->x.int_arg == -1 ? 0 : cur_cmd->x.int_arg;
 
             case 'r':
-              if (cur_cmd->x.fname)
+              if (cur_cmd->x.readcmd.fname)
                 {
-                  struct append_queue *aq = next_append_slot ();
-                  aq->fname = cur_cmd->x.fname;
+                  if (cur_cmd->x.readcmd.append)
+                    {
+                      struct append_queue *aq = next_append_slot ();
+                      aq->fname = cur_cmd->x.readcmd.fname;
+                    }
+                  else
+                    {
+                      print_file (cur_cmd->x.readcmd.fname, output_file.fp);
+                    }
                 }
               break;
 

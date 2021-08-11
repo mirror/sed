@@ -57,6 +57,11 @@ struct regex {
   char re[1];
 };
 
+struct readcmd {
+  char *fname;
+  bool append; /* true: append (default); false: prepend (gnu extension) */
+};
+
 enum replacement_types {
   REPL_ASIS = 0,
   REPL_UPPERCASE = 1,
@@ -158,7 +163,7 @@ struct sed_cmd {
     countT jump_index;
 
     /* This is used for the r command. */
-    char *fname;
+    struct readcmd readcmd;
 
     /* This is used for the hairy s command. */
     struct subst *cmd_subst;

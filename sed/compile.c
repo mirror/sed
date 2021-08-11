@@ -1021,7 +1021,8 @@ compile_program (struct vector *vector)
 
           if ((cur_cmd->a1->addr_type == ADDR_IS_NUM
                && cur_cmd->a1->addr_number == 0)
-              && ((!cur_cmd->a2 || cur_cmd->a2->addr_type != ADDR_IS_REGEX)
+              && ((!cur_cmd->a2 && ch != 'r')
+                  || (cur_cmd->a2 && cur_cmd->a2->addr_type != ADDR_IS_REGEX)
                   || posixicity == POSIXLY_BASIC))
             bad_prog (_(INVALID_LINE_0));
         }
@@ -1196,7 +1197,21 @@ compile_program (struct vector *vector)
           b = read_filename ();
           if (strlen (get_buffer (b)) == 0)
             bad_prog (_(MISSING_FILENAME));
-          cur_cmd->x.fname = xstrdup (get_buffer (b));
+          cur_cmd->x.readcmd.fname = xstrdup (get_buffer (b));
+
+          /* Adjust '0rFILE' command to '1rFILE' in prepend mode */
+          if (cur_cmd->a1
+              && cur_cmd->a1->addr_type == ADDR_IS_NUM
+              && cur_cmd->a1->addr_number == 0
+              && !cur_cmd->a2)
+            {
+              cur_cmd->a1->addr_number = 1;
+              cur_cmd->x.readcmd.append = false;
+            }
+          else
+            {
+              cur_cmd->x.readcmd.append = true;
+            }
           free_buffer (b);
           break;
 
