@@ -468,6 +468,26 @@ release_append_queue (void)
 }
 
 static void
+print_file (const char* infname, FILE* outf)
+{
+  char buf[FREAD_BUFFER_SIZE];
+  size_t cnt;
+  FILE *fp;
+
+  /* "If _fname_ does not exist or cannot be read, it shall
+     be treated as if it were an empty file, causing no error
+     condition."  IEEE Std 1003.2-1992
+     So, don't fail. */
+  fp = ck_fopen (infname, read_mode, false);
+  if (fp)
+    {
+      while ((cnt = ck_fread (buf, 1, sizeof buf, fp)) > 0)
+        ck_fwrite (buf, 1, cnt, outf);
+      ck_fclose (fp);
+    }
+}
+
+static void
 dump_append_queue (void)
 {
   struct append_queue *p;
@@ -479,23 +499,7 @@ dump_append_queue (void)
         ck_fwrite (p->text, 1, p->textlen, output_file.fp);
 
       if (p->fname)
-        {
-          char buf[FREAD_BUFFER_SIZE];
-          size_t cnt;
-          FILE *fp;
-
-          /* "If _fname_ does not exist or cannot be read, it shall
-             be treated as if it were an empty file, causing no error
-             condition."  IEEE Std 1003.2-1992
-             So, don't fail. */
-          fp = ck_fopen (p->fname, read_mode, false);
-          if (fp)
-            {
-              while ((cnt = ck_fread (buf, 1, sizeof buf, fp)) > 0)
-                ck_fwrite (buf, 1, cnt, output_file.fp);
-              ck_fclose (fp);
-            }
-        }
+        print_file (p->fname, output_file.fp);
     }
 
   flush_output (output_file.fp);
