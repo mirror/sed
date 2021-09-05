@@ -124,12 +124,14 @@ Normally @command{sed} is invoked like this:
 sed SCRIPT INPUTFILE...
 @end example
 
-For example, to replace all occurrences of @samp{hello} to @samp{world}
+For example, to change every @samp{hello} to @samp{world}
 in the file @file{input.txt}:
 
 @example
-sed 's/hello/world/' input.txt > output.txt
+sed 's/hello/world/g' input.txt > output.txt
 @end example
+
+Without the @samp{g} (global) modifier, @command{sed} affects only the first instance per line.
 
 @cindex stdin
 @cindex standard input
@@ -138,9 +140,9 @@ If you do not specify @var{INPUTFILE}, or if @var{INPUTFILE} is @file{-},
 commands are equivalent:
 
 @example
-sed 's/hello/world/' input.txt > output.txt
-sed 's/hello/world/' < input.txt > output.txt
-cat input.txt | sed 's/hello/world/' - > output.txt
+sed 's/hello/world/g' input.txt > output.txt
+sed 's/hello/world/g' < input.txt > output.txt
+cat input.txt | sed 's/hello/world/g' - > output.txt
 @end example
 
 @cindex stdout
@@ -586,7 +588,7 @@ sed '30,35d' input.txt > output.txt
 @cindex regular expression, example
 @cindex example, regular expression
 The following example prints all input until a line
-starting with the word @samp{foo} is found. If such line is found,
+starting with the string @samp{foo} is found. If such line is found,
 @command{sed} will terminate with exit status 42.
 If such line was not found (and no other error occurred), @command{sed}
 will exit with status 0.
@@ -615,15 +617,15 @@ operations: deleting any lines matching the regular expression @code{/^foo/},
 and replacing all occurrences of the string @samp{hello} with @samp{world}:
 
 @example
-sed '/^foo/d ; s/hello/world/' input.txt > output.txt
+sed '/^foo/d ; s/hello/world/g' input.txt > output.txt
 
-sed -e '/^foo/d' -e 's/hello/world/' input.txt > output.txt
+sed -e '/^foo/d' -e 's/hello/world/g' input.txt > output.txt
 
 echo '/^foo/d' > script.sed
-echo 's/hello/world/' >> script.sed
+echo 's/hello/world/g' >> script.sed
 sed -f script.sed input.txt > output.txt
 
-echo 's/hello/world/' > script2.sed
+echo 's/hello/world/g' > script2.sed
 sed -e '/^foo/d' -f script2.sed input.txt > output.txt
 @end example
 
@@ -1188,7 +1190,7 @@ See the @command{tr} command from GNU coreutils for similar functionality.
 Appending @var{text} after a line. This is a GNU extension
 to the standard @code{a} command - see below for details.
 
-Example: Add the word @samp{hello} after the second line:
+Example: Add @samp{hello} after the second line:
 @codequoteundirected on
 @codequotebacktick on
 @example
@@ -1277,7 +1279,7 @@ $ sed -e '2a\' -e "$VAR"
 insert @var{text} before a line. This is a GNU extension
 to the standard @code{i} command - see below for details.
 
-Example: Insert the word @samp{hello} before the second line:
+Example: Insert @samp{hello} before the second line:
 @codequoteundirected on
 @codequotebacktick on
 @example
@@ -2059,7 +2061,7 @@ $ ls -1
 @cindex addresses, numeric
 @cindex numeric addresses
 Addresses determine on which line(s) the @command{sed} command will be
-executed. The following command replaces the word @samp{hello}
+executed. The following command replaces any first occurrence of @samp{hello}
 with @samp{world} only on line 144:
 
 @codequoteundirected on
@@ -2072,9 +2074,12 @@ sed '144s/hello/world/' input.txt > output.txt
 
 
 
-If no addresses are given, the command is performed on all lines.
-The following command replaces the word @samp{hello} with @samp{world}
-on all lines in the input file:
+If no address is specified, the command is performed on all lines.
+The following command replaces @samp{hello} with @samp{world},
+targeting every line of the input file.
+However, note that it modifies only the first instance of @samp{hello}
+on each line.
+Use the @samp{g} modifier to affect every instance on each affected line.
 
 @codequoteundirected on
 @codequotebacktick on
@@ -2090,8 +2095,8 @@ sed 's/hello/world/' input.txt > output.txt
 @cindex regular expression addresses
 Addresses can contain regular expressions to match lines based
 on content instead of line numbers. The following command replaces
-the word @samp{hello} with @samp{world} only in lines
-containing the word @samp{apple}:
+@samp{hello} with @samp{world} only on lines
+containing the string @samp{apple}:
 
 @codequoteundirected on
 @codequotebacktick on
@@ -2108,8 +2113,8 @@ sed '/apple/s/hello/world/' input.txt > output.txt
 An address range is specified with two addresses separated by a comma
 (@code{,}). Addresses can be numeric, regular expressions, or a mix of
 both.
-The following command replaces the word @samp{hello} with @samp{world}
-only in lines 4 to 17 (inclusive):
+The following command replaces @samp{hello} with @samp{world}
+only on lines 4 to 17 (inclusive):
 
 @codequoteundirected on
 @codequotebacktick on
@@ -2129,16 +2134,16 @@ Appending the @code{!} character to the end of an address
 specification (before the command letter) negates the sense of the
 match.  That is, if the @code{!} character follows an address or an
 address range, then only lines which do @emph{not} match the addresses
-will be selected. The following command replaces the word @samp{hello}
-with @samp{world} only in lines @emph{not} containing the word
+will be selected. The following command replaces @samp{hello}
+with @samp{world} only on lines @emph{not} containing the string
 @samp{apple}:
 
 @example
 sed '/apple/!s/hello/world/' input.txt > output.txt
 @end example
 
-The following command replaces the word @samp{hello} with
-@samp{world} only in lines 1 to 3 and 18 till the last line of the input file
+The following command replaces @samp{hello} with
+@samp{world} only on lines 1 to 3 and from line 18 to the last line of the input file
 (i.e. excluding lines 4 to 17):
 
 @example
@@ -2505,8 +2510,7 @@ themselves in a pattern, and match the corresponding characters.
 Regular expressions in @command{sed} are specified between two
 slashes.
 
-The following command prints lines containing the word
-@samp{hello}:
+The following command prints lines containing the string @samp{hello}:
 
 @example
 sed -n '/hello/p'
@@ -2656,8 +2660,8 @@ pattern space.
 In most scripts, pattern space is initialized to the content of each
 line (@pxref{Execution Cycle, , How @code{sed} works}).  So, it is a
 useful simplification to think of @code{^#include} as matching only
-lines where @samp{#include} is the first thing on line---if there are
-spaces before, for example, the match fails.  This simplification is
+lines where @samp{#include} is the first thing on the line---if there is
+any preceding space, for example, the match fails.  This simplification is
 valid as long as the original content of pattern space is not modified,
 for example with an @code{s} command.
 
@@ -2882,7 +2886,7 @@ A @dfn{bracket expression} is a list of characters enclosed by @samp{[} and
 It matches any single character in that list;
 if the first character of the list is the caret @samp{^},
 then it matches any character @strong{not} in the list.
-For example, the following command replaces the words
+For example, the following command replaces the strings
 @samp{gray} or @samp{grey} with @samp{blue}:
 
 @example
@@ -5803,7 +5807,7 @@ in a read-only directory, and will break hard or symbolic links when
 
 There is no line 0.  0 is a special address that is only used to treat
 addresses like @code{0,/@var{RE}/} as active when the script starts: if
-you write @code{1,/abc/d} and the first line includes the word @samp{abc},
+you write @code{1,/abc/d} and the first line includes the string @samp{abc},
 then that match would be ignored because address ranges must span at least
 two lines (barring the end of the file); but what you probably wanted is
 to delete every line up to the first one including @samp{abc}, and this
