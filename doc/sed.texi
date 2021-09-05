@@ -131,7 +131,8 @@ in the file @file{input.txt}:
 sed 's/hello/world/g' input.txt > output.txt
 @end example
 
-Without the @samp{g} (global) modifier, @command{sed} affects only the first instance per line.
+Without the @samp{g} (global) modifier, @command{sed} affects
+only the first instance per line.
 
 @cindex stdin
 @cindex standard input
@@ -2143,8 +2144,8 @@ sed '/apple/!s/hello/world/' input.txt > output.txt
 @end example
 
 The following command replaces @samp{hello} with
-@samp{world} only on lines 1 to 3 and from line 18 to the last line of the input file
-(i.e. excluding lines 4 to 17):
+@samp{world} only on lines 1 to 3 and from line 18 to the last line of the
+input file (i.e. excluding lines 4 to 17):
 
 @example
 sed '4,17!s/hello/world/' input.txt > output.txt
