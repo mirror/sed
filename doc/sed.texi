@@ -2022,7 +2022,7 @@ a
 @item @code{s///[we]} (substitute with @code{e} or @code{w} flags)
 
 In a substitution command, the @code{w} flag writes the substitution
-result to a file, and the @code{e} flag executes the subsitution result
+result to a file, and the @code{e} flag executes the substitution result
 as a shell command.  As with the @code{r/R/w/W/e} commands, these
 must be terminated with a newline.  If whitespace, comments or semicolons
 are found, they will be included in the shell command or filename, leading to
@@ -2648,7 +2648,7 @@ postfixed regular expression can also be followed by @code{*}; for
 example, @code{a**} is equivalent to @code{a*}.  POSIX
 1003.1-2001 says that @code{*} stands for itself when it appears at
 the start of a regular expression or subexpression, but many
-nonGNU implementations do not support this and portable
+non-GNU implementations do not support this and portable
 scripts should instead use @code{\*} in these contexts.
 @item .
 Matches any character, including newline.
@@ -3344,7 +3344,7 @@ the existing ``word boundary'' meaning.
 
 @value{SSED} processes escape sequences @emph{before} passing
 the text onto the regular-expression matching of the @command{s///} command
-and Address matching. Thus the follwing two commands are equivalent
+and Address matching. Thus the following two commands are equivalent
 (@samp{0x5e} is the hexadecimal @sc{ascii} value of the character @samp{^}):
 
 @codequoteundirected on
