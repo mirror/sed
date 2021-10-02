@@ -2492,7 +2492,7 @@ other way will give an error.
 * regexp extensions::        Additional regular expression commands
 * Back-references and Subexpressions:: Back-references and Subexpressions
 * Escapes::                  Specifying special characters
-* Locale Considerations::    Multibyte characters and locale considrations
+* Locale Considerations::    Multibyte characters and locale considerations
 @end menu
 
 @node Regular Expressions Overview
