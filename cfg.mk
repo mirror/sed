@@ -35,6 +35,7 @@ local-checks-to-skip =			\
   sc_GPL_version			\
   sc_bindtextdomain			\
   sc_error_message_uppercase		\
+  sc_indent				\
   sc_preprocessor_indentation		\
   sc_prohibit_atoi_atof			\
   sc_prohibit_magic_number_exit		\
