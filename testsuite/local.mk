@@ -120,8 +120,6 @@ TESTS = $(SEDTESTS) $(T)
 
 SEDTESTS =
 
-noinst_HEADERS += testsuite/testcases.h testsuite/ptestcases.h
-
 check_PROGRAMS = testsuite/get-mb-cur-max testsuite/test-mbrtowc
 testsuite_get_mb_cur_max_LDADD = lib/libsed.a $(INTLLIBS)
 testsuite_test_mbrtowc_LDADD = lib/libsed.a $(INTLLIBS)
