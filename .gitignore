@@ -59,4 +59,5 @@
 /testsuite/test-mbrtowc
 Makefile
 Makefile.in
+gt-bug*
 test-suite.log
