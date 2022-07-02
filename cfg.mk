@@ -95,6 +95,7 @@ sc_prohibit_echo_minus_en:
 LINE_LEN_MAX = 80
 FILTER_LONG_LINES =						\
   /^[^:]*\.diff:[^:]*:@@ / d;					\
+  \|^[^:]*doc/fdl.texi:| d;						\
   \|^[^:]*man/help2man:| d;			\
   \|^[^:]*tests/misc/sha[0-9]*sum.*\.pl[-:]| d;			\
   \|^[^:]*tests/pr/|{ \|^[^:]*tests/pr/pr-tests:| !d; };
