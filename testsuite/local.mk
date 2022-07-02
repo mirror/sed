@@ -183,7 +183,6 @@ EXTRA_DIST += \
 	testsuite/CuTmpdir.pm					\
 	testsuite/init.sh init.cfg \
 	testsuite/envvar-check \
-	testsuite/PCRE.tests testsuite/BOOST.tests testsuite/SPENCER.tests \
 	testsuite/8bit.good \
 	testsuite/8bit.inp \
 	testsuite/binary.sed \
