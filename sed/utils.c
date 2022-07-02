@@ -46,12 +46,10 @@ struct open_file
     FILE *fp;
     char *name;
     struct open_file *link;
-    unsigned temp : 1;
-    unsigned fclose_failed : 1;
   };
 
 static struct open_file *open_files = NULL;
-static void do_ck_fclose (FILE *fp);
+static void do_ck_fclose (FILE *, char const *);
 
 /* Print an error message and exit */
 
@@ -66,29 +64,15 @@ panic (const char *str, ...)
   va_end (ap);
   putc ('\n', stderr);
 
-  /* Unlink the temporary files.  */
+#ifdef lint
   while (open_files)
     {
-      if (open_files->temp)
-        {
-          if (!open_files->fclose_failed)
-            fclose (open_files->fp);
-          errno = 0;
-          unlink (open_files->name);
-          if (errno != 0)
-            fprintf (stderr, _("cannot remove %s: %s"), open_files->name,
-                     strerror (errno));
-        }
-
-#ifdef lint
       struct open_file *next = open_files->link;
       free (open_files->name);
       free (open_files);
       open_files = next;
-#else
-      open_files = open_files->link;
-#endif
     }
+#endif
 
   exit (EXIT_PANIC);
 }
@@ -116,24 +100,11 @@ static void
 register_open_file (FILE *fp, const char *name)
 {
   struct open_file *p;
-  for (p=open_files; p; p=p->link)
-    {
-      if (fp == p->fp)
-        {
-          free (p->name);
-          break;
-        }
-    }
-  if (!p)
-    {
-      p = XCALLOC (1, struct open_file);
-      p->link = open_files;
-      open_files = p;
-    }
+  p = xmalloc (sizeof *p);
+  p->link = open_files;
+  open_files = p;
   p->name = xstrdup (name);
   p->fp = fp;
-  p->temp = false;
-  p->fclose_failed = false;
 }
 
 /* Panic on failing fopen */
@@ -174,6 +145,33 @@ ck_fdopen ( int fd, const char *name, const char *mode, int fail)
   return fp;
 }
 
+/* When we've created a temporary for an in-place update,
+   we may have to exit before the rename.  This is the name
+   of the temporary that we'll have to unlink via an atexit-
+   registered cleanup function.  */
+static char const *G_file_to_unlink;
+
+void
+remove_cleanup_file (void)
+{
+  if (G_file_to_unlink)
+    unlink (G_file_to_unlink);
+}
+
+/* Note that FILE must be removed upon exit.  */
+static void
+register_cleanup_file (char const *file)
+{
+  G_file_to_unlink = file;
+}
+
+/* Clear the global file-to-unlink global.  */
+void
+cancel_cleanup (void)
+{
+  G_file_to_unlink = NULL;
+}
+
 FILE *
 ck_mkstemp (char **p_filename, const char *tmpdir,
             const char *base, const char *mode)
@@ -186,17 +184,28 @@ ck_mkstemp (char **p_filename, const char *tmpdir,
       mkstemp forces O_BINARY on cygwin, so use mkostemp instead.  */
   mode_t save_umask = umask (0077);
   int fd = mkostemp (template, 0);
+  int err = errno;
   umask (save_umask);
-  if (fd == -1)
-    panic (_("couldn't open temporary file %s: %s"), template,
-           strerror (errno));
+  FILE *fp = NULL;
+
+  if (0 <= fd)
+    {
+      *p_filename = template;
+      register_cleanup_file (template);
+
 #if O_BINARY
-  if (binary_mode && (set_binary_mode ( fd, O_BINARY) == -1))
-      panic (_("failed to set binary mode on '%s'"), template);
+      if (binary_mode && set_binary_mode (fd, O_BINARY) == -1)
+        panic (_("failed to set binary mode on '%s'"), template);
 #endif
 
-  *p_filename = template;
-  FILE *fp = fdopen (fd, mode);
+      fp = fdopen (fd, mode);
+      err = errno;
+    }
+
+  if (!fp)
+    panic (_("couldn't open temporary file %s: %s"), template,
+           strerror (err));
+
   register_open_file (fp, template);
   return fp;
 }
@@ -225,7 +234,7 @@ ck_fread (void *ptr, size_t size, size_t nmemb, FILE *stream)
 }
 
 size_t
-ck_getdelim (char **text, size_t *buflen, char buffer_delimiter, FILE *stream)
+ck_getdelim (char **text, size_t *buflen, char delim, FILE *stream)
 {
   ssize_t result;
   bool error;
@@ -233,7 +242,7 @@ ck_getdelim (char **text, size_t *buflen, char buffer_delimiter, FILE *stream)
   error = ferror (stream);
   if (!error)
     {
-      result = getdelim (text, buflen, buffer_delimiter, stream);
+      result = getdelim (text, buflen, delim, stream);
       error = ferror (stream);
     }
 
@@ -255,69 +264,44 @@ ck_fflush (FILE *stream)
     panic ("couldn't flush %s: %s", utils_fp_name (stream), strerror (errno));
 }
 
-/* If we've failed to close a file in open_files whose "fp" member
-   is the same as FP, mark its entry as fclose_failed.  */
-static void
-mark_as_fclose_failed (FILE *fp)
-{
-  for (struct open_file *p = open_files; p; p = p->link)
-    {
-      if (p->fp == fp)
-        {
-          p->fclose_failed = true;
-          break;
-        }
-    }
-}
-
 /* Panic on failing fclose */
 void
 ck_fclose (FILE *stream)
 {
-  struct open_file r;
-  struct open_file *prev;
+  struct open_file **prev = &open_files;
   struct open_file *cur;
 
   /* a NULL stream means to close all files */
-  r.link = open_files;
-  prev = &r;
-  while ( (cur = prev->link) )
+  while ((cur = *prev))
     {
       if (!stream || stream == cur->fp)
         {
-          do_ck_fclose (cur->fp);
-          prev->link = cur->link;
+          FILE *fp = cur->fp;
+          *prev = cur->link;
+          do_ck_fclose (fp, cur->name);
           free (cur->name);
           free (cur);
         }
       else
-        prev = cur;
+        prev = &cur->link;
     }
-
-  open_files = r.link;
 
   /* Also care about stdout, because if it is redirected the
      last output operations might fail and it is important
      to signal this as an error (perhaps to make). */
   if (!stream)
-    do_ck_fclose (stdout);
+    do_ck_fclose (stdout, "stdout");
 }
 
 /* Close a single file. */
-void
-do_ck_fclose (FILE *fp)
+static void
+do_ck_fclose (FILE *fp, char const *name)
 {
   ck_fflush (fp);
   clearerr (fp);
 
   if (fclose (fp) == EOF)
-    {
-      /* Mark as already fclose-failed, so we don't attempt to fclose it
-         a second time via panic.  */
-      mark_as_fclose_failed (fp);
-
-      panic ("couldn't close %s: %s", utils_fp_name (fp), strerror (errno));
-    }
+    panic ("couldn't close %s: %s", name, strerror (errno));
 }
 
 /* Follow symlink and panic if something fails.  Return the ultimate
@@ -401,25 +385,11 @@ follow_symlink (const char *fname)
 
 /* Panic on failing rename */
 void
-ck_rename (const char *from, const char *to, const char *unlink_if_fail)
+ck_rename (const char *from, const char *to)
 {
   int rd = rename (from, to);
   if (rd != -1)
     return;
-
-  if (unlink_if_fail)
-    {
-      int save_errno = errno;
-      errno = 0;
-      unlink (unlink_if_fail);
-
-      /* Failure to remove the temporary file is more severe,
-         so trigger it first.  */
-      if (errno != 0)
-        panic (_("cannot remove %s: %s"), unlink_if_fail, strerror (errno));
-
-      errno = save_errno;
-    }
 
   panic (_("cannot rename %s: %s"), from, strerror (errno));
 }

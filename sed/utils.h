@@ -40,10 +40,13 @@ size_t ck_getdelim (char **text, size_t *buflen, char buffer_delimiter,
                     FILE *stream);
 FILE * ck_mkstemp (char **p_filename, const char *tmpdir, const char *base,
                    const char *mode) _GL_ARG_NONNULL ((1, 2, 3, 4));
-void ck_rename (const char *from, const char *to, const char *unlink_if_fail);
+void ck_rename (const char *from, const char *to);
 
 void *ck_malloc (size_t size);
 void *ck_realloc (void *ptr, size_t size);
+
+void cancel_cleanup (void);
+void remove_cleanup_file (void);
 
 struct buffer *init_buffer (void);
 char *get_buffer (struct buffer const *b) _GL_ATTRIBUTE_PURE;

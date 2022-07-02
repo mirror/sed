@@ -104,7 +104,7 @@ struct input {
 /* Have we done any replacements lately?  This is used by the `t' command. */
 static bool replaced = false;
 
-/* The current output file (stdout if -i is not being used. */
+/* The current output file (stdout if -i is not being used).  */
 static struct output output_file;
 
 /* The `current' input line. */
@@ -620,7 +620,6 @@ open_next_file (const char *name, struct input *input)
 
       output_file.fp = ck_mkstemp (&input->out_file_name, tmpdir, "sed",
                                    write_mode);
-      register_cleanup_file (input->out_file_name);
       output_file.missing_newline = false;
       free (tmpdir);
 
@@ -674,11 +673,11 @@ closedown (struct input *input)
       if (strcmp (in_place_extension, "*") != 0)
         {
           char *backup_file_name = get_backup_file_name (target_name);
-          ck_rename (target_name, backup_file_name, input->out_file_name);
+          ck_rename (target_name, backup_file_name);
           free (backup_file_name);
         }
 
-      ck_rename (input->out_file_name, target_name, input->out_file_name);
+      ck_rename (input->out_file_name, target_name);
       cancel_cleanup ();
       free (input->out_file_name);
     }

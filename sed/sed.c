@@ -85,12 +85,6 @@ countT lcmd_out_line_len = 70;
 /* The complete compiled SED program that we are going to run: */
 static struct vector *the_program = NULL;
 
-/* When we've created a temporary for an in-place update,
-   we may have to exit before the rename.  This is the name
-   of the temporary that we'll have to unlink via an atexit-
-   registered cleanup function.  */
-static char const *G_file_to_unlink;
-
 struct localeinfo localeinfo;
 
 /* When exiting between temporary file creation and the rename
@@ -99,22 +93,7 @@ static void
 cleanup (void)
 {
   IF_LINT (free (in_place_extension));
-  if (G_file_to_unlink)
-    unlink (G_file_to_unlink);
-}
-
-/* Note that FILE must be removed upon exit.  */
-void
-register_cleanup_file (char const *file)
-{
-  G_file_to_unlink = file;
-}
-
-/* Clear the global file-to-unlink global.  */
-void
-cancel_cleanup (void)
-{
-  G_file_to_unlink = NULL;
+  remove_cleanup_file ();
 }
 
 static void
