@@ -27,11 +27,20 @@
 #include <limits.h>
 
 #include "binary-io.h"
+#include "eloop-threshold.h"
+#include "idx.h"
+#include "minmax.h"
 #include "unlocked-io.h"
 #include "utils.h"
 #include "progname.h"
 #include "fwriting.h"
 #include "xalloc.h"
+
+#ifdef SSIZE_MAX
+# define SSIZE_IDX_MAX MIN (SSIZE_MAX, IDX_MAX)
+#else
+# define SSIZE_IDX_MAX IDX_MAX
+#endif
 
 #if O_BINARY
 extern bool binary_mode;
@@ -304,83 +313,88 @@ do_ck_fclose (FILE *fp, char const *name)
     panic ("couldn't close %s: %s", name, strerror (errno));
 }
 
-/* Follow symlink and panic if something fails.  Return the ultimate
-   symlink target, stored in a temporary buffer that the caller should
-   not free.  */
+/* Follow symlink FNAME and return the ultimate target, stored in a
+   temporary buffer that the caller should not free.  Return FNAME if
+   it is not a symlink.  Panic if a symlink loop is found.  */
 const char *
 follow_symlink (const char *fname)
 {
-#ifdef ENABLE_FOLLOW_SYMLINKS
-  static char *buf1, *buf2;
-  static int buf_size;
+  /* The file name, as adjusted so far by replacing symlinks with
+     their contents.  Only the last file name component is replaced,
+     as we need not do all the work of realpath.  */
 
-  struct stat statbuf;
-  const char *buf = fname, *c;
-  int rc;
+  /* FIXME: We should get a file descriptor on the parent directory,
+     to avoid resolving that directory name more than once (which can
+     lead to races).  Perhaps someday the Gnulib 'supersede' module
+     can get a function openat_supersede that will do this for us.  */
+  char const *fn = fname;
 
-  if (buf_size == 0)
+#ifdef HAVE_READLINK
+  static char *buf;
+  static idx_t buf_size;
+
+  idx_t buf_used = 0;
+
+  for (idx_t num_links = 0; ; num_links++)
     {
-      buf1 = xzalloc (PATH_MAX + 1);
-      buf2 = xzalloc (PATH_MAX + 1);
-      buf_size = PATH_MAX + 1;
-    }
+      ssize_t linklen;
+      idx_t newlen;
+      char const *c;
 
-  while ((rc = lstat (buf, &statbuf)) == 0
-         && (statbuf.st_mode & S_IFLNK) == S_IFLNK)
-    {
-      if (buf == buf2)
+      /* Put symlink contents into BUF + BUF_USED.  */
+      while ((linklen = (buf_used < buf_size
+                         ? readlink (fn, buf + buf_used, buf_size - buf_used)
+                         : 0))
+             == buf_size)
         {
-          strcpy (buf1, buf2);
-          buf = buf1;
+          buf = xpalloc (buf, &buf_size, 1, SSIZE_IDX_MAX, 1);
+          if (num_links)
+            fn = buf;
         }
-
-      while ((rc = readlink (buf, buf2, buf_size)) == buf_size)
+      if (linklen < 0)
         {
-          buf_size *= 2;
-          buf1 = xrealloc (buf1, buf_size);
-          buf2 = xrealloc (buf2, buf_size);
+          if (errno == EINVAL)
+            break;
+          panic (_("couldn't readlink %s: %s"), fn, strerror (errno));
         }
-      if (rc < 0)
-        panic (_("couldn't follow symlink %s: %s"), buf, strerror (errno));
-      else
-        buf2 [rc] = '\0';
+      if (__eloop_threshold () <= num_links)
+        panic (_("couldn't follow symlink %s: %s"), fname, strerror (ELOOP));
 
-      if (buf2[0] != '/' && (c = strrchr (buf, '/')) != NULL)
+      if ((linklen == 0 || buf[buf_used] != '/') && (c = strrchr (fn, '/')))
         {
-          /* Need to handle relative paths with care.  Reallocate buf1 and
-             buf2 to be big enough.  */
-          int len = c - buf + 1;
-          if (len + rc + 1 > buf_size)
+          /* A relative symlink not from the working directory.
+             Make sure BUF is big enough.  */
+          idx_t dirlen = c - fn + 1;
+          newlen = dirlen + linklen;
+          if (buf_size <= newlen)
             {
-              buf_size = len + rc + 1;
-              buf1 = xrealloc (buf1, buf_size);
-              buf2 = xrealloc (buf2, buf_size);
+              buf = xpalloc (buf, &buf_size, newlen + 1 - buf_size,
+                             SSIZE_IDX_MAX, 1);
+              if (num_links)
+                fn = buf;
             }
 
-          /* Always store the new path in buf1.  */
-          if (buf != buf1)
-            memcpy (buf1, buf, len);
-
-          /* Tack the relative symlink at the end of buf1.  */
-          memcpy (buf1 + len, buf2, rc + 1);
-          buf = buf1;
+          /* Store the new file name in BUF.  Beware overlap.  */
+          memmove (buf + dirlen, buf + buf_used, linklen);
+          if (fn != buf)
+            memcpy (buf, fn, dirlen);
         }
       else
         {
-          /* Use buf2 as the buffer, it saves a strcpy if it is not pointing to
-             another link.  It works for absolute symlinks, and as long as
-             symlinks do not leave the current directory.  */
-           buf = buf2;
+          /* A symlink to an absolute file name, or a relative symlink
+             from the working directory.  The new file name is simply
+             the symlink contents.  */
+          memmove (buf, buf + buf_used, linklen);
+          newlen = linklen;
         }
+
+      buf[newlen] = '\0';
+      buf_used = newlen + 1;
+      fn = buf;
     }
+#endif
 
-  if (rc < 0)
-    panic (_("cannot stat %s: %s"), buf, strerror (errno));
-
-  return buf;
-#else
-  return fname;
-#endif /* ENABLE_FOLLOW_SYMLINKS */
+  return fn;
 }
 
 /* Panic on failing rename */

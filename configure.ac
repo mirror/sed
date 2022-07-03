@@ -117,16 +117,11 @@ AC_TYPE_SIZE_T
 AM_GNU_GETTEXT_VERSION([0.19.2])
 AM_GNU_GETTEXT([external])
 
-AC_CHECK_FUNCS_ONCE(isatty isascii memcpy strchr strtoul lstat readlink
+AC_CHECK_FUNCS_ONCE(isatty isascii memcpy strchr strtoul readlink
                     popen pathconf fchown fchmod setlocale)
 
-# Check whether we are able to follow symlinks
-if test "$ac_cv_func_lstat:$ac_cv_func_readlink" = yes:yes; then
-   AC_DEFINE([ENABLE_FOLLOW_SYMLINKS], ,
-             [Follow symlinks when processing in place])
-fi
 AM_CONDITIONAL([TEST_SYMLINKS],
-          [test "$ac_cv_func_lstat:$ac_cv_func_readlink" = yes:yes])
+          [test "$ac_cv_func_readlink" = yes])
 
 AC_ARG_ENABLE(i18n,
 [  --disable-i18n          disable internationalization (default=enabled)], ,

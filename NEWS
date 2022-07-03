@@ -4,6 +4,10 @@ GNU sed NEWS                                    -*- outline -*-
 
 ** Bug fixes
 
+  'sed --follow-symlinks -i' no longer loops forever when its operand
+  is a symbolic link cycle.
+  [bug introduced in sed 4.2]
+
   a program with an execution line longer than 2GB can no longer trigger
   an out-of-bounds memory write.
 

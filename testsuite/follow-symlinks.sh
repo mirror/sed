@@ -52,9 +52,9 @@ sed --follow-symlinks -n 'F' la1 la2 > out-two-symlinks || fail=1
 compare_ exp-two-symlinks out-two-symlinks || fail=1
 
 # non-existing input with --follow-symlink
-# implementation note: lstat() will be called before open(), thus 'cannot stat'.
+# implementation note: readlink called before open, thus "couldn't readlink"
 cat <<\EOF >exp-stat || framework_failure_
-sed: cannot stat badfile:
+sed: couldn't readlink badfile:
 EOF
 returns_ 4 sed --follow-symlinks 'F' badfile >/dev/null 2>err-stat || fail=1
 
@@ -68,5 +68,9 @@ ln -s "$PWD/a" la-abs || framework_failure_
 echo "$PWD/a" > exp-la-abs || framework_failure_
 sed -n --follow-symlinks 'F' la-abs > out-la-abs || fail=1
 compare_ exp-la-abs out-la-abs || fail=1
+
+# symlink loop
+ln -s la-loop la-loop || framework_failure_
+sed --follow-symlinks -i s/a/b/ la-loop && fail=1
 
 Exit $fail

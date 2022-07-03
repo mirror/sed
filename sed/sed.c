@@ -143,7 +143,7 @@ Usage: %s [OPTION]... {script-only-if-no-other-script} [input-file]...\n\
   fprintf (out, _("  -f script-file, --file=script-file\n\
                  add the contents of script-file to the commands" \
                  " to be executed\n"));
-#ifdef ENABLE_FOLLOW_SYMLINKS
+#ifdef HAVE_READLINK
   fprintf (out, _("  --follow-symlinks\n\
                  follow symlinks when processing in place\n"));
 #endif
@@ -212,7 +212,7 @@ main (int argc, char **argv)
     {"unbuffered", 0, NULL, 'u'},
     {"version", 0, NULL, 'v'},
     {"help", 0, NULL, 'h'},
-#ifdef ENABLE_FOLLOW_SYMLINKS
+#ifdef HAVE_READLINK
     {"follow-symlinks", 0, NULL, 'F'},
 #endif
     {NULL, 0, NULL, 0}
