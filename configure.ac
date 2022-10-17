@@ -36,11 +36,7 @@ gl_DISABLE_THREADS
 AC_DEFINE([GNULIB_NO_VLA], [1], [Define to 1 to disable use of VLAs])
 
 # The test suite needs to know if we have a working perl.
-# FIXME: this is suboptimal.  Ideally, we would be able to call gl_PERL
-# with an ACTION-IF-NOT-FOUND argument ...
-cu_have_perl=yes
-case $PERL in *"/missing "*) cu_have_perl=no;; esac
-AM_CONDITIONAL([HAVE_PERL], [test $cu_have_perl = yes])
+AM_CONDITIONAL([HAVE_PERL], [test "$gl_cv_prog_perl" != no])
 
 # gl_GCC_VERSION_IFELSE([major], [minor], [run-if-found], [run-if-not-found])
 # ------------------------------------------------
@@ -289,28 +285,24 @@ if test "$gl_gcc_warnings" = yes; then
   AC_SUBST([GNULIB_TEST_WARN_CFLAGS])
 fi
 
+AC_ARG_ENABLE([bold-man-page-references],
+  [AS_HELP_STRING([--disable-bold-man-page-references],
+     [When generating man pages, do not apply bold style around any
+      references like name(1) etc.])],
+  [gl_bold_manpages=yes ;
+   case $enableval in
+     no|yes) gl_bold_manpages=$enableval ;;
+     *)      AC_MSG_ERROR([bad value $enableval for bold-man-page-references.
+                           Options are: yes, no.]) ;;
+   esac],
+  [gl_bold_manpages=yes]
+)
+AM_CONDITIONAL([BOLD_MAN_REFS], [test "$gl_bold_manpages" != no])
+
 AM_CONDITIONAL([CROSS_COMPILING], [test "$cross_compiling" = yes])
 
 # Perl is needed for help2man
 AC_PATH_PROG([PERL], [perl])
-
-# Can the man page be built?
-# Perl needed for help2man, executing sed needed for 'sed --help'
-can_rebuild_man_page=no
-test -n "$PERL" && \
-  test "$cross_compiling" != yes && \
-  can_rebuild_man_page=yes
-
-# Build the man page when
-# building from git and rebuilding is possible.
-AM_CONDITIONAL([BUILD_MAN_PAGE],
- [test "$can_rebuild_man_page" = yes])
-
-# Create a stub man page instead of failing when
-# building from git and rebuilding is not possible.
-AM_CONDITIONAL([BUILD_DUMMY_MAN_PAGE],
- [test "$can_rebuild_man_page" = no])
-
 
 # This is needed when building outside the source dir
 # with --disable-dependency-tracking, see https://bugs.gnu.org/25371

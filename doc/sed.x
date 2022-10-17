@@ -1,6 +1,6 @@
-.SH NAME
-sed \- a Stream EDitor
-.SH SYNOPSIS
+[NAME]
+sed \- stream editor for filtering and transforming text
+[SYNOPSIS]
 .nf
 sed [-V] [--version] [--help] [-n] [--quiet] [--silent]
     [-l N] [--line-length=N] [-u] [--unbuffered]

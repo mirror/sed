@@ -19,26 +19,32 @@ dist_man_MANS = doc/sed.1
 dist_noinst_DATA = doc/sed.x doc/sed-dummy.1
 HELP2MAN = $(top_srcdir)/build-aux/help2man
 SEDBIN = sed/sed
+EXTRA_DIST += doc/dummy-man
 
 AM_MAKEINFOHTMLFLAGS = --no-split
 
-if BUILD_MAN_PAGE
+## Use the distributed man pages if cross compiling or lack perl
+if CROSS_COMPILING
+run_help2man = $(SHELL) $(srcdir)/doc/dummy-man
+else
+## Graceful degradation for systems lacking perl.
+if HAVE_PERL
+if BOLD_MAN_REFS
+help2man_OPTS=--bold-refs
+endif
+run_help2man = $(PERL) -- $(HELP2MAN) $(help2man_OPTS)
+else
+run_help2man = $(SHELL) $(srcdir)/doc/dummy-man
+endif
+endif
+
 doc/sed.1: sed/sed$(EXEEXT) .version $(srcdir)/doc/sed.x
 	$(AM_V_GEN)$(MKDIR_P) doc
 	$(AM_V_at)rm -rf $@ $@-t
-	$(AM_V_at)$(HELP2MAN)						\
-	    --name 'stream editor for filtering and transforming text'	\
-	    -p sed --include $(srcdir)/doc/sed.x			\
-	    -o $@-t $(SEDBIN)						\
+	$(AM_V_at)$(run_help2man)					\
+	    --info-page=sed						\
+	    --include $(srcdir)/doc/sed.x				\
+	    --output=$@-t						\
+	    $(SEDBIN)							\
 	  && chmod a-w $@-t						\
 	  && mv $@-t $@
-else !BUILD_MAN_PAGE
-
-if BUILD_DUMMY_MAN_PAGE
-doc/sed.1: doc/sed-dummy.1
-	$(AM_V_at)$(SED) 's/VERSION/$(PACKAGE_VERSION)/' $< > $@-t	\
-	  && chmod a-w $@-t						\
-	  && mv $@-t $@
-endif BUILD_DUMMY_MAN_PAGE
-
-endif !BUILD_MAN_PAGE
