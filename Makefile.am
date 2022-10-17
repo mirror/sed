@@ -90,7 +90,7 @@ THANKS: THANKS.in Makefile.am .mailmap thanks-gen .version
 	} > $@-t && chmod a-w $@-t && mv $@-t $@
 
 
-DISTCHECK_CONFIGURE_FLAGS = XGETTEXT='$(SHELL) -c : dummy' $(EXTRA_DC_FLAGS)
+am_DISTCHECK_CONFIGURE_FLAGS = XGETTEXT='$(SHELL) -c : dummy' $(EXTRA_DC_FLAGS)
 EXTRA_DC_FLAGS =
 
 full-distcheck:
