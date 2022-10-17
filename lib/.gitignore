@@ -10,6 +10,7 @@
 /alloca.h
 /alloca.in.h
 /arg-nonnull.h
+/assert.h
 /attribute.h
 /basename-lgpl.c
 /basename-lgpl.h
@@ -175,6 +176,7 @@
 /stdarg.in.h
 /stdbool.h
 /stdbool.in.h
+/stdckdint.h
 /stddef.h
 /stddef.in.h
 /stdint.h
