@@ -557,8 +557,6 @@ match_slash (int slash, int regex)
               ch = inchar ();
               if (ch == EOF)
                 break;
-              else if (ch == 'n' && regex)
-                ch = '\n';
               else if (ch != '\n' && (ch != slash || (!regex && ch == '&')))
                 add1_buffer (b, '\\');
             }
