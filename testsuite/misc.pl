@@ -1197,6 +1197,8 @@ s,.*[^\/],,
      ['bug30794_1', "s/z/\\\\x5cA/",  {IN=>'z'}, {OUT => "\\A"}],
      ['bug30794_2', "s/z/\\\\x5c/",   {IN=>'z'}, {OUT => "\\"}],
      ['bug30794_3', "s/z/\\\\x5c1/",  {IN=>'z'}, {OUT => "\\1"}],
+
+     ['bug40242', q('sn\nnXn'),  {IN=>'n'}, {OUT => 'X'}],
     );
 
 my $save_temps = $ENV{SAVE_TEMPS};

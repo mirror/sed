@@ -29,6 +29,14 @@ GNU sed NEWS                                    -*- outline -*-
   The 'r' command now accepts address 0, allowing inserting a file before
   the first line.
 
+** Changes in behavior
+
+   Sed now prints the less-surprising variant in a corner case of
+   POSIX-unspecified behavior.  Before, this would print "n".
+   Now, it prints "X":
+
+    printf n | sed 'sn\nnXn'; echo
+
 
 * Noteworthy changes in release 4.8 (2020-01-14) [stable]
 
