@@ -18,9 +18,9 @@
 print_ver_ sed
 require_selinux_
 
-sed --version | grep -q "with SELinux" \
+sed --version | grep "with SELinux" > /dev/null \
   || skip_ "sed built without SELinux support"
-sed --version | grep -q "^SELinux is enabled" \
+sed --version | grep "^SELinux is enabled" > /dev/null \
   || skip_ "sed reports SELinux is disabled on this system"
 
 touch a || framework_failure_
