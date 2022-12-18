@@ -32,7 +32,10 @@ noinst_HEADERS +=	\
 
 sed_sed_CPPFLAGS = $(AM_CPPFLAGS) -DLOCALEDIR=\"$(localedir)\"
 sed_sed_CFLAGS = $(AM_CFLAGS) $(WARN_CFLAGS) $(WERROR_CFLAGS)
-sed_sed_LDADD = sed/libver.a lib/libsed.a $(INTLLIBS) $(LIB_ACL) $(LIB_SELINUX)
+sed_sed_LDADD = sed/libver.a lib/libsed.a \
+  $(LIB_ACL) $(LIB_CLOCK_GETTIME) $(LIB_GETRANDOM) \
+  $(LIB_HARD_LOCALE) $(LIB_MBRTOWC) $(LIB_SELINUX) $(LIB_SETLOCALE_NULL) \
+  $(LIBINTL) $(LIBTHREAD)
 sed_sed_DEPENDENCIES = lib/libsed.a sed/libver.a
 
 $(sed_sed_OBJECTS): $(BUILT_SOURCES)
