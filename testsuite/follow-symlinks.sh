@@ -73,4 +73,17 @@ compare_ exp-la-abs out-la-abs || fail=1
 ln -s la-loop la-loop || framework_failure_
 sed --follow-symlinks -i s/a/b/ la-loop && fail=1
 
+# symlink of length 128
+long=d/
+for i in 2 3 4 5 6 7; do
+  long=$long$long
+done
+dir=${long%/d/}
+file=$dir/xx
+mkdir -p $dir &&
+echo x >$file &&
+ln -s $file yy &&
+ln -s yy xx || framework_failure_
+sed -i --follow-symlinks s/x/y/ xx || fail=1
+
 Exit $fail

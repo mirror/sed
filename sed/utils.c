@@ -345,7 +345,7 @@ follow_symlink (const char *fname)
       while ((linklen = (buf_used < buf_size
                          ? readlink (fn, buf + buf_used, buf_size - buf_used)
                          : 0))
-             == buf_size)
+             == buf_size - buf_used)
         {
           buf = xpalloc (buf, &buf_size, 1, SSIZE_IDX_MAX, 1);
           if (num_links)
