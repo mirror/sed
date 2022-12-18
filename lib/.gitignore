@@ -11,6 +11,7 @@
 /alloca.in.h
 /arg-nonnull.h
 /assert.h
+/assert.in.h
 /attribute.h
 /basename-lgpl.c
 /basename-lgpl.h
@@ -79,6 +80,7 @@
 /ialloc.h
 /idx.h
 /ignore-value.h
+/intprops-internal.h
 /intprops.h
 /inttypes.h
 /inttypes.in.h
@@ -174,9 +176,8 @@
 /stdalign.in.h
 /stdarg.h
 /stdarg.in.h
-/stdbool.h
-/stdbool.in.h
 /stdckdint.h
+/stdckdint.in.h
 /stddef.h
 /stddef.in.h
 /stdint.h
