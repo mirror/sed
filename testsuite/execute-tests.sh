@@ -71,6 +71,19 @@ printf "%s\n" a | sed -n 'P' > out7 || fail=1
 compare_ in6 out7 || fail=1
 
 #
+# 'q' and other commands with big numbers (2**256 + 1, 2 ** 256 + 2)
+#
+big1=115792089237316195423570985008687907853269984665640564039457584007913129639937
+big2=115792089237316195423570985008687907853269984665640564039457584007913129639938
+printf '%s\n' a b >in7a || framework_failure_
+sed ${big1}q in7a >out7a1 || fail=1
+compare_ in7a out7a1 || fail=1
+sed -n 1,${big1}p in7a >out7a2 || fail=1
+compare_ in7a out7a2 || fail=1
+sed ${big1},${big2}d in7a >out7a3 || fail=1
+compare_ in7a out7a3 || fail=1
+
+#
 # 'Q' with exit code
 #
 echo a > in7 || framework_failure_
