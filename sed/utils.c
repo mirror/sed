@@ -185,8 +185,13 @@ FILE *
 ck_mkstemp (char **p_filename, const char *tmpdir,
             const char *base, const char *mode)
 {
-  char *template = xmalloc (strlen (tmpdir) + strlen (base) + 8);
-  sprintf (template, "%s/%sXXXXXX", tmpdir, base);
+  idx_t tmpdirlen = strlen (tmpdir), baselen = strlen (base);
+  char *template = xmalloc (tmpdirlen + baselen + 8);
+  char *basecopy = mempcpy (template, tmpdir, tmpdirlen);
+  *basecopy++ = '/';
+  char *suffix = mempcpy (basecopy, base, baselen);
+  memset (suffix, 'X', 6);
+  suffix[6] = '\0';
 
    /* The ownership might change, so omit some permissions at first
       so unauthorized users cannot nip in before the file is ready.
