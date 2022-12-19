@@ -25,7 +25,6 @@
 #include <string.h>
 #include <stdlib.h>
 #include <sys/types.h>
-#include <assert.h>
 
 /* indentation level when printing the program */
 static int block_level = 0;
@@ -286,9 +285,9 @@ debug_print_function (const struct vector *program, const struct sed_cmd *sc)
     case '}':
       break;
 
-    case '#':                  /* LCOV_EXCL_LINE */
+    case '#':
       /* should not happen - discarded during compilation.  */
-      assert (0);               /* LCOV_EXCL_LINE */
+      abort ();
 
     case 'a':
     case 'c':
@@ -377,9 +376,9 @@ debug_print_function (const struct vector *program, const struct sed_cmd *sc)
 
       /* 't','T' are lumped above with 'b' */
 
-    case 'v':                  /* LCOV_EXCL_LINE */
+    case 'v':
       /* should not happen - handled during compilation then discarded. */
-      assert (0);               /* LCOV_EXCL_LINE */
+      abort ();
 
     case 'W':
       debug_print_output_file (sc->x.outf);
@@ -399,9 +398,9 @@ debug_print_function (const struct vector *program, const struct sed_cmd *sc)
     case 'z':
       break;
 
-    default:                   /* LCOV_EXCL_LINE */
+    default:
       /* should not happen - unless missed a sed command. */
-      assert (0);               /* LCOV_EXCL_LINE */
+      abort ();
     }
 }
 
