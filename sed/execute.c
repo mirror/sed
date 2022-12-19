@@ -905,14 +905,12 @@ do_list (int line_len)
   unsigned char *p = (unsigned char *)line.active;
   countT len = line.length;
   countT width = 0;
-  char obuf[180];	/* just in case we encounter a 512-bit char (;-) */
-  char *o;
-  size_t olen;
   FILE *fp = output_file.fp;
 
   output_missing_newline (&output_file);
   for (; len--; ++p) {
-      o = obuf;
+      char obuf[sizeof "\\377" - 1];
+      char *o = obuf;
 
       /* Some locales define 8-bit characters as printable.  This makes the
          testsuite fail at 8to7.sed because the `l' command in fact will not
@@ -940,12 +938,13 @@ do_list (int line_len)
             case '\t': *o++ = 't'; break;
             case '\v': *o++ = 'v'; break;
             default:
-              sprintf (o, "%03o", *p);
-              o += strlen (o);
+              *o++ = '0' + ((*p & 0300) >> 6);
+              *o++ = '0' + ((*p & 0070) >> 3);
+              *o++ = '0' + ((*p & 0007) >> 0);
               break;
             }
       }
-      olen = o - obuf;
+      size_t olen = o - obuf;
       if (width+olen >= line_len && line_len > 0) {
           ck_fwrite ("\\", 1, 1, fp);
           ck_fwrite (&buffer_delimiter, 1, 1, fp);
