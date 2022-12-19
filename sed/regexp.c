@@ -24,21 +24,7 @@
 
 #include "xalloc.h"
 
-#ifdef gettext_noop
-# define N_(String) gettext_noop(String)
-#else
-# define N_(String) (String)
-#endif
-
 extern bool use_extended_syntax_p;
-
-static const char errors[] =
-  "no previous regular expression\0"
-  "cannot specify modifiers on empty regexp";
-
-#define NO_REGEX (errors)
-#define BAD_MODIF (NO_REGEX + sizeof(N_("no previous regular expression")))
-
 
 void
 dfaerror (char const *mesg)
@@ -114,18 +100,13 @@ compile_regex_1 (struct regex *new_regex, int needed_sub)
 #endif
 
   if (error)
-    bad_prog (error);
+    bad_prog_notranslate ("%s", error);
 
   /* Just to be sure, I mark this as not POSIXLY_CORRECT behavior */
   if (needed_sub
       && new_regex->pattern.re_nsub < needed_sub - 1
       && posixicity == POSIXLY_EXTENDED)
-    {
-      char buf[200];
-      sprintf (buf, _("invalid reference \\%d on `s' command's RHS"),
-              needed_sub - 1);
-      bad_prog (buf);
-    }
+    bad_prog ("invalid reference \\%d on `s' command's RHS", needed_sub - 1);
 
   int dfaopts = buffer_delimiter == '\n' ? 0 : DFA_EOL_NUL;
   new_regex->dfa = dfaalloc ();
@@ -155,7 +136,7 @@ compile_regex (struct buffer *b, int flags, int needed_sub)
   if (size_buffer (b) == 0)
     {
       if (flags > 0)
-        bad_prog (_(BAD_MODIF));
+        bad_prog ("cannot specify modifiers on empty regexp");
       return NULL;
     }
 
@@ -186,7 +167,7 @@ match_regex (struct regex *regex, char *buf, size_t buflen,
     {
       regex = regex_last;
       if (!regex_last)
-        bad_prog (_(NO_REGEX));
+        bad_prog ("no previous regular expression");
     }
   else
     regex_last = regex;

@@ -109,121 +109,43 @@ static struct sed_label *blocks = NULL;
 /* Use an obstack for compilation. */
 static struct obstack obs;
 
-/* Various error messages we may want to print */
-static const char errors[] =
-  "multiple `!'s\0"
-  "unexpected `,'\0"
-  "invalid usage of +N or ~N as first address\0"
-  "unmatched `{'\0"
-  "unexpected `}'\0"
-  "extra characters after command\0"
-  "expected \\ after `a', `c' or `i'\0"
-  "`}' doesn't want any addresses\0"
-  ": doesn't want any addresses\0"
-  "comments don't accept any addresses\0"
-  "missing command\0"
-  "command only uses one address\0"
-  "unterminated address regex\0"
-  "unterminated `s' command\0"
-  "unterminated `y' command\0"
-  "unknown option to `s'\0"
-  "multiple `p' options to `s' command\0"
-  "multiple `g' options to `s' command\0"
-  "multiple number options to `s' command\0"
-  "number option to `s' command may not be zero\0"
-  "strings for `y' command are different lengths\0"
-  "delimiter character is not a single-byte character\0"
-  "expected newer version of sed\0"
-  "invalid usage of line address 0\0"
-  "unknown command: `%c'\0"
-  "incomplete command\0"
-  "\":\" lacks a label\0"
-  "recursive escaping after \\c not allowed\0"
-  "e/r/w commands disabled in sandbox mode\0"
-  "missing filename in r/R/w/W commands";
-
-#define BAD_BANG (errors)
-#define BAD_COMMA (BAD_BANG + sizeof (N_("multiple `!'s")))
-#define BAD_STEP (BAD_COMMA + sizeof (N_("unexpected `,'")))
-#define EXCESS_OPEN_BRACE (BAD_STEP \
-  + sizeof (N_("invalid usage of +N or ~N as first address")))
-#define EXCESS_CLOSE_BRACE (EXCESS_OPEN_BRACE + sizeof (N_("unmatched `{'")))
-#define EXCESS_JUNK (EXCESS_CLOSE_BRACE + sizeof (N_("unexpected `}'")))
-#define EXPECTED_SLASH (EXCESS_JUNK \
-  + sizeof (N_("extra characters after command")))
-#define NO_CLOSE_BRACE_ADDR (EXPECTED_SLASH \
-  + sizeof (N_("expected \\ after `a', `c' or `i'")))
-#define NO_COLON_ADDR (NO_CLOSE_BRACE_ADDR \
-  + sizeof (N_("`}' doesn't want any addresses")))
-#define NO_SHARP_ADDR (NO_COLON_ADDR \
-  + sizeof (N_(": doesn't want any addresses")))
-#define NO_COMMAND (NO_SHARP_ADDR \
-  + sizeof (N_("comments don't accept any addresses")))
-#define ONE_ADDR (NO_COMMAND + sizeof (N_("missing command")))
-#define UNTERM_ADDR_RE (ONE_ADDR + sizeof (N_("command only uses one address")))
-#define UNTERM_S_CMD (UNTERM_ADDR_RE \
-  + sizeof (N_("unterminated address regex")))
-#define UNTERM_Y_CMD (UNTERM_S_CMD + sizeof (N_("unterminated `s' command")))
-#define UNKNOWN_S_OPT (UNTERM_Y_CMD + sizeof (N_("unterminated `y' command")))
-#define EXCESS_P_OPT (UNKNOWN_S_OPT + sizeof (N_("unknown option to `s'")))
-#define EXCESS_G_OPT (EXCESS_P_OPT \
-  + sizeof (N_("multiple `p' options to `s' command")))
-#define EXCESS_N_OPT (EXCESS_G_OPT \
-  + sizeof (N_("multiple `g' options to `s' command")))
-#define ZERO_N_OPT (EXCESS_N_OPT \
-  + sizeof (N_("multiple number options to `s' command")))
-#define Y_CMD_LEN (ZERO_N_OPT \
-  + sizeof (N_("number option to `s' command may not be zero")))
-#define BAD_DELIM (Y_CMD_LEN \
-  + sizeof (N_("strings for `y' command are different lengths")))
-#define ANCIENT_VERSION (BAD_DELIM \
-  + sizeof (N_("delimiter character is not a single-byte character")))
-#define INVALID_LINE_0 (ANCIENT_VERSION \
-  + sizeof (N_("expected newer version of sed")))
-#define UNKNOWN_CMD (INVALID_LINE_0 \
-  + sizeof (N_("invalid usage of line address 0")))
-#define INCOMPLETE_CMD (UNKNOWN_CMD + sizeof (N_("unknown command: `%c'")))
-#define COLON_LACKS_LABEL (INCOMPLETE_CMD \
-  + sizeof (N_("incomplete command")))
-#define RECURSIVE_ESCAPE_C (COLON_LACKS_LABEL \
-  + sizeof (N_("\":\" lacks a label")))
-#define DISALLOWED_CMD (RECURSIVE_ESCAPE_C \
-  + sizeof (N_("recursive escaping after \\c not allowed")))
-#define MISSING_FILENAME (DISALLOWED_CMD \
-  + sizeof (N_( "e/r/w commands disabled in sandbox mode")))
-/* #define END_ERRORS (DISALLOWED_CMD \
-     + sizeof (N_( "e/r/w commands disabled in sandbox mode"))) */
-
 static struct output *file_read = NULL;
 static struct output *file_write = NULL;
 
-/* Complain about an unknown command and exit. */
-static void
-bad_command (char ch)
-{
-  const char *msg = _(UNKNOWN_CMD);
-  char *unknown_cmd = xmalloc (strlen (msg));
-#pragma GCC diagnostic push
-#pragma GCC diagnostic ignored "-Wformat-nonliteral"
-  sprintf (unknown_cmd, msg, ch);
-#pragma GCC diagnostic pop
-  bad_prog (unknown_cmd);
-}
-
-/* Complain about a programming error and exit. */
-void
-bad_prog (const char *why)
+/* Complain about a programming error and exit.
+   bad_prog translates WHY, bad_prog_notranslate does not.  */
+static _Noreturn void _GL_ATTRIBUTE_FORMAT_PRINTF_STANDARD (1, 0)
+vbad_prog (char const *why, va_list ap)
 {
   if (cur_input.name)
-    fprintf (stderr, _("%s: file %s line %lu: %s\n"), program_name,
-             cur_input.name, (unsigned long)cur_input.line, why);
+    fprintf (stderr, _("%s: file %s line %lu: "), program_name,
+             cur_input.name, (unsigned long) cur_input.line);
   else
-    fprintf (stderr, _("%s: -e expression #%lu, char %lu: %s\n"),
+    fprintf (stderr, _("%s: -e expression #%lu, char %lu: "),
              program_name,
              (unsigned long)cur_input.string_expr_count,
-             (unsigned long)(prog.cur-prog.base),
-             why);
+             (unsigned long)(prog.cur-prog.base));
+
+  vfprintf (stderr, why, ap);
+  fputc ('\n', stderr);
+
   exit (EXIT_BAD_USAGE);
+}
+void
+bad_prog (char const *why, ...)
+{
+  va_list ap;
+  va_start (ap, why);
+  vbad_prog (gettext (why), ap);
+  va_end (ap);
+}
+void
+bad_prog_notranslate (const char *why, ...)
+{
+  va_list ap;
+  va_start (ap, why);
+  vbad_prog (why, ap);
+  va_end (ap);
 }
 
 /* Read the next character from the program.  Return EOF if there isn't
@@ -290,7 +212,7 @@ read_end_of_cmd (void)
   if (ch == CLOSE_BRACE || ch == '#')
     savchar (ch);
   else if (ch != EOF && ch != '\n' && ch != ';')
-    bad_prog (_(EXCESS_JUNK));
+    bad_prog ("extra characters after command");
 }
 
 /* Read an integer value from the program.  */
@@ -363,7 +285,7 @@ read_filename (void)
   int ch;
 
   if (sandbox)
-    bad_prog (_(DISALLOWED_CMD));
+    bad_prog ("e/r/w commands disabled in sandbox mode");
 
   b = init_buffer ();
   ch = in_nonblank ();
@@ -393,7 +315,7 @@ get_openfile (struct output **file_ptrs, const char *mode, int fail)
   b = read_filename ();
   file_name = get_buffer (b);
   if (strlen (file_name) == 0)
-    bad_prog (_(MISSING_FILENAME));
+    bad_prog ("missing filename in r/R/w/W commands");
 
   for (p=*file_ptrs; p; p=p->link)
     if (strcmp (p->name, file_name) == 0)
@@ -539,7 +461,7 @@ match_slash (int slash, int regex)
 
   /* We allow only 1 byte characters for a slash.  */
   if (IS_MB_CHAR (slash, &cur_stat))
-    bad_prog (BAD_DELIM);
+    bad_prog ("delimiter character is not a single-byte character");
 
   memset (&cur_stat, 0, sizeof cur_stat);
 
@@ -596,32 +518,32 @@ mark_subst_opts (struct subst *cmd)
       case 'i':	/* GNU extension */
       case 'I':	/* GNU extension */
         if (posixicity == POSIXLY_BASIC)
-          bad_prog (_(UNKNOWN_S_OPT));
+          bad_prog ("unknown option to `s'");
         flags |= REG_ICASE;
         break;
 
       case 'm':	/* GNU extension */
       case 'M':	/* GNU extension */
         if (posixicity == POSIXLY_BASIC)
-          bad_prog (_(UNKNOWN_S_OPT));
+          bad_prog ("unknown option to `s'");
         flags |= REG_NEWLINE;
         break;
 
       case 'e':
         if (posixicity == POSIXLY_BASIC)
-          bad_prog (_(UNKNOWN_S_OPT));
+          bad_prog ("unknown option to `s'");
         cmd->eval = true;
         break;
 
       case 'p':
         if (cmd->print)
-          bad_prog (_(EXCESS_P_OPT));
+          bad_prog ("multiple `p' options to `s' command");
         cmd->print |= (1 << cmd->eval); /* 1=before eval, 2=after */
         break;
 
       case 'g':
         if (cmd->global)
-          bad_prog (_(EXCESS_G_OPT));
+          bad_prog ("multiple `g' options to `s' command");
         cmd->global = true;
         break;
 
@@ -632,10 +554,10 @@ mark_subst_opts (struct subst *cmd)
       case '0': case '1': case '2': case '3': case '4':
       case '5': case '6': case '7': case '8': case '9':
         if (cmd->numb)
-          bad_prog (_(EXCESS_N_OPT));
+          bad_prog ("multiple number options to `s' command");
         cmd->numb = in_integer (ch);
         if (!cmd->numb)
-          bad_prog (_(ZERO_N_OPT));
+          bad_prog ("number option to `s' command may not be zero");
         break;
 
       case CLOSE_BRACE:
@@ -653,7 +575,7 @@ mark_subst_opts (struct subst *cmd)
         FALLTHROUGH;
 
       default:
-        bad_prog (_(UNKNOWN_S_OPT));
+        bad_prog ("unknown option to `s'");
         /*NOTREACHED*/
       }
 }
@@ -904,7 +826,7 @@ compile_address (struct addr *addr, int ch)
       if (ch == '\\')
         ch = inchar ();
       if ( !(b = match_slash (ch, true)) )
-        bad_prog (_(UNTERM_ADDR_RE));
+        bad_prog ("unterminated address regex");
 
       for (;;)
         {
@@ -1004,14 +926,14 @@ compile_program (struct vector *vector)
         {
           if (a.addr_type == ADDR_IS_STEP
               || a.addr_type == ADDR_IS_STEP_MOD)
-            bad_prog (_(BAD_STEP));
+            bad_prog ("invalid usage of +N or ~N as first address");
 
           cur_cmd->a1 = MEMDUP (&a, 1, struct addr);
           ch = in_nonblank ();
           if (ch == ',')
             {
               if (!compile_address (&a, in_nonblank ()))
-                bad_prog (_(BAD_COMMA));
+                bad_prog ("unexpected `,'");
 
               cur_cmd->a2 = MEMDUP (&a, 1, struct addr);
               ch = in_nonblank ();
@@ -1022,14 +944,14 @@ compile_program (struct vector *vector)
               && ((!cur_cmd->a2 && ch != 'r')
                   || (cur_cmd->a2 && cur_cmd->a2->addr_type != ADDR_IS_REGEX)
                   || posixicity == POSIXLY_BASIC))
-            bad_prog (_(INVALID_LINE_0));
+            bad_prog ("invalid usage of line address 0");
         }
       if (ch == '!')
         {
           cur_cmd->addr_bang = true;
           ch = in_nonblank ();
           if (ch == '!')
-            bad_prog (_(BAD_BANG));
+            bad_prog ("multiple `!'s");
         }
 
       /* Do not accept extended commands in --posix mode.  Also,
@@ -1039,13 +961,13 @@ compile_program (struct vector *vector)
          {
            case 'e': case 'F': case 'v': case 'z': case 'L':
            case 'Q': case 'T': case 'R': case 'W':
-             bad_command (ch);
+             bad_prog ("unknown command: `%c'", ch);
              FALLTHROUGH;
 
             case 'a': case 'i': case 'l':
             case '=': case 'r':
               if (cur_cmd->a2)
-                bad_prog (_(ONE_ADDR));
+                bad_prog ("command only uses one address");
           }
 
       cur_cmd->cmd = ch;
@@ -1053,7 +975,7 @@ compile_program (struct vector *vector)
         {
         case '#':
           if (cur_cmd->a1)
-            bad_prog (_(NO_SHARP_ADDR));
+            bad_prog ("comments don't accept any addresses");
           ch = inchar ();
           if (ch=='n' && first_script && cur_input.line < 2)
             if (   (prog.base && prog.cur==2+prog.base)
@@ -1073,7 +995,7 @@ compile_program (struct vector *vector)
             char const *compared_version;
             compared_version = (*version == '\0') ? "4.0" : version;
             if (strverscmp (compared_version, PACKAGE_VERSION) > 0)
-              bad_prog (_(ANCIENT_VERSION));
+              bad_prog ("expected newer version of sed");
 
             free (version);
             posixicity = POSIXLY_EXTENDED;
@@ -1087,9 +1009,9 @@ compile_program (struct vector *vector)
 
         case '}':
           if (!blocks)
-            bad_prog (_(EXCESS_CLOSE_BRACE));
+            bad_prog ("unexpected `}'");
           if (cur_cmd->a1)
-            bad_prog (_(NO_CLOSE_BRACE_ADDR));
+            bad_prog ("`}' doesn't want any addresses");
 
           read_end_of_cmd ();
 
@@ -1099,7 +1021,7 @@ compile_program (struct vector *vector)
 
         case 'e':
           if (sandbox)
-            bad_prog (_(DISALLOWED_CMD));
+            bad_prog ("e/r/w commands disabled in sandbox mode");
 
           ch = in_nonblank ();
           if (ch == EOF || ch == '\n')
@@ -1117,14 +1039,14 @@ compile_program (struct vector *vector)
 
         read_text_to_slash:
           if (ch == EOF)
-            bad_prog (_(EXPECTED_SLASH));
+            bad_prog ("expected \\ after `a', `c' or `i'");
 
           if (ch == '\\')
             ch = inchar ();
           else
             {
               if (posixicity == POSIXLY_BASIC)
-                bad_prog (_(EXPECTED_SLASH));
+                bad_prog ("expected \\ after `a', `c' or `i'");
               savchar (ch);
               ch = '\n';
             }
@@ -1134,11 +1056,11 @@ compile_program (struct vector *vector)
 
         case ':':
           if (cur_cmd->a1)
-            bad_prog (_(NO_COLON_ADDR));
+            bad_prog (": doesn't want any addresses");
           {
             char *label = read_label ();
             if (!*label)
-              bad_prog (_(COLON_LACKS_LABEL));
+              bad_prog ("\":\" lacks a label");
             labels = setup_label (labels, vector->v_length, label, NULL);
 
             if (debug)
@@ -1155,7 +1077,7 @@ compile_program (struct vector *vector)
         case 'Q':
         case 'q':
           if (cur_cmd->a2)
-            bad_prog (_(ONE_ADDR));
+            bad_prog ("command only uses one address");
           FALLTHROUGH;
 
         case 'L':
@@ -1194,7 +1116,7 @@ compile_program (struct vector *vector)
         case 'r':
           b = read_filename ();
           if (strlen (get_buffer (b)) == 0)
-            bad_prog (_(MISSING_FILENAME));
+            bad_prog ("missing filename in r/R/w/W commands");
           cur_cmd->x.readcmd.fname = xstrdup (get_buffer (b));
 
           /* Adjust '0rFILE' command to '1rFILE' in prepend mode */
@@ -1230,9 +1152,9 @@ compile_program (struct vector *vector)
 
             slash = inchar ();
             if ( !(b  = match_slash (slash, true)) )
-              bad_prog (_(UNTERM_S_CMD));
+              bad_prog ("unterminated `s' command");
             if ( !(b2 = match_slash (slash, false)) )
-              bad_prog (_(UNTERM_S_CMD));
+              bad_prog ("unterminated `s' command");
 
             cur_cmd->x.cmd_subst = OB_MALLOC (&obs, 1, struct subst);
             setup_replacement (cur_cmd->x.cmd_subst,
@@ -1245,7 +1167,7 @@ compile_program (struct vector *vector)
             free_buffer (b);
 
             if (cur_cmd->x.cmd_subst->eval && sandbox)
-              bad_prog (_(DISALLOWED_CMD));
+              bad_prog ("e/r/w commands disabled in sandbox mode");
           }
           break;
 
@@ -1258,12 +1180,12 @@ compile_program (struct vector *vector)
 
             slash = inchar ();
             if ( !(b = match_slash (slash, false)) )
-              bad_prog (_(UNTERM_Y_CMD));
+              bad_prog ("unterminated `y' command");
             src_buf = get_buffer (b);
             len = normalize_text (src_buf, size_buffer (b), TEXT_BUFFER);
 
             if ( !(b2 = match_slash (slash, false)) )
-              bad_prog (_(UNTERM_Y_CMD));
+              bad_prog ("unterminated `y' command");
             dest_buf = get_buffer (b2);
             dest_len = normalize_text (dest_buf, size_buffer (b2), TEXT_BUFFER);
 
@@ -1301,7 +1223,7 @@ compile_program (struct vector *vector)
                 for (i = 0; i < src_char_num; i++)
                   {
                     if (idx >= dest_len)
-                      bad_prog (_(Y_CMD_LEN));
+                      bad_prog ("strings for `y' command are different lengths");
 
                     /* Set the i-th source character.  */
                     trans_pairs[2 * i] = XCALLOC (src_lens[i] + 1, char);
@@ -1325,7 +1247,7 @@ compile_program (struct vector *vector)
                   }
                 trans_pairs[2 * i] = NULL;
                 if (idx != dest_len)
-                  bad_prog (_(Y_CMD_LEN));
+                  bad_prog ("strings for `y' command are different lengths");
 
                 IF_LINT (free (src_lens));
               }
@@ -1336,7 +1258,7 @@ compile_program (struct vector *vector)
                 unsigned char *ustring = (unsigned char *)src_buf;
 
                 if (len != dest_len)
-                  bad_prog (_(Y_CMD_LEN));
+                  bad_prog ("strings for `y' command are different lengths");
 
                 for (len = 0; len < YMAP_LENGTH; len++)
                   translate[len] = len;
@@ -1355,11 +1277,11 @@ compile_program (struct vector *vector)
         break;
 
         case EOF:
-          bad_prog (_(NO_COMMAND));
+          bad_prog ("missing command");
           /*NOTREACHED*/
 
         default:
-          bad_command (ch);
+          bad_prog ("unknown command: `%c'", ch);
           /*NOTREACHED*/
         }
 
@@ -1367,7 +1289,7 @@ compile_program (struct vector *vector)
       ++vector->v_length;
     }
   if (posixicity == POSIXLY_BASIC && pending_text)
-    bad_prog (_(INCOMPLETE_CMD));
+    bad_prog ("incomplete command");
   return vector;
 }
 
@@ -1451,7 +1373,7 @@ convert:
                   {
                     p++;
                     if (*p != '\\')
-                      bad_prog (RECURSIVE_ESCAPE_C);
+                      bad_prog ("recursive escaping after \\c not allowed");
                   }
                 p++;
                 continue;
@@ -1594,7 +1516,7 @@ check_final_program (struct vector *program)
     {
       /* update info for error reporting: */
       memcpy (&cur_input, &blocks->err_info, sizeof (cur_input));
-      bad_prog (_(EXCESS_OPEN_BRACE));
+      bad_prog ("unmatched `{'");
     }
 
   /* was the final command an unterminated a/c/i command? */

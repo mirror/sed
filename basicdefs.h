@@ -24,7 +24,6 @@
 #include <stdbool.h>
 
 #include <gettext.h>
-#define N_(String) gettext_noop(String)
 #define _(String) gettext(String)
 
 /* type countT is used to keep track of line numbers, etc. */
