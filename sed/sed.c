@@ -18,6 +18,7 @@
 #include "sed.h"
 
 
+#include <inttypes.h>
 #include <limits.h>
 #include <stdio.h>
 #include <string.h>
@@ -80,7 +81,7 @@ bool binary_mode = false;
 enum posixicity_types posixicity;
 
 /* How long should the `l' command's output line be? */
-countT lcmd_out_line_len = 70;
+intmax_t lcmd_out_line_len = 70;
 
 /* The complete compiled SED program that we are going to run: */
 static struct vector *the_program = NULL;
@@ -253,7 +254,7 @@ main (int argc, char **argv)
    */
   if (cols)
     {
-      countT t = atoi (cols);
+      intmax_t t = strtoimax (cols, NULL, 10);
       if (t > 1)
         lcmd_out_line_len = t-1;
     }
@@ -292,7 +293,7 @@ main (int argc, char **argv)
 
           else
             {
-              in_place_extension = XCALLOC (strlen (optarg) + 2, char);
+              in_place_extension = XNMALLOC (strlen (optarg) + 2, char);
               in_place_extension[0] = '*';
               strcpy (in_place_extension + 1, optarg);
             }
@@ -300,7 +301,7 @@ main (int argc, char **argv)
           break;
 
         case 'l':
-          lcmd_out_line_len = atoi (optarg);
+          lcmd_out_line_len = strtoimax (optarg, NULL, 10);
           break;
 
         case 'p':

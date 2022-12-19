@@ -2,9 +2,15 @@ GNU sed NEWS                                    -*- outline -*-
 
 * Noteworthy changes in release ?.? (????-??-??) [?]
 
+** Bug fixes
+
   'sed --follow-symlinks -i' no longer mishandles an operand that is a
   short symbolic link to a long symbolic link to a file.
   [bug introduced in sed 4.9]
+
+  Fix some some longstanding but unlikely integer overflows.
+  Internally, 'sed' now more often prefers signed integer arithmetic,
+  which can be checked automatically via 'gcc -fsanitize=undefined'.
 
 
 * Noteworthy changes in release 4.9 (2022-11-06) [stable]

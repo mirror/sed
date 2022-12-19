@@ -19,6 +19,7 @@
 #include <ctype.h>
 #include <limits.h>
 #include <string.h>
+#include <stdckdint.h>
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -130,7 +131,7 @@ struct regex *
 compile_regex (struct buffer *b, int flags, int needed_sub)
 {
   struct regex *new_regex;
-  size_t re_len;
+  idx_t re_len;
 
   /* // matches the last RE */
   if (size_buffer (b) == 0)
@@ -153,14 +154,12 @@ compile_regex (struct buffer *b, int flags, int needed_sub)
 }
 
 int
-match_regex (struct regex *regex, char *buf, size_t buflen,
-            size_t buf_start_offset, struct re_registers *regarray,
+match_regex (struct regex *regex, char *buf, idx_t buflen,
+            idx_t buf_start_offset, struct re_registers *regarray,
             int regsize)
 {
   int ret;
   static struct regex *regex_last;
-
-  /* printf ("Matching from %d/%d\n", buf_start_offset, buflen); */
 
   /* Keep track of the last regexp matched. */
   if (!regex)
@@ -172,9 +171,9 @@ match_regex (struct regex *regex, char *buf, size_t buflen,
   else
     regex_last = regex;
 
-  /* gnulib's re_search uses signed-int as length */
-  if (buflen >= INT_MAX)
-    panic (_("regex input buffer length larger than INT_MAX"));
+  regoff_t buflen_regoff;
+  if (ckd_add (&buflen_regoff, buflen, 0))
+    panic (_("regex input buffer length overflow"));
 
   if (regex->pattern.no_sub && regsize)
     {
@@ -196,7 +195,7 @@ match_regex (struct regex *regex, char *buf, size_t buflen,
   /* Optimized handling for '^' and '$' patterns */
   if (regex->begline || regex->endline)
     {
-      size_t offset;
+      idx_t offset;
 
       if (regex->endline)
         {
@@ -239,12 +238,12 @@ match_regex (struct regex *regex, char *buf, size_t buflen,
 
       if (regsize)
         {
-          size_t i;
+          idx_t i;
 
           if (!regarray->start)
             {
-              regarray->start = XCALLOC (1, regoff_t);
-              regarray->end = XCALLOC (1, regoff_t);
+              regarray->start = XNMALLOC (1, regoff_t);
+              regarray->end = XNMALLOC (1, regoff_t);
               regarray->num_regs = 1;
             }
 
@@ -311,7 +310,7 @@ match_regex (struct regex *regex, char *buf, size_t buflen,
 
           if (ret > -1)
             {
-              size_t i;
+              idx_t i;
 
               ret += beg - buf;
 

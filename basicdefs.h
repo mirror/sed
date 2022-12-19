@@ -26,13 +26,10 @@
 #include <gettext.h>
 #define _(String) gettext(String)
 
-/* type countT is used to keep track of line numbers, etc. */
-typedef unsigned long countT;
-
+#include "idx.h"
 #include "xalloc.h"
 
 /* some basic definitions to avoid undue promulgating of  ugliness */
-#define REALLOC(x,n,t)	 ((t *)xnrealloc((void *)(x),(n),sizeof(t)))
 #define MEMDUP(x,n,t)	 ((t *)xmemdup((x),(n)*sizeof(t)))
 #define OB_MALLOC(o,n,t) ((t *)(void *)obstack_alloc(o,(n)*sizeof(t)))
 

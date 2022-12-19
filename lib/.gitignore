@@ -196,6 +196,9 @@
 /string.h
 /string.in.h
 /stripslash.c
+/strtoimax.c
+/strtol.c
+/strtoll.c
 /strverscmp.c
 /sys/
 /sys_random.in.h

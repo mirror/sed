@@ -70,7 +70,7 @@ debug_print_char (char c)
 }
 
 static void
-debug_print_regex_pattern (const char *pat, size_t len)
+debug_print_regex_pattern (const char *pat, idx_t len)
 {
   const char *p = pat;
   while (len--)
@@ -132,16 +132,16 @@ debug_print_addr (const struct addr *a)
       debug_print_regex_flags (a->addr_regex, true);
       break;
     case ADDR_IS_NUM:
-      printf ("%lu", a->addr_number);
+      printf ("%jd", a->addr_number);
       break;
     case ADDR_IS_NUM_MOD:
-      printf ("%lu~%lu", a->addr_number, a->addr_step);
+      printf ("%jd~%jd", a->addr_number, a->addr_step);
       break;
     case ADDR_IS_STEP:
-      printf ("+%lu", a->addr_step);
+      printf ("+%jd", a->addr_step);
       break;
     case ADDR_IS_STEP_MOD:
-      printf ("~%lu", a->addr_step);
+      printf ("~%jd", a->addr_step);
       break;
     case ADDR_IS_LAST:
       putchar ('$');
@@ -223,7 +223,7 @@ debug_print_subst (const struct subst *s)
   if (s->print)
     putchar ('p');
   if (s->numb)
-    printf ("%lu", s->numb);
+    printf ("%jd", s->numb);
   if (s->outf)
     {
       putchar ('w');
@@ -234,7 +234,7 @@ debug_print_subst (const struct subst *s)
 static void
 debug_print_translation (const struct sed_cmd *sc)
 {
-  unsigned int i;
+  idx_t i;
 
   if (mb_cur_max > 1)
     {
@@ -318,7 +318,8 @@ debug_print_function (const struct vector *program, const struct sed_cmd *sc)
 
     case 'e':
       putchar (' ');
-      fwrite (sc->x.cmd_txt.text, 1, sc->x.cmd_txt.text_length, stdout);
+      if (sc->x.cmd_txt.text_length)
+        fwrite (sc->x.cmd_txt.text, 1, sc->x.cmd_txt.text_length, stdout);
       break;
 
     case 'F':
@@ -343,7 +344,7 @@ debug_print_function (const struct vector *program, const struct sed_cmd *sc)
     case 'q':
     case 'Q':
       if (sc->x.int_arg != -1)
-        printf (" %d", sc->x.int_arg);
+        printf (" %jd", sc->x.int_arg);
       break;
 
     case 'n':
@@ -449,7 +450,7 @@ debug_print_program (const struct vector *program)
 
   block_level = 1;
   puts ("SED PROGRAM:");
-  for (size_t i = 0; i < program->v_length; ++i)
+  for (idx_t i = 0; i < program->v_length; i++)
     debug_print_command (program, &program->v[i]);
   block_level = 0;
 }

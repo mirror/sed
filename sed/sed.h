@@ -27,8 +27,8 @@
 /* Struct vector is used to describe a compiled sed program. */
 struct vector {
   struct sed_cmd *v;	/* a dynamically allocated array */
-  size_t v_allocated;	/* ... number of slots allocated */
-  size_t v_length;	/* ... number of slots in use */
+  idx_t v_allocated;	/* ... number of slots allocated */
+  idx_t v_length;	/* ... number of slots in use */
 };
 
 /* This structure tracks files used by sed so that they may all be
@@ -44,13 +44,13 @@ struct output {
 
 struct text_buf {
   char *text;
-  size_t text_length;
+  idx_t text_length;
 };
 
 struct regex {
   regex_t pattern;
   int flags;
-  size_t sz;
+  idx_t sz;
   struct dfa *dfa;
   bool begline;
   bool endline;
@@ -107,15 +107,15 @@ enum addr_types {
 
 struct addr {
   enum addr_types addr_type;
-  countT addr_number;
-  countT addr_step;
+  intmax_t addr_number;
+  intmax_t addr_step;
   struct regex *addr_regex;
 };
 
 
 struct replacement {
   char *prefix;
-  size_t prefix_length;
+  idx_t prefix_length;
   int subst_id;
   enum replacement_types repl_type;
   struct replacement *next;
@@ -124,7 +124,7 @@ struct replacement {
 struct subst {
   struct regex *regx;
   struct replacement *replacement;
-  countT numb;		/* if >0, only substitute for match number "numb" */
+  intmax_t numb;	/* if >0, only substitute for match number "numb" */
   struct output *outf;	/* 'w' option given */
   unsigned global : 1;	/* 'g' option given */
   unsigned print : 2;	/* 'p' option given (before/after eval) */
@@ -157,10 +157,10 @@ struct sed_cmd {
     struct text_buf cmd_txt;
 
     /* This is used for the l, q and Q commands. */
-    int int_arg;
+    intmax_t int_arg;
 
     /* This is used for the {}, b, and t commands. */
-    countT jump_index;
+    idx_t jump_index;
 
     /* This is used for the r command. */
     struct readcmd readcmd;
@@ -189,8 +189,8 @@ _Noreturn void bad_prog (char const *why, ...)
   _GL_ATTRIBUTE_FORMAT_PRINTF_STANDARD (1, 2);
 _Noreturn void bad_prog_notranslate (char const *why, ...)
   _GL_ATTRIBUTE_FORMAT_PRINTF_STANDARD (1, 2);
-size_t normalize_text (char *text, size_t len, enum text_types buftype);
-struct vector *compile_string (struct vector *, char *str, size_t len);
+idx_t normalize_text (char *text, idx_t len, enum text_types buftype);
+struct vector *compile_string (struct vector *, char *str, idx_t len);
 struct vector *compile_file (struct vector *, const char *cmdfile);
 void check_final_program (struct vector *);
 void rewind_read_files (void);
@@ -198,7 +198,7 @@ void finish_program (struct vector *);
 
 struct regex *compile_regex (struct buffer *b, int flags, int needed_sub);
 int match_regex (struct regex *regex,
-                 char *buf, size_t buflen, size_t buf_start_offset,
+                 char *buf, idx_t buflen, idx_t buf_start_offset,
                  struct re_registers *regarray, int regsize);
 #ifdef lint
 void release_regex (struct regex *);
@@ -239,7 +239,7 @@ extern bool follow_symlinks;
 extern enum posixicity_types posixicity;
 
 /* How long should the `l' command's output line be? */
-extern countT lcmd_out_line_len;
+extern idx_t lcmd_out_line_len;
 
 /* How do we edit files in-place? (we don't if NULL) */
 extern char *in_place_extension;

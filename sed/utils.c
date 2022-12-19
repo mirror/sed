@@ -226,19 +226,19 @@ ck_mkstemp (char **p_filename, const char *tmpdir,
 
 /* Panic on failing fwrite */
 void
-ck_fwrite (const void *ptr, size_t size, size_t nmemb, FILE *stream)
+ck_fwrite (const void *ptr, idx_t size, idx_t nmemb, FILE *stream)
 {
   clearerr (stream);
   if (size && fwrite (ptr, size, nmemb, stream) != nmemb)
-    panic (ngettext ("couldn't write %llu item to %s: %s",
-                   "couldn't write %llu items to %s: %s", nmemb),
-          (unsigned long long) nmemb, utils_fp_name (stream),
+    panic (ngettext ("couldn't write %jd item to %s: %s",
+                     "couldn't write %jd items to %s: %s", nmemb),
+          nmemb, utils_fp_name (stream),
           strerror (errno));
 }
 
 /* Panic on failing fread */
-size_t
-ck_fread (void *ptr, size_t size, size_t nmemb, FILE *stream)
+idx_t
+ck_fread (void *ptr, idx_t size, idx_t nmemb, FILE *stream)
 {
   clearerr (stream);
   if (size && (nmemb=fread (ptr, size, nmemb, stream)) <= 0 && ferror (stream))
@@ -247,7 +247,7 @@ ck_fread (void *ptr, size_t size, size_t nmemb, FILE *stream)
   return nmemb;
 }
 
-size_t
+ssize_t
 ck_getdelim (char **text, size_t *buflen, char delim, FILE *stream)
 {
   ssize_t result;
@@ -421,20 +421,17 @@ nor do we care, as long as it doesn't mind being aligned by malloc. */
 
 struct buffer
   {
-    size_t allocated;
-    size_t length;
+    idx_t allocated;
+    idx_t length;
     char *b;
   };
-
-#define MIN_ALLOCATE 50
 
 struct buffer *
 init_buffer (void)
 {
-  struct buffer *b = XCALLOC (1, struct buffer);
-  b->b = XCALLOC (MIN_ALLOCATE, char);
-  b->allocated = MIN_ALLOCATE;
-  b->length = 0;
+  struct buffer *b = XNMALLOC (1, struct buffer);
+  b->allocated = b->length = 0;
+  b->b = xpalloc (NULL, &b->allocated, 1, -1, 1);
   return b;
 }
 
@@ -444,38 +441,19 @@ get_buffer (struct buffer const *b)
   return b->b;
 }
 
-size_t
+idx_t
 size_buffer (struct buffer const *b)
 {
   return b->length;
 }
 
-static void
-resize_buffer (struct buffer *b, size_t newlen)
-{
-  char *try = NULL;
-  size_t alen = b->allocated;
-
-  if (newlen <= alen)
-    return;
-  alen *= 2;
-  if (newlen < alen)
-    try = realloc (b->b, alen);	/* Note: *not* the REALLOC() macro! */
-  if (!try)
-    {
-      alen = newlen;
-      try = REALLOC (b->b, alen, char);
-    }
-  b->allocated = alen;
-  b->b = try;
-}
-
 char *
-add_buffer (struct buffer *b, const char *p, size_t n)
+add_buffer (struct buffer *b, const char *p, idx_t n)
 {
   char *result;
-  if (b->allocated - b->length < n)
-    resize_buffer (b, b->length+n);
+  idx_t avail = b->allocated - b->length;
+  if (avail < n)
+    b->b = xpalloc (b->b, &b->allocated, n - avail, -1, 1);
   result = memcpy (b->b + b->length, p, n);
   b->length += n;
   return result;
@@ -493,8 +471,8 @@ add1_buffer (struct buffer *b, int c)
   if (c != EOF)
     {
       char *result;
-      if (b->allocated - b->length < 1)
-        resize_buffer (b, b->length+1);
+      if (b->length == b->allocated)
+        b->b = xpalloc (b->b, &b->allocated, 1, -1, 1);
       result = b->b + b->length++;
       *result = c;
       return result;
@@ -507,6 +485,8 @@ void
 free_buffer (struct buffer *b)
 {
   if (b)
-    free (b->b);
-  free (b);
+    {
+      free (b->b);
+      free (b);
+    }
 }

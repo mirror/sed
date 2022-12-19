@@ -31,26 +31,23 @@ _Noreturn void panic (const char *str, ...)
 
 FILE *ck_fopen (const char *name, const char *mode, int fail);
 FILE *ck_fdopen (int fd, const char *name, const char *mode, int fail);
-void ck_fwrite (const void *ptr, size_t size, size_t nmemb, FILE *stream);
-size_t ck_fread (void *ptr, size_t size, size_t nmemb, FILE *stream);
+void ck_fwrite (const void *ptr, idx_t size, idx_t nmemb, FILE *stream);
+idx_t ck_fread (void *ptr, idx_t size, idx_t nmemb, FILE *stream);
 void ck_fflush (FILE *stream);
 void ck_fclose (FILE *stream);
 const char *follow_symlink (const char *path);
-size_t ck_getdelim (char **text, size_t *buflen, char buffer_delimiter,
-                    FILE *stream);
+ssize_t ck_getdelim (char **text, size_t *buflen, char buffer_delimiter,
+                     FILE *stream);
 FILE * ck_mkstemp (char **p_filename, const char *tmpdir, const char *base,
                    const char *mode) _GL_ARG_NONNULL ((1, 2, 3, 4));
 void ck_rename (const char *from, const char *to);
 
-void *ck_malloc (size_t size);
-void *ck_realloc (void *ptr, size_t size);
-
 void cancel_cleanup (void);
 void remove_cleanup_file (void);
 
-struct buffer *init_buffer (void);
+struct buffer *init_buffer (void) _GL_ATTRIBUTE_MALLOC;
 char *get_buffer (struct buffer const *b) _GL_ATTRIBUTE_PURE;
-size_t size_buffer (struct buffer const *b) _GL_ATTRIBUTE_PURE;
-char *add_buffer (struct buffer *b, const char *p, size_t n);
+idx_t size_buffer (struct buffer const *b) _GL_ATTRIBUTE_PURE;
+char *add_buffer (struct buffer *b, const char *p, idx_t n);
 char *add1_buffer (struct buffer *b, int ch);
 void free_buffer (struct buffer *b);

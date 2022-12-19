@@ -17,6 +17,7 @@
 /* compile.c: translate sed source into internal form */
 
 #include "sed.h"
+#include <stdckdint.h>
 #include <stdio.h>
 #include <ctype.h>
 #include <string.h>
@@ -27,7 +28,6 @@
 #include "xalloc.h"
 
 #define YMAP_LENGTH		256 /*XXX shouldn't this be (UCHAR_MAX+1)?*/
-#define VECTOR_ALLOC_INCREMENT	40
 
 /* let's not confuse text editors that have only dumb bracket-matching... */
 #define OPEN_BRACKET	'['
@@ -57,16 +57,16 @@ struct error_info {
   const char *name;
 
   /* This is the number of the current script line that we're compiling. */
-  countT line;
+  intmax_t line;
 
   /* This is the index of the "-e" expressions on the command line. */
-  countT string_expr_count;
+  int string_expr_count;
 };
 
 
 /* Label structure used to resolve GOTO's, labels, and block beginnings. */
 struct sed_label {
-  countT v_index;		/* index of vector element being referenced */
+  idx_t v_index;		/* index of vector element being referenced */
   char *name;			/* NUL-terminated name of the label */
   struct error_info err_info;	/* track where `{}' blocks start */
   struct sed_label *next;	/* linked list (stack) */
@@ -118,13 +118,13 @@ static _Noreturn void _GL_ATTRIBUTE_FORMAT_PRINTF_STANDARD (1, 0)
 vbad_prog (char const *why, va_list ap)
 {
   if (cur_input.name)
-    fprintf (stderr, _("%s: file %s line %lu: "), program_name,
-             cur_input.name, (unsigned long) cur_input.line);
+    fprintf (stderr, _("%s: file %s line %jd: "), program_name,
+             cur_input.name, cur_input.line);
   else
-    fprintf (stderr, _("%s: -e expression #%lu, char %lu: "),
+    fprintf (stderr, _("%s: -e expression #%d, char %td: "),
              program_name,
-             (unsigned long)cur_input.string_expr_count,
-             (unsigned long)(prog.cur-prog.base));
+             cur_input.string_expr_count,
+             prog.cur - prog.base);
 
   vfprintf (stderr, why, ap);
   fputc ('\n', stderr);
@@ -215,15 +215,17 @@ read_end_of_cmd (void)
     bad_prog ("extra characters after command");
 }
 
-/* Read an integer value from the program.  */
-static countT
+/* Read an unsigned integer value from the program.  Return the value,
+   or INTMAX_MAX on overflow.  */
+static intmax_t
 in_integer (int ch)
 {
-  countT num = 0;
+  intmax_t num = 0;
 
   while (ISDIGIT (ch))
     {
-      num = num * 10 + ch - '0';
+      if (ckd_mul (&num, num, 10) || ckd_add (&num, num, ch - '0'))
+        num = INTMAX_MAX;
       ch = inchar ();
     }
   savchar (ch);
@@ -352,17 +354,12 @@ get_openfile (struct output **file_ptrs, const char *mode, int fail)
 }
 
 static struct sed_cmd *
-next_cmd_entry (struct vector **vectorp)
+next_cmd_entry (struct vector *v)
 {
   struct sed_cmd *cmd;
-  struct vector *v;
 
-  v = *vectorp;
   if (v->v_length == v->v_allocated)
-    {
-      v->v_allocated += VECTOR_ALLOC_INCREMENT;
-      v->v = REALLOC (v->v, v->v_allocated, struct sed_cmd);
-    }
+    v->v = xpalloc (v->v, &v->v_allocated, 1, -1, sizeof *v->v);
 
   cmd = v->v + v->v_length;
   cmd->a1 = NULL;
@@ -371,7 +368,6 @@ next_cmd_entry (struct vector **vectorp)
   cmd->addr_bang = false;
   cmd->cmd = '\0';	/* something invalid, to catch bugs early */
 
-  *vectorp  = v;
   return cmd;
 }
 
@@ -607,7 +603,7 @@ read_label (void)
    compilation is complete, or a reference created by a `{' to be
    backpatched when the corresponding `}' is found.  */
 static struct sed_label *
-setup_label (struct sed_label *list, countT idx, char *name,
+setup_label (struct sed_label *list, idx_t idx, char *name,
              const struct error_info *err_info)
 {
   struct sed_label *ret = OB_MALLOC (&obs, 1, struct sed_label);
@@ -638,7 +634,7 @@ release_label (struct sed_label *list_head)
 }
 
 static struct replacement *
-new_replacement (char *text, size_t length, enum replacement_types type)
+new_replacement (char *text, idx_t length, enum replacement_types type)
 {
   struct replacement *r = OB_MALLOC (&obs, 1, struct replacement);
 
@@ -652,7 +648,7 @@ new_replacement (char *text, size_t length, enum replacement_types type)
 }
 
 static void
-setup_replacement (struct subst *sub, const char *text, size_t length)
+setup_replacement (struct subst *sub, const char *text, idx_t length)
 {
   char *base;
   char *p;
@@ -676,7 +672,7 @@ setup_replacement (struct subst *sub, const char *text, size_t length)
         {
           /* Preceding the backslash may be some literal text: */
           tail = tail->next =
-            new_replacement (base, (size_t)(p - base), repl_type);
+            new_replacement (base, p - base, repl_type);
 
           repl_type = save_type;
 
@@ -738,7 +734,7 @@ setup_replacement (struct subst *sub, const char *text, size_t length)
         {
           /* Preceding the ampersand may be some literal text: */
           tail = tail->next =
-            new_replacement (base, (size_t)(p - base), repl_type);
+            new_replacement (base, p - base, repl_type);
 
           repl_type = save_type;
           tail->subst_id = 0;
@@ -748,7 +744,7 @@ setup_replacement (struct subst *sub, const char *text, size_t length)
   /* There may be some trailing literal text: */
   if (base < text_end)
     tail = tail->next =
-      new_replacement (base, (size_t)(text_end - base), repl_type);
+      new_replacement (base, text_end - base, repl_type);
 
   tail->next = NULL;
   sub->replacement = root.next;
@@ -815,7 +811,7 @@ compile_address (struct addr *addr, int ch)
 {
   addr->addr_type = ADDR_IS_NULL;
   addr->addr_step = 0;
-  addr->addr_number = ~(countT)0;  /* extremely unlikely to ever match */
+  addr->addr_number = -1;  /* cannot match */
   addr->addr_regex = NULL;
 
   if (ch == '/' || ch == '\\')
@@ -863,7 +859,7 @@ compile_address (struct addr *addr, int ch)
         }
       else
         {
-          countT step = in_integer (in_nonblank ());
+          idx_t step = in_integer (in_nonblank ());
           if (step > 0)
             {
               addr->addr_step = step;
@@ -902,7 +898,7 @@ compile_program (struct vector *vector)
 
   if (!vector)
     {
-      vector = XCALLOC (1, struct vector);
+      vector = XNMALLOC (1, struct vector);
       vector->v = NULL;
       vector->v_allocated = 0;
       vector->v_length = 0;
@@ -921,7 +917,7 @@ compile_program (struct vector *vector)
       if (ch == EOF)
         break;
 
-      cur_cmd = next_cmd_entry (&vector);
+      cur_cmd = next_cmd_entry (vector);
       if (compile_address (&a, ch))
         {
           if (a.addr_type == ADDR_IS_STEP
@@ -1173,7 +1169,7 @@ compile_program (struct vector *vector)
 
         case 'y':
           {
-            size_t len, dest_len;
+            idx_t len, dest_len;
             int slash;
             struct buffer *b2;
             char *src_buf, *dest_buf;
@@ -1191,8 +1187,8 @@ compile_program (struct vector *vector)
 
             if (mb_cur_max > 1)
               {
-                size_t i, j, idx, src_char_num;
-                size_t *src_lens = XCALLOC (len, size_t);
+                idx_t i, j, idx, src_char_num;
+                idx_t *src_lens = XNMALLOC (len, idx_t);
                 char **trans_pairs;
                 size_t mbclen;
                 mbstate_t cur_stat = { 0, };
@@ -1218,7 +1214,7 @@ compile_program (struct vector *vector)
                      src(i) : pointer to i-th source character.
                      dest(i) : pointer to i-th destination character.
                      NULL : terminator */
-                trans_pairs = XCALLOC (2 * src_char_num + 1, char*);
+                trans_pairs = XNMALLOC (2 * src_char_num + 1, char *);
                 cur_cmd->x.translatemb = trans_pairs;
                 for (i = 0; i < src_char_num; i++)
                   {
@@ -1226,7 +1222,7 @@ compile_program (struct vector *vector)
                       bad_prog ("strings for `y' command are different lengths");
 
                     /* Set the i-th source character.  */
-                    trans_pairs[2 * i] = XCALLOC (src_lens[i] + 1, char);
+                    trans_pairs[2 * i] = XNMALLOC (src_lens[i] + 1, char);
                     memcpy (trans_pairs[2 * i], src_buf, src_lens[i]);
                     trans_pairs[2 * i][src_lens[i]] = '\0';
                     src_buf += src_lens[i]; /* Forward to next character.  */
@@ -1240,7 +1236,7 @@ compile_program (struct vector *vector)
                       mbclen = 1;
 
                     /* Set the i-th destination character.  */
-                    trans_pairs[2 * i + 1] = XCALLOC (mbclen + 1, char);
+                    trans_pairs[2 * i + 1] = XNMALLOC (mbclen + 1, char);
                     memcpy (trans_pairs[2 * i + 1], dest_buf + idx, mbclen);
                     trans_pairs[2 * i + 1][mbclen] = '\0';
                     idx += mbclen; /* Forward to next character.  */
@@ -1294,8 +1290,8 @@ compile_program (struct vector *vector)
 }
 
 /* deal with \X escapes */
-size_t
-normalize_text (char *buf, size_t len, enum text_types buftype)
+idx_t
+normalize_text (char *buf, idx_t len, enum text_types buftype)
 {
   const char *bufend = buf + len;
   char *p = buf;
@@ -1311,7 +1307,7 @@ normalize_text (char *buf, size_t len, enum text_types buftype)
      respectively within these three types of subexpressions.  */
   int bracket_state = 0;
 
-  int mbclen;
+  size_t mbclen;
   mbstate_t cur_stat = { 0, };
 
   while (p < bufend)
@@ -1419,16 +1415,16 @@ convert:
 
       *q++ = *p++;
     }
-    return (size_t)(q - buf);
+    return q - buf;
 }
 
 
 /* `str' is a string (from the command line) that contains a sed command.
    Compile the command, and add it to the end of `cur_program'. */
 struct vector *
-compile_string (struct vector *cur_program, char *str, size_t len)
+compile_string (struct vector *cur_program, char *str, idx_t len)
 {
-  static countT string_expr_count = 0;
+  static int string_expr_count;
   struct vector *ret;
 
   prog.file = NULL;
