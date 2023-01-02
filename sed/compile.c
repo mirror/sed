@@ -1219,7 +1219,7 @@ compile_program (struct vector *vector)
                 for (i = 0; i < src_char_num; i++)
                   {
                     if (idx >= dest_len)
-                      bad_prog ("strings for `y' command are different lengths");
+                      bad_prog ("`y' command strings have different lengths");
 
                     /* Set the i-th source character.  */
                     trans_pairs[2 * i] = XNMALLOC (src_lens[i] + 1, char);
@@ -1243,7 +1243,7 @@ compile_program (struct vector *vector)
                   }
                 trans_pairs[2 * i] = NULL;
                 if (idx != dest_len)
-                  bad_prog ("strings for `y' command are different lengths");
+                  bad_prog ("`y' command strings have different lengths");
 
                 IF_LINT (free (src_lens));
               }
@@ -1254,7 +1254,7 @@ compile_program (struct vector *vector)
                 unsigned char *ustring = (unsigned char *)src_buf;
 
                 if (len != dest_len)
-                  bad_prog ("strings for `y' command are different lengths");
+                  bad_prog ("`y' command strings have different lengths");
 
                 for (len = 0; len < YMAP_LENGTH; len++)
                   translate[len] = len;
