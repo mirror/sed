@@ -4,7 +4,7 @@
 # in "s///" command.
 # This is an adaptation of the old utf8-1/2/3/4 tests.
 
-# Copyright (C) 2017-2022 Free Software Foundation, Inc.
+# Copyright (C) 2017-2023 Free Software Foundation, Inc.
 
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
