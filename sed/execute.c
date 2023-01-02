@@ -50,8 +50,8 @@ struct line {
   char *active;		/* Pointer to non-consumed part of text. */
   idx_t length;		/* Length of text (or active, if used). */
   idx_t alloc;		/* Allocated space for active. */
-			/* 0 <= LENGTH <= ALLOC, and the malloc
-			   size is ACTIVE - TEXT + ALLOC + DFA_SLOP.  */
+                        /* 0 <= LENGTH <= ALLOC, and the malloc
+                           size is ACTIVE - TEXT + ALLOC + DFA_SLOP.  */
   bool chomped;		/* Was a trailing newline dropped? */
   mbstate_t mbstate;
 };
