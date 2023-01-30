@@ -239,7 +239,7 @@ extern bool follow_symlinks;
 extern enum posixicity_types posixicity;
 
 /* How long should the 'l' command's output line be? */
-extern idx_t lcmd_out_line_len;
+extern intmax_t lcmd_out_line_len;
 
 /* How do we edit files in-place? (we don't if NULL) */
 extern char *in_place_extension;
