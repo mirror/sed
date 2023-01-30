@@ -205,7 +205,7 @@ EXTRA_DIST += \
 	testsuite/xemacs.good \
 	testsuite/xemacs.inp
 
-# automake makes `check' depend on $(TESTS).  Declare
+# automake makes 'check' depend on $(TESTS).  Declare
 # dummy targets for $(TESTS) so that make does not complain.
 
 .PHONY: $(SEDTESTS)

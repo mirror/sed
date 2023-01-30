@@ -31,7 +31,7 @@ a reminder to those who already know \*(sd;
 other documentation (such as the texinfo document)
 must be consulted for fuller descriptions.
 .SS
-Zero-address ``commands''
+Zero-address "commands"
 .TP
 .RI :\  label
 Label for
@@ -123,10 +123,10 @@ g G
 Copy/append hold space to pattern space.
 .TP
 l
-List out the current line in a ``visually unambiguous'' form.
+List out the current line in a "visually unambiguous" form.
 .TP
 .RI l\  width
-List out the current line in a ``visually unambiguous'' form,
+List out the current line in a "visually unambiguous" form,
 breaking it at
 .I width
 characters.  This is a GNU extension.
@@ -243,7 +243,7 @@ Match every
 .IR step 'th
 line starting with line
 .IR first .
-For example, ``sed \-n 1~2p'' will print all the odd-numbered lines in
+For example, "sed \-n 1~2p" will print all the odd-numbered lines in
 the input stream, and the address 2~5 will match every fifth line,
 starting with the second.
 .I first
@@ -258,7 +258,7 @@ Match the last line.
 Match lines matching the regular expression
 .IR regexp .
 Matching is performed on the current pattern space, which
-can be modified with commands such as ``s///''.
+can be modified with commands such as "s///".
 .TP
 .BI \fR\e\fPc regexp c
 Match lines matching the regular expression
@@ -334,5 +334,5 @@ http://sed.sf.net/grabbag/.
 .PP
 E-mail bug reports to
 .BR bug-sed@gnu.org .
-Also, please include the output of ``sed \-\-version'' in the body
+Also, please include the output of "sed \-\-version" in the body
 of your report if at all possible.

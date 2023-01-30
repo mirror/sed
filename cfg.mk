@@ -242,8 +242,8 @@ sc_prohibit_fail_0:
 	halt='fail=0 initialization'					\
 	  $(_sc_search_regexp)
 
-# Ensure that tests don't use `cmd ... && fail=1` as that hides crashes.
-# The "exclude" expression allows common idioms like `test ... && fail=1`
+# Ensure that tests don't use 'cmd ... && fail=1' as that hides crashes.
+# The "exclude" expression allows common idioms like 'test ... && fail=1'
 # and the 2>... portion allows commands that redirect stderr and so probably
 # independently check its contents and thus detect any crash messages.
 sc_prohibit_and_fail_1:
@@ -290,7 +290,7 @@ sc_prohibit_test_backticks:
 # so that the unexpected contents are displayed
 sc_prohibit_test_empty:
 	@prohibit='test -s.*&&' in_vc_files='^tests/'			\
-	halt='use `compare /dev/null ...`, not `test -s ...` in tests/'	\
+	halt='use "compare /dev/null ...", not "test -s ..." in tests/'	\
 	  $(_sc_search_regexp)
 
 # With split lines, don't leave an operator at end of line.

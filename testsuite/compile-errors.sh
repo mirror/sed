@@ -22,7 +22,7 @@ print_ver_ sed
 # Excess P modifier to s//  (EXCESS_P_OPT)
 #
 cat <<\EOF >exp-exs-p || framework_failure_
-sed: -e expression #1, char 8: multiple `p' options to `s' command
+sed: -e expression #1, char 8: multiple 'p' options to 's' command
 EOF
 returns_ 1 sed 's/./x/pp' </dev/null 2>err-exs-p || fail=1
 compare_ exp-exs-p err-exs-p || fail=1
@@ -31,7 +31,7 @@ compare_ exp-exs-p err-exs-p || fail=1
 # Excess G modifier to s//  (EXCESS_G_OPT)
 #
 cat <<\EOF >exp-exs-g || framework_failure_
-sed: -e expression #1, char 8: multiple `g' options to `s' command
+sed: -e expression #1, char 8: multiple 'g' options to 's' command
 EOF
 returns_ 1 sed 's/./x/gg' </dev/null 2>err-exs-g || fail=1
 compare_ exp-exs-g err-exs-g || fail=1
@@ -40,7 +40,7 @@ compare_ exp-exs-g err-exs-g || fail=1
 # zero numeric modifier to s//  (ZERO_N_OPT)
 #
 cat <<\EOF >exp-exs-0 || framework_failure_
-sed: -e expression #1, char 7: number option to `s' command may not be zero
+sed: -e expression #1, char 7: number option to 's' command may not be zero
 EOF
 returns_ 1 sed 's/./x/0' </dev/null 2>err-exs-0 || fail=1
 compare_ exp-exs-0 err-exs-0 || fail=1
@@ -50,7 +50,7 @@ compare_ exp-exs-0 err-exs-0 || fail=1
 # Multiple number modifiers to s// (EXCESS_N_OPT)
 #
 cat <<\EOF >exp-exs-n || framework_failure_
-sed: -e expression #1, char 9: multiple number options to `s' command
+sed: -e expression #1, char 9: multiple number options to 's' command
 EOF
 returns_ 1 sed 's/./x/2p3' </dev/null 2>err-exs-n || fail=1
 compare_ exp-exs-n err-exs-n || fail=1
@@ -60,7 +60,7 @@ compare_ exp-exs-n err-exs-n || fail=1
 # Unknown s/// modifier letter
 #
 cat << \EOF >exp-unk-s-opt || framework_failure_
-sed: -e expression #1, char 7: unknown option to `s'
+sed: -e expression #1, char 7: unknown option to 's'
 EOF
 returns_ 1 sed 's/./x/Q' </dev/null 2>err-unk-s-opt || fail=1
 compare_ exp-unk-s-opt err-unk-s-opt || fail=1
@@ -70,7 +70,7 @@ compare_ exp-unk-s-opt err-unk-s-opt || fail=1
 #
 printf "s/./x/\r" > s-opt-r-in || framework_failure_
 cat << \EOF >exp-s-opt-r || framework_failure_
-sed: file s-opt-r-in line 1: unknown option to `s'
+sed: file s-opt-r-in line 1: unknown option to 's'
 EOF
 returns_ 1 sed -f s-opt-r-in </dev/null 2>err-s-opt-r || fail=1
 compare_ exp-s-opt-r err-s-opt-r || fail=1
@@ -92,7 +92,7 @@ compare_ exp-step-addr err-step-addr2 || fail=1
 # Multiple '!' (BAD_BANG)
 #
 cat <<\EOF >exp-bad-bang || framework_failure_
-sed: -e expression #1, char 3: multiple `!'s
+sed: -e expression #1, char 3: multiple '!'s
 EOF
 returns_ 1 sed '1!!d' </dev/null 2>err-bad-bang || fail=1
 compare_ exp-bad-bang err-bad-bang || fail=1
@@ -104,7 +104,7 @@ compare_ exp-bad-bang err-bad-bang || fail=1
 for opt in e F v z L Q T R W ;
 do
     cat <<EOF >exp-posix-cmd-$opt || framework_failure_
-sed: -e expression #1, char 2: unknown command: \`$opt'
+sed: -e expression #1, char 2: unknown command: '$opt'
 EOF
     returns_ 1 sed --posix "1$opt" </dev/null 2>err-posix-cmd-$opt || fail=1
     compare_ exp-posix-cmd-$opt err-posix-cmd-$opt || fail=1
@@ -143,7 +143,7 @@ compare_ exp-no-sharp err-no-sharp || fail=1
 # Unexpected closing braces (EXCESS_CLOSE_BRACE)
 #
 cat <<\EOF >exp-unexp-brace || framework_failure_
-sed: -e expression #1, char 2: unexpected `}'
+sed: -e expression #1, char 2: unexpected '}'
 EOF
 returns_ 1 sed '1}' </dev/null 2>err-unexp-brace || fail=1
 compare_ exp-unexp-brace err-unexp-brace || fail=1
@@ -153,7 +153,7 @@ compare_ exp-unexp-brace err-unexp-brace || fail=1
 # Umatched opening braces (EXCESS_OPEN_BRACE)
 # TODO: why 'char 0' ?
 cat <<\EOF >exp-unmatched-braces || framework_failure_
-sed: -e expression #1, char 0: unmatched `{'
+sed: -e expression #1, char 0: unmatched '{'
 EOF
 returns_ 1 sed '1{' </dev/null 2>err-unmatched-braces || fail=1
 compare_ exp-unmatched-braces err-unmatched-braces || fail=1
@@ -163,7 +163,7 @@ compare_ exp-unmatched-braces err-unmatched-braces || fail=1
 # '}' with address (NO_CLOSE_BRACE_ADDR)
 #
 cat <<\EOF >exp-brace-addr || framework_failure_
-sed: -e expression #1, char 3: `}' doesn't want any addresses
+sed: -e expression #1, char 3: '}' doesn't want any addresses
 EOF
 returns_ 1 sed '{1}' </dev/null 2>err-brace-addr || fail=1
 compare_ exp-brace-addr err-brace-addr || fail=1
@@ -201,7 +201,7 @@ compare_ exp-junk err-junk-braces || fail=1
 # Slash after a/c/i (EXPECTED_SLASH)
 # note: GNU extensions are less strict than --posix.
 cat <<\EOF >exp-junk || framework_failure_
-sed: -e expression #1, char 2: expected \ after `a', `c' or `i'
+sed: -e expression #1, char 2: expected \ after 'a', 'c' or 'i'
 EOF
 for opt in a c i ;
 do
@@ -245,7 +245,7 @@ compare_ exp-colon-addr err-colon-addr || fail=1
 # in multiple places due to varied conditions - check them all.
 # dummy addresses ensures the offending character is always 5.
 cat <<\EOF >exp-unterm-y || framework_failure_
-sed: -e expression #1, char 5: unterminated `y' command
+sed: -e expression #1, char 5: unterminated 'y' command
 EOF
 returns_ 1 sed '1111y' </dev/null 2>err-unterm-y1 || fail=1
 compare_ exp-unterm-y err-unterm-y1 || fail=1
@@ -262,7 +262,7 @@ compare_ exp-unterm-y err-unterm-y5 || fail=1
 # Y command with bad legth (Y_CMD_LEN)
 # TODO: check with multibyte strings.
 cat <<\EOF >exp-bad-y-len || framework_failure_
-sed: -e expression #1, char 7: `y' command strings have different lengths
+sed: -e expression #1, char 7: 'y' command strings have different lengths
 EOF
 returns_ 1 sed 'y/a/bb/' </dev/null 2>err-bad-y-len || fail=1
 compare_ exp-bad-y-len err-bad-y-len || fail=1

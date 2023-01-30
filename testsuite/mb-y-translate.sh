@@ -50,7 +50,7 @@ compare_ exp1 out1 || fail=1
 
 # in C locale, report error of mismatched length
 cat <<\EOF > exp-err1 || framework_failure_
-sed: file p1 line 1: `y' command strings have different lengths
+sed: file p1 line 1: 'y' command strings have different lengths
 EOF
 returns_ 1 env LC_ALL=C sed -f p1 </dev/null 2>err1 || fail=1
 compare_ exp-err1 err1 || fail=1
@@ -68,7 +68,7 @@ compare_ exp2 out2 || fail=1
 
 # in C locale, report error of mismatched length
 cat <<\EOF > exp-err2 || framework_failure_
-sed: file p2 line 1: `y' command strings have different lengths
+sed: file p2 line 1: 'y' command strings have different lengths
 EOF
 returns_ 1 env LC_ALL=C sed -f p2 </dev/null 2>err2 || fail=1
 compare_ exp-err2 err2 || fail=1
@@ -116,7 +116,7 @@ done
 # multibyte themselves.
 printf 'y/abc/d/' > p7 || framework_failure_
 cat <<\EOF > exp-err7 || framework_failure_
-sed: file p7 line 1: `y' command strings have different lengths
+sed: file p7 line 1: 'y' command strings have different lengths
 EOF
 
 returns_ 1 env LC_ALL=en_US.UTF-8 sed -f p7 </dev/null 2>err7 || fail=1
@@ -124,7 +124,7 @@ compare_ exp-err7 err7 || fail=1
 
 printf 'y/a/bcd/' > p8 || framework_failure_
 cat <<\EOF > exp-err8 || framework_failure_
-sed: file p8 line 1: `y' command strings have different lengths
+sed: file p8 line 1: 'y' command strings have different lengths
 EOF
 
 returns_ 1 env LC_ALL=en_US.UTF-8 sed -f p8 </dev/null 2>err8 || fail=1

@@ -347,7 +347,7 @@
 
 2010-08-17  Paolo Bonzini  <bonzini@gnu.org>
 
-	Fix imprecision in the documentation of `D'.
+	Fix imprecision in the documentation of 'D'.
 	* doc/sed-in.texi (D command): Fix documentation of behavior for
 	pattern space ending with \n and with no other newline.
 	Reported by Randall Cotton.
@@ -550,7 +550,7 @@
 
 	* sed/sed.c (contact): New.
 	(usage): From here.
-	(main): Use it for `sed --version' too.
+	(main): Use it for 'sed --version' too.
 
         * configure.ac: Point to GNU project mailing lists.
         * sed/sed.c (contact): Use PACKAGE_BUGREPORT.
@@ -577,8 +577,8 @@
 
 2009-01-28  Paolo Bonzini  <bonzini@gnu.org>
 
-	* sed/sed.c (usage): Only print the bug report address for `sed --help'.
-	(main): Print it for `sed --version' too.
+	* sed/sed.c (usage): Only print the bug report address for 'sed --help'.
+	(main): Print it for 'sed --version' too.
 	* testsuite/version.gin: Adapt.
 	* testsuite/Makefile.tests: Refine help message test.
 
@@ -609,8 +609,8 @@
 	Let --posix turn off more GNU extensions.
 	* sed/compile.c (mark_subst_opts): Turn off subst options i, I,
 	s, S, x, X, m, and M in --posix mode.
-	(compile_address): Disallow address modifiers, `FIRST~STEP',
-	`ADDR1,+N', and `ADDR1,~N' in --posix mode.
+	(compile_address): Disallow address modifiers, 'FIRST~STEP',
+	'ADDR1,+N', and 'ADDR1,~N' in --posix mode.
 	(compile_program): In --posix mode, do not accept e or z commands;
 	do not accept text between an a, c, or i command and the following
 	backslash; do not accept an argument to the l command.
@@ -658,10 +658,10 @@
 2008-09-29  Paolo Bonzini  <bonzini@gnu.org>
 
 	* BUGS: Document s/.*.// behavior with invalid multibyte sequences.
-	* NEWS: Document `z' extension.
+	* NEWS: Document 'z' extension.
 	* doc/sed-in.texi: Document both things.
-	* sed/compile.c (compile_program): Recognize `z'.
-	* sed/execute.c (execute_program): Execute `z'.
+	* sed/compile.c (compile_program): Recognize 'z'.
+	* sed/execute.c (execute_program): Execute 'z'.
 	* testsuite/Makefile.am: Add badenc test.
 	* testsuite/Makefile.tests: Add badenc test.
 	* testsuite/badenc.good: New.
@@ -837,7 +837,7 @@
 
 2006-08-21  Paolo Bonzini  <bonzini@gnu.org>
 
-	* sed/regexp.c: Accept NUL bytes for `.'.  Accept 'a\(b' in
+	* sed/regexp.c: Accept NUL bytes for '.'.  Accept 'a\(b' in
 	POSIXLY_CORRECT/POSIXLY_BASIC posixicity.
 
 2006-08-03  Paolo Bonzini  <bonzini@gnu.org>
@@ -1083,7 +1083,7 @@
 	* sed/execute.c (match_address_p): Rewritten.  Handle
 	ADDR_IS_NUM here.
 	(match_an_address_p): Suit to new match_address_p.
-	(execute_program): Adjust to use range_state in `c'.
+	(execute_program): Adjust to use range_state in 'c'.
 	Handle addr_bang here.
 	(reset_addresses): Use range_state.
 
@@ -1183,30 +1183,30 @@
 	newline, if necessary.
 	(flush_output): New function for a common pattern.
 	(output_line): Use struct output, set its flag accordingly.
-	(dump_append_queue): Use `ck_fwrite' instead of output_line.
+	(dump_append_queue): Use 'ck_fwrite' instead of output_line.
 	(do_list): Flush the output stream at the end.
-	(closedown): The code ``if(separate_files) rewind_read_files();''
+	(closedown): The code "if(separate_files) rewind_read_files();"
 	(read_pattern_space): ... has been moved here.
-	(process_files): Don't do the default `p' at the end, ...
+	(process_files): Don't do the default 'p' at the end, ...
 	(execute_program): ... as this function is now responsible for it;
-	add the code to the end of the function and to the command `q';
-	the commands `d', `D' and `Q' thus no longer have to forge an empty
+	add the code to the end of the function and to the command 'q';
+	the commands 'd', 'D' and 'Q' thus no longer have to forge an empty
 	line.
-	(execute_program): Commands `c' and `i' no longer call the
+	(execute_program): Commands 'c' and 'i' no longer call the
 	function output_line with chomped==FALSE; instead, they chomp
 	the text and call the function with chomped==TRUE.
-	(execute_program): Command `e' no longer uses output_line; it
-	calls ck_fwrite directly.  Commands `e', `L' and `=' flush
+	(execute_program): Command 'e' no longer uses output_line; it
+	calls ck_fwrite directly.  Commands 'e', 'L' and '=' flush
 	the output stream at the end.
-	* sed/compile.c (special_files): Use `struct output' instead of the
+	* sed/compile.c (special_files): Use 'struct output' instead of the
 	file name.
 	(get_openfile): ... special files are no longer copied to file_read
 	or file_write.
 	(fp_list): Move to sed.h (users adjusted) and rename as...
 	* sed/sed.h (struct output): ...this.  New flag missing_newline
 	associated to the output stream.
-	(struct sed_cmd, struct subst): Use `struct output *' instead of mere
-	`FILE *'; adjust compile.c and execute.c.
+	(struct sed_cmd, struct subst): Use 'struct output *' instead of mere
+	'FILE *'; adjust compile.c and execute.c.
 	* testsuite/noeolw.sed, testsuite/noeolw.good, testsuite/noeolw.1good,
 	testsuite/noeolw.2good: New tests
 
@@ -1269,7 +1269,7 @@
 2003-03-13  Paolo Bonzini  <bonzini@gnu.org>
 
 	* sed/compile.c (compile_program): Understand parameter
-	of `v'.
+	of 'v'.
 
 	* sed/sed.c (usage): Split help message into multiple
 	strings
@@ -1349,7 +1349,7 @@
 2002-12-16  Paolo Bonzini  <bonzini@gnu.org>
 
 	* sed/compile.c: Improvements to some error messages;
-	`a', `i', `l', `L', `r' accept two addresses except in
+	'a', 'i', 'l', 'L', 'r' accept two addresses except in
 	POSIXLY_CORRECT mode.
 
 2002-12-14  Paolo Bonzini  <bonzini@gnu.org>
@@ -1450,16 +1450,16 @@
 	* src/compile.c: Likewise
 	* src/execute.c: Likewise
 
-	* src/compile.c (compile_command): Parse `l' like
-	`q' and `Q'; default for int_arg is -1
+	* src/compile.c (compile_command): Parse 'l' like
+	'q' and 'Q'; default for int_arg is -1
 	* src/execute.c (do_list): New argument, used instead
 	of lcmd_out_line_len
-	(execute_program): Interpret int_arg for the `l' command;
-	return 0 for `q' and `Q' if int_arg is -1
+	(execute_program): Interpret int_arg for the 'l' command;
+	return 0 for 'q' and 'Q' if int_arg is -1
 
 	* src/fmt.c: New file, looted from GNU textutils
-	* src/compile.c: Parse `L'
-	* src/execute.c: Execute `L'
+	* src/compile.c: Parse 'L'
+	* src/execute.c: Execute 'L'
 
 2002-04-23  Paolo Bonzini  <bonzini@gnu.org>
 
@@ -1469,7 +1469,7 @@
 	* src/execute.c (reset_addresses): New function to make range
 	addresses work separately on each file when using in-place
 	editing
-	* src/execute.c (execute_program): The `n' and `N' use test_eof
+	* src/execute.c (execute_program): The 'n' and 'N' use test_eof
 	so that the script restarts at end of file, not at end of input
 	* src/execute.c (test_dollar_EOF): Make $ work separately
 	on each file when using -s; renamed to test_eof
@@ -1520,7 +1520,7 @@
 	* testsuite/uniq.sed, testsuite/uniq.inp, testsuite/uniq.good:
 	added to test P and D commands.
 	* testsuite/fasts.sed, testsuite/fasts.inp, testsuite/fasts.good:
-	added to test the new optimization done on the `s' command.
+	added to test the new optimization done on the 's' command.
 
 2001-12-17  Paolo Bonzini  <bonzini@gnu.org>
 
@@ -1540,15 +1540,15 @@
 
 2001-11-09  Paolo Bonzini  <bonzini@gnu.org>
 
-	* sed/compile.c (mark_subst_opts): Parse option `e',
-	preserve two occurrences of the `e' and `p' options.
+	* sed/compile.c (mark_subst_opts): Parse option 'e',
+	preserve two occurrences of the 'e' and 'p' options.
 	* sed/execute.c (do_subst) [HAVE_POPEN]: Interpret option
-	`e' (evaluate, like Perl's but uses Bourne shell).
-	* sed/sed.h (struct subst): Add an `eval' flag.
+	'e' (evaluate, like Perl's but uses Bourne shell).
+	* sed/sed.h (struct subst): Add an 'eval' flag.
 
-	* sed/compile.c (compile_program): Compile command `e'
-	like `c'.
-	* sed/execute.c (execute_program): Execute command `e'.
+	* sed/compile.c (compile_program): Compile command 'e'
+	like 'c'.
+	* sed/execute.c (execute_program): Execute command 'e'.
 
 2001-09-25  Paolo Bonzini  <bonzini@gnu.org>
 
@@ -1566,9 +1566,9 @@
 
 2001-09-05  Paolo Bonzini  <bonzini@gnu.org>
 
-	* sed/execute.c (do_subst): `baaac', if passed through
-	s/a*/x/g, gave `xbxxcx' rather than `xbxcx' (because an
-	empty string matched before the `c'.  Fixed.
+	* sed/execute.c (do_subst): 'baaac', if passed through
+	s/a*/x/g, gave 'xbxxcx' rather than 'xbxcx' (because an
+	empty string matched before the 'c'.  Fixed.
 
 	* sed/execute.c: Removed mmap support, I/O is done using
 	getline (slower but more bug-proof).
@@ -1620,7 +1620,7 @@
 2001-01-03  Paolo Bonzini  <bonzini@gnu.org>
 
 	* sed/compile.c(snarf_char_class) [REG_PERL]: Don't parse
-	`\n' specially
+	'\n' specially
 	* sed/compile.c(match_slash) [REG_PERL]: Ditto
 
 	* sed/compile.c(read_text) [REG_PERL]: Support [xX] modifiers
@@ -1629,12 +1629,12 @@
 2001-01-04  Paolo Bonzini  <bonzini@gnu.org>
 
 	* testsuite/Makefile.am: Use automake's implementation
-	of `make check'.  Removed the test targets
+	of 'make check'.  Removed the test targets
 	* testsuite/Makefile.tests: Moved the test targets here
 	(new file).
 	* testsuite/runtest: New file
 
-	* testsuite/Makefile.tests: `khadafy' test uses EREs.
+	* testsuite/Makefile.tests: 'khadafy' test uses EREs.
 
 	* testsuite/spencer.inp: Removed the ^* test
 
@@ -1642,16 +1642,16 @@
 
 2001-01-07  Paolo Bonzini  <bonzini@gnu.org>
 
-	* sed/compile.c (compile_program): Added `T' (branch if failed)
+	* sed/compile.c (compile_program): Added 'T' (branch if failed)
 	* sed/execute.c (shrink_program, execute_program): Ditto
 
 2001-02-08  Paolo Bonzini  <bonzini@gnu.org>
 
-	* sed/compile.c (compile_program): Added `Q' (quit without output)
+	* sed/compile.c (compile_program): Added 'Q' (quit without output)
 	* sed/execute.c (execute_program): Ditto
 
-	* sed/compile.c (compile_program): Fill in exit_status for `q' and `Q'
-	* sed/execute.c (execute_program): Return -1 for `go on', 0..255
+	* sed/compile.c (compile_program): Fill in exit_status for 'q' and 'Q'
+	* sed/execute.c (execute_program): Return -1 for 'go on', 0..255
 	to set the exit status
 	* sed/execute.c (process_files): Interpret new convention for
 	execute_program, return sed's exit code
@@ -1677,7 +1677,7 @@
 
 2000-12-08  Paolo Bonzini  <bonzini@gnu.org>
 
-	* basicdefs.h: Moved here from the `sed' subdirectory.
+	* basicdefs.h: Moved here from the 'sed' subdirectory.
 
 	* configure.in: Removed crap to pick a regex engine.
 	Added snprintf to the AC_REPLACE_FUNCS call.
@@ -1687,9 +1687,9 @@
 	* sed/regex.c(compile_regex): Use regncomp
 	* sed/regex.c(match_regex): Use regexec2
 
-	* sed/compile.c(compile_program): Implemented the `v' command.
+	* sed/compile.c(compile_program): Implemented the 'v' command.
 
-	* sed/sed.c(main): Implemented the `r' and `R' options
+	* sed/sed.c(main): Implemented the 'r' and 'R' options
 
 	* sed/sed.h: Replaced use_extended_syntax_t with
 	extended_regexp_flags to support Perl regular expressions.
@@ -1820,7 +1820,7 @@ Mon Nov 23 11:03:40 PST 1998  Ken Pizzini <ken@gnu.org>
 
 Sun Nov  1 00:09:07 PST 1998  Ken Pizzini <ken@gnu.org>
 
-	* sed/execute.c(do_list): make a `lcmd_out_line_len'
+	* sed/execute.c(do_list): make a 'lcmd_out_line_len'
 	(--line-length) of zero mean "infinite length",
 	i.e., "never wrap".
 
@@ -1837,39 +1837,39 @@ Sat Oct 31 23:06:50 PST 1998  Ken Pizzini <ken@gnu.org>
 Sat Oct 31 22:18:59 PST 1998  Ken Pizzini <ken@gnu.org>
 
 	* sed/sed.c, sed/sed.h, sed/execute.c: added new
-	`lcmd_out_line_len' variable.  (Idea suggested by
+	'lcmd_out_line_len' variable.  (Idea suggested by
 	Carlos J. G. Duarte <l38076@alfa.ist.utl.pt>.)
 	Also added ATOI macro (which uses strtoul() if available,
 	with fall-back to atoi()).
 	* sed/sed.c(main): attempt to use COLS environment variable
-	to set a reasonable `lcmd_out_line_len'; added -l/--line-length
-	command-line options to set the new `lcmd_out_line_len' flag.
+	to set a reasonable 'lcmd_out_line_len'; added -l/--line-length
+	command-line options to set the new 'lcmd_out_line_len' flag.
 	* sed/sed.c(usage): documented new -l/--line-length options.
-	* sed/execute.c(do_list): use `lcmd_out_line_len' variable
-	instead of `LCMD_OUT_LINE_LEN'.
+	* sed/execute.c(do_list): use 'lcmd_out_line_len' variable
+	instead of 'LCMD_OUT_LINE_LEN'.
 	* sed/execute.c: deleted now obsolete LCMD_OUT_LINE_LEN define.
 	* configure.in: added strtoul to the AC_CHECK_FUNCS call.
 
 Sat Oct 31 21:37:17 PST 1998  Ken Pizzini <ken@gnu.org>
 
-	* sed/sed.c, sed/sed.h, sed/execute.c: added new `force_unbuffered'
+	* sed/sed.c, sed/sed.h, sed/execute.c: added new 'force_unbuffered'
 	flag.  (Idea suggested by Frank Strauss <strauss@escape.de>.)
 	* sed/sed.c(main): added -u/--unbuffered command-line options
-	to set the new `force_unbuffered' flag.
+	to set the new 'force_unbuffered' flag.
 	* sed/sed.c(usage): documented new -u/--unbuffered options.
-	* sed/execute.c: changed the name of the `is_tty' flag in struct
-	input to a more generic `no_buffering'; also removed HAVE_ISATTY
+	* sed/execute.c: changed the name of the 'is_tty' flag in struct
+	input to a more generic 'no_buffering'; also removed HAVE_ISATTY
 	conditional on this member.
 	* sed/execute.c(slow_getline): removed HAVE_ISATTY conditonal
 	compilation of this function.
 	* sed/execute.c(output_line): if force_unbuffered is set,
 	then force a fflush() even if writing to stdout.
 	* sed/execute.c(open_next_file): added handling of the
-	new `force_unbuffered' flag so that slow_getline()
+	new 'force_unbuffered' flag so that slow_getline()
 	will always be used for input.
 	* sed/execute.c(read_file_line): changed the (conditionally
-	compiled) test of `input->is_tty' to (unconditionally)
-	use the new spelling `input->no_buffering'.
+	compiled) test of 'input->is_tty' to (unconditionally)
+	use the new spelling 'input->no_buffering'.
 
 Thu Oct 15 12:08:09 PDT 1998  Ken Pizzini <ken@gnu.org>
 
@@ -1880,7 +1880,7 @@ Thu Oct 15 12:08:09 PDT 1998  Ken Pizzini <ken@gnu.org>
 Sun Sep 27 01:42:42 PDT 1998  Ken Pizzini <ken@gnu.org>
 
 	* compile.c(compile_program): remove special-case code for matching
-	address range with a `0' beginning.
+	address range with a '0' beginning.
 
 	* compile.c(compile_address): change default addr_number to
 	be a pragmatically impossible countT value, instead of zero.
@@ -2034,22 +2034,22 @@ Sat May 30 12:23:16 PDT 1998  Ken Pizzini <ken@gnu.org>
 	whether fclose(NULL) is properly supported on a given
 	platform.)
 
-	* sed/sed.h: Renamed `struct text_buf' member `text_len'
-	to `text_length'.  Abstracted out `enum addr_types'
-	from `struct addr'; added new enum types num2,step,step_mod;
+	* sed/sed.h: Renamed 'struct text_buf' member 'text_len'
+	to 'text_length'.  Abstracted out 'enum addr_types'
+	from 'struct addr'; added new enum types num2,step,step_mod;
 	renamed mod to num_mod.  De-unionized the regex,number,
-	{modulo-offset/step} components of `struct addr', in
-	anticipation of new features.  Changed type of `a2' member
-	of `struct sed_cmd': now a pointer to save space.
-	Abstracted out `struct replacement' from `struct subst'.
-	Cleaned up declaration of `x' union of `struct addr'.
+	{modulo-offset/step} components of 'struct addr', in
+	anticipation of new features.  Changed type of 'a2' member
+	of 'struct sed_cmd': now a pointer to save space.
+	Abstracted out 'struct replacement' from 'struct subst'.
+	Cleaned up declaration of 'x' union of 'struct addr'.
 	Fixed prototype for compile_string().  Replaced prototype
 	for old close_all_files() with one for new finish_program().
 
 	* sed/sed.h, sed/compile.c, sed/execute.c: changed to
 	simplify the data structures used for branches and
-	command blocks: simplified `struct vector'; made
-	`struct label' local to compile.c; `struct sed_cmd'
+	command blocks: simplified 'struct vector'; made
+	'struct label' local to compile.c; 'struct sed_cmd'
 	was modified to support a simpler design for branches
 	and blocks.
 
@@ -2105,10 +2105,10 @@ Sat May 30 12:23:16 PDT 1998  Ken Pizzini <ken@gnu.org>
 	use line_exchange() function instead of custom in-line code.
 	* sed/execute.c(process_files): added NOLEAKS code.
 	* sed/execute.c(execute_program): updated implementations
-	of the `{', `}', `:', `b', and `t' commands; modified
-	`c' command gratuituosly; fixed potential memory
-	overrun in `D' command.  Simplified how nonstandard
-	`loop increments' work.  Use line_exchange() instead of
+	of the '{', '}', ':', 'b', and 't' commands; modified
+	'c' command gratuituosly; fixed potential memory
+	overrun in 'D' command.  Simplified how nonstandard
+	'loop increments' work.  Use line_exchange() instead of
 	custom in-line code in 'x' case.
 	* sed/execute.c[EXPERIMENTAL_DASH_N_OPTIMIZATION conditional
 	code]: various modifications intended to keep this
@@ -2131,13 +2131,13 @@ Sat May 30 12:23:16 PDT 1998  Ken Pizzini <ken@gnu.org>
 	memory.
 	* sed/compile.c: deleted obsolete new_vector() function;
 	abstracted new read_label() function; abstracted new
-	release_label() function; added new `blocks' module-static
+	release_label() function; added new 'blocks' module-static
 	variable.
 	* sed/compile.c(compile_program): updated implementations
-	of the `{', `}', `:', `b', and `t' commands; modified
+	of the '{', '}', ':', 'b', and 't' commands; modified
 	initialization from NULL vector.
 	* sed/compile.c(compile_regex): added mechanism to
-	release memory consumed by the cached `last' RE.
+	release memory consumed by the cached 'last' RE.
 	* sed/compile.c(setup_jump,setup_label): updated
 	name (from setup_jump to setup_label) and prototype;
 	changed body to reflect data structure changes.
@@ -2325,10 +2325,10 @@ Sun Jul  5 15:23:47 PDT 1998  Ken Pizzini <ken@gnu.org>
 Sun Jul  5 14:29:45 PDT 1998  Ken Pizzini <ken@gnu.org>
 
 	* sed/compile.c(mark_subst_opts), sed/execute.c(do_subst):
-	Define better semantics for interaction of the `g' flag
+	Define better semantics for interaction of the 'g' flag
 	with a numeric flag to the s/// command.  It used to
-	be that the `g' command siezed control; now the first
-	(number-1) matches are skipped and then `g' gets control
+	be that the 'g' command siezed control; now the first
+	(number-1) matches are skipped and then 'g' gets control
 	after that.  (It is not clear whether this is a feature
 	sneaking in during late beta, or a bug fix; the changes
 	involved were trivial, so I decided to treat it as a bug
@@ -2522,11 +2522,11 @@ Tue Jun  2 08:41:05 PDT 1998  Ken Pizzini <ken@gnu.org>
 	the rumored systems which stupidly #define __STDC__ 0.
 
 	* testsuite/help.good, testsuite/Makefile.in: make
-	the ``help'' test insensitive to the spelling of
-	the executable's name.  Also, enhanced `make clean'
+	the "help" test insensitive to the spelling of
+	the executable's name.  Also, enhanced 'make clean'
 	target.
 
-	* doc/sed.texi, doc/sed.1: correct documentation of `q'
+	* doc/sed.texi, doc/sed.1: correct documentation of 'q'
 	command; fix typos.
 
 	* configure, testsuite/version.good: update to beta10.
@@ -2599,7 +2599,7 @@ Sat May 23 20:04:31 HST 1998  Ken Pizzini <ken@gnu.org>
 
 	* sed/execute.c(read_file_line): EOF check was wrong --
 	it forgot to allow for the possibility that we were
-	appending to the end of the ``line'' (instead of merely
+	appending to the end of the "line" (instead of merely
 	reading a fresh line).
 
 Sat May 23 18:07:18 HST 1998  Ken Pizzini <ken@gnu.org>
@@ -2829,8 +2829,8 @@ Wed May  6 23:35:12 PDT 1998  Ken Pizzini <ken@gnu.org>
 	related to the substitution of regex for rx.
 
 	* lib/Makefile.am, sed/Makefile.am: since regex is not a
-	``compatability'' module, changed name of library to
-	``libsed.a''.
+	"compatability" module, changed name of library to
+	"libsed.a".
 
 	* lib/memchr.c, lib/memcpy.c, lib/memmove.c: add conditional
 	compilation code to leave zero-sized .o file if system
@@ -2844,7 +2844,7 @@ Wed May  6 23:35:12 PDT 1998  Ken Pizzini <ken@gnu.org>
 Wed May  6 18:40:47 PDT 1998  Ken Pizzini <ken@gnu.org>
 
 	* sed/execute.c: discovered awful bug in '}' handling:
-	it could read past the end of vec (because `n' was
+	it could read past the end of vec (because 'n' was
 	being decremented below zero)!  Needed to "continue"
 	instead of "break".
 
@@ -3225,7 +3225,7 @@ Sat Apr 30 17:17:38 1994  Tom Lord  (lord@x1.cygnus.com)
 
 Sat Apr 30 17:17:38 1994  Tom Lord  (lord@x1.cygnus.com)
 
-	* rx.c (solve_destination): protect `solution' more carefully.
+	* rx.c (solve_destination): protect 'solution' more carefully.
 	This is a cleanup of a patch from Kevin Buettner
 	 (kev@cujo.geg.mot.com).
 
@@ -3275,7 +3275,7 @@ Wed Jul 21 00:28:03 1993  Tom Lord  (lord@unix8.andrew.cmu.edu)
 	subexpressions to those with shorter ones, giving precedence
 	to low numbered subexpressions.
 
-	* rx.c (re_compile): don't free `params' if its null.
+	* rx.c (re_compile): don't free 'params' if its null.
 
 Fri Jul 16 01:12:08 1993  Tom Lord  (lord@unix8.andrew.cmu.edu)
 
@@ -3325,27 +3325,27 @@ Mon May 17 16:34:50 1993  Tom Lord  (lord@unix9.andrew.cmu.edu)
 Thu May  6 12:37:18 1993  Tom Lord  (lord@unix10.andrew.cmu.edu)
 
 	* sed.c (compile_filename, execute_program): don't use
-	`access' or `/dev/null'.
+	'access' or '/dev/null'.
 
 	* sed.c (execute_program): 'N' at EOF should delete the pat buf.
 
 	* sed.c (compile_filename): truncate, don't append files
-	being openned for `w' or `s///w'
+	being openned for 'w' or 's///w'
 
-	* sed.c (execute_program): -n switch shouldn't effect `i' or `c'.
+	* sed.c (execute_program): -n switch shouldn't effect 'i' or 'c'.
 
 	* sed.c (compile_program): don't compile unescaped newlines
-	into the substitution string of an `s' command (they are an error).
+	into the substitution string of an 's' command (they are an error).
 
 	* sed.c (compile_regex): correctly skip over character
-	sets that contain `]'.
+	sets that contain ']'.
 
 	* sed.c (execute_program): patch from gaumondp
-	Correctly handle empty-string matches in the case of an `s'
+	Correctly handle empty-string matches in the case of an 's'
 	command with a repeat count.
 
 	* sed.c (compile_program): patch from gaumondp@ere.UMontreal.ca.
-	Don't consume characters after the label of a `b', `t' or `:' command.
+	Don't consume characters after the label of a 'b', 't' or ':' command.
 
 	* sed.c (compile_program): unmatched open braces are an error.
 
@@ -3369,7 +3369,7 @@ Wed Nov  4 17:15:34 1992  Tom Lord  (lord@unix7.andrew.cmu.edu)
 	with a blank line.  Thanks to pinard@iro.umontreal.ca
 	(Francois Pinard) for pointing out this and many other bugs.
 
-	* sed.c (execute_program): Fixed a case of `D' command.
+	* sed.c (execute_program): Fixed a case of 'D' command.
 	Thanks Chris Weber <weber@bucknell.edu>
 
 	* sed.c: added new tests of no_default_output to make -n work.
@@ -3379,7 +3379,7 @@ Wed Nov  4 17:15:34 1992  Tom Lord  (lord@unix7.andrew.cmu.edu)
 	Thanks "J.T. Conklin" <jtc@gain.com>
 
 	* sed.c: made prog_cur, prog_start, and prog_end unsigned so
-	that users could write  `sed -e s/ÿ/foo/g'.
+	that users could write  'sed -e s/ÿ/foo/g'.
 
 Tue Oct 13 00:04:05 1992  Tom Lord  (lord@unix3.andrew.cmu.edu)
 
@@ -3418,7 +3418,7 @@ Tue Apr 28 17:13:04 1992  Tom Lord  (lord at unix7.andrew.cmu.edu)
 
 Sat Feb 29 10:55:54 1992  David J. MacKenzie  (djm@nutrimat)
 
-	* sed.c (usage): Document long options as starting with `--'.
+	* sed.c (usage): Document long options as starting with '--'.
 
 Mon Dec  9 23:56:40 1991  David J. MacKenzie  (djm at wookumz.gnu.ai.mit.edu)
 

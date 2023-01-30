@@ -23,7 +23,7 @@ sed: -e expression #1, char 6: invalid usage of line address 0
 EOF
 
 cat <<\EOF >exp-err-bad-addr || framework_failure_
-sed: -e expression #1, char 3: unexpected `,'
+sed: -e expression #1, char 3: unexpected ','
 EOF
 
 printf "%s\n" A B A C D E F G H I J >in1 || framework_failure_

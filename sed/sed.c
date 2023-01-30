@@ -80,7 +80,7 @@ bool binary_mode = false;
 /* Do we need to be pedantically POSIX compliant? */
 enum posixicity_types posixicity;
 
-/* How long should the `l' command's output line be? */
+/* How long should the 'l' command's output line be? */
 intmax_t lcmd_out_line_len = 70;
 
 /* The complete compiled SED program that we are going to run: */
@@ -104,7 +104,7 @@ contact (int errmsg)
   fprintf (out, _("GNU sed home page: <https://www.gnu.org/software/sed/>.\n\
 General help using GNU software: <https://www.gnu.org/gethelp/>.\n"));
 
-  /* Only print the bug report address for `sed --help', otherwise we'll
+  /* Only print the bug report address for 'sed --help', otherwise we'll
      get reports for other people's bugs.  */
   if (!errmsg)
     fprintf (out, _("E-mail bug reports to: <%s>.\n"), PACKAGE_BUGREPORT);
@@ -156,7 +156,7 @@ Usage: %s [OPTION]... {script-only-if-no-other-script} [input-file]...\n\
                  " processed specially)\n"));
 #endif
   fprintf (out, _("  -l N, --line-length=N\n\
-                 specify the desired line-wrap length for the `l' command\n"));
+                 specify the desired line-wrap length for the 'l' command\n"));
   fprintf (out, _("  --posix\n\
                  disable all GNU extensions.\n"));
   fprintf (out, _("  -E, -r, --regexp-extended\n\
@@ -248,8 +248,8 @@ main (int argc, char **argv)
   else
     posixicity = POSIXLY_EXTENDED;
 
-  /* If environment variable `COLS' is set, use its value for
-     the baseline setting of `lcmd_out_line_len'.  The "-1"
+  /* If environment variable 'COLS' is set, use its value for
+     the baseline setting of 'lcmd_out_line_len'.  The "-1"
      is to avoid gratuitous auto-line-wrap on ttys.
    */
   if (cols)

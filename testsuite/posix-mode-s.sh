@@ -19,7 +19,7 @@
 print_ver_ sed
 
 cat <<\EOF >exp-err || framework_failure_
-sed: -e expression #1, char 7: unknown option to `s'
+sed: -e expression #1, char 7: unknown option to 's'
 EOF
 
 # substitution command options (
@@ -48,7 +48,7 @@ compare exp-gnu-e out-gnu-e || fail=1
 
 # s///e rejected in POSIX mode
 cat <<\EOF >exp-err-psx-e || framework_failure_
-sed: -e expression #1, char 10: unknown option to `s'
+sed: -e expression #1, char 10: unknown option to 's'
 EOF
 returns_ 1 sed --posix 's/./echo/e' in1 2>err-posix-e || fail=1
 compare_ exp-err-psx-e err-posix-e || fail=1

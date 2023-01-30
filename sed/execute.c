@@ -105,13 +105,13 @@ struct input {
 };
 
 
-/* Have we done any replacements lately?  This is used by the `t' command. */
+/* Have we done any replacements lately?  This is used by the 't' command. */
 static bool replaced = false;
 
 /* The current output file (stdout if -i is not being used).  */
 static struct output output_file;
 
-/* The `current' input line. */
+/* The 'current' input line. */
 static struct line line;
 
 /* An input line used to accumulate the result of the s and e commands. */
@@ -273,7 +273,7 @@ str_append_modified (struct line *to, const char *string, idx_t length,
     }
 }
 
-/* Initialize a "struct line" buffer.  Copy multibyte state from `state'
+/* Initialize a "struct line" buffer.  Copy multibyte state from 'state'
    if not null.  */
 static void
 line_init (struct line *buf, struct line *state, idx_t initial_size)
@@ -291,7 +291,7 @@ line_init (struct line *buf, struct line *state, idx_t initial_size)
 }
 
 /* Reset a "struct line" buffer to length zero.  Copy multibyte state from
-   `state' if not null.  */
+   'state' if not null.  */
 static void
 line_reset (struct line *buf, struct line *state)
 {
@@ -307,9 +307,9 @@ line_reset (struct line *buf, struct line *state)
     }
 }
 
-/* Copy the contents of the line `from' into the line `to'.
-   This destroys the old contents of `to'.
-   Copy the multibyte state if `state' is true. */
+/* Copy the contents of the line 'from' into the line 'to'.
+   This destroys the old contents of 'to'.
+   Copy the multibyte state if 'state' is true. */
 static void
 line_copy (struct line *from, struct line *to, int state)
 {
@@ -335,8 +335,8 @@ line_copy (struct line *from, struct line *to, int state)
     memcpy (&to->mbstate, &from->mbstate, sizeof (from->mbstate));
 }
 
-/* Append the contents of the line `from' to the line `to'.
-   Copy the multibyte state if `state' is true. */
+/* Append the contents of the line 'from' to the line 'to'.
+   Copy the multibyte state if 'state' is true. */
 static void
 line_append (struct line *from, struct line *to, int state)
 {
@@ -349,7 +349,7 @@ line_append (struct line *from, struct line *to, int state)
 }
 
 /* Exchange two "struct line" buffers.
-   Copy the multibyte state if `state' is true. */
+   Copy the multibyte state if 'state' is true. */
 static void
 line_exchange (struct line *a, struct line *b, int state)
 {
@@ -773,7 +773,7 @@ last_file_with_data_p (struct input *input)
     }
 }
 
-/* Determine if we match the `$' address. */
+/* Determine if we match the '$' address. */
 static bool
 test_eof (struct input *input)
 {
@@ -792,7 +792,7 @@ test_eof (struct input *input)
 }
 
 /* Return non-zero if the current line matches the address
-   pointed to by `addr'. */
+   pointed to by 'addr'. */
 static bool
 match_an_address_p (struct addr *addr, struct input *input)
 {
@@ -894,7 +894,7 @@ match_address_p (struct sed_cmd *cmd, struct input *input)
     {
       /* If the second address is a line number, and if we got past
          that line, fail to match (it can happen when you jump
-         over such addresses with `b' and `t'.  Use RANGE_CLOSED
+         over such addresses with 'b' and 't'.  Use RANGE_CLOSED
          so that the range is not re-enabled anymore.  */
       if (input->line_number >= cmd->a2->addr_number)
         cmd->range_state = RANGE_CLOSED;
@@ -923,7 +923,7 @@ do_list (intmax_t line_len)
       char *o = obuf;
 
       /* Some locales define 8-bit characters as printable.  This makes the
-         testsuite fail at 8to7.sed because the `l' command in fact will not
+         testsuite fail at 8to7.sed because the 'l' command in fact will not
          convert the 8-bit characters. */
 #if defined isascii || defined HAVE_ISASCII
       if (isascii (*p) && ISPRINT (*p)) {
@@ -1053,7 +1053,7 @@ do_subst (struct subst *sub)
     {
       if (regs.start[0] == 0 && !sub->global)
         {
-          /* We found a match, set the `replaced' flag. */
+          /* We found a match, set the 'replaced' flag. */
           replaced = true;
 
           line.active += regs.end[0];
@@ -1063,7 +1063,7 @@ do_subst (struct subst *sub)
         }
       else if (regs.end[0] == line.length)
         {
-          /* We found a match, set the `replaced' flag. */
+          /* We found a match, set the 'replaced' flag. */
           replaced = true;
 
           line.length = regs.start[0];
@@ -1089,13 +1089,13 @@ do_subst (struct subst *sub)
          another match?
 
          This latter case avoids that baaaac, when passed through
-         s,a*,x,g, gives `xbxxcx' instead of xbxcx.  This behavior is
+         s,a*,x,g, gives 'xbxxcx' instead of xbxcx.  This behavior is
          unacceptable because it is not consistently applied (for
-         example, `baaaa' gives `xbx', not `xbxx'). */
+         example, 'baaaa' gives 'xbx', not 'xbxx'). */
       if ((matched > 0 || count == 0 || offset > last_end)
           && ++count >= sub->numb)
         {
-          /* We found a match, set the `replaced' flag. */
+          /* We found a match, set the 'replaced' flag. */
           replaced = true;
 
           /* Now expand the replacement string into the output string. */
@@ -1178,7 +1178,7 @@ do_subst (struct subst *sub)
       else
         panic (_("error in subprocess"));
 #else
-      panic (_("option `e' not supported"));
+      panic (_("option 'e' not supported"));
 #endif
     }
 
@@ -1205,7 +1205,7 @@ translate_mb (char *const *trans)
       if (mbclen == (size_t) -1 || mbclen == (size_t) -2 || mbclen == 0)
         mbclen = 1;
 
-      /* `i' indicate i-th translate pair.  */
+      /* 'i' indicate i-th translate pair.  */
       for (i = 0; trans[2*i] != NULL; i++)
         {
           if (STREQ_LEN (line.active + idx, trans[2*i], mbclen))
@@ -1276,7 +1276,7 @@ debug_print_line (struct line *ln)
   putchar ('\n');
 }
 
-/* Execute the program `vec' on the current input line.
+/* Execute the program 'vec' on the current input line.
    Return exit status if caller should quit, -1 otherwise. */
 static int
 execute_program (struct vector *vec, struct input *input)
@@ -1351,7 +1351,7 @@ execute_program (struct vector *vec, struct input *input)
 
             case 'e': {
 #ifndef HAVE_POPEN
-              panic (_("`e' command not supported"));
+              panic (_("'e' command not supported"));
 #else
               FILE *pipe_fp;
               idx_t cmd_length = cur_cmd->x.cmd_txt.text_length;
@@ -1387,7 +1387,7 @@ execute_program (struct vector *vec, struct input *input)
                 pclose (pipe_fp);
                 if (!cmd_length)
                   {
-                    /* Store into pattern space for plain `e' commands */
+                    /* Store into pattern space for plain 'e' commands */
                     if (s_accum.length
                         && (s_accum.active[s_accum.length - 1]
                             == buffer_delimiter))

@@ -238,7 +238,7 @@ extern bool follow_symlinks;
 /* Do we need to be pedantically POSIX compliant? */
 extern enum posixicity_types posixicity;
 
-/* How long should the `l' command's output line be? */
+/* How long should the 'l' command's output line be? */
 extern idx_t lcmd_out_line_len;
 
 /* How do we edit files in-place? (we don't if NULL) */

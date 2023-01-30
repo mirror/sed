@@ -3397,7 +3397,7 @@ a^c
 
 @c also: this fails in different places:
 @c   $ sed 's/[//'
-@c   sed: -e expression #1, char 5: unterminated `s' command
+@c   sed: -e expression #1, char 5: unterminated 's' command
 @c   $ sed 's/\x5b//'
 @c   sed: -e expression #1, char 8: Invalid regular expression
 @c
@@ -5845,8 +5845,8 @@ sequences.  @sc{posix} mandates that such sequences
 are @emph{not} matched by @samp{.}, so that @samp{s/.*//} will not clear
 pattern space as you would expect.  In fact, there is no way to clear
 sed's buffers in the middle of the script in most multibyte locales
-(including UTF-8 locales).  For this reason, @value{SSED} provides a `z'
-command (for `zap') as an extension.
+(including UTF-8 locales).  For this reason, @value{SSED} provides a @code{z}
+command (for ``zap'') as an extension.
 
 To work around these problems, which may cause bugs in shell scripts, set
 the @env{LC_COLLATE} and @env{LC_CTYPE} environment variables to @samp{C}.

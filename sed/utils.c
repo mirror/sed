@@ -416,7 +416,7 @@ ck_rename (const char *from, const char *to)
 
 
 
-/* Implement a variable sized buffer of `stuff'.  We don't know what it is,
+/* Implement a variable sized buffer of 'stuff'.  We don't know what it is,
 nor do we care, as long as it doesn't mind being aligned by malloc. */
 
 struct buffer

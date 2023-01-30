@@ -107,7 +107,7 @@ compile_regex_1 (struct regex *new_regex, int needed_sub)
   if (needed_sub
       && new_regex->pattern.re_nsub < needed_sub - 1
       && posixicity == POSIXLY_EXTENDED)
-    bad_prog ("invalid reference \\%d on `s' command's RHS", needed_sub - 1);
+    bad_prog ("invalid reference \\%d on 's' command's RHS", needed_sub - 1);
 
   int dfaopts = buffer_delimiter == '\n' ? 0 : DFA_EOL_NUL;
   new_regex->dfa = dfaalloc ();

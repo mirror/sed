@@ -73,7 +73,7 @@ compare_ exp3 out3 || fail=1
 # TODO: is this a bug?
 #       compare with 'y/a/\d/' and 'y/a/\x/'
 cat <<\EOF >exp-err-c || framework_failure_
-sed: -e expression #1, char 7: `y' command strings have different lengths
+sed: -e expression #1, char 7: 'y' command strings have different lengths
 EOF
 returns_ 1 sed 'y/a/\c/' </dev/null 2>err-c || fail=1
 compare_ exp-err-c err-c || fail=1

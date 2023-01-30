@@ -257,7 +257,7 @@ s/[[[[[[[[[]/h/
      ],
 
      ['fasts',
-      # test `fast' substitutions
+      # test 'fast' substitutions
       qw(-f),
       {IN => q(
 h
@@ -1049,7 +1049,7 @@ foo foo fo oo f oo foo foo foo foo foo foo foo foo foo foo foo foo foo
 /too\.$/q
 )},
       {AUX => { 'readin.in2' => "MOO\n" }},
-      {IN => "``Democracy will not come today, this year,\n"
+      {IN => " \"Democracy will not come today, this year,\n"
            . "  nor ever through compromise and fear.\n"
            . "  I have as much right as the other fellow has\n"
            . "  to stand on my two feet and own the land.\n"
@@ -1061,9 +1061,9 @@ foo foo fo oo f oo foo foo foo foo foo foo foo foo foo foo foo foo foo
            . "  Freedom is a strong seed\n"
            . "  planted in a great need.\n"
            . "  I live here, too.\n"
-           . "  I want freedom just as you.''\n"
-           . "    ``The Weary Blues'', Langston Hughes\n"},
-      {OUT => "``Democracy will not come today, this year,\n"
+           . "  I want freedom just as you.\"\n"
+           . "     \"The Weary Blues\", Langston Hughes\n"},
+      {OUT => " \"Democracy will not come today, this year,\n"
             . "  nor ever through compromise and fear.\n"
             . "MOO\n"
             . "  I have as much right as the other fellow has\n"

@@ -31,7 +31,7 @@ printf '1\n1\n2\n2\n' > exp-no-posix || framework_failure_
 #
 # using "--posix" disables the backref safety check in
 # regexp.c:compile_regex_1(), which is reported as:
-#     "invalid reference \\%d on `s' command's RHS"
+#     "invalid reference \\%d on 's' command's RHS"
 
 valgrind --quiet --error-exitcode=1 \
   sed --posix -e '/2/p ; 2s//\9/' in > out-posix 2> err-posix || fail=1

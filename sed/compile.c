@@ -36,7 +36,7 @@
 #define CLOSE_BRACE	'}'
 
 struct prog_info {
-  /* When we're reading a script command from a string, `prog.base'
+  /* When we're reading a script command from a string, 'prog.base'
      points to the first character in the string, 'prog.cur' points
      to the current character in the string, and 'prog.end' points
      to the end of the string.  This allows us to compile script
@@ -46,8 +46,8 @@ struct prog_info {
   const unsigned char *end;
 
   /* This is the current script file.  If it is NULL, we are reading
-     from a string stored at `prog.cur' instead.  If both `prog.file'
-     and `prog.cur' are NULL, we're in trouble! */
+     from a string stored at 'prog.cur' instead.  If both 'prog.file'
+     and 'prog.cur' are NULL, we're in trouble! */
   FILE *file;
 };
 
@@ -68,7 +68,7 @@ struct error_info {
 struct sed_label {
   idx_t v_index;		/* index of vector element being referenced */
   char *name;			/* NUL-terminated name of the label */
-  struct error_info err_info;	/* track where `{}' blocks start */
+  struct error_info err_info;	/* track where '{}' blocks start */
   struct sed_label *next;	/* linked list (stack) */
 };
 
@@ -171,7 +171,7 @@ inchar (void)
   return ch;
 }
 
-/* unget `ch' so the next call to inchar will return it.   */
+/* unget 'ch' so the next call to inchar will return it.   */
 static void
 savchar (int ch)
 {
@@ -279,7 +279,7 @@ convert_number (char *result, char *buf, const char *bufend, int base)
   return p;
 }
 
-/* Read in a filename for a `r', `w', or `s///w' command. */
+/* Read in a filename for a 'r', 'w', or 's///w' command. */
 static struct buffer *
 read_filename (void)
 {
@@ -514,32 +514,32 @@ mark_subst_opts (struct subst *cmd)
       case 'i':	/* GNU extension */
       case 'I':	/* GNU extension */
         if (posixicity == POSIXLY_BASIC)
-          bad_prog ("unknown option to `s'");
+          bad_prog ("unknown option to 's'");
         flags |= REG_ICASE;
         break;
 
       case 'm':	/* GNU extension */
       case 'M':	/* GNU extension */
         if (posixicity == POSIXLY_BASIC)
-          bad_prog ("unknown option to `s'");
+          bad_prog ("unknown option to 's'");
         flags |= REG_NEWLINE;
         break;
 
       case 'e':
         if (posixicity == POSIXLY_BASIC)
-          bad_prog ("unknown option to `s'");
+          bad_prog ("unknown option to 's'");
         cmd->eval = true;
         break;
 
       case 'p':
         if (cmd->print)
-          bad_prog ("multiple `p' options to `s' command");
+          bad_prog ("multiple 'p' options to 's' command");
         cmd->print |= (1 << cmd->eval); /* 1=before eval, 2=after */
         break;
 
       case 'g':
         if (cmd->global)
-          bad_prog ("multiple `g' options to `s' command");
+          bad_prog ("multiple 'g' options to 's' command");
         cmd->global = true;
         break;
 
@@ -550,10 +550,10 @@ mark_subst_opts (struct subst *cmd)
       case '0': case '1': case '2': case '3': case '4':
       case '5': case '6': case '7': case '8': case '9':
         if (cmd->numb)
-          bad_prog ("multiple number options to `s' command");
+          bad_prog ("multiple number options to 's' command");
         cmd->numb = in_integer (ch);
         if (!cmd->numb)
-          bad_prog ("number option to `s' command may not be zero");
+          bad_prog ("number option to 's' command may not be zero");
         break;
 
       case CLOSE_BRACE:
@@ -571,12 +571,12 @@ mark_subst_opts (struct subst *cmd)
         FALLTHROUGH;
 
       default:
-        bad_prog ("unknown option to `s'");
+        bad_prog ("unknown option to 's'");
         /*NOTREACHED*/
       }
 }
 
-/* read in a label for a `:', `b', or `t' command */
+/* read in a label for a ':', 'b', or 't' command */
 static char * _GL_ATTRIBUTE_MALLOC
 read_label (void)
 {
@@ -598,10 +598,10 @@ read_label (void)
   return ret;
 }
 
-/* Store a label (or label reference) created by a `:', `b', or `t'
+/* Store a label (or label reference) created by a ':', 'b', or 't'
    command so that the jump to/from the label can be backpatched after
-   compilation is complete, or a reference created by a `{' to be
-   backpatched when the corresponding `}' is found.  */
+   compilation is complete, or a reference created by a '{' to be
+   backpatched when the corresponding '}' is found.  */
 static struct sed_label *
 setup_label (struct sed_label *list, idx_t idx, char *name,
              const struct error_info *err_info)
@@ -803,7 +803,7 @@ read_text (struct text_buf *buf, int leadin_ch)
 }
 
 /* Try to read an address for a sed command.  If it succeeds,
-   return non-zero and store the resulting address in `*addr'.
+   return non-zero and store the resulting address in '*addr'.
    If the input doesn't look like an address read nothing
    and return zero.  */
 static bool
@@ -887,8 +887,8 @@ compile_address (struct addr *addr, int ch)
   return true;
 }
 
-/* Read a program (or a subprogram within `{' `}' pairs) in and store
-   the compiled form in `*vector'.  Return a pointer to the new vector.  */
+/* Read a program (or a subprogram within '{' '}' pairs) in and store
+   the compiled form in '*vector'.  Return a pointer to the new vector.  */
 static struct vector *
 compile_program (struct vector *vector)
 {
@@ -929,7 +929,7 @@ compile_program (struct vector *vector)
           if (ch == ',')
             {
               if (!compile_address (&a, in_nonblank ()))
-                bad_prog ("unexpected `,'");
+                bad_prog ("unexpected ','");
 
               cur_cmd->a2 = MEMDUP (&a, 1, struct addr);
               ch = in_nonblank ();
@@ -947,7 +947,7 @@ compile_program (struct vector *vector)
           cur_cmd->addr_bang = true;
           ch = in_nonblank ();
           if (ch == '!')
-            bad_prog ("multiple `!'s");
+            bad_prog ("multiple '!'s");
         }
 
       /* Do not accept extended commands in --posix mode.  Also,
@@ -957,7 +957,7 @@ compile_program (struct vector *vector)
          {
            case 'e': case 'F': case 'v': case 'z': case 'L':
            case 'Q': case 'T': case 'R': case 'W':
-             bad_prog ("unknown command: `%c'", ch);
+             bad_prog ("unknown command: '%c'", ch);
              FALLTHROUGH;
 
             case 'a': case 'i': case 'l':
@@ -983,7 +983,7 @@ compile_program (struct vector *vector)
 
         case 'v':
           /* This is an extension.  Programs needing GNU sed might start
-           * with a `v' command so that other seds will stop.
+           * with a 'v' command so that other seds will stop.
            * We compare the version and ignore POSIXLY_CORRECT.
            */
           {
@@ -1005,9 +1005,9 @@ compile_program (struct vector *vector)
 
         case '}':
           if (!blocks)
-            bad_prog ("unexpected `}'");
+            bad_prog ("unexpected '}'");
           if (cur_cmd->a1)
-            bad_prog ("`}' doesn't want any addresses");
+            bad_prog ("'}' doesn't want any addresses");
 
           read_end_of_cmd ();
 
@@ -1035,14 +1035,14 @@ compile_program (struct vector *vector)
 
         read_text_to_slash:
           if (ch == EOF)
-            bad_prog ("expected \\ after `a', `c' or `i'");
+            bad_prog ("expected \\ after 'a', 'c' or 'i'");
 
           if (ch == '\\')
             ch = inchar ();
           else
             {
               if (posixicity == POSIXLY_BASIC)
-                bad_prog ("expected \\ after `a', `c' or `i'");
+                bad_prog ("expected \\ after 'a', 'c' or 'i'");
               savchar (ch);
               ch = '\n';
             }
@@ -1148,9 +1148,9 @@ compile_program (struct vector *vector)
 
             slash = inchar ();
             if ( !(b  = match_slash (slash, true)) )
-              bad_prog ("unterminated `s' command");
+              bad_prog ("unterminated 's' command");
             if ( !(b2 = match_slash (slash, false)) )
-              bad_prog ("unterminated `s' command");
+              bad_prog ("unterminated 's' command");
 
             cur_cmd->x.cmd_subst = OB_MALLOC (&obs, 1, struct subst);
             setup_replacement (cur_cmd->x.cmd_subst,
@@ -1176,12 +1176,12 @@ compile_program (struct vector *vector)
 
             slash = inchar ();
             if ( !(b = match_slash (slash, false)) )
-              bad_prog ("unterminated `y' command");
+              bad_prog ("unterminated 'y' command");
             src_buf = get_buffer (b);
             len = normalize_text (src_buf, size_buffer (b), TEXT_BUFFER);
 
             if ( !(b2 = match_slash (slash, false)) )
-              bad_prog ("unterminated `y' command");
+              bad_prog ("unterminated 'y' command");
             dest_buf = get_buffer (b2);
             dest_len = normalize_text (dest_buf, size_buffer (b2), TEXT_BUFFER);
 
@@ -1219,7 +1219,7 @@ compile_program (struct vector *vector)
                 for (i = 0; i < src_char_num; i++)
                   {
                     if (idx >= dest_len)
-                      bad_prog ("`y' command strings have different lengths");
+                      bad_prog ("'y' command strings have different lengths");
 
                     /* Set the i-th source character.  */
                     trans_pairs[2 * i] = XNMALLOC (src_lens[i] + 1, char);
@@ -1243,7 +1243,7 @@ compile_program (struct vector *vector)
                   }
                 trans_pairs[2 * i] = NULL;
                 if (idx != dest_len)
-                  bad_prog ("`y' command strings have different lengths");
+                  bad_prog ("'y' command strings have different lengths");
 
                 IF_LINT (free (src_lens));
               }
@@ -1254,7 +1254,7 @@ compile_program (struct vector *vector)
                 unsigned char *ustring = (unsigned char *)src_buf;
 
                 if (len != dest_len)
-                  bad_prog ("`y' command strings have different lengths");
+                  bad_prog ("'y' command strings have different lengths");
 
                 for (len = 0; len < YMAP_LENGTH; len++)
                   translate[len] = len;
@@ -1277,7 +1277,7 @@ compile_program (struct vector *vector)
           /*NOTREACHED*/
 
         default:
-          bad_prog ("unknown command: `%c'", ch);
+          bad_prog ("unknown command: '%c'", ch);
           /*NOTREACHED*/
         }
 
@@ -1419,8 +1419,8 @@ convert:
 }
 
 
-/* `str' is a string (from the command line) that contains a sed command.
-   Compile the command, and add it to the end of `cur_program'. */
+/* 'str' is a string (from the command line) that contains a sed command.
+   Compile the command, and add it to the end of 'cur_program'. */
 struct vector *
 compile_string (struct vector *cur_program, char *str, idx_t len)
 {
@@ -1445,8 +1445,8 @@ compile_string (struct vector *cur_program, char *str, idx_t len)
   return ret;
 }
 
-/* `cmdfile' is the name of a file containing sed commands.
-   Read them in and add them to the end of `cur_program'.
+/* 'cmdfile' is the name of a file containing sed commands.
+   Read them in and add them to the end of 'cur_program'.
  */
 struct vector *
 compile_file (struct vector *cur_program, const char *cmdfile)
@@ -1512,7 +1512,7 @@ check_final_program (struct vector *program)
     {
       /* update info for error reporting: */
       memcpy (&cur_input, &blocks->err_info, sizeof (cur_input));
-      bad_prog ("unmatched `{'");
+      bad_prog ("unmatched '{'");
     }
 
   /* was the final command an unterminated a/c/i command? */
@@ -1538,7 +1538,7 @@ check_final_program (struct vector *program)
       else
         {
           if (*go->name)
-            panic (_("can't find label for jump to `%s'"), go->name);
+            panic (_("can't find label for jump to '%s'"), go->name);
           program->v[go->v_index].x.jump_index = program->v_length;
         }
     }

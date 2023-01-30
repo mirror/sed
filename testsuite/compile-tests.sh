@@ -83,7 +83,7 @@ compare_ exp-err-op-bracket err-op-bracket2 || fail=1
 # unterminated character class '[.'
 # (snarf_char_class terminates on char 7, then returns)
 cat <<\EOF >exp-chr-class || framework_failure_
-sed: -e expression #1, char 7: unterminated `s' command
+sed: -e expression #1, char 7: unterminated 's' command
 EOF
 returns_ 1 sed 's/[[.//' </dev/null 2>err-chr-class || fail=1
 compare_ exp-chr-class err-chr-class || fail=1
@@ -92,7 +92,7 @@ compare_ exp-chr-class err-chr-class || fail=1
 # closing bracket immediately after char-class opening
 # sequence (e.g. '[:]' instead of '[:alpha:]' ).
 cat<< \EOF >exp-chr-class2 || framework_failure_
-sed: -e expression #1, char 9: unterminated `s' command
+sed: -e expression #1, char 9: unterminated 's' command
 EOF
 returns_ 1 sed 's/[[:]]//' </dev/null 2>err-chr-class2 || fail=1
 compare_ exp-chr-class2 err-chr-class2 || fail=1

@@ -12,6 +12,12 @@ GNU sed NEWS                                    -*- outline -*-
   Internally, 'sed' now more often prefers signed integer arithmetic,
   which can be checked automatically via 'gcc -fsanitize=undefined'.
 
+** Changes in behavior
+
+  In the default C locale, diagnostics now quote 'like this' (with
+  apostrophes) instead of `like this' (with a grave accent and an
+  apostrophe).  This tracks the GNU coding standards.
+
 
 * Noteworthy changes in release 4.9 (2022-11-06) [stable]
 
@@ -250,9 +256,9 @@ GNU sed NEWS                                    -*- outline -*-
 
 * -u also does unbuffered input, rather than unbuffered output only
 
-* New command `F' to print current input file name
+* New command 'F' to print current input file name
 
-* sed -i, s///w, and the `w' and `W' commands also obey the --binary option
+* sed -i, s///w, and the 'w' and 'W' commands also obey the --binary option
   (and create CR/LF-terminated files if the option is absent)
 
 * --posix fails for scripts (or fragments as passed to the -e option) that
@@ -279,7 +285,7 @@ Sed 4.2
 
 * now released under GPLv3
 
-* added a new extension `z` to clear pattern space even in the presence
+* added a new extension 'z' to clear pattern space even in the presence
 of invalid multibyte sequences
 
 * a preexisting GNU gettext installation is needed in order to compile
@@ -297,9 +303,9 @@ indistinguishable from a correct implementation.
 * multibyte processing fixed
 
 * the following GNU extensions are turned off by --posix: options [iImMsSxX]
-in the `s' command, address kinds `FIRST~STEP' and `ADDR1,+N' and `ADDR1,~N',
-line address 0, `e' or `z' commands, text between an `a' or `c' or `i'
-command and the following backslash, arguments to the `l' command.
+in the 's' command, address kinds 'FIRST~STEP' and 'ADDR1,+N' and 'ADDR1,~N',
+line address 0, 'e' or 'z' commands, text between an 'a' or 'c' or 'i'
+command and the following backslash, arguments to the 'l' command.
 --posix disables all extensions to regular expressions.
 
 * fixed bug in 'i\' giving a segmentation violation if given alone.
@@ -310,7 +316,7 @@ command and the following backslash, arguments to the `l' command.
 
 * will correctly replace ACLs when using -i
 
-* will now accept NUL bytes for `.'
+* will now accept NUL bytes for '.'
 
 ----------------------------------------------------------------------------
 Sed 4.1.5
@@ -329,7 +335,7 @@ Sed 4.1.4
 
 * bugfixes for platform without internationalization
 
-* more thorough testing framework for tarballs (`make full-distcheck')
+* more thorough testing framework for tarballs ('make full-distcheck')
 
 ----------------------------------------------------------------------------
 Sed 4.1.3
@@ -339,13 +345,13 @@ Sed 4.1.3
   many of them as possible like it used to do.
 
 * added a note to BUGS and the manual about changed interpretation
-  of `s|abc\|def||', and about localization issues.
+  of 's|abc\|def||', and about localization issues.
 
 * fixed --disable-nls build problems on Solaris.
 
-* fixed `make check' in non-English locales.
+* fixed 'make check' in non-English locales.
 
-* `make check' tests the regex library by default if the included regex
+* 'make check' tests the regex library by default if the included regex
   is used (regex tests had to be enabled separately up to now).
 
 ----------------------------------------------------------------------------
@@ -379,21 +385,21 @@ but as soon as more text is sent to the same output stream, the
 missing newline is printed, so that the two lines don't concatenate.
 The behavior is now independent from POSIXLY_CORRECT because POSIX
 actually has undefined behavior in this case, and the new implementation
-arguably gives the ``least expected surprise''.  Thanks to Stepan
+arguably gives the "least expected surprise".  Thanks to Stepan
 Kasal for the implementation.
 
 * documentation improvements, with updated references to the POSIX.2
 specification
 
 * error messages on I/O errors are better, and -i does not leave temporary
-files around (e.g. when running ``sed -i'' on a directory).
+files around (e.g. when running "sed -i" on a directory).
 
 * escapes are accepted in the y command (for example: y/o/\n/ transforms
 o's into newlines)
 
 * -i option tries to set the owner and group to the same as the input file
 
-* `L' command is deprecated and will be removed in sed 4.2.
+* 'L' command is deprecated and will be removed in sed 4.2.
 
 * line number addresses are processed differently -- this is supposedly
 conformant to POSIX and surely more idiot-proof.  Line number addresses
@@ -426,10 +432,10 @@ alone).
 
 * when a \ is used to escape the character that would terminate an operand
 of the s or y commands, the backslash is removed before the regex is
-compiled.  This is left undefined by POSIX; this behavior makes `s+x\+++g'
-remove occurrences of `x+', consistently with `s/x\///g'.  (However, if
-you enjoy yourself trying `s*x\***g', sed will use the `x*' regex, and you
-won't be able to pass down `x\*' while using * as the delimiter; ideas on
+compiled.  This is left undefined by POSIX; this behavior makes 's+x\+++g'
+remove occurrences of 'x+', consistently with 's/x\///g'.  (However, if
+you enjoy yourself trying 's*x\***g', sed will use the 'x*' regex, and you
+won't be able to pass down 'x\*' while using * as the delimiter; ideas on
 how to simplify the parser in this respect, and/or gain more coherent
 semantics, are welcome).
 
@@ -445,7 +451,7 @@ Sed 4.0.9
 
 * updated regex matcher from upstream, with many bugfixes and speedups.
 
-* the `N' command's feature that is detailed in the BUGS file was disabled
+* the 'N' command's feature that is detailed in the BUGS file was disabled
 by the first change below in sed 4.0.8.  The behavior has now been
 restored, and is only enabled if POSIXLY_CORRECT behavior is not
 requested.
@@ -453,7 +459,7 @@ requested.
 ----------------------------------------------------------------------------
 Sed 4.0.8
 
-* fix `sed n' printing the last line twice.
+* fix 'sed n' printing the last line twice.
 
 * fix incorrect error message for invalid character classes.
 
@@ -482,7 +488,7 @@ a null string (and the infinite loop did not happen :-)
 ----------------------------------------------------------------------------
 Sed 4.0.6
 
-* added parameter to `v' for the version of sed that is expected.
+* added parameter to 'v' for the version of sed that is expected.
 
 * configure switch --without-included-regex to use the system regex matcher
 
@@ -494,11 +500,11 @@ Sed 4.0.5
 * portability fixes
 
 * improvements to some error messages (e.g. y/abc/defg/ incorrectly said
-`excess characters after command' instead of `y arguments have different
+'excess characters after command' instead of 'y arguments have different
 lengths')
 
-* `a', `i', `l', `L', `r' accept two addresses except in POSIXLY_CORRECT
-mode.  Only `q' and `Q' do not accept two addresses in standard (GNU) mode.
+* 'a', 'i', 'l', 'L', 'r' accept two addresses except in POSIXLY_CORRECT
+mode.  Only 'q' and 'Q' do not accept two addresses in standard (GNU) mode.
 
 ----------------------------------------------------------------------------
 Sed 4.0.4
@@ -538,25 +544,25 @@ Sed 4.0
 ----------------------------------------------------------------------------
 Sed 3.96
 
-* `y' command supports multibyte character sets
+* 'y' command supports multibyte character sets
 
 * Update regex matcher
 
 ----------------------------------------------------------------------------
 Sed 3.95
 
-* `R' command reads a single line from a file.
+* 'R' command reads a single line from a file.
 
 * CR-LF pairs are always ignored under Windows, even if (under Cygwin)
 a disk is mounted as binary.
 
 * More attention to errors on stdout
 
-* New `W' command to write first line of pattern space to a file
+* New 'W' command to write first line of pattern space to a file
 
-* Can customize line wrap width on single `l' commands
+* Can customize line wrap width on single 'l' commands
 
-* `L' command formats and reflows paragraphs like `fmt' does.
+* 'L' command formats and reflows paragraphs like 'fmt' does.
 
 * The test suite makefiles are better organized (this change is
 transparent however).
@@ -564,7 +570,7 @@ transparent however).
 * Compiles and bootstraps out-of-the-box under MinGW32 and Cygwin.
 
 * Optimizes cases when pattern space is truncated at its start or at
-its end by `D' or by a substitution command with an empty RHS.
+its end by 'D' or by a substitution command with an empty RHS.
 For example scripts like this,
 
     seq 1 10000 | tr \\n \  | ./sed ':a; s/^[0-9][0-9]* //; ta'
@@ -572,10 +578,10 @@ For example scripts like this,
 whose behavior was quadratic with previous versions of sed, have
 now linear behavior.
 
-* New command `e' to pipe the output of a command into the output
+* New command 'e' to pipe the output of a command into the output
 of sed.
 
-* New option `e' to pass the output of the `s' command through the
+* New option 'e' to pass the output of the 's' command through the
 Bourne shell and get the result into pattern space.
 
 * Switched to obstacks in the parser -- less memory-related bugs
@@ -589,7 +595,7 @@ not necessary anymore.
 bugs in systems with CRLF termination.  The current solution is
 not definitive, though.
 
-* Bug fix: Made the behavior of s/A*/x/g (i.e. `s' command with a
+* Bug fix: Made the behavior of s/A*/x/g (i.e. 's' command with a
 possibly empty LHS) more consistent:
 
        pattern               GNU sed 3.x       GNU sed 4.x
@@ -603,10 +609,10 @@ regular expression that was matched, rather than to the last
 regular expression that was compiled.  This richer behavior seems
 to be the correct one (albeit neither one is POSIXLY_CORRECT).
 
-* Check for invalid backreferences in the RHS of the `s' command
+* Check for invalid backreferences in the RHS of the 's' command
 (e.g. s/1234/\1/)
 
-* Support for \[lLuUE] in the RHS of the `s' command like in Perl.
+* Support for \[lLuUE] in the RHS of the 's' command like in Perl.
 
 * New regular expression matcher
 
@@ -614,7 +620,7 @@ to be the correct one (albeit neither one is POSIXLY_CORRECT).
 it.  So
       (sed d; sed G) < TESTFILE
 
-double-spaced TESTFILE, while the equivalent `useless use of cat'
+double-spaced TESTFILE, while the equivalent 'useless use of cat'
       cat TESTFILE | (sed d; sed G)
 
 printed nothing (which is the correct behavior).  A test for this
@@ -629,20 +635,20 @@ specific to this version.
   -r, --regexp-extended
     Use extended regexps -- e.g. (abc+) instead of \(abc\+\)
 
-* Added feature to the `w' command and to the `w' option of the `s'
+* Added feature to the 'w' command and to the 'w' option of the 's'
 command: if the file name is /dev/stderr, it means the standard
 error (inspired by awk); and similarly for /dev/stdout.  This is
 disabled if POSIXLY_CORRECT is set.
 
-* Added `m' and `M' modifiers to `s' command for multi-line
-matching (Perl-style); in addresses, only `M' works.
+* Added 'm' and 'M' modifiers to 's' command for multi-line
+matching (Perl-style); in addresses, only 'M' works.
 
-* Added `Q' command for `silent quit'; added ability to pass
+* Added 'Q' command for 'silent quit'; added ability to pass
 an exit code from a sed script to the caller.
 
-* Added `T' command for `branch if failed'.
+* Added 'T' command for 'branch if failed'.
 
-* Added `v' command, which is a do-nothing intended to fail on
+* Added 'v' command, which is a do-nothing intended to fail on
 seds that do not support GNU sed 4.0's extensions.
 
 ----------------------------------------------------------------------------
@@ -662,7 +668,7 @@ NUL character.  Had the glibc folk fix a bug in lib/regex.c where
   -u, --unbuffered
     Do not attempt to read-ahead more than required; do not buffer stdout.
   -l N, --line-length=N
-    Specify the desired line-wrap length for the `l' command.
+    Specify the desired line-wrap length for the 'l' command.
     A length of "0" means "never wrap".
 
 * New internationalization translations added: fr ru de it el sk pt_BR sv
@@ -725,8 +731,8 @@ in a RE matches a NUL; it does not prematurely terminate the RE.
 only passes NUL-terminated strings, and so sed will only be able
 to see up to the first NUL in any -e scriptlet.)
 
-* Wherever a `;' is accepted as a command terminator, also allow a `}'
-or a `#' to appear.  (This allows for less cluttered-looking scripts.)
+* Wherever a ';' is accepted as a command terminator, also allow a '}'
+or a '#' to appear.  (This allows for less cluttered-looking scripts.)
 
 * Lots of internal changes that are only relevant to source junkies
 and development testing.  Some of which might cause imperceptible
