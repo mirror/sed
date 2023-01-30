@@ -97,7 +97,6 @@
 /malloca.m4
 /manywarnings-c++.m4
 /manywarnings.m4
-/mbrlen.m4
 /mbrtowc.m4
 /mbsinit.m4
 /mbstate_t.m4

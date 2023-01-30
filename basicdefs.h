@@ -17,7 +17,6 @@
 #ifndef BASICDEFS_H
 #define BASICDEFS_H
 
-#include <alloca.h>
 #include <wchar.h>
 #include <locale.h>
 #include <wctype.h>

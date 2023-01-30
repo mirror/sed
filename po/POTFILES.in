@@ -1,4 +1,3 @@
-lib/closeout.c
 lib/copy-acl.c
 lib/dfa.c
 lib/error.c

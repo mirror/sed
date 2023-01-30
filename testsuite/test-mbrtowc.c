@@ -122,7 +122,6 @@
 #include <stdlib.h>
 #include <wchar.h>
 
-#include "closeout.h"
 #include "error.h"
 #include "progname.h"
 
@@ -164,7 +163,8 @@ main (int argc, char **argv)
 
   if (ferror (stdin))
     die ("read error");
-  close_stdout ();
+  if (ferror (stdout) || fclose (stdout) != 0)
+    die ("write error");
 
   exit (EXIT_SUCCESS);
 }
