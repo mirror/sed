@@ -262,7 +262,7 @@ compare_ exp-unterm-y err-unterm-y5 || fail=1
 # Y command with bad legth (Y_CMD_LEN)
 # TODO: check with multibyte strings.
 cat <<\EOF >exp-bad-y-len || framework_failure_
-sed: -e expression #1, char 7: strings for `y' command are different lengths
+sed: -e expression #1, char 7: `y' command strings have different lengths
 EOF
 returns_ 1 sed 'y/a/bb/' </dev/null 2>err-bad-y-len || fail=1
 compare_ exp-bad-y-len err-bad-y-len || fail=1
