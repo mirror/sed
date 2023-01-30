@@ -48,7 +48,6 @@
 /errno.h
 /errno.in.h
 /error.c
-/error.h
 /exitfail.c
 /exitfail.h
 /fcntl.c
@@ -239,3 +238,4 @@
 /xalloc-oversized.h
 /xalloc.h
 /xmalloc.c
+/error.in.h
