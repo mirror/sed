@@ -24,6 +24,7 @@
 /environ.m4
 /errno_h.m4
 /error.m4
+/error_h.m4
 /extensions.m4
 /extern-inline.m4
 /fcntl-o.m4
@@ -104,6 +105,7 @@
 /memchr.m4
 /mempcpy.m4
 /memrchr.m4
+/memset_explicit.m4
 /minmax.m4
 /mkdir.m4
 /mkostemp.m4
@@ -214,8 +216,6 @@
 /wctype_h.m4
 /wint_t.m4
 /xalloc.m4
+/xattr.m4
 /xsize.m4
 /zzgnulib.m4
-/memset_explicit.m4
-/error_h.m4
-/xattr.m4

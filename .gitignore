@@ -19,12 +19,14 @@
 /THANKS
 /aclocal.m4
 /autom4te.cache
+/confdefs.h
 /config.cache
 /config.h
 /config.log
 /config.status
 /config_h.in
 /configure
+/conftest*
 /doc/.gitignore
 /doc/coverage/
 /doc/sed.1
@@ -39,6 +41,7 @@
 /doc/sed.op
 /doc/sed.pdf
 /doc/sed.pg
+/doc/sed.t2p/
 /doc/sed.toc
 /doc/sed.tp
 /doc/sed.vr
