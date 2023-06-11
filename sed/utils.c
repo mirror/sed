@@ -410,7 +410,7 @@ ck_rename (const char *from, const char *to)
   if (rd != -1)
     return;
 
-  panic (_("cannot rename %s: %s"), from, strerror (errno));
+  panic (_("cannot rename %s to %s: %s"), from, to, strerror (errno));
 }
 
 

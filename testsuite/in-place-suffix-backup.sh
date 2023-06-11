@@ -29,7 +29,7 @@ printf "1\nz\n" >> exp-z || framework_failure_
 # TODO: misleading error: the problem is the target filename of rename(2),
 #       not the source filename.
 cat <<\EOF >exp-err-rename || framework_failure_
-sed: cannot rename ./e: No such file or directory
+sed: cannot rename ./e to ./e./e./e: No such file or directory
 EOF
 
 
