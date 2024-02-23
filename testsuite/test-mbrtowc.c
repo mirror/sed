@@ -117,12 +117,12 @@
 */
 
 #include <config.h>
+#include <error.h>
 #include <locale.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <wchar.h>
 
-#include "error.h"
 #include "progname.h"
 
 /* stub replacement for non-standard err(3) */
