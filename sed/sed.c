@@ -20,6 +20,7 @@
 #include <getopt.h>
 #include <inttypes.h>
 #include <limits.h>
+#include <selinux/selinux.h>
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
@@ -28,7 +29,6 @@
 
 #include "binary-io.h"
 #include "progname.h"
-#include "selinux/selinux.h"
 #include "version.h"
 #include "xalloc.h"
 
