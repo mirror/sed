@@ -1,3 +1,8 @@
+/wchar_t.m4
+/wint_t.m4~
+/lock.m4~
+/lcmessage.m4~
+/codeset.m4~
 /00gnulib.m4
 /__inline.m4
 /absolute-header.m4
@@ -208,7 +213,6 @@
 /warn-on-use.m4
 /warnings.m4
 /wchar_h.m4
-/wchar_t.m4
 /wcrtomb.m4
 /wctob.m4
 /wctomb.m4
@@ -218,3 +222,16 @@
 /xattr.m4
 /xsize.m4
 /zzgnulib.m4
+/off64_t.m4
+/pthread-cond.m4
+/pthread-mutex.m4
+/pthread-once.m4
+/pthread-rwlock.m4
+/pthread-spin.m4
+/pthread_mutex_timedlock.m4
+/random.m4
+/random_r.m4
+/sched_yield.m4
+/semaphore.m4
+/sys_cdefs_h.m4
+/yield.m4
