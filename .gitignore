@@ -59,6 +59,7 @@
 /testsuite/*.trs
 /testsuite/eval.in2
 /testsuite/get-mb-cur-max
+/testsuite/init.sh
 /testsuite/test-mbrtowc
 Makefile
 Makefile.in
